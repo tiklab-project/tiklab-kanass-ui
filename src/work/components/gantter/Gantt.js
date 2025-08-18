@@ -496,7 +496,7 @@ const Gantt = (props) => {
                                         <ImgComponent
                                             src={item.workTypeSys?.iconUrl}
                                             alt=""
-                                            className="icon-24"
+                                            className="icon-18"
                                         />
                                         <div>
                                             <div className="table-work-text" onClick={() => goWorkDetail(item, index)}>{item.title}</div>

@@ -1,0 +1,118 @@
+.product-productPlan {
+  .ant-row {
+    overflow: auto;
+    height: 100%;
+  }
+  .product-productPlan-list {
+    background-color: #fff;
+    height: 100%;
+    padding: var(--tiklab-padding);;
+    flex: 1;
+
+    .productPlan-tabs {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 50px;
+      line-height: 50px;
+      white-space: nowrap;
+      .productPlan-tab {
+        font-size: var(--tiklab-font-13);;
+        cursor: pointer;
+        height: 50px;
+        line-height: 50px;
+        margin-right: 20px;
+        .tabs-bar-num {
+          font-size: 12px;
+          padding-left: 3px;
+          color: #999;
+        }
+      }
+      .productPlan-tab:last-child {
+        margin-right: 0;
+      }
+      .active-tabs {
+        color: #000;
+        border-bottom: var(--tiklab-gray-400) 2px solid;
+      }
+    }
+
+    .productPlan-filter {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      // height: 50px;
+      // line-height: 50px;
+      gap: 20px;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+      .vertical-bar {
+        width: 1px;
+        height: 15px;
+        background-color: #d7d7d7;
+        margin: 0 10px;
+      }
+      .active-tabs {
+        border-bottom: 2px solid var(--tiklab-blue);
+      }
+      .filter-search {
+        width: 120px;
+        border-radius: 4px;;
+      }
+      .productPlan-filter-right {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        .select-content {
+          padding: 5px 10px;
+          background-color: var(--tiklab-gray);
+          width: 100px;
+        }
+      }
+    }
+    .productPlan-botton {
+      display: flex;
+      .product-primary {
+        margin-right: 10px;
+      }
+    }
+    .productPlan-box {
+      .productPlan-name {
+        cursor: pointer;
+      }
+      .productPlan-item {
+        display: flex;
+        align-items: center;
+      }
+      .productPlan-name:hover {
+        color: var(--tiklab-blue);
+      }
+      .productPlan-status {
+        padding: 2px 3px;
+        background: #e2e1e4;
+        border-radius: 4px;
+        font-size: 10px;
+        width: fit-content;
+        color: #2b333e;
+      }
+      .productPlan-status-todo {
+        background: #e2e1e4;
+        color: #2b333e;
+      }
+      .productPlan-status-process{
+        background: #b0d5dfa1;
+        color: #132c33;
+      }
+      .productPlan-status-done {
+        background: #dfecd5e3;
+        color: #5e5314;
+      }
+      .ant-pagination-simple .ant-pagination-simple-pager input {
+        user-select: none;
+        pointer-events: none;
+        padding: 0;
+        border: 0;
+      }
+    }
+  }
+}

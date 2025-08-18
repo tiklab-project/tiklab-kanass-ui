@@ -34,7 +34,15 @@ const ProductDetailAside = (props) => {
             encoded: "project",
         },
         {
-            title: `事项`,
+            title: `计划`,
+            icon: 'plan-' + theme,
+            defaultIcon: "plan-default",
+            id: `/product/${productId}/plan`,
+            key: "plan",
+            encoded: "plan",
+        },
+        {
+            title: `需求`,
             icon: 'workitem-' + theme,
             defaultIcon: "workitem-default",
             id: `/product/${productId}/workitem`,

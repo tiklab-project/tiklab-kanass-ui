@@ -87,12 +87,12 @@ const WorkTableFilter = (props) => {
         getSelectUserList(projectId)
         getWorkTypeList({ projectId: projectId });
         getWorkStatus()
-        if (path === "/product/:productId/workitem"){
+        if (path.includes("/product")){
             findProjectList({productId: productId}).then(res => {
                 setProjectList(res.data)
             })
         }
-        if (path === "/projectSet/:projectSetId/workitem"){
+        if (path.includes("/projectSet")){
             findProjectList({projectSetId: projectSetId}).then(res => {
                 setProjectList(res.data)
             })
@@ -258,10 +258,10 @@ const WorkTableFilter = (props) => {
 
             <div className="work-table-filter">
                 {quickFilterVisible && <WorkFilterSelect />}
-                {workTypeVisible && path !== "/product/:productId/workitem"  && <WorkTypeSelect />}
+                {workTypeVisible && !path.includes("/product")  && <WorkTypeSelect />}
 
                 {
-                    (path === "/projectSet/:projectSetId/workitem" || path === "/product/:productId/workitem") &&
+                    (path.includes("/projectSet") || path.includes("/product")) &&
                     <SelectSimple
                         name="projectIds"
                         onChange={(value) => selectChange("projectIds", value)}

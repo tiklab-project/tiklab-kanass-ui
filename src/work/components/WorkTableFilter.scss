@@ -14,6 +14,8 @@
         gap: 10px;
        
         .select-group-title {
+            display: flex;
+            gap: 5px;
             font-weight: 600;
             color: var(--tiklab-gray-500);
             font-size: 12px;

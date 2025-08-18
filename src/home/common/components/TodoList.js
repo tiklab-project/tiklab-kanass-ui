@@ -17,6 +17,7 @@ import {getUser} from "tiklab-core-ui";
 import Breadcrumb from "../../../common/breadcrumb/Breadcrumb";
 import ProjectStore from "../../../project/project/store/ProjectStore";
 import WorkTypeSelect from "../../../work/components/WorkTypeSelect";
+import ColorIcon from "../../../common/colorIcon/ColorIcon";
 
 const TodoList = (props) => {
     const store = {
@@ -424,11 +425,7 @@ const TodoList = (props) => {
             width: "20%",
             render: (text, record) => <div className="work-info">
                 <div className="work-info-img">
-                    <ImgComponent
-                        src={record.project?.iconUrl}
-                        alt=""
-                        className="img-icon-right"
-                    />
+                    <ColorIcon color={record.project.color} name={record.project.projectName} className="icon-20" />
 
                 </div>
                 <div className="work-info-text">{text.length > 10 ? text.slice(0, 10) + "..." : text}</div>
@@ -569,7 +566,7 @@ const TodoList = (props) => {
                                                     value={item.id}
                                                     label={item.projectName}
                                                     key={item.id}
-                                                    imgUrl={item.iconUrl}
+                                                    color={item.color}
                                                 />
                                             })
                                         }
@@ -578,9 +575,9 @@ const TodoList = (props) => {
                             </div>
 
                             <div className="table-top-right">
-                                <div className="worklist-table-todo-label">
-                                    {todoLabel}
-                                </div>
+                                {/*<div className="worklist-table-todo-label">*/}
+                                {/*    {todoLabel}*/}
+                                {/*</div>*/}
                                 {/*搜索框*/}
                                 <div className="worklist-table-search">
                                     <div className="search-input">

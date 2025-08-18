@@ -82,7 +82,7 @@ const ProjectFormDetail = AsyncComponent(() => import('./project/setting/project
 
 const Survey = AsyncComponent(() => import('./project/overview/components/Survey'))
 const Sprint = AsyncComponent(() => import('./project/sprint/components/SprintList'))
-const WikiRepository = AsyncComponent(() => import('./project/wiki/components/WikiRepository'))
+const WikiRepository = AsyncComponent(() => import('./project/wiki/repository/components/WikiRepository'))
 const TestRepository = AsyncComponent(() => import('./project/test/components/TestRepository'))
 const PlanSprint = AsyncComponent(() => import('./project/sprint/components/SprintPlan'))
 const ProjectLog = AsyncComponent(() => import("./project/workLog/components/LogContent.js"))
@@ -152,16 +152,20 @@ const ProductProjectList = AsyncComponent(() => import('./product/projectList/co
 const ProductModule = AsyncComponent(() => import('./product/module/components/ProductModuleList'))
 const ProductLineMap = AsyncComponent(() => import('./product/lineMap/components/ProductLineMap'))
 const ProductBasicInfo = AsyncComponent(() => import("./product/setting/basicInfo/components/ProductBasicInfo"))
+// 产品计划
+const ProductPlanList = AsyncComponent(() => import('./product/plan/planList/components/ProductPlanList'))
+const ProductPlanLayout = AsyncComponent(() => import('./product/plan/common/components/ProductPlanLayout'))
+
 // 导入外部数据
 const JiraLoadData = AsyncComponent(() => import('./setting/systemIntegration/components/JiraLoadData'))
 const MantisLoadData = AsyncComponent(() => import('./setting/systemIntegration/components/MantisLoadData'))
 const LoadData = AsyncComponent(() => import('./setting/systemIntegration/components/LoadData'))
 const UrlData = AsyncComponent(() => import('./setting/systemIntegration/components/UrlData'))
 //效能
-// const Insight = AsyncComponent(() => import('./home/insight/components/Insight'))
-// const InsightList = AsyncComponent(() => import('./home/insight/components/InsightList'))
-// const NewInsight = AsyncComponent(() => import("./home/insight/components/NewInsight"))
-// const ViewInsight = AsyncComponent(() => import("./home/insight/components/ViewInsight.js"))
+const Insight = AsyncComponent(() => import('./home/insight/components/Insight'))
+const InsightList = AsyncComponent(() => import('./home/insight/components/InsightList'))
+const NewInsight = AsyncComponent(() => import("./home/insight/components/NewInsight"))
+const ViewInsight = AsyncComponent(() => import("./home/insight/components/ViewInsight.js"))
 // const ViewInsight1 = AsyncComponent(() => import("./home/insight/components/ViewInsight1.js"))
 
 // 首页
@@ -203,11 +207,16 @@ const ProjectLogTypeList = AsyncComponent(() => import('./setting/log/ProjectLog
 const EpicDetail = AsyncComponent(() => import("./project/lineMap/component/EpicDetail"))
 
 //计划
-const Stage = AsyncComponent(() => import("./project/stage/component/Stage"))
-// const StageHome = AsyncComponent(() => import("./stage/common/components/StageLayout"))
-// const StageSurvey = AsyncComponent(() => import("./stage/overview/components/StageSurvey"))
-// const StagePlan = AsyncComponent(() => import("./stage/plan/components/StagePlan"))
-// const StageBasicInfo = AsyncComponent(() => import("./stage/setting/components/StageBasicInfo"))
+// const Stage = AsyncComponent(() => import("./project/stagePlan/component/Stage"))
+// const StageHome = AsyncComponent(() => import("./stagePlan/common/components/StageLayout"))
+// const StageSurvey = AsyncComponent(() => import("./stagePlan/overview/components/StageSurvey"))
+// const StagePlan = AsyncComponent(() => import("./stagePlan/plan/components/StagePlan"))
+// const StageBasicInfo = AsyncComponent(() => import("./stagePlan/setting/components/StageBasicInfo"))
+
+// 阶段
+const StageList = AsyncComponent(() => import("./project/stage/stageList/components/StageList"))
+const StageDetail = AsyncComponent(() => import("./stage/common/components/StageDetailLayout"))
+const StageSurvey = AsyncComponent(() => import("./stage/overview/components/StageSurvey"))
 
 const LicenceVersion = AsyncComponent(() => import('./setting/version/Version'));
 const ProductAuth = AsyncComponent(() => import('./setting/version/Product'));
@@ -339,24 +348,24 @@ const Routers = [
                             }
                         ]
                     },
-                    // {
-                    //     path: "/index/insightlist",
-                    //     exact: false,
-                    //     component: InsightList,
-                    //     key: "InsightList"
-                    // },
-                    // {
-                    //     path: "/index/newInsight/:id",
-                    //     exact: false,
-                    //     component: NewInsight,
-                    //     key: "NewInsight"
-                    // },
-                    // {
-                    //     path: "/index/viewInsight/:id",
-                    //     exact: false,
-                    //     component: ViewInsight,
-                    //     key: "ViewInsight"
-                    // },
+                    {
+                        path: "/index/insightlist",
+                        exact: false,
+                        component: InsightList,
+                        key: "InsightList"
+                    },
+                    {
+                        path: "/index/newInsight/:id",
+                        exact: false,
+                        component: NewInsight,
+                        key: "NewInsight"
+                    },
+                    {
+                        path: "/index/viewInsight/:id",
+                        exact: false,
+                        component: ViewInsight,
+                        key: "ViewInsight"
+                    },
                     {
                         path: "/index/appraised",
                         exact: false,
@@ -841,13 +850,30 @@ const Routers = [
                     },
                     {
                         path: "/project/:id/stage",
-                        component: Stage,
+                        component: StageList,
                     },
-                    // {
-                    //     path: "/project/:id/stageDetail/:stageId",
-                    //     component: StageDetail,
-
-                    // },
+                    {
+                        path: "/project/:id/stageDetail/:stage",
+                        component: StageDetail,
+                        routes: [
+                            {
+                                path: "/project/:id/stageDetail/:stage/workitem",
+                                component: Work,
+                            },
+                            {
+                                path: "/project/:id/stageDetail/:stage/workitem/:workId",
+                                component: WorkDetailPage,
+                            },
+                            {
+                                path: "/project/:id/stageDetail/:stage/workDetail",
+                                component: WorkTableDetail,
+                            },
+                            {
+                                path: "/project/:id/stageDetail/:stage/overview",
+                                component: StageSurvey,
+                            },
+                        ]
+                    },
                     {
                         path: "/project/:id/sprint",
                         component: Sprint
@@ -1387,6 +1413,30 @@ const Routers = [
                         exact: false,
                         component: ProductBasicInfo,
                         key: "ProductBasicInfo"
+                    },
+                    {
+                        path: "/product/:productId/plan",
+                        exact: false,
+                        component: ProductPlanList,
+                        key: "ProductPlanList"
+                    },
+                    {
+                        path: "/product/:productId/planDetail/:productPlanId",
+                        component: ProductPlanLayout,
+                        routes: [
+                            {
+                                path: "/product/:productId/planDetail/:productPlanId/type/:workTypeCode",
+                                exact: false,
+                                component: Work,
+                                key: "ProductPlanDemand"
+                            },
+                            // {
+                            //     path: "/product/:productId/planDetail/:productPlanId/defect",
+                            //     exact: false,
+                            //     component: Work,
+                            //     key: "ProductPlanDefect"
+                            // },
+                        ]
                     },
                 ]
             },

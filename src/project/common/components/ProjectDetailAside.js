@@ -154,7 +154,7 @@ const ProjectDetailAside = (props) => {
             encoded: "Survey"
         },
         {
-            title: "计划",
+            title: "阶段",
             icon: 'plan-' + theme,
             defaultIcon: "plan-default",
             id: `/project/${projectId}/stage`,
@@ -170,18 +170,18 @@ const ProjectDetailAside = (props) => {
             encoded: "Work",
         },
 
-        {
-            title: `${t('version')}`,
-            icon: 'version-' + theme,
-            defaultIcon: "version-default",
-            id: `/project/${projectId}/version`,
-            key: "version",
-            encoded: "Version",
-        },
+        // {
+        //     title: `${t('version')}`,
+        //     icon: 'version-' + theme,
+        //     defaultIcon: "version-default",
+        //     id: `/project/${projectId}/version`,
+        //     key: "version",
+        //     encoded: "Version",
+        // },
         {
             title: "测试",
-            icon: 'test',
-            defaultIcon: "test",
+            icon: 'test-' + theme,
+            defaultIcon: "test-default",
             id: `/project/${projectId}/testcase/cases`,
             key: "test",
             encoded: "test",
@@ -211,14 +211,14 @@ const ProjectDetailAside = (props) => {
             key: "statistics",
             encoded: "Statistic",
         },
-        // {
-        //     title: `${t('milestone')}`,
-        //     icon: 'milestone-' + theme,
-        //     defaultIcon: "milestone-default",
-        //     id: `/project/${projectId}/milestone`,
-        //     key: "milestone",
-        //     encoded: "Milestone",
-        // },
+        {
+            title: `${t('milestone')}`,
+            icon: 'milestone-' + theme,
+            defaultIcon: "milestone-default",
+            id: `/project/${projectId}/milestone`,
+            key: "milestone",
+            encoded: "Milestone",
+        },
         // {
         //     title: "文档",
         //     icon: 'repository-' + theme,
@@ -282,8 +282,8 @@ const ProjectDetailAside = (props) => {
         },
         {
             title: "测试",
-            icon: 'test',
-            defaultIcon: "test",
+            icon: 'test-' + theme,
+            defaultIcon: "test-default",
             id: `/project/${projectId}/testcase/cases`,
             key: "test",
             encoded: "test",
@@ -365,7 +365,7 @@ const ProjectDetailAside = (props) => {
             encoded: "Survey"
         },
         {
-            title: "计划",
+            title: "阶段",
             icon: 'plan-' + theme,
             defaultIcon: "plan-default",
             id: `/project/${projectId}/stage`,
@@ -399,8 +399,8 @@ const ProjectDetailAside = (props) => {
         },
         {
             title: "测试",
-            icon: 'test',
-            defaultIcon: "test",
+            icon: 'test-' + theme,
+            defaultIcon: "test-default",
             id: `/project/${projectId}/testcase/cases`,
             key: "test",
             encoded: "test",
@@ -472,6 +472,108 @@ const ProjectDetailAside = (props) => {
         }
     ];
 
+    const ipdProrouter = (projectId) => [
+        {
+            title: `${t('survey')}`,
+            icon: 'survey-' + theme,
+            defaultIcon: "survey-default",
+            id: `/project/${projectId}/overview`,
+            key: "overview",
+            encoded: "Survey"
+        },
+        {
+            title: "阶段",
+            icon: 'plan-' + theme,
+            defaultIcon: "plan-default",
+            id: `/project/${projectId}/stage`,
+            key: "stage",
+            encoded: "stage",
+        },
+        {
+            title: `${t('work')}`,
+            icon: 'workitem-' + theme,
+            defaultIcon: "workitem-default",
+            id: `/project/${projectId}/workitem`,
+            key: "workitem",
+            encoded: "Work",
+        },
+
+        // {
+        //     title: `${t('version')}`,
+        //     icon: 'version-' + theme,
+        //     defaultIcon: "version-default",
+        //     id: `/project/${projectId}/version`,
+        //     key: "version",
+        //     encoded: "Version",
+        // },
+        {
+            title: "测试",
+            icon: 'test-' + theme,
+            defaultIcon: "test-default",
+            id: `/project/${projectId}/testcase/cases`,
+            key: "test",
+            encoded: "test",
+        },
+        {
+            title: "文档",
+            icon: 'repository-' + theme,
+            defaultIcon: "repository-default",
+            id: `/project/${projectId}/wiki`,
+            key: "wiki",
+            encoded: "wiki",
+        },
+
+        // {
+        //     title: "工时",
+        //     icon: 'log-' + theme,
+        //     defaultIcon: "log-default",
+        //     id: `/project/${projectId}/log`,
+        //     key: "log",
+        //     encoded: "log",
+        // },
+        {
+            title: `${t('statistic')}`,
+            icon: 'statistics-' + theme,
+            defaultIcon: "statistics-default",
+            id: `/project/${projectId}/statistics/overview`,
+            key: "statistics",
+            encoded: "Statistic",
+        },
+        // {
+        //     title: `${t('milestone')}`,
+        //     icon: 'milestone-' + theme,
+        //     defaultIcon: "milestone-default",
+        //     id: `/project/${projectId}/milestone`,
+        //     key: "milestone",
+        //     encoded: "Milestone",
+        // },
+        // {
+        //     title: "文档",
+        //     icon: 'repository-' + theme,
+        //     defaultIcon: "repository-default",
+        //     id: `/project/${projectId}/wiki`,
+        //     key: "wiki",
+        //     encoded: "wiki",
+        // },
+        // {
+        //     title: "测试",
+        //     icon: 'test',
+        //     defaultIcon: "test",
+        //     id: `/project/${projectId}/testcase/cases`,
+        //     key: "test",
+        //     encoded: "test",
+        // },
+        {
+            title: "评审",
+            icon: 'appraised',
+            defaultIcon: "appraised",
+            id: `/project/${projectId}/appraised`,
+            key: "appraised",
+            encoded: "appraised",
+        }
+
+    ];
+
     // const [allProjectRouter, setAllProjectRouter] = useState(project?.projectType.type === "scrum" ? scrumProrouter(props.match.params.id) : normalProrouter(props.match.params.id));
     const [allProjectRouter, setAllProjectRouter] = useState([]);
 
@@ -494,6 +596,9 @@ const ProjectDetailAside = (props) => {
                 break;
             case "hybrid":
                 setAllProjectRouter(hybridProrouter(project.id))
+                break;
+            case "ipd":
+                setAllProjectRouter(ipdProrouter(project.id))
                 break;
             default:
                 setAllProjectRouter(scrumProrouter(project.id))

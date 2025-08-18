@@ -38,8 +38,8 @@ import setImageUrl from "../../common/utils/setImageUrl";
 import WorkDetailSelect from "./WorkDetailSprintSelect";
 import WorkDetailVersionSelect from "./WorkDetailVersionSelect";
 import { changeWorkItemList, changeWorkItemParent } from "./WorkGetList";
-import StageStore from "../../project/stage/store/StageStore";
-import { updateWorkTree } from "../../project/stage/component/StageListTreeChange";
+import StageStore from "../../project/stagePlan/store/StagePlanStore";
+import { updateWorkTree } from "../../project/stagePlan/component/StageListTreeChange";
 import DeleteModal from "../../common/deleteModal/deleteModal";
 import ImgComponent from "../../common/imgComponent/ImgComponent";
 import ProjectEmpty from "../../common/component/ProjectEmpty";
@@ -385,7 +385,7 @@ const WorkBasicInfo = (props) => {
 
                 }
 
-                if (props.match.path === "/project/:id/stage" && changeKey === "stage") {
+                if (props.match.path === "/project/:id/stagePlan" && changeKey === "stage") {
                     updateWorkTree(StageStore.stageList, changedValues.stage?.id, workId)
                 }
             }
@@ -765,7 +765,7 @@ const WorkBasicInfo = (props) => {
                                     }
 
                                     {
-                                        (projectType === "nomal" || projectType === "hybrid") && <Form.Item
+                                        (projectType === "nomal" || projectType === "hybrid" || projectType === "ipd") && <Form.Item
                                             label="所属计划" name="stage"
                                             hasFeedback={showValidateStatus === "stage" ? true : false}
                                             validateStatus={validateStatus}

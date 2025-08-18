@@ -74,62 +74,118 @@ const WorkAddPage = (props) => {
 
             const project = res.data.project;
 
-            form.setFieldsValue({
-                parentWorkItem: workId,
-                project: projectId,
-                sprint: sprintId,
-                assigner: project?.master.id,
-                planTime: [moment(getNowFormatDate(), dateFormat), moment(getNowFormatDate(), dateFormat)]
-            })
+            if (project){
+                form.setFieldsValue({
+                    parentWorkItem: workId,
+                    project: projectId,
+                    sprint: sprintId,
+                    assigner: project?.master.id,
+                    planTime: [moment(getNowFormatDate(), dateFormat), moment(getNowFormatDate(), dateFormat)]
+                })
 
-            // 设置模块
-            form.setFieldsValue({
-                module: res.data.moduleList[0]?.id
-            })
+                // 设置模块
+                // form.setFieldsValue({
+                //     module: res.data.moduleList[0]?.id
+                // })
 
-            // 设置所选版本、迭代、计划
-            // 敏捷模型
-            console.log("sprintId:  " + sprintId)
-            if (projectType === 'scrum'){
-                if (sprintId) {
-                    form.setFieldsValue({
-                        sprint: sprintId
-                    })
-                } else {
-                    if (res.data.sprintList.length > 0) {
+                // 设置所选版本、迭代、计划
+                // 敏捷模型
+                console.log("sprintId:  " + sprintId)
+                if (projectType === 'scrum'){
+                    if (sprintId) {
                         form.setFieldsValue({
-                            sprint: res.data.sprintList[0]?.id
+                            sprint: sprintId
                         })
                     } else {
+                        if (res.data.sprintList.length > 0) {
+                            form.setFieldsValue({
+                                sprint: res.data.sprintList[0]?.id
+                            })
+                        } else {
+                            form.setFieldsValue({
+                                sprint: null
+                            })
+                        }
+                    }
+                }
+
+                // 瀑布模型
+                if (projectType === 'nomal'){
+                    form.setFieldsValue({
+                        stage: res.data.stageList[0]?.id
+                    })
+                }
+
+                // 看板模型
+                if (projectType === 'kanban'){
+                    if (sprintId) {
                         form.setFieldsValue({
-                            sprint: null
+                            sprint: sprintId
                         })
+                    } else {
+                        if (res.data.sprintList.length > 0) {
+                            form.setFieldsValue({
+                                sprint: res.data.sprintList[0]?.id
+                            })
+                        } else {
+                            form.setFieldsValue({
+                                sprint: null
+                            })
+                        }
+                    }
+                }
+
+
+                // 混合模型
+                if (projectType === 'hybrid'){
+
+                    if (sprintId) {
+                        form.setFieldsValue({
+                            sprint: sprintId
+                        })
+                    } else {
+                        if (res.data.sprintList.length > 0) {
+                            form.setFieldsValue({
+                                sprint: res.data.sprintList[0]?.id
+                            })
+                        } else {
+                            form.setFieldsValue({
+                                sprint: null
+                            })
+                        }
+                    }
+
+                    form.setFieldsValue({
+                        stage: res.data.stageList[0]?.id
+                    })
+                }
+
+                // ipd模型
+                if (projectType === 'ipd'){
+                    form.setFieldsValue({
+                        stage: res.data.stageList[0]?.id
+                    })
+                }
+
+                if (projectType !== "nomal" && projectType !== "ipd"){
+                    if (versionId) {
+                        form.setFieldsValue({
+                            projectVersion: versionId
+                        })
+                    } else {
+                        if (res.data.versionList.length > 0) {
+                            form.setFieldsValue({
+                                projectVersion: res.data.versionList[0]?.id
+                            })
+                        } else {
+                            form.setFieldsValue({
+                                projectVersion: null
+                            })
+                        }
                     }
                 }
             }
 
-            // 瀑布模型
-            if (projectType === 'nomal'){
-                form.setFieldsValue({
-                    stage: res.data.stageList[0]?.id
-                })
-            }
-
-            if (versionId) {
-                form.setFieldsValue({
-                    projectVersion: versionId
-                })
-            } else {
-                if (res.data.versionList.length > 0) {
-                    form.setFieldsValue({
-                        projectVersion: res.data.versionList[0]?.id
-                    })
-                } else {
-                    form.setFieldsValue({
-                        projectVersion: null
-                    })
-                }
-            }
 
         });
 
@@ -443,16 +499,16 @@ const WorkAddPage = (props) => {
                                 </Select>
                             </Form.Item>
                             {
-                                projectType === "nomal" && <Form.Item
-                                    label="所属计划"
+                                (projectType === "nomal" || projectType === "hybrid" || projectType === "ipd") && <Form.Item
+                                    label="所属阶段"
                                     name="stage"
-                                    rules={[{ required: true, message: '请输入所属计划!' }]}
+                                    rules={[{ required: true, message: '请输入所属阶段!' }]}
                                     wrapperCol={{
                                         span: 16,
                                     }}
                                 >
                                     <Select
-                                        placeholder="计划"
+                                        placeholder="阶段"
                                         allowClear
                                         className="work-select"
                                         key="selectSprint"
@@ -469,7 +525,7 @@ const WorkAddPage = (props) => {
                             }
 
                             {
-                                projectType === "scrum" && <Form.Item
+                                (projectType === "scrum" || projectType === "kanban" || projectType === "hybrid") && <Form.Item
                                     label="所属迭代"
                                     name="sprint"
                                     rules={[{ required: false, message: '请输入所属迭代!' }]}
@@ -492,24 +548,28 @@ const WorkAddPage = (props) => {
                                 </Form.Item>
                             }
 
-                            <Form.Item
-                                label="所属版本"
-                                name="projectVersion"
-                                rules={[{ required: false, message: '请输入所属版本!' }]}
-                            >
-                                <Select
-                                    placeholder="版本"
-                                    allowClear
-                                    className="work-select"
-                                    key="selectProjectVersion"
+                            {
+                                (projectType !== "nomal" && projectType !== "ipd") &&
+                                <Form.Item
+                                    label="所属版本"
+                                    name="projectVersion"
+                                    rules={[{ required: false, message: '请输入所属版本!' }]}
                                 >
-                                    {
-                                        selectVersionList && selectVersionList.map((item) => {
-                                            return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
-                                        })
-                                    }
-                                </Select>
-                            </Form.Item>
+                                    <Select
+                                        placeholder="版本"
+                                        allowClear
+                                        className="work-select"
+                                        key="selectProjectVersion"
+                                    >
+                                        {
+                                            selectVersionList && selectVersionList.map((item) => {
+                                                return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
+                                            })
+                                        }
+                                    </Select>
+                                </Form.Item>
+                            }
+
 
                         </Form>
                     </div>

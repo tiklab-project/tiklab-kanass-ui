@@ -816,6 +816,9 @@ export class WorkStore {
             builder: {
                 id: value.builder
             },
+            productPlan: {
+                id: value.productPlan
+            },
             eachType: value.eachType,
             desc: value.desc || undefined,
             preDependWorkItem: {
@@ -1384,5 +1387,71 @@ export class WorkStore {
         return data;
     }
 
+    // 筛选条件
+    @observable unLinkProductPlanWorkPageCondition = {
+        orderParams: [{
+            name: "code",
+            orderType: "desc"
+        }],
+        productPlanIdIsNull:true,
+        pageParam: {
+            pageSize: 20,
+            currentPage: 1,
+        }
+    }
+
+    @observable
+    unLinkList = [];
+
+    @observable
+    unLinkWorkTotal = 0;
+    @action
+    cleanUnLinkProductPlanWorkPageCondition = () => {
+        this.unLinkProductPlanWorkPageCondition = {
+            orderParams: [{
+                name: "code",
+                orderType: "desc"
+            }],
+            pageParam: {
+                pageSize: 20,
+                currentPage: 1,
+            }
+        }
+    }
+
+    @action
+    setUnLinkProductPlanWorkPageCondition = (value) => {
+        Object.assign(this.unLinkProductPlanWorkPageCondition, value)
+    }
+
+    @action
+    findUnLinkProductPlanWorkPage= async (value) => {
+        Object.assign(this.unLinkProductPlanWorkPageCondition, value)
+        const data = await Service("/workItem/findUnLinkProductPlanWorkPage", this.unLinkProductPlanWorkPageCondition);
+        if (data.code === 0){
+            this.unLinkList = data.data.dataList;
+            this.unLinkWorkTotal = data.data.totalRecord;
+            return data;
+        }
+    }
+
+    @action
+    createProductPlanWork = async (value) => {
+        const data = await Service("/workProductPlan/createWorkProductPlan", value);
+        if (data.code === 0){
+            return data;
+        }
+    }
+
+    @action
+    deleteProductPlanWork = async (id) => {
+        const param = {
+            workItemId:id
+        }
+        const data = await Service("/workProductPlan/deleteWorkProductPlanByQuery", param);
+        if (data.code === 0){
+            return data;
+        }
+    }
 }
 export default new WorkStore();

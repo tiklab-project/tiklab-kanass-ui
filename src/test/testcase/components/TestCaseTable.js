@@ -13,6 +13,7 @@ import HideDelete from "../../../common/caseCommon/hideDelete/HideDelete";
 import {toDiffCaseFn} from "../../common/caseCommonFn";
 import FuncUnitEdit from "../../function/components/funcUnitEdit";
 import {SearchOutlined} from "@ant-design/icons";
+import CaseCategoryTree from "../../category/components/CaseCategoryTree";
 
 
 const TestCaseTable = (props) => {
@@ -25,6 +26,10 @@ const TestCaseTable = (props) => {
         isCaseExist,
         currentPage,
         setCurrentPage,
+        setTestType,
+        testType,
+        caseTypeList,
+        setCaseTypeList
     } = testcaseStore;
     const {categoryIds} = categoryStore;
 
@@ -33,6 +38,7 @@ const TestCaseTable = (props) => {
     const [totalPage, setTotalPage] = useState();
     const [totalRecord, setTotalRecord] = useState();
     const [pageSize] = useState(20);
+    const [creatorAndDirectorNum, setCreatorAndDirectorNum] = useState();
 
     let projectId = localStorage.getItem("projectId")
 
@@ -192,67 +198,85 @@ const TestCaseTable = (props) => {
         },
     ]
 
+    // 模块筛选
+    const changeCategory = (category) => {
+        setCategoryIds(category?.moduleIds);
+        const targetPath = `/project/${projectId}/testcase/cases`;
+        if (location.pathname !== targetPath) history.push(targetPath);
+    };
 
 
     return (
-        <Row style={{height:"100%"}}>
-            <Col
-                md={{ span: 24, offset: 0 }}
-                lg={{ span: 20, offset: 2 }}
-                xl={{ span: 20, offset: 2 }}
-                xll={{ span: 16, offset: 4 }}
-            >
-                <div className={"content-box-center"}>
-                    <div className={"display-flex-between"}>
-                        <Input
-                            placeholder={`搜索用例名`}
-                            onPressEnter={onSearch}
-                            // className='search-input-common'
-                            prefix={<SearchOutlined />}
-                            onChange={debounce(onSearch, 500)}
-                            style={{width: '180px'}}
-                            allowClear
-                        />
+        <div style={{display: "flex", height:"100%", flex:"1 1 0%"}}>
+            <CaseCategoryTree
+                creatorAndDirectorNum={creatorAndDirectorNum}
+                onNodeClick={changeCategory}
+                setTestType={setTestType}
+                testType={testType}
+                caseTypeList={caseTypeList}
+                setCaseTypeList={setCaseTypeList}
+                add={true}
+            />
+            <div style={{display: "flex", height:"100%", flex:"1 1 0%"}}>
+                <Row style={{height:"100%", width: "100%", overflowY: "auto"}}>
+                    <Col
+                        md={{ span: 24, offset: 0 }}
+                        lg={{ span: 20, offset: 2 }}
+                        xl={{ span: 20, offset: 2 }}
+                        xll={{ span: 16, offset: 4 }}
+                    >
+                        <div className={"content-box-center"}>
+                            <div className={"display-flex-between"}>
+                                <Input
+                                    placeholder={`搜索用例名`}
+                                    onPressEnter={onSearch}
+                                    className='search-input-common'
+                                    prefix={<SearchOutlined />}
+                                    onChange={debounce(onSearch, 500)}
+                                    style={{width: '180px'}}
+                                    allowClear
+                                />
 
-                        <Space>
-                            <FuncUnitEdit
-                                findPage={findPage}
-                                categoryStore={categoryStore}
-                                name={"添加功能"}
-                                type={"add"}
-                                {...props}
-                            />
-                        </Space>
-                    </div>
-                    <div className={"table-list-box"}>
-                        <Table
-                            columns={column}
-                            dataSource={testcaseList}
-                            rowKey={record => record.id}
-                            pagination={false}
-                            loading={tableLoading}
-                            onRow={(record) => ({style: rowStyle(record.caseType)})}
-                            locale={{
-                                emptyText: !tableLoading
-                                    ? <Empty
-                                        imageStyle={{height: 100}}
-                                        description={<span>暂无用例</span>}
+                                <Space>
+                                    <FuncUnitEdit
+                                        findPage={findPage}
+                                        categoryStore={categoryStore}
+                                        name={"添加功能"}
+                                        type={"add"}
+                                        {...props}
                                     />
-                                    : <div style={{height: 100}}/>,
-                            }}
-                        />
-                        <PaginationCommon
-                            currentPage={currentPage}
-                            totalPage={totalPage}
-                            changePage={onTableChange}
-                            totalRecord={totalRecord}
-                            findPage={findPage}
-                        />
-                    </div>
-                </div>
-            </Col>
-        </Row>
-
+                                </Space>
+                            </div>
+                            <div className={"table-list-box"}>
+                                <Table
+                                    columns={column}
+                                    dataSource={testcaseList}
+                                    rowKey={record => record.id}
+                                    pagination={false}
+                                    loading={tableLoading}
+                                    onRow={(record) => ({style: rowStyle(record.caseType)})}
+                                    locale={{
+                                        emptyText: !tableLoading
+                                            ? <Empty
+                                                imageStyle={{height: 100}}
+                                                description={<span>暂无用例</span>}
+                                            />
+                                            : <div style={{height: 100}}/>,
+                                    }}
+                                />
+                                <PaginationCommon
+                                    currentPage={currentPage}
+                                    totalPage={totalPage}
+                                    changePage={onTableChange}
+                                    totalRecord={totalRecord}
+                                    findPage={findPage}
+                                />
+                            </div>
+                        </div>
+                    </Col>
+                </Row>
+            </div>
+        </div>
     )
 }
 

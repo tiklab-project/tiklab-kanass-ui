@@ -15,7 +15,7 @@ import { SystemNav } from "tiklab-privilege-ui";
 import { setDevRouter, setPrdRouter } from "./SetRouter";
 import { getUser } from 'tiklab-core-ui';
 import { inject, observer } from 'mobx-react';
-import EnhanceEntranceModal from "./EnhanceEntranceModal";
+import EnhanceEntranceModal from "../../../common/enhanceEntrance/EnhanceEntranceModal";
 import SettingHomeStore from "../../home/store/SettingHomeStore";
 // import { UserVerify } from 'tiklab-user-extension-ui';
 const { Sider, Content } = Layout;
@@ -68,13 +68,13 @@ const Setting = (props) => {
                             {
                                 selectKey === "/setting/logo" &&
                                 <EnhanceEntranceModal
-                                    config={{title:"自定义LOGO"}}
+                                    config={{title:"自定义LOGO", desc:"允许替换系统默认的LOGO图片，实现品牌个性化展示"}}
                                 />
                             }
                             {
                                 selectKey === "/setting/ipRoster" &&
                                 <EnhanceEntranceModal
-                                    config={{title:"IP黑白名单"}}
+                                    config={{title:"IP黑白名单", desc:"允许或禁止特定IP地址访问系统，实现网络访问控制"}}
                                 />
                             }
 

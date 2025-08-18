@@ -1,0 +1,80 @@
+.wiki-repository {
+    height: 100%;
+    overflow: auto;
+
+    .wiki-table-top{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .top-operate{
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+    }
+
+    .wiki-repository-list {
+        padding: var(--tiklab-padding);
+        .wiki-repository-list-top {
+            display: flex;
+            justify-content: space-between;
+        }
+        .wiki-repository-tab {
+            display: flex;
+            gap: 20px;
+            position: sticky;
+            padding-bottom: 15px;
+            .wiki-repository-tab-item {
+                cursor: pointer;
+                background-color: var(--tiklab-gray-800);
+                height: 32px;
+                width: 80px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 10px;
+    
+            }
+    
+            .wiki-repository-tab-select {
+                font-weight: var(--tiklab-font-weight-bold);
+                color: var(--tiklab-blue);
+                background-color: var(--tiklab-gray-400);
+            }
+        }
+    }
+    .document-title {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+    .document-title:hover {
+        color: var(--tiklab-blue);
+    }
+    .repository-delete {
+        color: var(--tiklab-blue);
+        cursor: pointer;
+    }
+    .repository-name {
+       
+        cursor: pointer;
+    }
+    .repository-name:hover {
+        color: var(--tiklab-blue);
+    }
+    .ant-alert-info {
+        margin: 10px 0;
+    }
+
+
+    .link-text {
+        display: inline-flex;
+        align-items: center;
+        transition: color 0.3s;
+
+        &:hover {
+            color: #40a9ff;
+        }
+    }
+}

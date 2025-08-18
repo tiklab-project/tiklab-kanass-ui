@@ -1,0 +1,265 @@
+import {StageListStore} from "../../../project/stage/stageList/store/StageListStore";
+import {action, extendObservable, observable} from "mobx";
+import {Service} from "../../../common/utils/requset";
+
+export class StageDetailStore {
+    // 成员列表
+    @observable
+    useList = [];
+
+    @observable workTypeList = [];
+    // 搜索参数
+    @observable
+    searchCondition = {
+        orderParams: [{
+            title: "标题",
+            name: "title",
+            orderType: "asc"
+        }],
+        pageParam: {
+            pageSize: 10,
+            currentPage: 1,
+        }
+    };
+
+    @observable
+    stageCondition = {
+        orderParams: [{
+            name: "startTime",
+            orderType: "desc"
+        }],
+        pageParam: {
+            pageSize: 10,
+            currentPage: 1,
+        }
+    }
+
+    @observable
+    stageList = [];
+
+    @observable
+    totalPage = 0;
+
+    @observable
+    currentPage = 0;
+
+    @observable
+    totalRecord = 0;
+
+    @observable
+    total = 0;
+
+    @observable
+    parentStageList = [];
+
+    @observable
+    stage = "";
+
+    @observable
+    parentCondition = {
+        orderParams: [{
+            name: "startTime",
+            orderType: "desc"
+        }],
+        pageParam: {
+            pageSize: 10,
+            currentPage: 1,
+        }
+    }
+
+    @action
+    setStageList = (value) => {
+        this.stageList = value;
+    }
+
+
+    /**
+     * 创建计划
+     * @param {计划信息} param
+     * @returns
+     */
+    @action
+    createStage = async (param) => {
+        const data = await Service("/stage/createStage", param)
+        return data;
+    }
+
+    /**
+     * 获取项目成员
+     * @param {项目id} value
+     */
+    @action
+    getUseList = async (value) => {
+        const params = {
+            domainId: value.projectId,
+            pageParam: {
+                pageSize: 10,
+                currentPage: 1
+            }
+        }
+        const data = await Service("/dmUser/findDmUserPage", params)
+        if (data.code === 0) {
+            this.useList = data.data.dataList
+        }
+        return data;
+    }
+
+    /**
+     * 根据条件查找计划列表
+     * @param {} value
+     * @returns
+     */
+    @action
+    findStageList = async (value) => {
+        const data = await Service("/stage/findStageListTree", value)
+        if (data.code === 0) {
+            return data;
+        }
+    }
+
+    @action
+    findStageListTreePage = async (value) => {
+        Object.assign(this.stageCondition, value)
+        const data = await Service("/stage/findStageListTreePage", this.stageCondition)
+        if (data.code === 0) {
+
+            // const curentPage = this.stageCondition.pageParam.currentPage;
+            // if (curentPage <= 1) {
+            //     this.stageList = data.data.dataList;
+            // }else {
+            //     this.stageList = this.stageList.concat(data.data.dataList);
+            // }
+            this.stageList = data.data.dataList;
+            this.total = data.data.totalRecord;
+            this.currentPage = this.stageCondition.pageParam.currentPage;
+            this.totalPage = data.data.totalPage;
+        }
+        return data;
+    }
+    /**
+     * 根据id查找计划信息
+     * @param {计划id} value
+     * @returns
+     */
+    @action
+    findStage = async (value) => {
+        const params = new FormData();
+        params.append("id", value.id);
+        const data = await Service("/stage/findStage", params);
+        if (data.code === 0) {
+            this.stage = data.data;
+            return data;
+        }
+    }
+
+    /**
+     * 按照分页查找计划
+     * @param {条件} value
+     * @returns
+     */
+    @action
+    findWorkItemPageTreeByQuery = async (value) => {
+        this.searchCondition = extendObservable(this.searchCondition, { ...value })
+        const data = await Service("/workItem/findWorkItemListTree", this.searchCondition);
+        if (data.code === 0) {
+            return data;
+        }
+    }
+
+    /**
+     * 创建事项计划关联
+     * @param {事项id,计划id} value
+     * @returns
+     */
+    @action
+    createStageWorkItem = async (value) => {
+        const data = await Service("/stageWorkItem/createStageWorkItem", value);
+        if (data.code === 0) {
+            return data;
+        }
+    }
+
+    /**
+     * 根据条件查找计划的事项列表
+     * @param {*} value
+     * @returns
+     */
+    @action
+    findWorkItemListByStage = async (value) => {
+        const data = await Service("/stageWorkItem/findStageChildWorkItemAndStage", value);
+        if (data.code === 0) {
+            return data;
+        }
+    }
+
+    /**
+     * 根据条件删除计划事项关联
+     * @param {*} value
+     * @returns
+     */
+    @action
+    deleteStageWorkItem = async (value) => {
+        const data = await Service("/stageWorkItem/deleteStageWorkItemCondition", value);
+        if (data.code === 0) {
+            return data;
+        }
+    }
+
+    /**
+     * 更新计划信息
+     * @param {计划信息} value
+     * @returns
+     */
+    @action
+    updateStage = async (value) => {
+        const data = await Service("/stage/updateStage", value);
+        if (data.code === 0) {
+            return data;
+        }
+    }
+
+    /**
+     * 删除计划
+     * @param {计划id} value
+     * @returns
+     */
+    @action
+    deleteStage = async (value) => {
+        const params = new FormData()
+        params.append("id", value.id)
+        const data = await Service("/stage/deleteStage", params);
+        return data;
+    }
+
+    // @action
+    // getWorkTypeList = async(value) => {
+    //     const data = await Service("/workTypeDm/findWorkTypeDmList",value);
+    //     if(data.code === 0){
+    //         this.workTypeList = data.data;
+    //     }
+    //     return data.data;
+    // }
+
+    @action
+    findWorkTypeDmList = async (value) => {
+        const data = await Service("/workTypeDm/findWorkTypeDmList", value);
+        if (data.code === 0) {
+            this.workTypeList = data.data;
+        }
+        return data.data;
+    }
+
+    @action
+    findParentStageList = async (value) => {
+        // const params = new FormData();
+        // params.append("id", value.id);
+        Object.assign(this.parentCondition, value)
+        const data = await Service("/stage/findParentStageList", this.parentCondition);
+        if (data.code === 0) {
+            this.parentStageList = data.data.dataList;
+        }
+        return data;
+    }
+
+}
+export default new StageDetailStore();

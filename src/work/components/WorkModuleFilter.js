@@ -43,6 +43,7 @@ const WorkModuleFilter = (props) => {
 
     const project = JSON.parse(localStorage.getItem('project'));
     const path = props.match.path;
+    const workTypeCode = props.match.params.workTypeCode ? props.match.params.workTypeCode : null;
     const {findModuleListTree, deleteModule} = getModuleStore(project, path)
 
     const productId = props.match.params.productId ? props.match.params.productId : null;
@@ -626,7 +627,7 @@ const WorkModuleFilter = (props) => {
                             }
                         </div>
                         {
-                            path !== "/product/:productId/workitem" &&
+                            !path.includes("/product") &&
                             <div className="work-module-filter-sider-middle">
                                 <div className="work-module-filter-sider-title">
                                     事项类型

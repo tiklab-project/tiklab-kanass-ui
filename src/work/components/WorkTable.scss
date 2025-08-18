@@ -31,7 +31,7 @@
         }
         /* 强制统一行高 */
         .ant-table-tbody > tr > td {
-            height: 60px !important;
+            //height: 60px !important;
             vertical-align: middle !important;
         }
         .ant-table-thead {
@@ -119,7 +119,7 @@
             display: inline-flex;
             align-items: center;
             margin-left: 5px;
-            gap: 5px;
+            gap: 8px;
             .work-key {
                 color: var(--tiklab-gray-500);
             }
@@ -129,66 +129,34 @@
                 cursor: pointer;
             }
         }
-        .work-title {
-            display: flex;
-            align-items: center; /* 确保整体垂直居中 */
-            gap: 12px;
-            cursor: pointer;
-            height: 48px; /* 固定高度确保对齐 */
-            padding: 4px 5px;
 
-            /* 图标容器 */
-            .work-icon {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                width: 18px;
-                height: 18px;
-                flex-shrink: 0;
-            }
-
-            /* 右侧内容容器 */
-            .work-title-content {
-                display: block;
-                line-height: 2.5;
-                height: 100%; /* 继承父级高度 */
-                gap: 5px;
-                width: 300px;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-
-                /* 标题行 */
-                .work-title-top {
-                    max-width: 95%;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    min-width: 0;
-                    text-overflow: ellipsis;
-                    font-size: 14px;
-                    line-height: 1.3;
-                }
-
-                /* 信息行 */
-                .work-title-bottom {
-                    display: flex;
-                    align-items: center;
-                    gap: 3px;
-                    font-size: 12px;
-                    color: #666;
-                    line-height: 1.3;
-                    margin-top: 2px;
-
-                    span {
-                        white-space: nowrap;
-                        &:not(:last-child)::after {
-                            margin-left: 8px;
-                        }
-                    }
-                }
+        @media (max-width: 768px) {
+            .work-title {
+                width: 240px;
             }
         }
-        .work-title-content:hover {
+
+        @media (min-width: 769px) and (max-width: 1280px) {
+            .work-title {
+                width: 300px;
+            }
+        }
+
+        @media (min-width: 1281px) {
+            .work-title {
+                width: 380px;
+            }
+        }
+        .work-title {
+            display: inline-block;
+            align-items: center;
+            cursor: pointer;
+
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .work-title:hover {
             color: var(--tiklab-blue);
             text-decoration: underline;
         }

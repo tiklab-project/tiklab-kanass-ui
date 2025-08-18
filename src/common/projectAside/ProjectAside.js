@@ -187,33 +187,43 @@ const ProjectAside = (props) => {
                         />}
                     </div>
 
+                    <div className="project-expend" onClick={toggleCollapsed} >
+                        {
+                            isShowText ?
+                                <div style={{display: "flex", alignItems: "center", gap: "8px", marginLeft: "15px", height: "40px"}}>
+                                    <svg className="icon-18" aria-hidden="true">
+                                        <use xlinkHref={`#icon-indent-decrease-${theme}`}></use>
+                                    </svg>
+                                    <span>
+                                        收起
+                                    </span>
+                                </div>
+                                :
+                                <div style={{display: "flex", alignItems: "center", flexDirection: "column", padding: "10px 0"}} data-title-right="展开">
+                                    <svg className="icon-18" aria-hidden="true">
+                                        <use xlinkHref={`#icon-indent-increase-${theme}`}></use>
+                                    </svg>
+                                </div>
+                        }
+                    </div>
+
                     {
                         !unNeedBottomSet && <SetMenu isShowText={isShowText} setUrl={setUrl} theme={theme} />
                     }
-                    {/* <div className="project-expend" onClick={toggleCollapsed} >
-                        {
-                            isShowText ? <svg className="project-expend-icon" aria-hidden="true">
-                                <use xlinkHref="#icon-leftcircle"></use>
-                            </svg>
-                                :
-                                <svg className="project-expend-icon" aria-hidden="true">
-                                    <use xlinkHref="#icon-rightcircle"></use>
-                                </svg>
-                        }
-                    </div> */}
-                    <div className={"menu-box-right-border"}>
-                        <div className={"menu-box-isexpanded"} onClick={toggleCollapsed}>
-                            {
-                                isShowText ? <svg className="first-menu-expend-icon" aria-hidden="true">
-                                    <use xlinkHref="#icon-leftcircle"></use>
-                                </svg>
-                                    :
-                                    <svg className="first-menu-expend-icon" aria-hidden="true">
-                                        <use xlinkHref="#icon-rightcircle"></use>
-                                    </svg>
-                            }
-                        </div>
-                    </div>
+
+                    {/*<div className={"menu-box-right-border"}>*/}
+                    {/*    <div className={"menu-box-isexpanded"} onClick={toggleCollapsed}>*/}
+                    {/*        {*/}
+                    {/*            isShowText ? <svg className="first-menu-expend-icon" aria-hidden="true">*/}
+                    {/*                <use xlinkHref="#icon-leftcircle"></use>*/}
+                    {/*            </svg>*/}
+                    {/*                :*/}
+                    {/*                <svg className="first-menu-expend-icon" aria-hidden="true">*/}
+                    {/*                    <use xlinkHref="#icon-rightcircle"></use>*/}
+                    {/*                </svg>*/}
+                    {/*        }*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
                 </div>
             </Sider>
 

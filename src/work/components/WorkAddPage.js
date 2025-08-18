@@ -16,36 +16,52 @@ import "./WorkAddPage.scss";
 import Button from "../../common/button/Button";
 import { DocumentEditor, PreviewEditor } from "tiklab-slate-ui";
 import { setSessionStorage } from "../../common/utils/setSessionStorage";
-import { appendNodeInTree } from "../../project/stage/component/StageListTreeChange";
+import { appendNodeInTree } from "../../project/stagePlan/component/StageListTreeChange";
 import ProductModuleStore from "../../product/module/store/ProductModuleStore";
 import ModuleStore from "../../project/setting/module/store/ModuleStore";
+import ProductStore from "../../product/product/store/ProductStore";
+import ProjectSetStore from "../../projectSet/projectSet/store/ProjectSetStore";
 
 const { RangePicker } = DatePicker;
 
-const getStore = (project) =>{
-    if (project?.productId){
+const getModuleStore = (path) =>{
+    if (path.includes("/product")){
         return ProductModuleStore
     }else {
         return ModuleStore
     }
 }
+const getProjectStore = (productId) =>{
+    if (productId){
+        return ProductStore
+    }else {
+        return ProjectSetStore
+    }
+}
 const WorkAddPage = (props) => {
     const [form] = Form.useForm();
+    const path = props.match.path;
     // 全局不一定存在
-    const project = JSON.parse(localStorage.getItem("project"));
+    const [project, setProject] = useState(JSON.parse(localStorage.getItem("project")));
     const { workStore, workType, workAddPageRef, setShowAddModel, setIsEditStart, handleCancel, stageTreeList } = props;
-    const { selectSprintList, userList, findProjectList, projectList,
+    const { selectSprintList, userList,
         getModuleList, findSelectSprintList, findStageList, stageList, getSelectUserList, addWork,
         findPriority, priorityList, workId, findFormConfig,
         findFieldList, setWorkId, findWorkItemById, workShowType, getWorkBoardList,
         selectVersionList, findSelectVersionList, workList, total, setTotal, setWorkList, searchCondition,
         findWorkItemCreateMetaData
     } = workStore;
-    const {moduleList, findModuleList} = getStore(project)
+    const {moduleList, findModuleList} = getModuleStore(path)
 
     const projectId = props.match.params.id ? props.match.params.id : null;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const versionId = props.match.params.version ? props.match.params.version : null;
+    const productId = props.match.params.productId ? props.match.params.productId : null;
+    const projectSetId = props.match.params.projectSetId ? props.match.params.projectSetId : null;
+    const productPlanId = props.match.params.productPlanId ? props.match.params.productPlanId : null;
+
+    const {findProjectList} = getProjectStore(productId)
+    const [projectList, setProjectList] = useState([])
 
     // console.log(project)
     const [projectType, setProjectType] = useState(project ? project?.projectType?.type : null);
@@ -55,177 +71,352 @@ const WorkAddPage = (props) => {
     const [selectItem, setSelectItem] = useState();
     const [loading, setLoading] = useState(false);
     const [createNext, setCreateNext] = useState(false);
-    const path = props.match.path;
     const urlParams = new URLSearchParams(props.history.location.search)
     let workItemType = urlParams.get("workItemType")
     let caseId = urlParams.get("caseId")
     const [editorType, setEditorType] = useState(false);
     const editorRef = useRef(null);
+    const [selectProjectId, setSelectProjectId] = useState(projectId);
 
     useEffect(() => {
         form.setFieldsValue({
             planTime: [moment(getNowFormatDate(), dateFormat), moment(getNowFormatDate(), dateFormat)]
         })
-        const param = {
-            projectId: projectId,
-            workType: workType
+        let matchProject = null;
+        if (path.includes("/product")){
+            findProjectList({productId: productId}).then(res => {
+                setProjectList(res.data)
+            })
         }
-        findWorkItemCreateMetaData(param).then(res => {
-
-            // 事项子类型下拉框
-            setSelectItem(res.data.fieldList[0][0])
-            form.setFieldsValue({
-                eachType: res.data.fieldList[0][0]?.selectItemList[0]?.id,
+        if (path.includes("/projectSet")){
+            findProjectList({projectSetId: projectSetId}).then(res => {
+                setProjectList(res.data)
             })
+        }
+        // const metaProjectId = projectId;
+        // const param = {
+        //     projectId: metaProjectId,
+        //     workType: workType
+        // }
+        // findWorkItemCreateMetaData(param).then(res => {
+        //
+        //     // 事项子类型下拉框
+        //     setSelectItem(res.data.fieldList[0][0])
+        //     form.setFieldsValue({
+        //         eachType: res.data.fieldList[0][0]?.selectItemList[0]?.id,
+        //     })
+        //
+        //
+        //
+        //     // 设置优先级
+        //     form.setFieldsValue({
+        //         workPriority: res.data.fieldList[1][0]?.selectItemList[0].id
+        //     })
+        //
+        //     // 设置项目信息
+        //     if (project){
+        //         form.setFieldsValue({
+        //             parentWorkItem: workId,
+        //             project: projectId,
+        //             sprint: sprintId,
+        //             assigner: project?.master.id,
+        //             planTime: [moment(getNowFormatDate(), dateFormat), moment(getNowFormatDate(), dateFormat)]
+        //         })
+        //
+        //         // // 设置模块
+        //         // form.setFieldsValue({
+        //         //     module: res.data.moduleList[0]?.id
+        //         // })
+        //
+        //         // 设置所选版本、迭代、计划
+        //         // 敏捷模型
+        //         console.log("sprintId:  " + sprintId)
+        //         if (projectType === 'scrum'){
+        //             if (sprintId) {
+        //                 form.setFieldsValue({
+        //                     sprint: sprintId
+        //                 })
+        //             } else {
+        //                 if (res.data.sprintList.length > 0) {
+        //                     form.setFieldsValue({
+        //                         sprint: res.data.sprintList[0]?.id
+        //                     })
+        //                 } else {
+        //                     form.setFieldsValue({
+        //                         sprint: null
+        //                     })
+        //                 }
+        //             }
+        //         }
+        //
+        //         // 瀑布模型
+        //         if (projectType === 'nomal'){
+        //             form.setFieldsValue({
+        //                 stage: res.data.stageList[0]?.id
+        //             })
+        //         }
+        //
+        //         // 看板模型
+        //         if (projectType === 'kanban'){
+        //             if (sprintId) {
+        //                 form.setFieldsValue({
+        //                     sprint: sprintId
+        //                 })
+        //             } else {
+        //                 if (res.data.sprintList.length > 0) {
+        //                     form.setFieldsValue({
+        //                         sprint: res.data.sprintList[0]?.id
+        //                     })
+        //                 } else {
+        //                     form.setFieldsValue({
+        //                         sprint: null
+        //                     })
+        //                 }
+        //             }
+        //         }
+        //
+        //
+        //         // 混合模型
+        //         if (projectType === 'hybrid'){
+        //
+        //             if (sprintId) {
+        //                 form.setFieldsValue({
+        //                     sprint: sprintId
+        //                 })
+        //             } else {
+        //                 if (res.data.sprintList.length > 0) {
+        //                     form.setFieldsValue({
+        //                         sprint: res.data.sprintList[0]?.id
+        //                     })
+        //                 } else {
+        //                     form.setFieldsValue({
+        //                         sprint: null
+        //                     })
+        //                 }
+        //             }
+        //
+        //             form.setFieldsValue({
+        //                 stage: res.data.stageList[0]?.id
+        //             })
+        //         }
+        //
+        //         // ipd模型
+        //         if (projectType === 'ipd'){
+        //             form.setFieldsValue({
+        //                 stage: res.data.stageList[0]?.id
+        //             })
+        //         }
+        //
+        //         if (projectType !== "nomal" && projectType !== "ipd"){
+        //             if (versionId) {
+        //                 form.setFieldsValue({
+        //                     projectVersion: versionId
+        //                 })
+        //             } else {
+        //                 if (res.data.versionList.length > 0) {
+        //                     form.setFieldsValue({
+        //                         projectVersion: res.data.versionList[0]?.id
+        //                     })
+        //                 } else {
+        //                     form.setFieldsValue({
+        //                         projectVersion: null
+        //                     })
+        //                 }
+        //             }
+        //         }
+        //     }
+        //
+        //
+        // });
+        //
+        // if (project?.productId){
+        //     findModuleList({ productId: project?.productId }).then(res => {
+        //         form.setFieldsValue({
+        //             module: res.data[0]?.id
+        //         })
+        //     });
+        // }else{
+        //     findModuleList({ projectId: projectId }).then(res => {
+        //         form.setFieldsValue({
+        //             module: res.data[0]?.id
+        //         })
+        //     });
+        // }
+        return;
+    }, [projectId, projectSetId, productId])
 
-
-
-            // 设置优先级
-            form.setFieldsValue({
-                workPriority: res.data.fieldList[1][0]?.selectItemList[0].id
-            })
-
-            // 设置项目信息
-            if (project){
-                form.setFieldsValue({
-                    parentWorkItem: workId,
-                    project: projectId,
-                    sprint: sprintId,
-                    assigner: project?.master.id,
-                    planTime: [moment(getNowFormatDate(), dateFormat), moment(getNowFormatDate(), dateFormat)]
-                })
-
-                // // 设置模块
-                // form.setFieldsValue({
-                //     module: res.data.moduleList[0]?.id
-                // })
-
-                // 设置所选版本、迭代、计划
-                // 敏捷模型
-                console.log("sprintId:  " + sprintId)
-                if (projectType === 'scrum'){
-                    if (sprintId) {
-                        form.setFieldsValue({
-                            sprint: sprintId
-                        })
-                    } else {
-                        if (res.data.sprintList.length > 0) {
-                            form.setFieldsValue({
-                                sprint: res.data.sprintList[0]?.id
-                            })
-                        } else {
-                            form.setFieldsValue({
-                                sprint: null
-                            })
-                        }
-                    }
-                }
-
-                // 瀑布模型
-                if (projectType === 'nomal'){
-                    form.setFieldsValue({
-                        stage: res.data.stageList[0]?.id
-                    })
-                }
-
-                // 看板模型
-                if (projectType === 'kanban'){
-                    if (sprintId) {
-                        form.setFieldsValue({
-                            sprint: sprintId
-                        })
-                    } else {
-                        if (res.data.sprintList.length > 0) {
-                            form.setFieldsValue({
-                                sprint: res.data.sprintList[0]?.id
-                            })
-                        } else {
-                            form.setFieldsValue({
-                                sprint: null
-                            })
-                        }
-                    }
-                }
-
-
-                // 混合模型
-                if (projectType === 'hybrid'){
-
-                    if (sprintId) {
-                        form.setFieldsValue({
-                            sprint: sprintId
-                        })
-                    } else {
-                        if (res.data.sprintList.length > 0) {
-                            form.setFieldsValue({
-                                sprint: res.data.sprintList[0]?.id
-                            })
-                        } else {
-                            form.setFieldsValue({
-                                sprint: null
-                            })
-                        }
-                    }
-
-                    form.setFieldsValue({
-                        stage: res.data.stageList[0]?.id
-                    })
-                }
-
-                if (versionId) {
-                    form.setFieldsValue({
-                        projectVersion: versionId
-                    })
-                } else {
-                    if (res.data.versionList.length > 0) {
-                        form.setFieldsValue({
-                            projectVersion: res.data.versionList[0]?.id
-                        })
-                    } else {
-                        form.setFieldsValue({
-                            projectVersion: null
-                        })
-                    }
-                }
+    useEffect(() => {
+        if (selectProjectId){
+            const param = {
+                projectId: selectProjectId,
+                workType: workType
             }
+            findWorkItemCreateMetaData(param).then(res => {
 
-
-        });
-
-        if (project?.productId){
-            findModuleList({ productId: project?.productId }).then(res => {
+                // 事项子类型下拉框
+                setSelectItem(res.data.fieldList[0][0])
                 form.setFieldsValue({
-                    module: res.data[0]?.id
+                    eachType: res.data.fieldList[0][0]?.selectItemList[0]?.id,
                 })
-            });
-        }else{
-            findModuleList({ projectId: projectId }).then(res => {
+
+
+
+                // 设置优先级
                 form.setFieldsValue({
-                    module: res.data[0]?.id
+                    workPriority: res.data.fieldList[1][0]?.selectItemList[0].id
                 })
+
+                // 设置项目信息
+                if (project){
+                    form.setFieldsValue({
+                        parentWorkItem: workId,
+                        project: selectProjectId,
+                        sprint: sprintId,
+                        assigner: project?.master.id,
+                        planTime: [moment(getNowFormatDate(), dateFormat), moment(getNowFormatDate(), dateFormat)]
+                    })
+
+                    // // 设置模块
+                    // form.setFieldsValue({
+                    //     module: res.data.moduleList[0]?.id
+                    // })
+
+                    // 设置所选版本、迭代、计划
+                    // 敏捷模型
+                    console.log("sprintId:  " + sprintId)
+                    if (projectType === 'scrum'){
+                        if (sprintId) {
+                            form.setFieldsValue({
+                                sprint: sprintId
+                            })
+                        } else {
+                            if (res.data.sprintList.length > 0) {
+                                form.setFieldsValue({
+                                    sprint: res.data.sprintList[0]?.id
+                                })
+                            } else {
+                                form.setFieldsValue({
+                                    sprint: null
+                                })
+                            }
+                        }
+                    }
+
+                    // 瀑布模型
+                    if (projectType === 'nomal'){
+                        form.setFieldsValue({
+                            stage: res.data.stageList[0]?.id
+                        })
+                    }
+
+                    // 看板模型
+                    if (projectType === 'kanban'){
+                        if (sprintId) {
+                            form.setFieldsValue({
+                                sprint: sprintId
+                            })
+                        } else {
+                            if (res.data.sprintList.length > 0) {
+                                form.setFieldsValue({
+                                    sprint: res.data.sprintList[0]?.id
+                                })
+                            } else {
+                                form.setFieldsValue({
+                                    sprint: null
+                                })
+                            }
+                        }
+                    }
+
+
+                    // 混合模型
+                    if (projectType === 'hybrid'){
+
+                        if (sprintId) {
+                            form.setFieldsValue({
+                                sprint: sprintId
+                            })
+                        } else {
+                            if (res.data.sprintList.length > 0) {
+                                form.setFieldsValue({
+                                    sprint: res.data.sprintList[0]?.id
+                                })
+                            } else {
+                                form.setFieldsValue({
+                                    sprint: null
+                                })
+                            }
+                        }
+
+                        form.setFieldsValue({
+                            stage: res.data.stageList[0]?.id
+                        })
+                    }
+
+                    // ipd模型
+                    if (projectType === 'ipd'){
+                        form.setFieldsValue({
+                            stage: res.data.stageList[0]?.id
+                        })
+                    }
+
+                    if (projectType !== "nomal" && projectType !== "ipd"){
+                        if (versionId) {
+                            form.setFieldsValue({
+                                projectVersion: versionId
+                            })
+                        } else {
+                            if (res.data.versionList.length > 0) {
+                                form.setFieldsValue({
+                                    projectVersion: res.data.versionList[0]?.id
+                                })
+                            } else {
+                                form.setFieldsValue({
+                                    projectVersion: null
+                                })
+                            }
+                        }
+                    }
+                }
+
+
             });
+
+            if (project?.productId){
+                findModuleList({ productId: project?.productId }).then(res => {
+                    form.setFieldsValue({
+                        module: res.data[0]?.id
+                    })
+                });
+            }else{
+                findModuleList({ projectId: projectId }).then(res => {
+                    form.setFieldsValue({
+                        module: res.data[0]?.id
+                    })
+                });
+            }
         }
         return;
-    }, [])
+    }, [selectProjectId]);
 
     const containerRef = useRef(null);
     const [isEditorFocused, setIsEditorFocused] = useState(false);
-    useEffect(() => {
-        const handleWheel = (e) => {
-            if (isEditorFocused && editorRef.current && editorRef.current.contains(e.target)) {
-                // 阻止事件冒泡，让编辑器内部处理滚动
-                e.stopPropagation();
-            }
-            // 否则由外部容器处理滚动
-        };
-
-        const container = containerRef.current;
-        container.addEventListener('wheel', handleWheel, { passive: false });
-
-        return () => {
-            container.removeEventListener('wheel', handleWheel);
-        };
-    }, [isEditorFocused]);
+    // useEffect(() => {
+    //     const handleWheel = (e) => {
+    //         if (isEditorFocused && editorRef.current && editorRef.current.contains(e.target)) {
+    //             // 阻止事件冒泡，让编辑器内部处理滚动
+    //             e.stopPropagation();
+    //         }
+    //         // 否则由外部容器处理滚动
+    //     };
+    //
+    //     const container = containerRef.current;
+    //     container.addEventListener('wheel', handleWheel, { passive: false });
+    //
+    //     return () => {
+    //         container.removeEventListener('wheel', handleWheel);
+    //     };
+    // }, [isEditorFocused]);
 
     const handleMouseEnter = () => {
         setIsEditorFocused(true);
@@ -325,7 +516,7 @@ const WorkAddPage = (props) => {
         }
 
         // 如果是瀑布式开发，获取计划
-        if ((projectType === "nomal" || projectType === "hybrid")) {
+        if ((projectType === "nomal" || projectType === "hybrid" || projectType === "ipd")) {
             findStageList({ projectId: projectId }).then(res => {
                 if (res.code === 0) {
                     form.setFieldsValue({
@@ -370,7 +561,8 @@ const WorkAddPage = (props) => {
 
     // 选择项目
     const selectProject = (value, option) => {
-        getProjectValue(option.project)
+        setSelectProjectId(option.project.id)
+        // getProjectValue(option.project)
     }
 
     //提交表单
@@ -400,6 +592,9 @@ const WorkAddPage = (props) => {
             if(workItemType&&workItemType==="defect"){
                 values.caseId = caseId
             }
+            if (productPlanId){
+                values.productPlan = productPlanId
+            }
 
             setLoading(true)
             addWork(values).then((res) => {
@@ -409,7 +604,7 @@ const WorkAddPage = (props) => {
                     findWorkItemById(res.data).then(data => {
                         if (data.code === 0) {
                             setSessionStorage("detailCrumbArray", [{ id: data.data.id, code: data.data.code, title: values.title, iconUrl: workType.workType.iconUrl }])
-                            if (path === "/project/:id/stage") {
+                            if (path === "/project/:id/stagePlan") {
                                 appendNodeInTree(stageTreeList, values.stage, data.data)
                                 message.success({
                                     content: '添加成功',
@@ -575,7 +770,7 @@ const WorkAddPage = (props) => {
                                 <Input placeholder="事项标题" />
                             </Form.Item>
                             {
-                                (props.match.path === "/projectSet/:projectSetId/workitem" || props.match.path === "/product/:productId/workitem" || props.match.path === "/worklist" || props.match.path === "/workbodar") &&
+                                (path.includes("/projectSet") || path.includes("/product") || path === "/worklist" || path === "/workbodar") &&
                                 <Form.Item
                                     label="所属项目"
                                     name="project"
@@ -735,15 +930,15 @@ const WorkAddPage = (props) => {
                                 </Select>
                             </Form.Item>
                             {
-                                (projectType === "nomal" || projectType === "hybrid") && <Form.Item
-                                    label="所属计划"
+                                (projectType === "nomal" || projectType === "ipd" || projectType === "hybrid") && <Form.Item
+                                    label="所属阶段"
                                     name="stage"
-                                    rules={[{ required: true, message: '请输入所属计划!' }]}
+                                    rules={[{ required: true, message: '请输入所属阶段!' }]}
                                 >
                                     <Select
                                         bordered={false}
                                         style={{backgroundColor: '#f0f0f0'}}
-                                        placeholder="计划"
+                                        placeholder="阶段"
                                         allowClear
                                         className="work-select"
                                         key="selectSprint"
@@ -781,26 +976,27 @@ const WorkAddPage = (props) => {
                                 </Form.Item>
                             }
 
-                            <Form.Item
-                                label="所属版本"
-                                name="projectVersion"
-                                rules={[{ required: false, message: '请输入所属版本!' }]}
-                            >
-                                <Select
-                                    bordered={false}
-                                    style={{backgroundColor: '#f0f0f0'}}
-                                    placeholder="版本"
-                                    allowClear
-                                    className="work-select"
-                                    key="selectProjectVersion"
+                            {
+                                (projectType !== "nomal" && projectType !== "ipd") &&
+                                <Form.Item
+                                    label="所属版本"
+                                    name="projectVersion"
+                                    rules={[{ required: false, message: '请输入所属版本!' }]}
                                 >
-                                    {
-                                        selectVersionList && selectVersionList.map((item) => {
-                                            return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
-                                        })
-                                    }
-                                </Select>
-                            </Form.Item>
+                                    <Select
+                                        placeholder="版本"
+                                        allowClear
+                                        className="work-select"
+                                        key="selectProjectVersion"
+                                    >
+                                        {
+                                            selectVersionList && selectVersionList.map((item) => {
+                                                return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
+                                            })
+                                        }
+                                    </Select>
+                                </Form.Item>
+                            }
 
                             <Form.Item
                                 name="planTakeupTime"

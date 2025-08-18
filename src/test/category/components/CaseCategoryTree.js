@@ -274,9 +274,9 @@ const CaseCategoryTree = ({
                         className="case-category-tree-box"
                     >
 
-                        <div className={"display-flex-between"} style={{padding: "10px 10px 0 16px"}}>
-                            <div style={{fontSize: "16px", fontWeight: "600"}}>测试用例</div>
-                        </div>
+                        {/*<div className={"display-flex-between"} style={{padding: "10px 10px 0 16px"}}>*/}
+                        {/*    <div style={{fontSize: "16px", fontWeight: "600"}}>测试用例</div>*/}
+                        {/*</div>*/}
 
                         <div className={"category-param-search"}>
                             {/*<MenuSelect*/}

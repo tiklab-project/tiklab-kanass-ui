@@ -125,13 +125,13 @@ const ProjectChangeModal = (props) => {
                             <div className='name'>
                                 {project?.projectName}
                             </div>
-                            <div className='type'>
-                                {project?.projectType?.name}
-                            </div>
+                            {/*<div className='type'>*/}
+                            {/*    {project?.projectType?.name}*/}
+                            {/*</div>*/}
                         </div>
                         <div className={`project-toggleCollapsed`}>
                             <svg className="icon-15" aria-hidden="true">
-                                <use xlinkHref={`${theme === "default" ? "#icon-down-gray" : "#icon-down-white"}`}></use>
+                                <use xlinkHref={`${theme === "default" ? "#icon-down-gray2" : "#icon-down-white2"}`}></use>
                             </svg>
                         </div>
                     </div>

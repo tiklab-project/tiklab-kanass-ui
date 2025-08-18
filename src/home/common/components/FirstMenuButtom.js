@@ -22,18 +22,18 @@ const FirstMenuButtom = (props) => {
                     <div className="first-menu-bottom-text ">
                         <SetingMenu isShowText={isShowText} theme={theme} />
                         <MessageList isShowText={isShowText} theme={theme} />
-                        <HelpLink
-                            bgroup={"kanass"}
-                            iconComponent={
-                                <div className="first-menu-text-item">
-                                    <svg className="icon-18" aria-hidden="true">
-                                        <use xlinkHref={`#icon-help-${theme}`} ></use>
-                                    </svg>
-                                    <div>帮助</div>
-                                </div>
+                        {/*<HelpLink*/}
+                        {/*    bgroup={"kanass"}*/}
+                        {/*    iconComponent={*/}
+                        {/*        <div className="first-menu-text-item">*/}
+                        {/*            <svg className="icon-18" aria-hidden="true">*/}
+                        {/*                <use xlinkHref={`#icon-help-${theme}`} ></use>*/}
+                        {/*            </svg>*/}
+                        {/*            <div>帮助</div>*/}
+                        {/*        </div>*/}
 
-                            }
-                        />
+                        {/*    }*/}
+                        {/*/>*/}
                         <AppLink
                             translateX={isShowText ? 200 : 75}
                             iconComponent={
@@ -48,6 +48,8 @@ const FirstMenuButtom = (props) => {
                         />
                         <AvatarLink
                             changeTheme={changeTheme}
+                            isHelp={true}
+                            bgroup={"kanass"}
                             iconComponent={
                                 <div className="first-menu-text-item">
                                     <UserIcon name={nickname} />
@@ -63,17 +65,17 @@ const FirstMenuButtom = (props) => {
                     <div className="first-menu-bottom-icon">
                         <SetingMenu isShowText={isShowText} theme={theme} />
                         <MessageList isShowText={isShowText} theme={theme} />
-                        <HelpLink
-                            bgroup={"kanass"}
-                            iconComponent={
-                                <div className="first-menu-link-item" data-title-right="帮助">
-                                    <svg className="icon-18 " aria-hidden="true">
-                                        <use xlinkHref={`#icon-help-${theme}`}></use>
-                                    </svg>
-                                </div>
+                        {/*<HelpLink*/}
+                        {/*    bgroup={"kanass"}*/}
+                        {/*    iconComponent={*/}
+                        {/*        <div className="first-menu-link-item" data-title-right="帮助">*/}
+                        {/*            <svg className="icon-18 " aria-hidden="true">*/}
+                        {/*                <use xlinkHref={`#icon-help-${theme}`}></use>*/}
+                        {/*            </svg>*/}
+                        {/*        </div>*/}
 
-                            }
-                        />
+                        {/*    }*/}
+                        {/*/>*/}
                         <AppLink
                             translateX={isShowText ? 200 : 75}
                             iconComponent={
@@ -87,6 +89,8 @@ const FirstMenuButtom = (props) => {
                         />
                         <AvatarLink
                             changeTheme={changeTheme}
+                            isHelp={true}
+                            bgroup={"kanass"}
                             iconComponent={
                                 <div className="first-menu-link-item" data-title-right={nickname}>
                                     <UserIcon name={nickname} />

@@ -270,6 +270,18 @@ const ProjectList = (props) => {
             )
         },
         {
+            title: "项目进度",
+            dataIndex: "percent",
+            key: "percent",
+            align: "left",
+            width: "10%",
+            render: (text, record) => (
+                <CircleProgress
+                    percent={text}
+                />
+            )
+        },
+        {
             title: "负责人",
             dataIndex: ["master", "nickname"],
             key: "master",
@@ -284,27 +296,15 @@ const ProjectList = (props) => {
 
         },
         {
-            title: "计划时间",
-            dataIndex: "startTime",
-            key: "startTime",
+            title: "创建时间",
+            dataIndex: "createTime",
+            key: "createTime",
             align: "left",
-            width: "20%",
+            width: "15%",
             render: (text, record) => (
                 <>
-                    {record.startTime} - {record.endTime}
+                    {text}
                 </>
-            )
-        },
-        {
-            title: "项目进度",
-            dataIndex: "percent",
-            key: "percent",
-            align: "left",
-            width: "10%",
-            render: (text, record) => (
-                <CircleProgress
-                    percent={text}
-                />
             )
         },
         {

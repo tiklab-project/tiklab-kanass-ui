@@ -80,10 +80,9 @@ const SelectItem = (props) => {
 
             }
             {
-                imgUrl ?
-                    <ImgComponent isRemote = {isRemote} className="img-icon-right" src={`${imgUrl}`} width="15" height="15" />
-                    :
-                    <ColorIcon color={color} name={label} className="img-icon-right"/>
+                imgUrl ? <ImgComponent isRemote = {isRemote} className="img-icon-right" src={`${imgUrl}`} width="15" height="15" />
+                    : color ? <ColorIcon color={color} name={label} className="img-icon-right"/>
+                    : <></>
             }
                     <div className="select-item-text">{label}</div>
 

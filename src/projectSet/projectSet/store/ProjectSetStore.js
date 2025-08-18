@@ -19,8 +19,8 @@ export class ProjectSetStore {
     @observable total = 0;
     @observable projectSetPageParams = {
         orderParams: [{
-            name: "name",
-            orderType: "asc"
+            name: "creatTime",
+            orderType: "desc"
         }],
         pageParam: {
             pageSize: 5,

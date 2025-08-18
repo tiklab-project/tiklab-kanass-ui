@@ -52,7 +52,7 @@ const Planning = (props) => {
                     }
                 })
             }
-            if (project.projectType.type === "nomal" || project.projectType.type === "hybrid"){
+            if (project.projectType.type === "nomal" || project.projectType.type === "hybrid" || project.projectType.type === "ipd"){
                 findStageList({ projectId: projectId }).then(res => {
                     if (res.code === 0) {
                         setDefaultStage(res.data[0]?.id)

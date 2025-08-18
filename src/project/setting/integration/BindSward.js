@@ -2,9 +2,9 @@ import React, {useEffect, useState} from "react";
 import {message, Space, Table} from "antd";
 import DeleteModal from "../../../common/deleteModal/deleteModal";
 import {applyJump} from "tiklab-core-ui";
-import WikiRepositoryAdd from "../../wiki/components/WikiRepositoryAdd";
+import WikiRepositoryAdd from "../../wiki/repository/components/WikiRepositoryAdd";
 import {observer,Provider} from "mobx-react";
-import WikiRepositoryStore from "../../wiki/store/WikiRepositoryStore";
+import WikiRepositoryStore from "../../wiki/repository/store/WikiRepositoryStore";
 
 const BindSward = (props) => {
     const {activeKey,wikiAddvisible,setWikiAddvisible} = props

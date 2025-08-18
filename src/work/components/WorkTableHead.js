@@ -15,6 +15,9 @@ import WorkChangeView from "./WorkChangeView";
 import Button from "../../common/button/Button";
 import WorkCreatDropdown from "./workCreatDropdown";
 import { PrivilegeProjectButton } from "tiklab-privilege-ui";
+import path from "path";
+import WorkProductPlanLinkModal from "./WorkProductPlanLinkModal";
+import projectList from "../../project/project/components/ProjectList";
 
 
 const WorkTableHead = (props) => {
@@ -28,8 +31,10 @@ const WorkTableHead = (props) => {
     const projectId = props.match.params.id ? props.match.params.id : null;
     const workAddModel = useRef()
     const project = JSON.parse(localStorage.getItem("project"));
-
-        
+    const path = props.match.path;
+    const workTypeCode = props.match.params.workTypeCode;
+    const productPlanId = props.match.params.productPlanId ? props.match.params.productPlanId : null;
+    const [showLinkModal, setShowLinkModal] = useState(false);
 
 
     /**
@@ -79,6 +84,27 @@ const WorkTableHead = (props) => {
         }
     }
 
+    /**
+     * 产品计划新增事项
+     * @param workTypeList
+     * @param productPlanId
+     */
+    const handleProductPlanAddWork = (workTypeList, productPlanId) => {
+        if (workTypeList && workTypeList.length > 0) {
+            const matchWorkType = workTypeList.find(item => item.workType.code === workTypeCode);
+            console.log(matchWorkType)
+            setState(matchWorkType);
+            workAddModel.current.setShowAddModel(true)
+        }
+    }
+    /**
+     * 产品计划关联事项
+     * @param workTypeList
+     * @param productPlanId
+     */
+    const handleProductPlanLinkWork = (workTypeList, productPlanId) => {
+        setShowLinkModal(true)
+    }
 
     return (
         <Fragment>
@@ -90,6 +116,18 @@ const WorkTableHead = (props) => {
                         <PrivilegeProjectButton code={'WorkItemAdd'} domainId={projectId}  {...props}>
                             <WorkCreatDropdown workTypeList={workTypeList}  {...props} />
                         </PrivilegeProjectButton>
+                        {
+                            path.includes("/planDetail") &&
+                            <Button type={"primary"} onClick={() => handleProductPlanAddWork(workTypeList, productPlanId)}>
+                                创建{workTypeCode === "demand" ? "需求" : "缺陷"}
+                            </Button>
+                        }
+                        {
+                            path.includes("/planDetail") &&
+                            <Button type={"primary"} onClick={() => handleProductPlanLinkWork(workTypeList, productPlanId)}>
+                                关联{workTypeCode === "demand" ? "需求" : "缺陷"}
+                            </Button>
+                        }
                         <Dropdown trigger="click" overlay={menuPlugin} className="right-item">
                             <Button>
                                 <svg className="svg-icon" aria-hidden="true">
@@ -98,7 +136,7 @@ const WorkTableHead = (props) => {
                             </Button>
                         </Dropdown>
                         {
-                            project?.projectType.type !== "kanban" &&
+                            !(project?.projectType.type === "kanban" || path.includes("/planDetail")) &&
                             <WorkChangeView
                                 searchCondition={searchCondition}
                                 getWorkConditionPage={getWorkConditionPage}
@@ -115,6 +153,7 @@ const WorkTableHead = (props) => {
 
                 </div>
                 <WorkAddModel workAddModel={workAddModel} workType={stateType} {...props} />
+                <WorkProductPlanLinkModal showLinkModal={showLinkModal} setShowLinkModal={setShowLinkModal} workStore={workStore}/>
             </div>
         </Fragment>
     )

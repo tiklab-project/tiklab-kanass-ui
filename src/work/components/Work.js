@@ -37,6 +37,11 @@ const Work = (props) => {
             dom = <WorkBodar />;
             return dom;
         }
+        if (path.includes("/productPlan")){
+            setWorkShowType("table")
+            dom = <WorkTable />;
+            return dom;
+        }
         switch (workShowType) {
             case "table":
                 dom = <WorkTable />;

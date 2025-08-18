@@ -258,12 +258,14 @@ const WorkBodar = (props) => {
     }
     return (
         <Provider {...store}>
-            <div style={{display: "flex", height:"100%", flex:"1 1 0%"}}>
-                <WorkModuleFilter workStore={WorkStore}/>
-                <div style={{flex:"1 1 0%"}}>
+            <div style={{display: "flex", height:"100%", width: "100%"}}>
+                <div style={{flex: "0 0 1", overflow: "auto"}}>
+                    <WorkModuleFilter workStore={WorkStore}/>
+                </div>
+                <div style={{display: "flex", height:"100%", flex:1, minWidth: "0", flexDirection: "column"}}>
                     <div className="work-bordar">
                         <Row style={{ background: "#fff" }}>
-                            <Col className="work-col" lg={{ span: 24 }} xl={{ span: "22", offset: "1" }} xxl={{ span: "24", offset: "0" }}>
+                            <Col className="work-col" lg={{ span: 24 }} xl={{ span: "24", offset: "0" }} xxl={{ span: "24", offset: "0" }}>
                                 <div className="work-bodar-filter" style={{ background: "#fff" }}>
                                     <WorkTableHead />
                                     <WorkTableFilter />
@@ -291,7 +293,7 @@ const WorkBodar = (props) => {
                             </Col>
                         </Row>
                         <Row style={{ background: "#fff" }}>
-                            <Col className="work-col" lg={{ span: 24 }} xl={{ span: "22", offset: "1" }} xxl={{ span: "24", offset: "0" }}>
+                            <Col className="work-col" lg={{ span: 24 }} xl={{ span: "24", offset: "0" }} xxl={{ span: "24", offset: "0" }}>
                                 <WorkBodarContent
                                     loading = {loading}
                                     workStore = {WorkStore}

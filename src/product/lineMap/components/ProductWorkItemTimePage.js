@@ -284,7 +284,7 @@ const ProductWorkItemTimePage = (props) => {
                                                                             <ImgComponent
                                                                                 src={item.workTypeSys?.iconUrl}
                                                                                 alt=""
-                                                                                className="menu-icon"
+                                                                                className="icon-18"
                                                                             />
                                                                             {/*<span className="item-code">{item.code}</span>*/}
                                                                         </div>

@@ -140,14 +140,14 @@ const ProjectSetProjectList = (props) => {
             )
         },
         {
-            title: "计划时间",
-            dataIndex: "startTime",
-            key: "startTime",
+            title: "创建时间",
+            dataIndex: "createTime",
+            key: "createTime",
             align: "left",
-            width: "25%",
+            width: "15%",
             render: (text, record) => (
                 <>
-                    {record.startTime} - {record.endTime}
+                    {text}
                 </>
             )
         },

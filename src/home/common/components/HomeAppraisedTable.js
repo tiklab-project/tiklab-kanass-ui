@@ -16,6 +16,7 @@ import AppraisedStores from "../../../project/appraised/store/AppraisedStores";
 import { getUser } from 'tiklab-core-ui'
 import "./HomeAppraisedTable.scss";
 import {SelectItem, SelectSimple} from "../../../common/select";
+import ColorIcon from "../../../common/colorIcon/ColorIcon";
 
 const HomeAppraisedTable = (props) => {
     const store = {
@@ -188,12 +189,7 @@ const HomeAppraisedTable = (props) => {
             width: "15%",
             render: (text, record) => <div className="work-info">
                 <div className="work-info-img">
-                    <ImgComponent
-                        src={record.workItem.project?.iconUrl}
-                        alt=""
-                        className="img-icon-right"
-                    />
-
+                    <ColorIcon color={record.workItem.project?.color} name={record.workItem.project?.projectName} className="icon-20" />
                 </div>
                 <div className="work-info-text">{text.length > 10 ? text.slice(0, 10) + "..." : text}</div>
             </div>
@@ -356,7 +352,7 @@ const HomeAppraisedTable = (props) => {
                                                 value={item.id}
                                                 label={item.projectName}
                                                 key={item.id}
-                                                imgUrl={item.iconUrl}
+                                                color={item.color}
                                             />
                                         })
                                     }

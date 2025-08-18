@@ -122,7 +122,7 @@ const WorkType = (props) => {
                         <ImgComponent
                             src={record.workType?.iconUrl}
                             alt=""
-                            className="icon-32"
+                            className="icon-18"
                         />
                     </div>
                     <div className="work-type-text">{text}</div>

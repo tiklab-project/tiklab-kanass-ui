@@ -59,28 +59,26 @@
         }
 
         .project-expend {
-            position: absolute;
-            right: -5px;
-            width: 10px;
-            height: 50px;
-            border-radius: 20px;
-            top: 50%;
-            line-height: 20px;
-            display: none;
-            z-index: 2;
-            background: var(--tiklab-gray-400);
-            .project-expend-icon {
-                width: 10px;
-                height: 50px;
-
-            }
+            //position: absolute;
+            //right: -5px;
+            //width: 10px;
+            //height: 50px;
+            //border-radius: 20px;
+            //top: 50%;
+            //line-height: 20px;
+            //display: none;
+            //z-index: 2;
+            cursor: pointer;
+            //background: var(--tiklab-gray-400);
+            //.project-expend-icon {
+            //    width: 10px;
+            //    height: 50px;
+            //}
         }
     }
 
     .project-aside:hover {
-        .project-expend {
-            display: block;
-        }
+
     }
 }
 .project-sider-blue {
@@ -109,7 +107,10 @@
     .project-setting:hover {
         background-color: #557ac0;
     }
-    
+
+    .project-expend:hover {
+        background-color: #557ac0;
+    }
     
 }
     
@@ -131,6 +132,11 @@
     .project-setting:hover {
         background-color: var(--tiklab-gray-400);
     }
+
+    .project-expend:hover {
+        background-color: var(--tiklab-gray-400);
+    }
+
     .project-text  {
         .type {
             color: #666;
@@ -160,6 +166,10 @@
     }
 
     .project-setting:hover {
+        background-color: #414a5a;
+    }
+
+    .project-expend:hover {
         background-color: #414a5a;
     }
 }

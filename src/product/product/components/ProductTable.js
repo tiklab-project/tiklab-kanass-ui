@@ -176,17 +176,6 @@ const ProductTable = (props) => {
                 {text}
             </Space>,
         },
-
-        {
-            title: "计划时间",
-            dataIndex: "startTime",
-            key: "startTime",
-            align: "left",
-            width: "25%",
-            render: (text, record) => <>
-                {record.startTime} - {record.endTime}
-            </>
-        },
         {
             title: "关联项目",
             dataIndex: "projectNumber",
@@ -196,14 +185,6 @@ const ProductTable = (props) => {
             render: (text, record) => <span>
                 {text > 0 ? text : 0}
             </span>
-        },
-        {
-            title: "负责人",
-            dataIndex: ["master", "nickname"],
-            key: "master",
-            align: "left",
-            width: "15%"
-
         },
         {
             title: "项目状态",
@@ -227,6 +208,24 @@ const ProductTable = (props) => {
                     />
                 </>
             )
+        },
+        {
+            title: "负责人",
+            dataIndex: ["master", "nickname"],
+            key: "master",
+            align: "left",
+            width: "15%"
+
+        },
+        {
+            title: "创建时间",
+            dataIndex: "creatTime",
+            key: "creatTime",
+            align: "left",
+            width: "20%",
+            render: (text, record) => <>
+                {record?.creatTime?.substring(0, 10)}
+            </>
         },
         {
             title: "操作",

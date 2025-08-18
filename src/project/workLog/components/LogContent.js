@@ -189,7 +189,7 @@ const LogContent = (props) => {
             width: "15%"
         },
         {
-            title: "负责人",
+            title: "记录人",
             dataIndex: ["user", "nickname"],
             key: "user",
             align: "left",

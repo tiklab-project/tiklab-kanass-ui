@@ -269,6 +269,13 @@ const xxlWorkColumn = (goWorkItemDetail, sortArray, actionColumn) => {
             },
             render: (text, record, index) => (
                 <div className="work-id  work-first-col" title = {text} onClick={() => goWorkItemDetail(record, index)}>
+                    <div className="work-icon">
+                        <ImgComponent
+                            src={record.workTypeSys?.iconUrl}
+                            alt=""
+                            className="icon-18"
+                        />
+                    </div>
                     <div className="work-key">
                         {record.code}
                     </div>
@@ -285,16 +292,7 @@ const xxlWorkColumn = (goWorkItemDetail, sortArray, actionColumn) => {
             },
             render: (text, record, index) => (
                 <div className="work-title " title = {text} onClick={() => goWorkItemDetail(record, index)}>
-                    <div className="work-icon">
-                        <ImgComponent
-                            src={record.workTypeSys?.iconUrl}
-                            alt=""
-                            className="icon-18"
-                        />
-                    </div>
-                    <div className="work-title-content">
-                        {text}
-                    </div>
+                    {text}
                 </div>
             )
         },
@@ -401,10 +399,16 @@ const lgWorkColumn = (goWorkItemDetail, sortArray, actionColumn) => {
             },
             render: (text, record, index) => (
                 <div className="work-id work-first-col " title = {text} onClick={() => goWorkItemDetail(record, index)}>
+                    <div className="work-icon">
+                        <ImgComponent
+                            src={record.workTypeSys?.iconUrl}
+                            alt=""
+                            className="icon-18"
+                        />
+                    </div>
                     <div className="work-key">
                         {text}
                     </div>
-
                 </div>
             )
         },
@@ -418,17 +422,7 @@ const lgWorkColumn = (goWorkItemDetail, sortArray, actionColumn) => {
             },
             render: (text, record, index) => (
                 <div className="work-title " title = {text} onClick={() => goWorkItemDetail(record, index)}>
-                    <div className="work-icon">
-                        <ImgComponent
-                            src={record.workTypeSys?.iconUrl}
-                            alt=""
-                            className="icon-18"
-                        />
-                    </div>
-                    <div className="work-title-content">
-                        {text}
-                    </div>
-
+                    {text}
                 </div>
             )
         },

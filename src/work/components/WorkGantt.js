@@ -25,6 +25,8 @@ import setImageUrl from "../../common/utils/setImageUrl";
 import {applySubscription} from "tiklab-core-ui";
 import Gantt from "./gantter/Gantt";
 import WorkModuleFilter from "./WorkModuleFilter";
+import ProductStore from "../../product/product/store/ProductStore";
+import ProjectSetStore from "../../projectSet/projectSet/store/ProjectSetStore";
 
 const getStore = (productId) =>{
     if (productId){
@@ -80,7 +82,7 @@ const WorkGantt = (props) => {
 
     return (<Provider {...store}>
         <div style={{display: "flex", height:"100%", width: "100%"}}>
-            <div style={{flex: "0 0 250px", overflow: "auto"}}>
+            <div style={{flex: "0 0 1", overflow: "auto"}}>
                 <WorkModuleFilter workStore={WorkStore}/>
             </div>
             <div style={{display: "flex", height:"100%", flex:1, minWidth: "0", flexDirection: "column"}}>

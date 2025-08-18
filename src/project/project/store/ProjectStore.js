@@ -15,7 +15,7 @@ export class ProjectStore {
      
     @observable projectPageParams = {
         orderParams: [{
-            name: "startTime",
+            name: "createTime",
             orderType: "desc"
         }],
         pageParam: {

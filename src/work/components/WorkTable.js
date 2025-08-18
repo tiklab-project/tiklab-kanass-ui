@@ -59,7 +59,7 @@ const WorkTable = (props) => {
     const screenCode = getScreenType();
     const { workList, total, searchCondition, getWorkConditionPageTree, tableLoading,
         deleteWorkItem, getWorkConditionPage, viewType, setWorkId, setWorkShowType, workId,
-        createRecent, setWorkIndex, setWorkList, haveChildren } = WorkStore;
+        createRecent, setWorkIndex, setWorkList, haveChildren, deleteProductPlanWork, findUnLinkProductPlanWorkPage } = WorkStore;
     const productId = props.match.params.productId ? props.match.params.productId : null;
     const projectSetId = props.match.params.projectSetId ? props.match.params.projectSetId : null;
     const {findProjectList} = getStore(productId)
@@ -68,12 +68,13 @@ const WorkTable = (props) => {
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const versionId = props.match.params.version ? props.match.params.version : null;
     const stageId = props.match.params.stage ? props.match.params.stage : null;
+    const productPlanId = props.match.params.productPlanId ? props.match.params.productPlanId : null;
     const [isModalVisible, setIsModalVisible] = useState(false);
     const modelRef = useRef();
     const [projectColums, setProjectColums] = useState([])
     const [loading, setLoading] = useState(true)
     const path = props.match.path;
-
+    const workTypeCode = props.match.params.workTypeCode ? props.match.params.workTypeCode : null;
     
     useEffect(async () => {
         // 设置事项列表页面类型
@@ -83,23 +84,30 @@ const WorkTable = (props) => {
             sprintId: sprintId,
             versionId: versionId,
             stageId: stageId,
+            productPlanId: productPlanId,
             epicView: null
         }
-        if (path === "/product/:productId/workitem"){
+        if (path.includes("/product")){
             const res = await findProjectList({productId: productId})
             const ids = res.data.map(item => item.id);
             console.log("项目ids: ", ids)
             params = {projectIds: ids, workTypeCode: "demand", ...params}
         }
-        if (path === "/projectSet/:projectSetId/workitem"){
+        if (path.includes("/projectSet")){
             const res = await findProjectList({projectSetId: projectSetId})
             const ids = res.data.map(item => item.id);
             params = {projectIds: ids, ...params}
         }
+        if (workTypeCode){
+            params = {...params, workTypeCode: workTypeCode }
+        }
+        console.log("workTypeCode: ******  ", workTypeCode)
+        console.log("params: ******  ", params)
         await finWorkList(path, WorkStore, params);
         setLoading(false)
         return;
-    }, [projectId, sprintId, versionId, stageId])
+    }, [projectId, sprintId, versionId, stageId, productId, productPlanId, workTypeCode])
+    // }, [props.location.pathname])
 
     /**
      * 跳转事项详情
@@ -133,20 +141,42 @@ const WorkTable = (props) => {
         title: '操作',
         width: "60",
         key: 'action',
-        render: (text, record) => (
-            <PrivilegeProjectButton code={'WorkItemDelete'} domainId={projectId}  {...props}>
-                <WorkDeleteSelectModal
-                    deleteSelectModal={deleteSelectModal}
-                    setDeleteSelectModal={setDeleteSelectModal}
-                    getPopupContainer={workTable}
-                    delectCurrentWorkItem={delectCurrentWorkItem}
-                    haveChildren={haveChildren}
-                    workId={record.id}
-                    setWorkId={setWorkId}
-                /> 
-            </PrivilegeProjectButton>
+        render: (text, record) => {
 
-        ),
+            return (
+                !path.includes("/planDetail/") ?
+                <PrivilegeProjectButton code={'WorkItemDelete'} domainId={projectId}  {...props}>
+                    <WorkDeleteSelectModal
+                        deleteSelectModal={deleteSelectModal}
+                        setDeleteSelectModal={setDeleteSelectModal}
+                        getPopupContainer={workTable}
+                        delectCurrentWorkItem={delectCurrentWorkItem}
+                        haveChildren={haveChildren}
+                        workId={record.id}
+                        setWorkId={setWorkId}
+                    />
+                </PrivilegeProjectButton>
+                :
+                <svg style={{cursor: "pointer"}} className="icon-20" aria-hidden="true" onClick={() => {
+                    deleteProductPlanWork(record.id).then(res => {
+                        findUnLinkProductPlanWorkPage()
+                        if (viewType === "tree") {
+                            getWorkConditionPageTree().then(res => {
+                                setLoading(false)
+                            })
+                        }
+                        if (viewType === "tile") {
+                            getWorkConditionPage().then(res => {
+                                setLoading(false)
+                            })
+                        }
+                    });
+
+                }}>
+                    <use xlinkHref="#icon-unLink"></use>
+                </svg>
+            )
+        },
     }
 
 

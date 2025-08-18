@@ -60,7 +60,7 @@ class HomeStore {
     activeKey = "overview";
 
     @observable
-    todoActiveKey = 1;
+    todoActiveKey = 0;
     // 待办的条件分页
     @observable todoTotal = 0;
     @observable todoCondition = {

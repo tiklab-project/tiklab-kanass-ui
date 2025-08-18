@@ -27,7 +27,7 @@ import WorkPrivilegeComponent from "./WorkPrivilegeComponent";
 import UserIcon from "../../common/UserIcon/UserIcon";
 import ImgComponent from "../../common/imgComponent/ImgComponent";
 import WorkDetailSelect from "./WorkDetailSprintSelect";
-import {updateWorkTree} from "../../project/stage/component/StageListTreeChange";
+import {updateWorkTree} from "../../project/stagePlan/component/StageListTreeChange";
 
 const rowSpan = {
     sm: 24,

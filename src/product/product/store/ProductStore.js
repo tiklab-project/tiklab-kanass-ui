@@ -11,8 +11,8 @@ export class ProductStore {
     @observable total = 0;
     @observable productPageParams = {
         orderParams: [{
-            name: "name",
-            orderType: "asc"
+            name: "creatTime",
+            orderType: "desc"
         }],
         pageParam: {
             pageSize: 10,

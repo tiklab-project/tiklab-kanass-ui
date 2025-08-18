@@ -273,19 +273,19 @@ const FirstMenu = (props) => {
                     </div>
 
                     <FirstMenuButtom isShowText={isShowText} theme={theme} changeTheme={changeTheme} {...props}/>
-                    <div className={"menu-box-right-border"}>
-                        <div className={"menu-box-isexpanded"} onClick={toggleCollapsed}>
-                            {
-                                isShowText ? <svg className="first-menu-expend-icon" aria-hidden="true">
-                                    <use xlinkHref="#icon-leftcircle"></use>
-                                </svg>
-                                    :
-                                    <svg className="first-menu-expend-icon" aria-hidden="true">
-                                        <use xlinkHref="#icon-rightcircle"></use>
-                                    </svg>
-                            }
-                        </div>
-                    </div>
+                    {/*<div className={"menu-box-right-border"}>*/}
+                    {/*    <div className={"menu-box-isexpanded"} onClick={toggleCollapsed}>*/}
+                    {/*        {*/}
+                    {/*            isShowText ? <svg className="first-menu-expend-icon" aria-hidden="true">*/}
+                    {/*                <use xlinkHref="#icon-leftcircle"></use>*/}
+                    {/*            </svg>*/}
+                    {/*                :*/}
+                    {/*                <svg className="first-menu-expend-icon" aria-hidden="true">*/}
+                    {/*                    <use xlinkHref="#icon-rightcircle"></use>*/}
+                    {/*                </svg>*/}
+                    {/*        }*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
 
                 </div>
             </Sider>

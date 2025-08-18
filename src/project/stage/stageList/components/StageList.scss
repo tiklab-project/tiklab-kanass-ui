@@ -1,0 +1,117 @@
+.stage {
+  padding: var(--tiklab-padding);
+  .stage-action {
+    display: flex;
+    justify-content: space-between;
+
+    padding: 15px 0;
+    .stage-action-right {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+
+      .stage-view {
+        display: flex;
+        // border: 1px solid #f0f0f0;
+        align-items: center;
+        border-radius: 4px;
+        .stage-view-item {
+          padding: 0 15px;
+          height: 32px;
+          line-height: 32px;
+          cursor: pointer;
+          background-color: var(--tiklab-gray);
+          border: 1px solid var(--tiklab-gray);
+        }
+        .stage-view-select {
+          background-color: var(--tiklab-white);
+        }
+        .stage-view-tile {
+          border: 1px solid #f0f0f0;
+          border-right: 0;
+          border-top-left-radius: 4px;
+          border-bottom-left-radius: 4px;
+        }
+
+        .stage-view-tree {
+          border: 1px solid #f0f0f0;
+          border-left: 0;
+
+
+
+          border-top-right-radius: 4px;
+          border-bottom-right-radius: 4px;
+        }
+      }
+    }
+
+  }
+  .add-stage-botton {
+    height: 40px;
+    line-height: 40px;
+    margin: 5px auto;
+    width: 150px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .add-stage-botton:hover {
+    background-color: var(--tiklab-gray-300);
+  }
+
+  .stage-content{
+
+    .stage-table{
+      .ant-table-thead {
+        .stage-first-col {
+          display: table-cell;
+        }
+      }
+      .stage-first-col{
+        display: inline-flex;
+        align-items: center;
+        //min-width: 80px;
+        //max-width: 120px;
+      }
+      .stage-name {
+        cursor: pointer;
+      }
+      .stage-title {
+        display: flex;
+        align-items: center;
+        margin-left: 5px;
+      }
+      .stage-name:hover {
+        color: var(--tiklab-blue);
+      }
+      .stage-status {
+        padding: 2px 3px;
+        background: #e2e1e4;
+        border-radius: 4px;
+        font-size: 10px;
+        width: fit-content;
+        color: #2b333e;
+      }
+      .stage-status-todo {
+        background: #e2e1e4;
+        color: #2b333e;
+      }
+      .stage-status-process{
+        background: #b0d5dfa1;
+        color: #132c33;
+      }
+      .stage-status-done {
+        background: #dfecd5e3;
+        color: #5e5314;
+      }
+      .ant-pagination-simple .ant-pagination-simple-pager input {
+        user-select: none;
+        pointer-events: none;
+        padding: 0;
+        border: 0;
+      }
+
+    }
+  }
+
+}
+

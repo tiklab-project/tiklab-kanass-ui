@@ -22,7 +22,11 @@ const finWorkList = (router, workStore, params) => {
             type = "version"
 
         }
-        if (router.indexOf("/:id/stagedetail/:stage/work") > -1) {
+        // if (router.indexOf("/:id/stagedetail/:stage/work") > -1) {
+        //     type = "stage"
+        //
+        // }
+        if (router.indexOf("/project/:id/stageDetail/:stage/workitem") > -1) {
             type = "stage"
 
         }
@@ -30,13 +34,16 @@ const finWorkList = (router, workStore, params) => {
             type = "planning"
 
         }
-        if (router.indexOf("product/:productId/workitem") > -1) {
+        if (router.indexOf("/product/:productId/workitem") > -1) {
             type = "product"
 
         }
         if (router.indexOf("/projectSet/:projectSetId/workitem") > -1) {
             type = "projectSet"
 
+        }
+        if (router.indexOf("/product/:productId/planDetail/:productPlanId/type/:workTypeCode") > -1) {
+            type = "productPlan"
         }
         goWorkItem(type, workStore, params)
     }
@@ -47,7 +54,7 @@ const finWorkList = (router, workStore, params) => {
  * 获取事项列表
  */
 const goWorkItem = (type, workStore, params) => {
-    const { sprintId, versionId, stageId, projectId, quickFilter, projectIds, workTypeCode } = params;
+    const { sprintId, versionId, stageId, projectId, quickFilter, projectIds, workTypeCode, productPlanId } = params;
     const { setSearchConditionNull, setSearchCondition, searchCondition } = workStore;
     let initValues = {
         orderParams: [{
@@ -83,6 +90,9 @@ const goWorkItem = (type, workStore, params) => {
             break;
         case "projectSet":
             initValues = { ...initValues, projectIds: projectIds };
+            break;
+        case "productPlan":
+            initValues = { ...initValues, projectIds: projectIds, workTypeCode: workTypeCode, productPlanId: productPlanId };
             break;
         default:
             break;
