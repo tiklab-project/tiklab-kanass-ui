@@ -84,11 +84,34 @@
     .work-detail {
         height: 100%;
         .work-detail-top-row{
-            height: 95px;
+            height: 50px;
+            align-items: center;
+        }
+        .work-detail-top-row-background {
+            border-bottom: 1px solid var(--tiklab-gray-200);
         }
         .work-detail-info-row{
-            height: calc(100% - 95px);
+            height: calc(100% - 50px);
             flex: 1;
+            padding-top: 5px;
+
+            overflow-y: auto;
+            scrollbar-gutter: stable;
+        }
+        .work-detail-info-row-border {
+            border-top: 5px solid var(--tiklab-gray-200);
+        }
+
+        .work-detail-info-row::-webkit-scrollbar {
+            width: 5px;
+        }
+        .work-detail-info-row::-webkit-scrollbar-thumb {
+            border-radius: 5px;
+            background: var(--tiklab-gray-400);
+        }
+        .work-detail-info-row::-webkit-scrollbar-track {
+            border-radius: 0;
+            background: var(--tiklab-gray-800);
         }
 
 
@@ -109,11 +132,35 @@
     display: flex;
 
     .work-detail-top-row{
-        height: 95px;
+        height: 50px;
+        align-items: center;
+    }
+    .work-detail-top-row-background {
+        border-bottom: 1px solid var(--tiklab-gray-200);
     }
     .work-detail-info-row{
-        height: calc(100% - 95px);
+        height: calc(100% - 50px);
         flex: 1;
+        padding-top: 5px;
+
+        overflow-y: auto;
+        scrollbar-gutter: stable;
+    }
+
+    .work-detail-info-row-border {
+        border-top: 5px solid var(--tiklab-gray-200);
+    }
+
+    .work-detail-info-row::-webkit-scrollbar {
+        width: 5px;
+    }
+    .work-detail-info-row::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        background: var(--tiklab-gray-400);
+    }
+    .work-detail-info-row::-webkit-scrollbar-track {
+        border-radius: 0;
+        background: var(--tiklab-gray-800);
     }
 
     .ant-form-item {
@@ -133,7 +180,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 10 15px;
+        padding: 0 15px;
     }
     .work-detail-crumb {
         display: flex;
@@ -163,8 +210,8 @@
         display: flex;
         justify-content: flex-start;
         align-items: center;
-        padding-bottom: 10px;
-        padding: 0 15px;
+        //padding-bottom: 10px;
+        padding: 10px 15px;
         overflow: hidden;
         .edit-status-modal {
             .ant-modal-body {
@@ -175,8 +222,22 @@
         .work-item-title-top {
             display: flex;
             align-items: center;
+            justify-content: space-between;
             //border-bottom: 1px solid var(--tiklab-gray-200);
 
+            .work-item-title-top-info{
+                //display: flex;
+                //align-items: center;
+                //gap: 10px;
+                width: 100%;
+
+                .title-top-info-content {
+                    flex: 1;
+                }
+                .work-item-code{
+                    color: #999;
+                }
+            }
             .work-detail-tab-botton {
                 display: flex;
                 justify-content: flex-end;

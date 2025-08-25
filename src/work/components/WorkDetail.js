@@ -37,10 +37,17 @@ const rowSpan = {
     xxl: 24
 }
 
+const drawerViewRowSpan = {
+    md:{ span: 24, offset: 0 },
+    lg:{ span: 14, offset: 5 },
+    xl:{ span: 18, offset: 3 },
+    xll:{ span: 16, offset: 4 }
+}
+
 const WorkDetail = (props) => {
     const [detailForm] = Form.useForm();
 
-    const { workStore, setIsModalVisible, delectCurrentWorkItem, rowSpan, closeModal } = props;
+    const { workStore, setIsModalVisible, delectCurrentWorkItem, rowSpan, closeModal, drawerView, modalView } = props;
     const { workList, setWorkList, setWorkId, workShowType, workId, editWork,
         setWorkIndex, getWorkTypeList, getModuleList, findSprintList, getSelectUserList,
         findPriority, searchWorkById, findTransitionList, findWorkItemRelationModelCount,
@@ -424,8 +431,11 @@ const WorkDetail = (props) => {
                                 <>
                                     {workInfo &&
                                         <div className="work-detail">
-                                            <Row className="work-detail-top-row">
-                                                <Col {...rowSpan} style={{ background: "#fff", width: "100%", borderBottom: "1px solid var(--tiklab-gray-200)" }}>
+                                            <Row className={`work-detail-top-row ${modalView ? "work-detail-top-row-background":""}`}>
+                                                <Col {...rowSpan} style={{
+                                                    // background: "#fff",
+                                                    width: "100%",
+                                                }}>
                                                     <Skeleton loading={infoLoading} active>
                                                         <WorkDetailCrumb
                                                             detailCrumbArray={detailCrumbArray}
@@ -437,25 +447,49 @@ const WorkDetail = (props) => {
                                                             projectId={projectId}
                                                             sprintId={sprintId}
                                                             versionId={versionId}
+                                                            modalView={modalView}
                                                             {...props}
                                                         />
+
+
+                                                    </Skeleton>
+                                                </Col>
+                                            </Row>
+                                            <Row className={`work-detail-info-row`} style={{ background: "#fff" }} onWheel={(e) => e.stopPropagation()}>
+                                                <Col {...(drawerView ? drawerViewRowSpan : rowSpan)}
+                                                     style={{ background: "#fff" }}
+                                                >
+                                                    <Skeleton loading={infoLoading} active>
+
                                                         <div className="work-detail-top" ref={workDetailTop} >
                                                             <div className="work-detail-top-name">
                                                                 <div className="work-item-title-top">
-                                                                    <div
-                                                                        className={`work-item-title ${isFocus ? "work-item-title-focus" : ""}`}
-                                                                        onClick={() => focusTitleInput()}
-
-                                                                    >
-                                                                        <div
-                                                                            contentEditable={isPermissionField("title")}
-                                                                            suppressContentEditableWarning
-                                                                            onBlur={() => updateByBlur(event, "blur")}
-                                                                            onKeyDown={() => updateNameByKey(event, workInfo.id)}
-                                                                            ref={inputRef}
-                                                                            className="work-item-title-left"
-                                                                        >
-                                                                            {workInfo?.title}
+                                                                    <div className={"work-item-title-top-info"}>
+                                                                        {/*<ImgComponent*/}
+                                                                        {/*    src={workInfo?.workTypeSys.iconUrl}*/}
+                                                                        {/*    alt=""*/}
+                                                                        {/*    className="img-icon-right"*/}
+                                                                        {/*/>*/}
+                                                                        {/*<span className={"work-item-code"}>{workInfo.code}</span>*/}
+                                                                        <div className={"title-top-info-content"}>
+                                                                            <div
+                                                                                className={`work-item-title ${isFocus ? "work-item-title-focus" : ""}`}
+                                                                                onClick={() => focusTitleInput()}
+                                                                            >
+                                                                                <div
+                                                                                    contentEditable={isPermissionField("title")}
+                                                                                    suppressContentEditableWarning
+                                                                                    onBlur={() => updateByBlur(event, "blur")}
+                                                                                    onKeyDown={() => updateNameByKey(event, workInfo.id)}
+                                                                                    ref={inputRef}
+                                                                                    className="work-item-title-left"
+                                                                                >
+                                                                                    {workInfo?.title}
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className={"work-item-code"}>
+                                                                                由 {workInfo.builder.nickname} 于 {workInfo.buildTime.slice(0,19)} 创建
+                                                                            </div>
                                                                         </div>
                                                                     </div>
 
@@ -488,131 +522,10 @@ const WorkDetail = (props) => {
 
                                                             </div>
                                                         </div>
-                                                        {/*<div className="work-detail-top-info" ref={detailTopFormRef}>*/}
-                                                        {/*    <Skeleton loading={infoLoading} active>*/}
-                                                        {/*        <Form*/}
-                                                        {/*            className="work-detail-top-info-form"*/}
-                                                        {/*            form={detailTopForm}*/}
-                                                        {/*            initialValues={{ remember: true }}*/}
-                                                        {/*            labelAlign="left"*/}
-                                                        {/*            // layout="vertical"*/}
-                                                        {/*            onValuesChange={(changedValues, allValues) => changeWorkItemInfo(changedValues, allValues)}*/}
-                                                        {/*        >*/}
-                                                        {/*            <Row style={{width: "100%", display: "flex", gap: "20px"}}>*/}
-                                                        {/*                <div style={{*/}
-                                                        {/*                    display: "flex",*/}
-                                                        {/*                    alignItems: "center",*/}
-                                                        {/*                    gap: "5px"*/}
-                                                        {/*                }}>*/}
-
-                                                        {/*                    <Form.Item label="负责人" name="assigner"*/}
-                                                        {/*                    >*/}
-                                                        {/*                        <Select*/}
-                                                        {/*                            placeholder="无"*/}
-                                                        {/*                            className="work-select"*/}
-                                                        {/*                            key="selectAssigner"*/}
-                                                        {/*                            bordered={fieldName === "assigner" ? true : false}*/}
-                                                        {/*                            suffixIcon={fieldName === "assigner" || hoverFieldName == "assigner" ? <CaretDownOutlined /> : false}*/}
-                                                        {/*                            onFocus={() => changeStyle("assigner", "assigner")}*/}
-                                                        {/*                            onBlur={() => setFieldName("")}*/}
-                                                        {/*                            onMouseEnter={() => onMouseEnter("assigner")}*/}
-                                                        {/*                            onMouseLeave={() => setHoverFieldName("")}*/}
-                                                        {/*                            getPopupContainer={() => detailTopFormRef.current}*/}
-                                                        {/*                            disabled={!isPermissionField("assigner")}*/}
-                                                        {/*                            dropdownMatchSelectWidth={false} // 下拉菜单不自适应宽度*/}
-                                                        {/*                        >*/}
-                                                        {/*                            {*/}
-                                                        {/*                                userList && userList.map((item) => {*/}
-                                                        {/*                                    return <Select.Option value={item.user?.id} key={item.user?.id}>*/}
-                                                        {/*                                        <div style={{*/}
-                                                        {/*                                            display: "flex",*/}
-                                                        {/*                                            alignItems: "center",*/}
-                                                        {/*                                            gap: "3px"*/}
-                                                        {/*                                        }}>*/}
-                                                        {/*                                            <UserIcon name={nickName} size={"small"} />*/}
-                                                        {/*                                            {item.user?.nickname ? item.user?.nickname : item.user?.name}*/}
-                                                        {/*                                        </div>*/}
-                                                        {/*                                    </Select.Option>*/}
-                                                        {/*                                })*/}
-                                                        {/*                            }*/}
-                                                        {/*                        </Select>*/}
-                                                        {/*                    </Form.Item>*/}
-                                                        {/*                </div>*/}
-                                                        {/*                <div style={{*/}
-                                                        {/*                    display: "flex",*/}
-                                                        {/*                    alignItems: "center",*/}
-                                                        {/*                    gap: "5px"*/}
-                                                        {/*                }}>*/}
-
-                                                        {/*                    <Form.Item label="优先级" name="workPriority"*/}
-                                                        {/*                               hasFeedback={false}*/}
-                                                        {/*                               validateStatus={"validating"}*/}
-                                                        {/*                    >*/}
-                                                        {/*                        <Select*/}
-                                                        {/*                            placeholder="无"*/}
-                                                        {/*                            className="work-select"*/}
-                                                        {/*                            key="selectWorkPriority"*/}
-                                                        {/*                            bordered={fieldName === "workPriority" ? true : false}*/}
-                                                        {/*                            suffixIcon={fieldName === "workPriority" || hoverFieldName == "workPriority" ? <CaretDownOutlined /> : false}*/}
-                                                        {/*                            onFocus={() => changeStyle("workPriority", "workPriority")}*/}
-                                                        {/*                            onBlur={() => setFieldName("")}*/}
-                                                        {/*                            onMouseEnter={() => onMouseEnter("workPriority")}*/}
-                                                        {/*                            onMouseLeave={() => setHoverFieldName("")}*/}
-                                                        {/*                            allowClear*/}
-                                                        {/*                            getPopupContainer={() => detailTopFormRef.current}*/}
-                                                        {/*                            disabled={!isPermissionField("workPriority")}*/}
-                                                        {/*                            dropdownMatchSelectWidth={false} // 下拉菜单不自适应宽度*/}
-                                                        {/*                        >*/}
-                                                        {/*                            {*/}
-                                                        {/*                                priorityList && priorityList.map((item) => {*/}
-                                                        {/*                                    return <Select.Option value={item.id} key={item.id}>*/}
-                                                        {/*                                        <div style={{*/}
-                                                        {/*                                            display: "flex",*/}
-                                                        {/*                                            alignItems: "center",*/}
-                                                        {/*                                            gap: "3px"*/}
-                                                        {/*                                        }}>*/}
-                                                        {/*                                            <ImgComponent*/}
-                                                        {/*                                                src={item.iconUrl}*/}
-                                                        {/*                                                alt=""*/}
-                                                        {/*                                                className="img-icon"*/}
-                                                        {/*                                            />*/}
-                                                        {/*                                            {item.name}*/}
-                                                        {/*                                        </div>*/}
-                                                        {/*                                    </Select.Option>*/}
-                                                        {/*                                })*/}
-                                                        {/*                            }*/}
-                                                        {/*                        </Select>*/}
-                                                        {/*                    </Form.Item>*/}
-                                                        {/*                </div>*/}
-                                                        {/*                <Form.Item label="状态" name="workStatus"*/}
-                                                        {/*                >*/}
-                                                        {/*                    <div className={`work-status ${setStatuStyle(workInfo.workStatusNode?.status)}`} style={{ padding: "0 11px" }}>{workInfo.workStatusNode?.name}</div>*/}
-                                                        {/*                </Form.Item>*/}
-                                                        {/*            </Row>*/}
 
 
-
-
-
-
-                                                        {/*        </Form>*/}
-                                                        {/*    </Skeleton>*/}
-
-                                                        {/*</div>*/}
                                                         <WorkPrivilegeComponent roleId = {userId} domainId = {projectId} workTypeId = {workInfo.workType.id}/>
-                                                        {/*<WorkDetailTab*/}
-                                                        {/*    workInfo={workInfo}*/}
-                                                        {/*    relationModalNum={relationModalNum}*/}
-                                                        {/*    setTabValue={setTabValue}*/}
-                                                        {/*    tabValue={tabValue}*/}
-                                                        {/*/>*/}
 
-                                                    </Skeleton>
-                                                </Col>
-                                            </Row>
-                                            <Row className="work-detail-info-row">
-                                                <Col {...rowSpan} style={{ background: "#fff" }}>
-                                                    <Skeleton loading={infoLoading} active>
                                                         <WorkDetailBottom
                                                             workInfo={workInfo}
                                                             setWorkInfo={setWorkInfo}
@@ -632,8 +545,6 @@ const WorkDetail = (props) => {
                                                     </Skeleton>
                                                 </Col>
                                             </Row>
-
-
                                         </div>
 
                                     }

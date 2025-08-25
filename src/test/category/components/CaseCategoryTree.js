@@ -15,6 +15,8 @@ import {useHistory} from "react-router";
 import {showCaseTypeView} from "../../../common/caseCommon/CaseCommonFn";
 import { toDiffCaseFn } from "../../common/caseCommonFn";
 import {CASE_TYPE} from "../../../common/dictionary/dictionary"
+import { getUser } from 'tiklab-core-ui'
+import {findTestCaseTableListFn} from "../../testcase/components/testCaseTableFn";
 
 const transformData = (
     data = [],
@@ -148,6 +150,7 @@ const CaseCategoryTree = ({
     // allCaseNum,
     categoryStore,
     add,
+    testcaseStore,
     }) => {
 
 
@@ -155,9 +158,12 @@ const CaseCategoryTree = ({
         findCategoryListTree,
         deleteCategory,
         categoryList,
-        isCategoryHasCases
-
+        isCategoryHasCases,
+        setTableTitle,
+        setTreeCollapsed
     } = categoryStore;
+
+    const {setSearchCondition, searchCondition} = testcaseStore
 
     let projectId = localStorage.getItem("projectId");
 
@@ -171,10 +177,138 @@ const CaseCategoryTree = ({
     const [selectedSearchKey, setSelectedSearchKey] = useState(null);
     const history = useHistory()
     const [loading, setLoading] = useState(false);
+    const [moduleTreeVisible, setModuleTreeVisible] = useState(false);
+    const [quickFilterValue, setQuickFilterValue] = useState("all");
+    const userId = getUser().userId;
 
     useEffect(() => {
         findList(projectId);
     }, [projectId]);
+
+    const quickFilterList = [
+        {
+            value: "all",
+            label: "所有用例",
+            icon: "module"
+        },
+        {
+            value: "pending",
+            label: "我的待办",
+            icon: "my-pending"
+        },
+        {
+            value: "assigner",
+            label: "我负责的",
+            icon: "my-ending"
+        },
+        {
+            value: "creat",
+            label: "我创建的",
+            icon: "my-creat"
+        }
+    ]
+
+    const getQuickFilterRangeTestCase = (value,label) => {
+        setQuickFilterValue(value)
+        setTableTitle(label)
+        // setModuleTitle(null)
+
+        console.log("筛选条件++++++" + JSON.stringify(value))
+        if (!value) {
+            getAllTestCase();
+            return
+        } else {
+            let data = value;
+            switch (data) {
+                case "all":
+                    getAllTestCase();
+                    break;
+                case "pending":
+                    getPendingTestCase();
+                    break;
+                case "creat":
+                    getCreatTestCase();
+                    break;
+                case "assigner":
+                    getAssignerTestCase();
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    const getAllTestCase = () => {
+        const initValues = {
+            projectId: projectId,
+            name: null,
+            createUser: null,
+            director: null,
+            pageParam: {
+                pageSize: 20,
+                currentPage: 1,
+            },
+            moduleIds: [],
+            status: null,
+        }
+        setSearchCondition(initValues)
+        setTableTitle("所有用例")
+        const res = findTestCaseTableListFn(initValues)
+    }
+
+    const getPendingTestCase = () => {
+        const initValues = {
+            projectId: projectId,
+            name: null,
+            createUser: null,
+            director: userId,
+            pageParam: {
+                pageSize: 20,
+                currentPage: 1,
+            },
+            moduleIds: [],
+            status: 0,
+        }
+        setSearchCondition(initValues)
+        setTableTitle("我的待办")
+        const res = findTestCaseTableListFn(initValues)
+    }
+
+    const getCreatTestCase = () => {
+        const initValues = {
+            projectId: projectId,
+            name: null,
+            createUser: userId,
+            director: null,
+            pageParam: {
+                pageSize: 20,
+                currentPage: 1,
+            },
+            moduleIds: [],
+            status: null,
+        }
+        setSearchCondition(initValues)
+        setTableTitle("我创建的")
+        const res = findTestCaseTableListFn(initValues)
+    }
+
+    const getAssignerTestCase = () => {
+        const initValues = {
+            projectId: projectId,
+            name: null,
+            createUser: null,
+            director: userId,
+            pageParam: {
+                pageSize: 20,
+                currentPage: 1,
+            },
+            moduleIds: [],
+            status: null,
+        }
+        setSearchCondition(initValues)
+        setTableTitle("我负责的")
+        const res = findTestCaseTableListFn(initValues)
+    }
 
     const findList = async (projectId,name) => {
         setLoading(true);
@@ -201,6 +335,7 @@ const CaseCategoryTree = ({
 
     const handleSelect = (selectedKeys, info) => {
         if (info.node) {
+            setTableTitle(info.node.data.moduleName)
             onNodeClick(info.node.data, info.node.key);
             setSelectedKeys(selectedKeys);
             setSelectedSearchKey(null); // 清除搜索选项的选中状态
@@ -215,6 +350,7 @@ const CaseCategoryTree = ({
         setSelectedSearchKey(null); // 清除搜索选项的选中状态
         setSelectedKeys([]); // 清除树节点的选中状态
         onNodeClick(null, null); // 调用父组件的回调，传递null表示没有选中任何节点
+        setTableTitle("所有用例")
     };
 
     const toggleCollapse = () => {
@@ -222,6 +358,7 @@ const CaseCategoryTree = ({
             localStorage.setItem('CATEGORY_TREE_COLLAPSED', !prev);
             return !prev;
         });
+        setTreeCollapsed();
     };
 
     const treeData = transformData(
@@ -274,62 +411,79 @@ const CaseCategoryTree = ({
                         className="case-category-tree-box"
                     >
 
-                        {/*<div className={"display-flex-between"} style={{padding: "10px 10px 0 16px"}}>*/}
-                        {/*    <div style={{fontSize: "16px", fontWeight: "600"}}>测试用例</div>*/}
-                        {/*</div>*/}
-
-                        <div className={"category-param-search"}>
-                            {/*<MenuSelect*/}
-                            {/*    menuItems={items}*/}
-                            {/*    selectFn={selectKeyFun}*/}
-                            {/*    selected={testType}*/}
-                            {/*    style={{width: `100%`}}*/}
-                            {/*/>*/}
+                        <div className={"case-category-filter-sider-top"}>
+                            <div className="case-category-filter-sider-title">
+                                快速筛选
+                            </div>
+                            {
+                                quickFilterList.map((item, index) => {
+                                    return (
+                                        <div className={`case-category-filter-sider-top-item ${quickFilterValue === item.value ? "case-category-filter-sider-top-item-active" : ""}`}
+                                             onClick={() => getQuickFilterRangeTestCase(item.value, item.label)}>
+                                            <svg className="svg-icon" aria-hidden="true">
+                                                <use xlinkHref={`#icon-${item.icon}`}></use>
+                                            </svg>
+                                            <div className="case-category-filter-sider-top-item-title">
+                                                <span>{item.label}</span>
+                                                {/*<span style={{marginRight: "7px", color: "#999"}}>{index === 0 && workNum.pending || index === 1 && workNum.create}</span>*/}
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            }
                         </div>
 
-                        <div
-                            className={`module-header ${selectedSearchKey === null && selectedKeys.length === 0 ? "ant-tree-node-selected" : ""}`}
-                            onClick={handleModuleClick}
-                        >
-                            <div className="module-header-title">
-                                <Space>
-                                    <UnorderedListOutlined style={{fontSize: "18px"}}/>
-                                    <span>目录</span>
-                                </Space>
-                            </div>
+                        <div className={"case-category-filter-sider-bottom"}>
+                            <div className="case-category-filter-sider-title">
+                                模块筛选
 
+                                <div className={"show-more-icon"}>
+                                    <svg className="icon-18" aria-hidden="true" onClick={() => setModuleTreeVisible(!moduleTreeVisible)}>
+                                        {
+                                            moduleTreeVisible ?
+                                                <use xlinkHref="#icon-show"></use>
+                                                :
+                                                <use xlinkHref="#icon-hidden"></use>
+                                        }
+                                    </svg>
+                                </div>
+                            </div>
                         </div>
+                        {
+                            moduleTreeVisible && (
+                                <>
+                                    <div
+                                        className={`module-header ${selectedSearchKey === null && selectedKeys.length === 0 ? "ant-tree-node-selected" : ""}`}
+                                        onClick={handleModuleClick}
+                                    >
+                                        <div className="module-header-title">
+                                            <Space>
+                                                <UnorderedListOutlined style={{fontSize: "18px"}}/>
+                                                <span>目录</span>
+                                            </Space>
+                                        </div>
 
-                        <Spin spinning={loading}>
-                            <div className={"case-category-tree"}>
-                                <Tree
-                                    treeData={treeData}
-                                    expandedKeys={expandedKeys}
-                                    onExpand={setExpandedKeys}
-                                    blockNode
-                                    onSelect={handleSelect}
-                                    rootClassName="case-category-tree"
-                                    switcherIcon={<DownOutlined/>}
-                                    selectedKeys={selectedKeys}
-                                />
-                            </div>
-                        </Spin>
+                                    </div>
 
-                        <div className={"collapse-bottom-box"} style={{display:"flex",justifyContent:"space-between"}}>
-                            <div
-                                onClick={() => {
-                                    history.push(`/project/${projectId}/testcase/testplan`)
-                                }}
-                                style={{
-                                    cursor: "pointer",
-                                    display: "flex",
-                                    alignItems: "center",
-                                    gap:10
-                                }}
-                            >
-                                <CalendarOutlined />
-                                测试计划
-                            </div>
+                                    <Spin spinning={loading}>
+                                        <div className={"case-category-tree"}>
+                                            <Tree
+                                                treeData={treeData}
+                                                expandedKeys={expandedKeys}
+                                                onExpand={setExpandedKeys}
+                                                blockNode
+                                                onSelect={handleSelect}
+                                                rootClassName="case-category-tree"
+                                                switcherIcon={<DownOutlined/>}
+                                                selectedKeys={selectedKeys}
+                                            />
+                                        </div>
+                                    </Spin>
+                                </>
+                            )
+                        }
+
+                        <div className={"collapse-bottom-box"} style={{display:"flex",justifyContent:"flex-end", marginTop: "auto"}}>
                             <Button
                                 type="text"
                                 onClick={toggleCollapse}
@@ -344,4 +498,4 @@ const CaseCategoryTree = ({
         </div>
     );
 };
-export default inject("categoryStore")(observer(CaseCategoryTree));
+export default inject("categoryStore","testcaseStore")(observer(CaseCategoryTree));

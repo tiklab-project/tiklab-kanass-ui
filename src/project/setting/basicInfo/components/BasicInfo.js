@@ -377,7 +377,7 @@ const BasicInfo = props => {
                                     >
                                         <Input placeholder="项目描述" />
                                     </Form.Item>
-                                    <PrivilegeProjectButton code={'ProjectEdit'} domainId={projectId}  {...props}>
+                                    {/*<PrivilegeProjectButton code={'ProjectEdit'} domainId={projectId}  {...props}>*/}
                                         <Form.Item {...formTailLayout} >
                                             <Button onClick={() => cancel()}>
                                                 取消
@@ -396,7 +396,7 @@ const BasicInfo = props => {
                                                 保存
                                             </Button>
                                         </Form.Item>
-                                    </PrivilegeProjectButton>
+                                    {/*</PrivilegeProjectButton>*/}
 
                                 </Form>
                             </div>
@@ -407,11 +407,11 @@ const BasicInfo = props => {
                                     此项目及其事务、组件、附件和版本将在回收站中保留 60 天，之后将被永久删除。
                                 </div>
 
-                                <PrivilegeProjectButton code={'ProjectDelete'} domainId={projectId}  {...props}>
+                                {/*<PrivilegeProjectButton code={'ProjectDelete'} domainId={projectId}  {...props}>*/}
                                     <div className="change-button delete-button" onClick={() => showModal()}>
                                         删除项目
                                     </div>
-                                </PrivilegeProjectButton>
+                                {/*</PrivilegeProjectButton>*/}
                             </div>
                         </Panel>
                     </Collapse>

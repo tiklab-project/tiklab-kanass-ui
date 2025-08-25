@@ -15,6 +15,7 @@ import { withRouter } from 'react-router';
 import { renderRoutes } from "react-router-config";
 import LogAside from "./LogAside";
 import Breadcrumb from "../../common/breadcrumb/Breadcrumb";
+import EnhanceEntranceCloseModal from "../../common/enhanceEntrance/EnhanceEntranceCloseModal";
 const { Sider,Content } = Layout;
 const LogContent = (props) => {
     const store = {
@@ -22,6 +23,7 @@ const LogContent = (props) => {
     }
     const { route } = props;
     const [selectTab, setSelectTab] = useState("list");
+    const [enhanceModal, setEnhanceModal] = useState( false);
 
     const logTabs = [
         {
@@ -39,6 +41,12 @@ const LogContent = (props) => {
     ];
 
     const handleTabClick = (key, id) => {
+        // if (key === "statistics"){
+        //     setEnhanceModal(true)
+        // }else {
+        //     setSelectTab(key)
+        //     props.history.push(id)
+        // }
         setSelectTab(key)
         props.history.push(id)
     }
@@ -85,6 +93,11 @@ const LogContent = (props) => {
                 </Layout>
             </Row>
         </Layout>
+        {/*<EnhanceEntranceCloseModal*/}
+        {/*    enhanceModal = {enhanceModal}*/}
+        {/*    setEnhanceModal={setEnhanceModal}*/}
+        {/*    config={{title:"工时统计", desc:"工时统计"}}*/}
+        {/*/>*/}
     </Provider>
 
     )

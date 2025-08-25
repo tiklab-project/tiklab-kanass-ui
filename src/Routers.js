@@ -38,6 +38,7 @@ const SystemMessageTemplate = AsyncComponent(() => import('./setting/message/Sys
 const SystemMessageNotice = AsyncComponent(() => import('./setting/message/SystemMessageNotice.js'))
 const SystemMessageNoticeBase = AsyncComponent(() => import('./setting/message/SystemMessageNoticeBase.js'))
 const ProjectMessageNoticeContent = AsyncComponent(() => import("./setting/message/ProjectMessageNoticeContent"))
+const SystemMessageContent = AsyncComponent(() => import("./setting/message/SystemMessageContent"))
 const DomainMessageNoticeContent = AsyncComponent(() => import("./project/setting/projectMessage/DomainMessageNoticeContent.js"))
 
 const Setting = AsyncComponent(() => import('./setting/common/components/Setting'))
@@ -243,14 +244,15 @@ const Appraised = AsyncComponent(() => import('./project/appraised/components/Ap
 
 // 评审
 const AppraisedHome = AsyncComponent(() => import('./appraised/common/components/AppraisedLayout'))
-const AppraisedWorkItem = AsyncComponent(() => import('./project/appraised/components/AppraisedWorkItemTable'))
-const AppraisedWorkItemDetail = AsyncComponent(() => import('./project/appraised/components/AppraisedWorkItemStatusDrawer'))
+const AppraisedItem = AsyncComponent(() => import('./project/appraised/components/AppraisedItemTable'))
+const AppraisedWorkItemDetail = AsyncComponent(() => import('./project/appraised/components/AppraisedItemStatusDrawer'))
 
 // requestError
 const RequestErrorContent = AsyncComponent(() => import('./common/requestError/RequestErrorContent'))
 
 //测试用例
 let TestCaseTableMain = AsyncComponent(() => import( "./test/testcase/components/TestCaseTableMain"));
+let TestCaseTableLayout = AsyncComponent(() => import( "./test/testcase/components/TestCaseLayout"));
 let TestCaseTable = AsyncComponent(() => import("./test/testcase/components/TestCaseTable"));
 let FunctionContentListView = AsyncComponent(() => import("./test/function/components/listView/FunctionContentListView"));
 
@@ -706,6 +708,12 @@ const Routers = [
                     {
                         path: "/setting/systemFlowsystem",
                         component: ProjectSystemFlowListSystem,
+                        row: true,
+                        exact: true
+                    },
+                    {
+                        path: "/setting/message",
+                        component: SystemMessageContent,
                         row: true,
                         exact: true
                     },
@@ -1205,7 +1213,7 @@ const Routers = [
                     },
                     {
                         path: "/project/:id/appraised/:appraised",
-                        component: AppraisedWorkItem,
+                        component: AppraisedItem,
                     },
                     {
                         path: "/project/:id/appraised/:appraised/:workId",
@@ -1220,15 +1228,22 @@ const Routers = [
                         component: TestCaseTableMain,
                         routes: [
                             {
-                                path: "/project/:id/testcase/cases",
-                                exact: true,
-                                component: TestCaseTable,
+                                path: "/project/:id/testcase/caseDetail",
+                                component: TestCaseTableLayout,
+                                routes: [
+                                    {
+                                        path: "/project/:id/testcase/caseDetail/info",
+                                        exact: true,
+                                        component: TestCaseTable,
+                                    },
+                                    {
+                                        path: "/project/:id/testcase/caseDetail/function/:caseId",
+                                        exact: true,
+                                        component: FunctionContentListView,
+                                    },
+                                ]
                             },
-                            {
-                                path: "/project/:id/testcase/function/:caseId",
-                                exact: true,
-                                component: FunctionContentListView,
-                            },
+
                             {
                                 path: "/project/:id/testcase/testplan",
                                 exact: true,

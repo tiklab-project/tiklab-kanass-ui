@@ -82,7 +82,8 @@ export class ProjectSetStore {
      */
     @action
     getProjectSetlist = async(value) => {
-        const data = await Service("/projectSet/findProjectSetList", value);
+        Object.assign(this.projectSetPageParams, value)
+        const data = await Service("/projectSet/findProjectSetList", this.projectSetPageParams);
         if(data.code === 0){
             this.projectSetList = data.data;
         }

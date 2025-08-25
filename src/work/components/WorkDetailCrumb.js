@@ -13,7 +13,7 @@ import ImgComponent from "../../common/imgComponent/ImgComponent";
 
 const WorkDetailCrumb = (props) => {
     const { detailCrumbArray, workShowType, setDetailCrumbArray, setWorkId, setShowFlow, setIsModalVisible, projectId,versionId, sprintId
-     } = props;
+     , modalView} = props;
 
     const isDetail = () => {
         let isView = false;
@@ -85,6 +85,13 @@ const WorkDetailCrumb = (props) => {
                                 </svg>
                                 事项 &nbsp;/ &nbsp;</div>
                         }
+                        {/*{*/}
+                        {/*    <div className="work-detail-crumb-item" onClick={() => closeDrawer()}>*/}
+                        {/*        <svg className="svg-icon work-detail-crumb-icon" aria-hidden="true">*/}
+                        {/*            <use xlinkHref="#icon-pageLeft"></use>*/}
+                        {/*        </svg>*/}
+                        {/*    </div>*/}
+                        {/*}*/}
                         {
                             detailCrumbArray?.length > 0 && detailCrumbArray.map((item, index) => {
                                 let html;
@@ -98,6 +105,7 @@ const WorkDetailCrumb = (props) => {
 
                                         <span className="work-detail-crumb-text">{item.code}</span>
                                     </div>
+                                    // html = <></>
                                 } else {
                                     html = <div className="work-detail-crumb-item" key={item.id} onClick={() => goCrumWork(index, item.id)}>
                                         <span style={{ padding: "0 10px" }}>/</span>

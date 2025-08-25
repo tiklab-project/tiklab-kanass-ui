@@ -123,20 +123,20 @@ const MilestoneAddEditModal = (props) => {
         <div className="addmodel">
             {
                 props.type !== "edit" ?
-                    <PrivilegeProjectButton code={'MilestoneAdd'} disabled={"hidden"} domainId={projectId}  {...props}>
+                    // <PrivilegeProjectButton code={'MilestoneAdd'} disabled={"hidden"} domainId={projectId}  {...props}>
                         <Button type="primary" onClick={showModal}>
                             添加里程碑
                         </Button>
-                    </PrivilegeProjectButton> 
+                    // </PrivilegeProjectButton>
                     :
-                    <PrivilegeProjectButton code={'MilestoneEdit'} disabled={"hidden"} domainId={projectId}  {...props}>
+                    // <PrivilegeProjectButton code={'MilestoneEdit'} disabled={"hidden"} domainId={projectId}  {...props}>
                         <svg className="svg-icon" aria-hidden="true"
                             onClick={() => showModal()}
                             style={{ cursor: "pointer", marginRight: "16px" }}
                         >
                             <use xlinkHref="#icon-edit"></use>
                         </svg>
-                    </PrivilegeProjectButton>
+                    // </PrivilegeProjectButton>
             }
             <Modal
                 title={props.name}

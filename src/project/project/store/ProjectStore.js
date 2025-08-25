@@ -125,7 +125,8 @@ export class ProjectStore {
             startTime: values.startTime,
             endTime: values.endTime,
             iconUrl: values.iconUrl,
-            productId: values.productId
+            productId: values.productId,
+            projectSetId: values.projectSetId
         }
         const data = await Service("/project/createProject", param)
         if(data.code === 0){

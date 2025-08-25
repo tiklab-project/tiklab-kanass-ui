@@ -242,7 +242,7 @@ const SprintBasicInfo = props => {
                                     >
                                         <Input placeholder="迭代描述" />
                                     </Form.Item>
-                                    <PrivilegeProjectButton code={'SprintEdit'} domainId={projectId}  {...props}>
+                                    {/*<PrivilegeProjectButton code={'SprintEdit'} domainId={projectId}  {...props}>*/}
                                         <Form.Item {...formTailLayout} >
                                             <Button onClick={() => cancel()}>
                                                 取消
@@ -251,7 +251,7 @@ const SprintBasicInfo = props => {
                                                 保存
                                             </Button>
                                         </Form.Item>
-                                    </PrivilegeProjectButton>
+                                    {/*</PrivilegeProjectButton>*/}
 
                                 </Form>
                             </div>
@@ -261,11 +261,11 @@ const SprintBasicInfo = props => {
                                 <div className="sprint-set-icon-block">
                                     删除迭代，包含迭代与事项的关联关系
                                 </div>
-                                <PrivilegeProjectButton code={'SprintDelete'} domainId={projectId}  {...props}>
+                                {/*<PrivilegeProjectButton code={'SprintDelete'} domainId={projectId}  {...props}>*/}
                                     <div className="change-button delete-button" onClick={() => showModal()}>
                                         删除迭代
                                     </div>
-                                </PrivilegeProjectButton>
+                                {/*</PrivilegeProjectButton>*/}
 
                             </div>
                         </Panel>

@@ -123,12 +123,12 @@ const VersionPlan = (props) => {
                     {/* <svg className="svg-icon" aria-hidden="true" onClick={() => deleSprintList(item.id)} style={{ cursor: "pointer" }}>
                         <use xlinkHref="#icon-edit"></use>
                     </svg> */}
-                    <PrivilegeProjectButton code={'VersionDelete'} domainId={projectId}  {...props}>
+                    {/*<PrivilegeProjectButton code={'VersionDelete'} domainId={projectId}  {...props}>*/}
                         <svg className="svg-icon" aria-hidden="true" onClick={() => deleteVersionPlan(record.id)} style={{ cursor: "pointer" }}>
                             <use xlinkHref="#icon-delete"></use>
                         </svg>
 
-                    </PrivilegeProjectButton>
+                    {/*</PrivilegeProjectButton>*/}
 
 
                 </Space>

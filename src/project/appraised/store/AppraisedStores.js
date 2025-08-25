@@ -41,6 +41,9 @@ export class AppraisedStore {
         }
     };
 
+    @observable
+    appraisedTypeList = [];
+
     /**
      * 查找项目下的评审
      * @param value
@@ -149,6 +152,18 @@ export class AppraisedStore {
         const data = await Service("/appraised/findAppraisedAndWorkItemNum", param);
         if (data.code === 0) {
             this.appraisedItem = data.data;
+        }
+        return data;
+    }
+
+    /**
+     * 查找全部评审类型
+     */
+    @action
+    findAllAppraisedType = async () => {
+        const data = await Service("/appraisedType/findAllAppraisedType")
+        if (data.code === 0) {
+            this.appraisedTypeList = data.data;
         }
         return data;
     }

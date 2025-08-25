@@ -35,7 +35,7 @@ const getStore = (productId) =>{
     }
 }
 const WorkModuleFilter = (props) => {
-    const { workStore } = props;
+    const { workStore, onIsOpenChange } = props;
     const { quickFilterValue, setQuickFilterValue,setSearchCondition, findStateNodeList, tabValue,
         getWorkConditionPageTree, getWorkConditionPage, setTableTitle, setModuleTitle, setTabValue,
         viewType, findUserCreateAndTodoWorkNum, workList, findWorkTypeDmList, setQuickFilterVisible,
@@ -71,6 +71,12 @@ const WorkModuleFilter = (props) => {
     });
     const [workSystem, setWorkSystem] = useState([]);
     const [workCustom, setWorkCustom] = useState([]);
+    const [showCustomWorkType, setShowCustomWorkType] = useState(false);
+
+    useEffect(() => {
+        // 当 isOpen 变化时调用父组件的回调
+        onIsOpenChange?.();
+    }, [isOpen, onIsOpenChange]);
 
     // useEffect(() => {
     //     console.log("当前状态：  ", moduleTreeVisible)
@@ -87,21 +93,21 @@ const WorkModuleFilter = (props) => {
             label: "我的待办",
             icon: "my-pending"
         },
-        // {
-        //     value: "ending",
-        //     label: "我的已办",
-        //     icon: "my-ending"
-        // },
+        {
+            value: "assigner",
+            label: "我负责的",
+            icon: "my-ending"
+        },
         {
             value: "creat",
             label: "我创建的",
             icon: "my-creat"
         },
-        {
-            value: "overdue",
-            label: "已逾期",
-            icon: "my-overdue"
-        }
+        // {
+        //     value: "overdue",
+        //     label: "已逾期",
+        //     icon: "my-overdue"
+        // }
     ]
 
     /**
@@ -143,6 +149,9 @@ const WorkModuleFilter = (props) => {
                     break;
                 case "overdue":
                     getOverdueWorkItem();
+                    break;
+                case "assigner":
+                    getAssignerWorkItem();
                     break;
                 default:
                     break;
@@ -383,6 +392,29 @@ const WorkModuleFilter = (props) => {
     }
 
     /**
+     * 获取我负责的事项
+     */
+    const getAssignerWorkItem = () => {
+        let initValues = {
+            projectId: projectId,
+            sprintId: sprintId,
+            versionId: versionId,
+            workTypeId: "",
+            overdue: false,
+            builderId: null,
+            assignerId: userId,
+            workStatusIds: [],
+            pageParam: {
+                pageSize: 20,
+                currentPage: 1,
+            },
+            moduleIds: [],
+        }
+        setSearchCondition(initValues)
+        getWorkList(initValues);
+    }
+
+    /**
      * 获取事项列表
      */
     const getWorkList = (initValues) => {
@@ -594,22 +626,6 @@ const WorkModuleFilter = (props) => {
                             <div className="work-module-filter-sider-title">
                                 快速筛选
                             </div>
-                            {/*<div className="work-module-filter-sider-top-title">*/}
-                            {/*    <div className="module-search">*/}
-                            {/*        <div className="search-input">*/}
-                            {/*            <svg className="svg-icon" aria-hidden="true">*/}
-                            {/*                <use xlinkHref="#icon-search"></use>*/}
-                            {/*            </svg>*/}
-                            {/*            <Input bordered={false} allowClear*/}
-                            {/*                   className="module-filter-search-input"*/}
-                            {/*                   key={"search"}*/}
-                            {/*                   onChange={(value) => inputChange(value.target.value)}*/}
-                            {/*                   placeholder="搜索模块"*/}
-                            {/*                   value={inputValue}*/}
-                            {/*            />*/}
-                            {/*        </div>*/}
-                            {/*    </div>*/}
-                            {/*</div>*/}
                             {
                                 quickFilterList.map((item, index) => {
                                     return (
@@ -631,6 +647,19 @@ const WorkModuleFilter = (props) => {
                             <div className="work-module-filter-sider-middle">
                                 <div className="work-module-filter-sider-title">
                                     事项类型
+
+                                    {
+                                        workCustom.length > 0 && <div className={"show-more-icon"}>
+                                            <svg className="icon-18" aria-hidden="true" onClick={() => setShowCustomWorkType(!showCustomWorkType)}>
+                                                {
+                                                    showCustomWorkType ?
+                                                        <use xlinkHref="#icon-normal2"></use>
+                                                        :
+                                                        <use xlinkHref="#icon-normal3"></use>
+                                                }
+                                            </svg>
+                                        </div>
+                                    }
                                 </div>
                                 {workSystem?.map(item => (
                                     <div
@@ -650,7 +679,7 @@ const WorkModuleFilter = (props) => {
                                         {/*</span>*/}
                                     </div>
                                 ))}
-                                {workCustom?.map(item => (
+                                {showCustomWorkType && workCustom?.map(item => (
                                     <div
                                         key={item.id}
                                         className={`worktype-option ${tabValue?.id === item.workType.id ? "selected" : ""}`}
@@ -670,33 +699,8 @@ const WorkModuleFilter = (props) => {
                         <div className="work-module-filter-sider-bottom">
                             <div className="work-module-filter-sider-title">
                                 模块筛选
-                            </div>
-                            <div className="content-module-head"
-                                 onClick={(e) => {
-                                    e.stopPropagation()
-                                    handleNodeClick(null, null)
-                                }}
-                                 onMouseEnter={() => setHoverTitle(true)}
-                                 onMouseLeave={() => setHoverTitle(false)}
-                            >
-                                <svg className="icon-18" aria-hidden="true">
-                                    <use xlinkHref="#icon-module"></use>
-                                </svg>
-                                <div className="content-module-title">
-                                    所有模块
-                                </div>
 
-                                <div style={{marginLeft: "auto",display: "flex", alignItems: "center"}}>
-                                    {
-                                        !project?.productId && hoverTitle && <div
-                                            style={{
-                                                marginRight: "7px",
-                                                cursor: "pointer",
-                                            }}
-                                            onClick={addRootModule}>
-                                            <PlusOutlined style={{ fontSize: '14px' }} />
-                                        </div>
-                                    }
+                                <div style={{color: "var(--tiklab-black)"}}>
                                     <svg className="icon-18" aria-hidden="true" onClick={() => setModuleTreeVisible(!moduleTreeVisible)}>
                                         {
                                             moduleTreeVisible ?
@@ -706,8 +710,39 @@ const WorkModuleFilter = (props) => {
                                         }
                                     </svg>
                                 </div>
-
                             </div>
+                            {
+                                moduleTreeVisible &&
+                                <div className="content-module-head"
+                                     onClick={(e) => {
+                                         e.stopPropagation()
+                                         handleNodeClick(null, null)
+                                     }}
+                                     onMouseEnter={() => setHoverTitle(true)}
+                                     onMouseLeave={() => setHoverTitle(false)}
+                                >
+                                    <svg className="icon-18" aria-hidden="true">
+                                        <use xlinkHref="#icon-module"></use>
+                                    </svg>
+                                    <div className="content-module-title">
+                                        所有模块
+                                    </div>
+
+                                    <div style={{marginLeft: "auto",display: "flex", alignItems: "center"}}>
+                                        {
+                                            !project?.productId && hoverTitle && <div
+                                                style={{
+                                                    marginRight: "7px",
+                                                    cursor: "pointer",
+                                                }}
+                                                onClick={addRootModule}>
+                                                <PlusOutlined style={{ fontSize: '14px' }} />
+                                            </div>
+                                        }
+                                    </div>
+
+                                </div>
+                            }
                             {
                                 moduleTreeVisible &&
                                 <div className="content-module-tree">

@@ -22,6 +22,9 @@
       font-weight: 600;
       margin-top: 10px;
       color: var(--tiklab-gray-500);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
     .work-module-filter-sider-top{
@@ -184,6 +187,15 @@
         background: var(--tiklab-gray-800);
         padding: 6px;
       }
+    }
+
+    .show-more-icon {
+      color: var(--tiklab-black);
+      opacity: 0;
+      transition: all 0.2s;
+    }
+    .work-module-filter-sider-middle .work-module-filter-sider-title:hover .show-more-icon {
+      opacity: 1;
     }
   }
   .work-module-filter-sider::-webkit-scrollbar{

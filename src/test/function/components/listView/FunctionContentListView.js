@@ -40,7 +40,7 @@ const FunctionContentListView = (props) =>{
         <PageCenter>
             <div className={"display-flex-gap"} style={{marginTop:"10px"}}>
                 <LeftOutlined
-                    onClick={()=>props.history.push(`/project/${projectId}/testcase/cases`)}
+                    onClick={()=>props.history.push(`/project/${projectId}/testcase/caseDetail/info`)}
                     style={{marginBottom:"8px"}}
                 />
                 <EditableTitle

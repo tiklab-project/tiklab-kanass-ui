@@ -1,29 +1,35 @@
-import AppraisedWorkItemStore from "../store/AppraisedWorkItemStore";
+import AppraisedItemStore from "../store/AppraisedItemStore";
 import React, {useEffect, useState} from 'react';
 import {Col, Progress, Row, Space, Table, Tooltip} from "antd";
 import InputSearch from "../../../common/input/InputSearch";
 import Button from "../../../common/button/Button";
 import WorkStore from "../../../work/store/WorkStore";
-import AppraisedWorkItemAddModel from "./AppraisedWorkItemAddModel";
+import AppraisedItemAddModel from "./AppraisedItemAddModel";
 import {observer, inject, Provider} from "mobx-react";
 import {withRouter} from "react-router";
 import WorkCalendarStore from "../../../work/store/WorkCalendarStore";
 import DeleteModal from "../../../common/deleteModal/deleteModal";
-import "./AppraisedWorkItemTable.scss"
+import "./AppraisedItemTable.scss"
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
 import UserIcon from "../../../common/UserIcon/UserIcon";
 import AppraisedStores from "../store/AppraisedStores";
 import WorkDetailDrawer from "../../../work/components/WorkDetailDrawer";
 import {setSessionStorage} from "../../../common/utils/setSessionStorage";
-import AppraisedWorkItemStatusDrawer from "./AppraisedWorkItemStatusDrawer";
+import AppraisedItemStatusDrawer from "./AppraisedItemStatusDrawer";
+import IconCommon from "../../../common/caseCommon/IconCommon";
 
-const AppraisedWorkItemTable = (props) => {
-    const store = {appraisedWorkItemStore: AppraisedWorkItemStore, workStore: WorkStore, workCalendarStore: WorkCalendarStore}
+const AppraisedItemTable = (props) => {
+    const store = {
+        appraisedItemStore: AppraisedItemStore,
+        workStore: WorkStore,
+        workCalendarStore: WorkCalendarStore,
+        appraisedStores: AppraisedStores
+    }
     // const workStore = {workStore: WorkSort}
     // const workCalendarStore = {workCalendarStore: WorkCalendarStore}
     const [tableList, setTableList] = useState([]);
     const {searchAppraisedWorkItemPage, searchCondition,
-        total, setRecordId, deleteAppraisedWorkItem, appraisedWorkItemList} = AppraisedWorkItemStore;
+        total, setRecordId, deleteAppraisedWorkItem, appraisedItemList} = AppraisedItemStore;
     const {setWorkId, workId} = WorkStore;
     const {searchAppraisedById, status} = AppraisedStores;
 
@@ -47,10 +53,7 @@ const AppraisedWorkItemTable = (props) => {
     useEffect(() => {
         searchTable({appraisedId: appraisedId, workItemTitle: null, workItemAppraisedState: null});
         searchAppraisedById(appraisedId).then(res => {
-            // console.log("appraised:     "+JSON.stringify(res));
             setAppraised(res.data);
-            // const number = ((res.data.passAppraisedWorkItemNumber + unPassAppraisedWorkItemNumber) / res.data.allAppraisedWorkItemNumber).toFixed(2);
-            // setPercent(number)
         })
     },[])
 
@@ -165,13 +168,13 @@ const AppraisedWorkItemTable = (props) => {
         return name;
     }
 
-    const columns=[
+    const workItemColumns=[
         {
             title: '序号',
             dataIndex: 'code',
             key: 'code',
             width: "20%",
-            render: (text, record, index) => <Space onClick={() => goDetail(record)}>
+            render: (text, record, index) => <Space onClick={() => goAppraisedStatus(record)}>
                 <ImgComponent
                     src={record.workItem.workTypeSys?.iconUrl}
                     alt=""
@@ -216,14 +219,140 @@ const AppraisedWorkItemTable = (props) => {
         },
         {
             title: '评审意见',
-            dataIndex: 'workItemAppraisedState',
-            key: 'workItemAppraisedState',
+            dataIndex: 'appraisedItemState',
+            key: 'appraisedItemState',
             ellipsis: true,
             width: "15%",
             render: (text, record) =>
                 <Space onClick={() => goAppraisedStatus(record)} style={{cursor: "pointer"}}>
                     {
-                        getState(record.workItemAppraisedState)
+                        getState(record.appraisedItemState)
+                    }
+                </Space>
+        },
+        {
+            title: "操作",
+            key: "action",
+            width: "50px",
+            render: (text, record, index) => (
+                <Space size="middle">
+                    <DeleteModal deleteFunction={deleteItem} id={record.id} />
+                </Space>
+
+            ),
+        },
+    ];
+
+    const documentColumns=[
+        {
+            title: '标题',
+            dataIndex: ["projectDocument","kanassDocument","documentName"],
+            key: 'documentName',
+            width: "20%",
+            ellipsis: true,
+            render: (text, record, index) => <Space onClick={() => goAppraisedStatus(record)}>
+                <IconCommon icon={"file"} className={"menu-icon"} />
+                <div className="appraised-key">{record?.projectDocument?.kanassDocument.documentName}</div>
+            </Space>
+        },
+        {
+            title: '知识库',
+            dataIndex: ["projectDocument","kanassDocument","kanassRepositoryName"],
+            key: 'title',
+            ellipsis: true,
+            render: (text, record) => <Tooltip title={text}>
+                {text}
+            </Tooltip>
+        },
+        {
+            title: '作者',
+            dataIndex: ["projectDocument","kanassDocument","userName"],
+            key: 'userName',
+            render: (text, record) => <Space>
+                <UserIcon name={record?.projectDocument?.kanassDocument?.userName} />
+                {record?.projectDocument?.kanassDocument?.userName}
+            </Space>
+        },
+        {
+            title: '创建时间',
+            dataIndex: ["projectDocument","kanassDocument","createTime"],
+            key: 'createTime',
+            render: (text, record) => <div className="appraised-info-text">
+                {text.slice(0, 10)}
+            </div>
+        },
+        {
+            title: '评审意见',
+            dataIndex: 'appraisedItemState',
+            key: 'appraisedItemState',
+            ellipsis: true,
+            width: "15%",
+            render: (text, record) =>
+                <Space onClick={() => goAppraisedStatus(record)} style={{cursor: "pointer"}}>
+                    {
+                        getState(record.appraisedItemState)
+                    }
+                </Space>
+        },
+        {
+            title: "操作",
+            key: "action",
+            width: "50px",
+            render: (text, record, index) => (
+                <Space size="middle">
+                    <DeleteModal deleteFunction={deleteItem} id={record.id} />
+                </Space>
+
+            ),
+        },
+    ];
+
+    const testCaseColumns=[
+        {
+            title: '序号',
+            dataIndex: 'caseKey',
+            key: 'caseKey',
+            width: "20%",
+            render: (text, record, index) => <Space onClick={() => goAppraisedStatus(record)}>
+                <IconCommon icon={"gongneng1"} className={"menu-icon"} />
+                <div className="appraised-key">{record.testCase.caseKey}</div>
+            </Space>
+        },
+        {
+            title: '标题',
+            dataIndex: 'name',
+            key: 'name',
+            render: (text, record) => <Tooltip title={record.testCase.name}>
+                {record.testCase.name.length > 15 ? record.testCase.name.substring(0, 15) + "..." : record.testCase.name}
+            </Tooltip>
+        },
+        {
+            title: '用例类型',
+            dataIndex: 'caseType',
+            key: 'caseType',
+            render: (text, record) => <Space >
+                {"功能用例"}
+            </Space>
+        },
+        {
+            title: '创建人',
+            dataIndex: ["createUser", "name"],
+            key: 'createUser',
+            render: (text, record) => <Space>
+                <UserIcon userInfo={record.testCase.createUser?.id} name={record.testCase.createUser?.nickname} />
+                {record.testCase.createUser?.nickname}
+            </Space>
+        },
+        {
+            title: '评审意见',
+            dataIndex: 'appraisedItemState',
+            key: 'appraisedItemState',
+            ellipsis: true,
+            width: "15%",
+            render: (text, record) =>
+                <Space onClick={() => goAppraisedStatus(record)} style={{cursor: "pointer"}}>
+                    {
+                        getState(record.appraisedItemState)
                     }
                 </Space>
         },
@@ -331,6 +460,35 @@ const AppraisedWorkItemTable = (props) => {
         props.history.push(`/project/${projectId}/appraised`)
     }
 
+    const getAddTitle = () => {
+        if (appraised){
+            switch (appraised.appraisedType.id) {
+                case "000000":
+                    return "关联需求"
+                case "111111":
+                    return "关联用例"
+                case "222222":
+                case "333333":
+                    return "关联文档"
+                default:
+                    return "关联需求"
+            }
+        }else {
+            return "关联需求"
+        }
+
+    }
+
+    // 表格列
+    const getTableColumn = () => {
+        switch (appraised?.appraisedType.id) {
+            case "000000" :return workItemColumns;
+            case "111111" :return testCaseColumns;
+            case "222222" :
+            case "333333" :return documentColumns;
+        }
+    }
+
     return <Provider {...store}>
         <div className={`project-appraised`}>
             <Row >
@@ -341,7 +499,7 @@ const AppraisedWorkItemTable = (props) => {
                                 <use xlinkHref="#icon-left"></use>
                             </svg>
                             <p className="appraised-title">{appraised?.name}</p>
-                            <Button onClick={handleAddClick} buttonText={"关联需求"} />
+                            <Button onClick={handleAddClick} buttonText={getAddTitle()} />
                         </div>
                         <div className="appraised-top-info">
                             <div className="top-info-content">
@@ -409,7 +567,7 @@ const AppraisedWorkItemTable = (props) => {
                         <div className="project-appraised-contant">
                             <div className="appraised-table-box">
                                 <Table
-                                    columns={columns}
+                                    columns={getTableColumn()}
                                     dataSource={tableList}
                                     rowKey={(record) => record.id}
                                     pagination={{
@@ -430,31 +588,24 @@ const AppraisedWorkItemTable = (props) => {
                     </div>
                 </Col>
             </Row>
-            <AppraisedWorkItemAddModel
+            <AppraisedItemAddModel
                 showAddModel={showAddModel}
                 setShowAddModel={setShowAddModel}
-                appraisedWorkItemStore={AppraisedWorkItemStore}
                 projectId={projectId}
                 appraisedId={appraisedId}
                 searchTable={searchTable}
                 {...props}
             />
-            <AppraisedWorkItemStatusDrawer
+            <AppraisedItemStatusDrawer
                 visible={statusVisible}
                 setVisible={setStatusVisible}
-                // recordId={}
+                appraised={appraised}
                 searchTable={searchTable}
                 {...props}
             />
 
-            <WorkDetailDrawer
-                isModalVisible={detailVisible}
-                setIsModalVisible={setDetailVisible}
-                searchTable={searchTable}
-                {...props}
-            />
         </div>
     </Provider>
 }
 
-export default withRouter(observer(AppraisedWorkItemTable));
+export default withRouter(observer(AppraisedItemTable));

@@ -68,6 +68,19 @@ export class StageListStore {
         this.stageList = value;
     }
 
+    @action
+    resetStageCondition() {
+        this.stageCondition = {
+            orderParams: [{
+                name: "startTime",
+                orderType: "desc"
+            }],
+            pageParam: {
+                pageSize: 10,
+                currentPage: 1,
+            }
+        };
+    }
 
     /**
      * 创建计划
@@ -266,6 +279,14 @@ export class StageListStore {
         if (data.code === 0) {
             this.parentStageList = data.data.dataList;
         }
+        return data;
+    }
+
+    @observable
+    findStageListTile = async (value) => {
+        this.resetStageCondition();
+        Object.assign(this.stageCondition, value)
+        const data = await Service("/stage/findStageList", this.stageCondition);
         return data;
     }
 

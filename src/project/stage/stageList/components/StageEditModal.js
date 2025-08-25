@@ -143,26 +143,26 @@ const StageEditModal = (props) => {
                     layout="vertical"
                     onFieldsChange = {(changedFields, allFields) => console.log(changedFields, allFields)}
                 >
-                    <Form.Item
-                        label="上级计划"
-                        name="parentStageId"
-                        rules={[
-                            {
-                                message: '请选择上级计划',
-                            },
-                        ]}
-                    >
-                        <Select
-                            placeholder="上级计划"
-                            allowClear
-                        >
-                            {
-                                parentStageList && parentStageList.map((item, index) => {
-                                    return <Select.Option value={item.id} key={item.id}>{item.stageName}</Select.Option>
-                                })
-                            }
-                        </Select>
-                    </Form.Item>
+                    {/*<Form.Item*/}
+                    {/*    label="上级计划"*/}
+                    {/*    name="parentStageId"*/}
+                    {/*    rules={[*/}
+                    {/*        {*/}
+                    {/*            message: '请选择上级计划',*/}
+                    {/*        },*/}
+                    {/*    ]}*/}
+                    {/*>*/}
+                    {/*    <Select*/}
+                    {/*        placeholder="上级计划"*/}
+                    {/*        allowClear*/}
+                    {/*    >*/}
+                    {/*        {*/}
+                    {/*            parentStageList && parentStageList.map((item, index) => {*/}
+                    {/*                return <Select.Option value={item.id} key={item.id}>{item.stageName}</Select.Option>*/}
+                    {/*            })*/}
+                    {/*        }*/}
+                    {/*    </Select>*/}
+                    {/*</Form.Item>*/}
 
                     <Form.Item
                         label="计划名称"

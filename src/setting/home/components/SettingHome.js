@@ -64,7 +64,7 @@ const SettingHome = props => {
 
     const select = (data) => {
         const id = data.id;
-        if (version === "cloud") {
+        if (cloudVersion === "cloud") {
             if (data.islink) {
                 window.open(workUrl + "#" + data.id, '_blank');
             } else {
@@ -94,7 +94,7 @@ const SettingHome = props => {
             children: [
                 {
                     title: '用户',
-                    id: version === "cloud" ? '/enterprise/user' : '/setting/user',
+                    id: cloudVersion === "cloud" ? '/enterprise/user' : '/setting/user',
                     parentUrl: '/setting/orga',
                     icon: <UserOutlined />,
                     islink: true,
@@ -102,7 +102,7 @@ const SettingHome = props => {
                 },
                 {
                     title: "部门",
-                    id: version === "cloud" ? '/enterprise/orga' : '/setting/orga',
+                    id: cloudVersion === "cloud" ? '/enterprise/orga' : '/setting/orga',
                     islink: true,
                     parentUrl: '/setting/orga',
                     icon: <ApartmentOutlined />,
@@ -111,7 +111,7 @@ const SettingHome = props => {
 
                 {
                     title: '用户组',
-                    id: version === "cloud" ? '/enterprise/userGroup' : '/setting/userGroup',
+                    id: cloudVersion === "cloud" ? '/enterprise/userGroup' : '/setting/userGroup',
                     parentUrl: '/setting/orga',
                     islink: true,
                     icon: <GroupOutlined />,
@@ -120,7 +120,7 @@ const SettingHome = props => {
                 {
 
                     title: "用户目录",
-                    id: version === "cloud" ? '/enterprise/dir' : '/setting/dir',
+                    id: cloudVersion === "cloud" ? '/enterprise/dir' : '/setting/dir',
                     parentUrl: '/setting/orga',
                     islink: true,
                     icon: <IdcardOutlined />,
@@ -198,7 +198,7 @@ const SettingHome = props => {
                 setCount(res.data)
             }
         })
-        if (version === 'cloud') {
+        if (cloudVersion === 'cloud') {
             findlogpage({
                 pageParam: { pageSize: 1, currentPage: 1 },
                 userId: getUser().userId
@@ -244,7 +244,7 @@ const SettingHome = props => {
             >
                 <div className='setting-home-limited'>
                     {
-                        version === "cloud" ? <>
+                        cloudVersion === "cloud" ? <>
                             <div className='home-licence-box'>
                                 {cloudVersion}
                             </div>

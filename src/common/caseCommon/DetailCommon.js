@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Form, Row, Col, TreeSelect, Select,  Drawer} from "antd";
 import {DownOutlined} from "@ant-design/icons";
 import Input from "antd/es/input/Input";
@@ -44,6 +44,7 @@ const DetailCommon = (props) =>{
         setDrawerVisible(false);
     };
 
+    const drawerFormRef = useRef();
     return(
         <div >
             <div
@@ -62,131 +63,141 @@ const DetailCommon = (props) =>{
                 placement="right"
                 onClose={onDrawerClose}
                 visible={drawerVisible}
+                className={"detail-drawer"}
                 width={600}
+                mask={false}
+                style={{
+                    // top: "55px",
+                    // height: "calc(100% - 55px)",
+                }}
             >
-                <Form
-                    form={form}
-                    layout="vertical"
-                    onValuesChange={updateCase}
-                    className={"base-info-form"}
-                    style={{padding: " 0 15px"}}
-                >
-                    {/*<Form.Item label={"名称"} name="name">*/}
-                    {/*    <Input placeholder={"名称"}/>*/}
-                    {/*</Form.Item>*/}
-                    
-                    {/*<Form.Item label={"用例类型"}>*/}
-                    {/*    <div style={{margin: "0 0 0 10px"}}>*/}
-                    {/*        {showCaseTypeInList(detailInfo?.testCase?.caseType)}*/}
-                    {/*    </div>*/}
-                    {/*</Form.Item>*/}
-                    
-                    <Form.Item label={"责任人"} name="director">
-                        <Select placeholder={"未设置"}>
-                            {
-                                userList && userList.map(item => {
-                                    return <Option key={item?.user?.id}
-                                                   value={item?.user?.id}>{item?.user?.nickname}</Option>
-                                })
-                            }
-                        </Select>
-                    </Form.Item>
-                    
-                    {/*<Form.Item label={"状态"} name="status">*/}
-                    {/*    <Select placeholder={"未设置"}>*/}
-                    {/*        <Option value={0}><Tag color="#bfc4c6">未开始</Tag></Option>*/}
-                    {/*        <Option value={1}><Tag color="#76b6f1">进行中</Tag></Option>*/}
-                    {/*        <Option value={2}><Tag color="#f29e9ee8">结束</Tag></Option>*/}
-                    {/*    </Select>*/}
-                    {/*</Form.Item>*/}
-                    
-                    <Form.Item label={"模块"} name="category">
-                        <TreeSelect
-                            style={{width: '100%'}}
-                            dropdownStyle={{
-                                maxHeight: 400,
-                                overflow: 'auto',
-                            }}
-                            placeholder="未设置"
-                            allowClear
-                            treeDefaultExpandAll
-                            treeData={categoryTableList.map(item => ({
-                                title: item.name,
-                                key: item.id,
-                                value: item.id,
-                                children: item.children?.map(child => ({
-                                    title: child.name,
-                                    key: child.id,
-                                    value: child.id,
-                                    children: child.children?.map(grandChild => ({
-                                        title: grandChild.name,
-                                        key: grandChild.id,
-                                        value: grandChild.id
+                <div ref={drawerFormRef}>
+                    <Form
+                        form={form}
+                        layout="vertical"
+                        onValuesChange={updateCase}
+                        className={"base-info-form"}
+                        style={{padding: " 0 15px"}}
+                    >
+                        {/*<Form.Item label={"名称"} name="name">*/}
+                        {/*    <Input placeholder={"名称"}/>*/}
+                        {/*</Form.Item>*/}
+
+                        {/*<Form.Item label={"用例类型"}>*/}
+                        {/*    <div style={{margin: "0 0 0 10px"}}>*/}
+                        {/*        {showCaseTypeInList(detailInfo?.testCase?.caseType)}*/}
+                        {/*    </div>*/}
+                        {/*</Form.Item>*/}
+
+                        <Form.Item label={"责任人"} name="director">
+                            <Select placeholder={"未设置"} getPopupContainer={() => drawerFormRef.current}>
+                                {
+                                    userList && userList.map(item => {
+                                        return <Option key={item?.user?.id}
+                                                       value={item?.user?.id}>{item?.user?.nickname}</Option>
+                                    })
+                                }
+                            </Select>
+                        </Form.Item>
+
+                        {/*<Form.Item label={"状态"} name="status">*/}
+                        {/*    <Select placeholder={"未设置"}>*/}
+                        {/*        <Option value={0}><Tag color="#bfc4c6">未开始</Tag></Option>*/}
+                        {/*        <Option value={1}><Tag color="#76b6f1">进行中</Tag></Option>*/}
+                        {/*        <Option value={2}><Tag color="#f29e9ee8">结束</Tag></Option>*/}
+                        {/*    </Select>*/}
+                        {/*</Form.Item>*/}
+
+                        <Form.Item label={"模块"} name="category">
+                            <TreeSelect
+                                style={{width: '100%'}}
+                                getPopupContainer={() => drawerFormRef.current}
+                                dropdownStyle={{
+                                    maxHeight: 400,
+                                    overflow: 'auto',
+                                }}
+                                placeholder="未设置"
+                                allowClear
+                                treeDefaultExpandAll
+                                treeData={categoryTableList.map(item => ({
+                                    title: item.name,
+                                    key: item.id,
+                                    value: item.id,
+                                    children: item.children?.map(child => ({
+                                        title: child.name,
+                                        key: child.id,
+                                        value: child.id,
+                                        children: child.children?.map(grandChild => ({
+                                            title: grandChild.name,
+                                            key: grandChild.id,
+                                            value: grandChild.id
+                                        }))
                                     }))
-                                }))
-                            }))}
-                        />
-                    </Form.Item>
+                                }))}
+                            />
+                        </Form.Item>
 
-                    <Form.Item label={"优先级"} name="priorityLevel" >
-                        <Select placeholder={"未设置"} style={{flex: 1}}>
-                            <Option value={0}>
-                                <div className={"display-flex-gap"}>
-                                    <IconCommon
-                                        className={"icon-s"}
-                                        icon={"icon_level1"}
-                                        style={{cursor: "pointer"}}
-                                    />
-                                    <div>低</div>
-                                </div>
-                            </Option>
-                            <Option value={1}>
-                                <div className={"display-flex-gap"}>
-                                    <IconCommon
-                                        className={"icon-s"}
-                                        icon={"icon_level2"}
-                                        style={{cursor: "pointer"}}
-                                    />
-                                    <div>中</div>
-                                </div>
-                            </Option>
-                            <Option value={2}>
-                                <div className={"display-flex-gap"}>
-                                    <IconCommon
-                                        className={"icon-s"}
-                                        icon={"icon_level3"}
-                                        style={{cursor: "pointer"}}
-                                    />
-                                    <div>高</div>
-                                </div>
-                            </Option>
-                        </Select>
-                    </Form.Item>
+                        <Form.Item label={"优先级"} name="priorityLevel" >
+                            <Select placeholder={"未设置"} style={{flex: 1}} getPopupContainer={() => drawerFormRef.current}>
+                                <Option value={0}>
+                                    <div className={"display-flex-gap"}>
+                                        <IconCommon
+                                            className={"icon-s"}
+                                            icon={"icon_level1"}
+                                            style={{cursor: "pointer"}}
+                                        />
+                                        <div>低</div>
+                                    </div>
+                                </Option>
+                                <Option value={1}>
+                                    <div className={"display-flex-gap"}>
+                                        <IconCommon
+                                            className={"icon-s"}
+                                            icon={"icon_level2"}
+                                            style={{cursor: "pointer"}}
+                                        />
+                                        <div>中</div>
+                                    </div>
+                                </Option>
+                                <Option value={2}>
+                                    <div className={"display-flex-gap"}>
+                                        <IconCommon
+                                            className={"icon-s"}
+                                            icon={"icon_level3"}
+                                            style={{cursor: "pointer"}}
+                                        />
+                                        <div>高</div>
+                                    </div>
+                                </Option>
+                            </Select>
+                        </Form.Item>
 
-                    <Form.Item label={"创建时间"} name="createTime" >
-                        <Input disabled={true} placeholder={"创建时间"} />
-                    </Form.Item>
-                    
-                    <Form.Item label={"更新时间"} name="updateTime" >
-                        <Input disabled={true}  placeholder={"更新时间"}/>
-                    </Form.Item>
-                    
-                    <Form.Item label={"评审"} name="reviewResult" >
-                        <ReviewResultDisplay />
-                    </Form.Item>
-                    
-                    {
-                        demand
-                            ?<Form.Item label={"关联需求"} name="updateTime" >
-                                {demand}
-                            </Form.Item>
-                            :null
-                    }
-                </Form>
-                
-                <div style={{marginTop: '20px',padding: " 0 15px"}}>
-                    <CaseDesc form={form} updateCase={updateCase}/>
+                        <Form.Item label={"创建时间"} name="createTime" >
+                            <Input disabled={true} placeholder={"创建时间"} />
+                        </Form.Item>
+
+                        <Form.Item label={"更新时间"} name="updateTime" >
+                            <Input disabled={true}  placeholder={"更新时间"}/>
+                        </Form.Item>
+
+                        <Form.Item label={"评审"} name="reviewResult" >
+                            <ReviewResultDisplay />
+                        </Form.Item>
+
+                        {
+                            demand
+                                ?<Form.Item label={"关联需求"} name="updateTime" >
+                                    {demand}
+                                </Form.Item>
+                                :null
+                        }
+                    </Form>
+
+                    <div style={{marginTop: '20px',padding: " 0 15px"}}>
+                        <CaseDesc form={form} updateCase={updateCase}/>
+                    </div>
                 </div>
+
             </Drawer>
         </div>
     )

@@ -59,9 +59,11 @@ const { RangePicker } = DatePicker;
 const { Dragger } = Upload;
 
 const getStore = (project) =>{
-    if (project?.productId){
+    if (project?.productId != null){
+        console.log("产品module")
         return ProductModuleStore
     }else {
+        console.log("项目自带module")
         return ModuleStore
     }
 }
@@ -72,6 +74,7 @@ const WorkBasicInfo = (props) => {
     const formRef = useRef();
     const exFormRef = useRef();
     const moreFormRef = useRef();
+    const detailTabRef = useRef();
 
     // 自定义字段的栅格设置
     const layoutExForm = {
@@ -104,7 +107,6 @@ const WorkBasicInfo = (props) => {
         userList, searchWorkById, findChildrenLevel, stageList, createSelectItemRelation,
         createCheckboxSelectItemRelation, deleteWorkAttach, findFlow, permissionFieldList
     } = workStore;
-    const {moduleList, findModuleList} = getStore(project)
     const store = {
         workRelation: workRelationStore,
         workStore: workStore
@@ -122,6 +124,7 @@ const WorkBasicInfo = (props) => {
     // 项目id
     const projectId = props.match.params.id;
     const project = JSON.parse(localStorage.getItem("project"));
+    const {moduleList, findModuleList} = getStore(workInfo.project)
     // 项目类型
     const projectType = workInfo?.project?.projectType.type;
 
@@ -241,7 +244,7 @@ const WorkBasicInfo = (props) => {
         setPreWorkList(workDetailMetaData.canBeRelationPerWorkItemList);
 
 
-        if (project?.productId){
+        if (workInfo?.project?.productId){
             findModuleList({ productId: project?.productId });
         }else{
             findModuleList({ projectId: projectId });
@@ -816,7 +819,7 @@ const WorkBasicInfo = (props) => {
 
                                     {
                                         (projectType === "nomal" || projectType === "hybrid" || projectType === "ipd") && <Form.Item
-                                            label="所属计划" name="stage"
+                                            label="所属阶段" name="stage"
                                             hasFeedback={showValidateStatus === "stage" ? true : false}
                                             validateStatus={validateStatus}
                                         >
@@ -1396,8 +1399,8 @@ const WorkBasicInfo = (props) => {
                         }
                     </div>
 
-                    <div className="work-detail-box comment-box">
-                        <WorkBasicInfoBottom {...props}/>
+                    <div className="work-detail-box comment-box" ref={detailTabRef}>
+                        <WorkBasicInfoBottom detailTabRef={detailTabRef} {...props}/>
                     </div>
                 </div>
 

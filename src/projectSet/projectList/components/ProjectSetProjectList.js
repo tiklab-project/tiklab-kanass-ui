@@ -21,6 +21,8 @@ import { PrivilegeProjectButton } from 'tiklab-privilege-ui';
 import UserIcon from "../../../common/UserIcon/UserIcon";
 import CircleProgress from "../../../common/progress/CircleProgress";
 import ColorIcon from "../../../common/colorIcon/ColorIcon";
+import Button from "../../../common/button/Button";
+import ProjectAdd from "../../../project/project/components/ProjectAdd";
 const ProjectSetProjectList = (props) => {
     const store = {
         projectSetProjectStore: ProjectSetProjectStore
@@ -31,6 +33,7 @@ const ProjectSetProjectList = (props) => {
         findProjectPage({ projectSetId: projectSetId })
         return;
     }, [projectSetId])
+    const [projectAddVisible, setProjectAddVisible] = useState(false)
 
 
 
@@ -277,9 +280,15 @@ const ProjectSetProjectList = (props) => {
             <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                 <div className="projectSetDetail">
                     <Breadcumb firstText="项目">
-                        <PrivilegeProjectButton code={'RelationProject'} domainId={projectSetId}  {...props}>
-                            <ProjectSetRelevance projectSetId={projectSetId}>关联项目</ProjectSetRelevance>
-                        </PrivilegeProjectButton>
+                        <div className={"project-operate-button"}>
+                            {/*<PrivilegeProjectButton code={'RelationProject'} domainId={projectSetId}  {...props}>*/}
+                                <ProjectSetRelevance projectSetId={projectSetId}>关联项目</ProjectSetRelevance>
+                            {/*</PrivilegeProjectButton>*/}
+                            <Button
+                                style={{ width: "fit-content" }}
+                                type="primary" onClick={() => {setProjectAddVisible(true)}} buttonText={"创建项目"} >
+                            </Button>
+                        </div>
 
                     </Breadcumb>
                     <div>
@@ -320,7 +329,11 @@ const ProjectSetProjectList = (props) => {
                             />
                         </div>
                     </div>
-
+                    <ProjectAdd
+                        projectAddVisible  = {projectAddVisible}
+                        setProjectAddVisible = {setProjectAddVisible}
+                        projectSetId = {projectSetId}
+                    />
                 </div>
             </Col>
         </Row>

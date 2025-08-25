@@ -206,9 +206,9 @@ const Sprintdetail = (props) => {
                                 <svg className="svg-icon" aria-hidden="true" onClick={() => showModal("edit", sprintId)}>
                                     <use xlinkHref="#icon-edit"></use>
                                 </svg>
-                                <PrivilegeProjectButton code={'SprintDelete'} domainId={projectId}  {...props}>
+                                {/*<PrivilegeProjectButton code={'SprintDelete'} domainId={projectId}  {...props}>*/}
                                     <DeleteModal deleteFunction={deleSprintList} id={sprintId} />
-                                </PrivilegeProjectButton>
+                                {/*</PrivilegeProjectButton>*/}
                             </div>
                         </div>
                     </Col>

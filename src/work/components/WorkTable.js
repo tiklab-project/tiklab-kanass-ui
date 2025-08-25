@@ -5,7 +5,7 @@
  * @LastEditTime: 2024-12-26 15:53:32
  * @Description: 事项列表页面
  */
-import React, { useState, useRef, useEffect } from "react";
+import React, {useState, useRef, useEffect, useCallback} from "react";
 import { Table, Space, Row, Col, Spin, Popconfirm, Dropdown, Menu } from 'antd';
 import { observer, Provider } from "mobx-react";
 import "./WorkTable.scss";
@@ -26,6 +26,8 @@ import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import WorkModuleFilter from "./WorkModuleFilter";
 import ProductStore from "../../product/product/store/ProductStore";
 import ProjectSetStore from "../../projectSet/projectSet/store/ProjectSetStore";
+import WorkDetailDrawerView from "./workDetailDrawerView/WorkDetailDrawerView";
+import WorkDetailModalView from "./workDetailModalView/WorkDetailModalView";
 
 /**
  * 获取屏幕类型
@@ -145,7 +147,7 @@ const WorkTable = (props) => {
 
             return (
                 !path.includes("/planDetail/") ?
-                <PrivilegeProjectButton code={'WorkItemDelete'} domainId={projectId}  {...props}>
+                // <PrivilegeProjectButton code={'WorkItemDelete'} domainId={projectId}  {...props}>
                     <WorkDeleteSelectModal
                         deleteSelectModal={deleteSelectModal}
                         setDeleteSelectModal={setDeleteSelectModal}
@@ -155,7 +157,7 @@ const WorkTable = (props) => {
                         workId={record.id}
                         setWorkId={setWorkId}
                     />
-                </PrivilegeProjectButton>
+                // </PrivilegeProjectButton>
                 :
                 <svg style={{cursor: "pointer"}} className="icon-20" aria-hidden="true" onClick={() => {
                     deleteProductPlanWork(record.id).then(res => {
@@ -371,12 +373,26 @@ const WorkTable = (props) => {
     const [deleteSelectModal, setDeleteSelectModal] = useState(false)
 
     const workTable = useRef()
+    const detailWidthRef = useRef();
+    const [detailWidth, setDetailWidth] = useState(0);
+
+    // 处理 isOpen 变化的回调
+    const handleIsOpenChange = useCallback(() => {
+        if (detailWidthRef.current) {
+            setDetailWidth(detailWidthRef.current.offsetWidth);
+        }
+    }, []);
+
+    useEffect(() => {
+        console.log("宽度：   ", detailWidth)
+    }, [detailWidth]);
     return (
             <div style={{display: "flex", height:"100%", flex:"1 1 0%"}}>
                 <WorkModuleFilter
                     workStore={WorkStore}
+                    onIsOpenChange={handleIsOpenChange}
                 />
-                <div style={{display: "flex", height:"100%", flex:"1 1 0%"}}>
+                <div style={{display: "flex", height:"100%", flex:"1 1 0%"}} ref={detailWidthRef}>
                     <Row style={{ height: "100%", width: "100%", overflow: "auto", background: "#fff" }}>
                         <Col className="work-col" sm={24} md={24} lg={{ span: 24 }} xl={{ span: "22", offset: "1" }} xxl={{ span: "18", offset: "3"}}>
                             <div className={`work-table ${["sm", "md", "lg", "xl"].indexOf(getScreenType()) > -1 ? "work-table-small" : ""}`} >
@@ -427,15 +443,23 @@ const WorkTable = (props) => {
                                     </Spin>
                                 </div>
                             </div>
-                            <WorkDetailDrawer
+                            {/*<WorkDetailDrawer*/}
+                            {/*    isModalVisible={isModalVisible}*/}
+                            {/*    setIsModalVisible={setIsModalVisible}*/}
+                            {/*    modelRef={modelRef}*/}
+                            {/*    showPage={true}*/}
+                            {/*    delectCurrentWorkItem={delectCurrentWorkItem}*/}
+                            {/*    {...props}*/}
+                            {/*/>*/}
+                            <WorkDetailModalView
                                 isModalVisible={isModalVisible}
                                 setIsModalVisible={setIsModalVisible}
                                 modelRef={modelRef}
                                 showPage={true}
                                 delectCurrentWorkItem={delectCurrentWorkItem}
+                                detailWidth={detailWidth}
                                 {...props}
                             />
-
                         </Col>
                     </Row>
                 </div>

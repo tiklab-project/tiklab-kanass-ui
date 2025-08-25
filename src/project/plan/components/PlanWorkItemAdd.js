@@ -105,11 +105,11 @@ const  PlanWorkItemAddmodal = (props) => {
         <div >
             {   
                 props.type !== "children"?
-                    <PrivilegeProjectButton code={'PlanWorkAdd'} disabled ={"hidden"} domainId={projectId}  {...props}>
+                    // <PrivilegeProjectButton code={'PlanWorkAdd'} disabled ={"hidden"} domainId={projectId}  {...props}>
                         <Button type="primary" onClick={showModal}>
                             {props.name}
                         </Button>
-                    </PrivilegeProjectButton>
+                    // </PrivilegeProjectButton>
                     : <span onClick={showModal} style={{color: "var(--tiklab-gray-400)"}}>{props.name}</span>
             }
             <Modal

@@ -70,9 +70,9 @@ const WorkListHead = (props) => {
                     <WorkFilterType {...props} label="事项" />
                 </div>
                 <div className="worklist-head-right">
-                    <PrivilegeProjectButton code={'WorkItemAdd'} domainId={projectId}  {...props}>
+                    {/*<PrivilegeProjectButton code={'WorkItemAdd'} domainId={projectId}  {...props}>*/}
                         <WorkCreatDropdown workTypeList={workTypeList} buttonType="svg" {...props} />
-                    </PrivilegeProjectButton>
+                    {/*</PrivilegeProjectButton>*/}
                     {/* <div style={{ positon: "relative" }} className="worklist-button-icon">
                         <svg className="icon-20" aria-hidden="true">
                             <use xlinkHref="#icon-more"></use>

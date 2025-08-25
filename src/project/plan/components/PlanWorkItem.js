@@ -64,11 +64,11 @@ const PlanWorkItem = (props) => {
             key: "action",
             render: (text, record) => (
                 <Space size="middle">
-                    <PrivilegeProjectButton code={'PlanWorkDele'} disabled={"hidden"} domainId={projectId}  {...props}>
+                    {/*<PrivilegeProjectButton code={'PlanWorkDele'} disabled={"hidden"} domainId={projectId}  {...props}>*/}
                         <Button type="link" onClick={() => deletePlanWorkItem(record.id)}>
                             删除
                         </Button>
-                    </PrivilegeProjectButton>
+                    {/*</PrivilegeProjectButton>*/}
                 </Space>
             ),
         },

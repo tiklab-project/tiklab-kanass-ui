@@ -203,6 +203,7 @@ const ProjectSetTable = (props) => {
             dataIndex: "progress",
             key: "progress",
             align: "left",
+            width: "10%",
             render: (text, record) => (
                 <>
                     <CircleProgress
@@ -298,12 +299,12 @@ const ProjectSetTable = (props) => {
         <Row>
             <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                 <Breadcumb firstText="项目集">
-                    <PrivilegeButton code={'ProjectSetAdd'}  {...props}>
+                    {/*<PrivilegeButton code={'ProjectSetAdd'}  {...props}>*/}
                         <Button
                             style={{ width: "fit-content" }}
                             type="primary" onClick={() => {setProjectSetAddVisible(true)}} buttonText={name} >
                         </Button>
-                    </PrivilegeButton>
+                    {/*</PrivilegeButton>*/}
 
                 </Breadcumb>
                 <div className="projectSet-recent-box">

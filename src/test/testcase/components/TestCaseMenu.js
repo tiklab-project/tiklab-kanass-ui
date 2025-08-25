@@ -25,7 +25,7 @@ const TestCaseMenu = (props) => {
     const logTabs = [
         {
             title: "测试用例",
-            id: `/project/${projectId}/testcase/cases`,
+            id: `/project/${projectId}/testcase/caseDetail/info`,
             key: "testcase",
             encoded: "testcase",
         },
@@ -54,7 +54,8 @@ const TestCaseMenu = (props) => {
                         display: "flex",
                         alignItems: "center",
                         // gap: "60px",
-                        lineHeight: "55px"
+                        lineHeight: "55px",
+                        justifyContent: "space-between"
                     }}>
                         <Breadcrumb firstText={"测试"}/>
                         <div className="log-top-tabs">
@@ -70,6 +71,7 @@ const TestCaseMenu = (props) => {
                                 })
                             }
                         </div>
+                        <div></div>
                     </div>
                 </Col>
             </Row>

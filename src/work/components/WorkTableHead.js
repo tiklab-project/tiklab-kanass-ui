@@ -113,9 +113,9 @@ const WorkTableHead = (props) => {
                     <div className="work-title">{getTitle()}</div>
                     <div className="work-top-right">
 
-                        <PrivilegeProjectButton code={'WorkItemAdd'} domainId={projectId}  {...props}>
+                        {/*<PrivilegeProjectButton code={'WorkItemAdd'} domainId={projectId}  {...props}>*/}
                             <WorkCreatDropdown workTypeList={workTypeList}  {...props} />
-                        </PrivilegeProjectButton>
+                        {/*</PrivilegeProjectButton>*/}
                         {
                             path.includes("/planDetail") &&
                             <Button type={"primary"} onClick={() => handleProductPlanAddWork(workTypeList, productPlanId)}>

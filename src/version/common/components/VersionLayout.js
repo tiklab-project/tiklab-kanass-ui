@@ -164,9 +164,9 @@ const Versiondetail = (props) => {
                                 versionStore={VersionStore}
                                 {...props}
                             />
-                            <PrivilegeProjectButton code={'ProjectVersionDelete'} domainId={projectId}  {...props}>
+                            {/*<PrivilegeProjectButton code={'ProjectVersionDelete'} domainId={projectId}  {...props}>*/}
                                 <DeleteModal deleteFunction={deletVersionList} id={versionId} />
-                            </PrivilegeProjectButton>
+                            {/*</PrivilegeProjectButton>*/}
                         </div>
                     </div>
                 </Col>

@@ -7,10 +7,30 @@ export class TestCaseStore {
     @observable tabList = [];
     @observable currentPage=1;
     @observable createUserAndDirectorNum={}
+    @observable detailWidth=0;
+
+    @observable searchCondition = {
+        pageParam: {
+            pageSize: 20,
+            currentPage:this.currentPage
+        },
+    }
+
+    @action
+    setDetailWidth = (value) => {
+        this.detailWidth = value
+    }
+
+    @action
+    setSearchCondition = (value) => {
+        Object.assign(this.searchCondition, {...value})
+        console.log("用例查询参数：     ", this.searchCondition)
+    }
 
     @action
     findTestCaseList = async (values) => {
-        const res = await Axios.post("/testCase/findTestCasePage", values);
+        Object.assign(this.searchCondition, {...values})
+        const res = await Axios.post("/testCase/findTestCasePage", this.searchCondition);
 
         if (res.code === 0) {
             this.testcaseList = res.data.dataList;

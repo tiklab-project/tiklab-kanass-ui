@@ -18,6 +18,7 @@ import dayjs from 'dayjs';
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
 import UserIcon from "../../../common/UserIcon/UserIcon";
 import CircleProgress from "../../../common/progress/CircleProgress";
+import WorkDetailModalView from "../workDetailModalView/WorkDetailModalView";
 
 const Gantt = (props) => {
     // 获取当前年月日
@@ -737,7 +738,7 @@ const Gantt = (props) => {
                 />
             </div>
 
-            <WorkDetailDrawer
+            <WorkDetailModalView
                 isModalVisible={isModalVisible}
                 setIsModalVisible={setIsModalVisible}
                 modelRef={modelRef}

@@ -9,6 +9,22 @@ export class CategoryStore{
     @observable categoryTableList=[]
     @observable categoryIds = [];
 
+    @observable tableTitle="所有用例";
+
+    @observable treeCollapsed= false;
+
+    @action
+    setTableTitle = (title) => {
+        this.tableTitle = title;
+    }
+
+    @action
+    setTreeCollapsed = () => {
+        console.log("before:  " , this.treeCollapsed)
+        this.treeCollapsed = !this.treeCollapsed;
+        console.log("after:  " , this.treeCollapsed)
+    }
+
     /**
      * 查询模块树
      * 包含用例

@@ -116,7 +116,7 @@ export class ModuleStore {
     @action
     findModuleList = async (value) => {
         Object.assign(this.searchCondition, { ...value })
-        const data = await Service("/productModule/findModuleList", this.searchCondition)
+        const data = await Service("/module/findModuleList", this.searchCondition)
         if(data.code===0){
             this.moduleList = data.data
         }

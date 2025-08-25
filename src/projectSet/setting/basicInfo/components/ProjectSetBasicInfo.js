@@ -274,7 +274,7 @@ const ProjectSetBasicInfo = props => {
                                 >
                                     <Input placeholder="项目集描述" />
                                 </Form.Item>
-                                <PrivilegeProjectButton code={'ProjectSetEdit'} domainId={projectSetId}  {...props}>
+                                {/*<PrivilegeProjectButton code={'ProjectSetEdit'} domainId={projectSetId}  {...props}>*/}
                                     <Form.Item {...formTailLayout} >
                                         <Button onClick={() => cancel()}>
                                             取消
@@ -283,7 +283,7 @@ const ProjectSetBasicInfo = props => {
                                             保存
                                         </Button>
                                     </Form.Item>
-                                </PrivilegeProjectButton>
+                                {/*</PrivilegeProjectButton>*/}
 
                             </Form>
 
@@ -295,11 +295,11 @@ const ProjectSetBasicInfo = props => {
 
                                         <span>此项目集将被永久删除。</span>
                                     </div>
-                                    <PrivilegeProjectButton code={'ProjectSetDelete'} domainId={projectSetId}  {...props}>
+                                    {/*<PrivilegeProjectButton code={'ProjectSetDelete'} domainId={projectSetId}  {...props}>*/}
                                         <div className="change-button  delete-button" onClick={() => showModal()}>
                                             删除项目集
                                         </div>
-                                    </PrivilegeProjectButton>
+                                    {/*</PrivilegeProjectButton>*/}
 
 
                                 </div>

@@ -70,10 +70,9 @@ const SetAside = (props) => {
         return
     }, [])
 
-
+    //<PrivilegeButton code={data.purviewCode} key={data.code}>
     const renderMenu = (data, deep, index) => {
         return (
-            <PrivilegeButton code={data.purviewCode} key={data.code}>
                 <li
                     style={{ cursor: "pointer", paddingLeft: `${deep * 20 + 20}` }}
                     className={`orga-aside-item ${data.id === selectKey ? "orga-aside-select" : ""}`}
@@ -100,7 +99,7 @@ const SetAside = (props) => {
 
 
                 </li>
-            </PrivilegeButton>
+
 
         )
     }

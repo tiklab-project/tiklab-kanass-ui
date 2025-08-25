@@ -187,6 +187,10 @@ const ProjectAside = (props) => {
                         />}
                     </div>
 
+                    {
+                        !unNeedBottomSet && <SetMenu isShowText={isShowText} setUrl={setUrl} theme={theme} />
+                    }
+
                     <div className="project-expend" onClick={toggleCollapsed} >
                         {
                             isShowText ?
@@ -206,10 +210,6 @@ const ProjectAside = (props) => {
                                 </div>
                         }
                     </div>
-
-                    {
-                        !unNeedBottomSet && <SetMenu isShowText={isShowText} setUrl={setUrl} theme={theme} />
-                    }
 
                     {/*<div className={"menu-box-right-border"}>*/}
                     {/*    <div className={"menu-box-isexpanded"} onClick={toggleCollapsed}>*/}

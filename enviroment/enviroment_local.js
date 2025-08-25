@@ -6,17 +6,17 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2022-04-25 11:56:01
  */
-const api =  'http://192.168.10.24:8080';
+const api =  'http://192.168.10.21:8080';
 const base_url = JSON.stringify(api);
 
 // 决定请求那边的css, js 一定要写这个!!!!!!!!
-const plugin_base_url = JSON.stringify("http://192.168.10.24:3000");
+const plugin_base_url = JSON.stringify("http://192.168.10.21:3000");
 
 // let plugin_url = `/pluginConfig/getPluginConfig`;
-let plugin_url = `http://192.168.10.24:3000/plugin.json`;
+let plugin_url = `http://192.168.10.21:3000/plugin.json`;
 plugin_url = JSON.stringify(plugin_url);
 
-const upload_url = JSON.stringify('http://192.168.10.24:8080')
+const upload_url = JSON.stringify('http://192.168.10.21:8080')
 
 let fetchMethod = "get"
 fetchMethod = JSON.stringify(fetchMethod);
@@ -32,9 +32,9 @@ const version = JSON.stringify('ce');
 const client = JSON.stringify('web');
 // 企业微信专用
 // const acc_url = JSON.stringify("http://portal.local.tiklab.net")
-const mobile_url = JSON.stringify('http://192.168.10.24:3100/')
-const homes_url = JSON.stringify("http://192.168.10.24")
-const kanass_url =JSON.stringify("http://192.168.10.24:3100")
+const mobile_url = JSON.stringify('http://192.168.10.21:3100/')
+const homes_url = JSON.stringify("http://192.168.10.21")
+const kanass_url =JSON.stringify("http://192.168.10.21:3100")
 // const eas_url = JSON.stringify("http://eas.test.tiklab.net")
 const workUrl = JSON.stringify("https://work.cloud.tiklab.net")
 module.exports = {

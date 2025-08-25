@@ -53,10 +53,10 @@ $blue-main: #0053ca;
 }
 
 
-.search-input{
-  width: 230px!important;
-  border-radius: 15px;
-}
+//.search-input{
+//  width: 230px!important;
+//  border-radius: 15px;
+//}
 
 //表单内组件背景
 //.ant-select-selector {
@@ -192,12 +192,12 @@ table .icon{
 .search-input-common{
   //width: 200px!important;
   height: 32px!important;
-  border-radius: var(--pi-border-radius)!important;
-  border: 1px solid #fff !important;
-  background: #f1f1f1 !important;
+  border-radius: 4px!important;
+  border: 2px solid #f0f0f0 !important;
+  background: #f0f0f0 !important;
 
   .ant-input{
-    background: #f1f1f1;
+    background: #f0f0f0;
   }
 }
 

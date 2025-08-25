@@ -155,7 +155,7 @@ const VersionTable = (props) => {
             title: "版本名称",
             dataIndex: "name",
             key: "name",
-            width: "25%",
+            width: "40%",
             render: (text, record) => (
                 <div className="version-master" onClick={() => goDetail(record.id, text)}>
                     <ColorIcon name={text} className="icon-32" color={record.color} />
@@ -164,23 +164,23 @@ const VersionTable = (props) => {
 
             ),
         },
-        {
-            title: "计划日期",
-            dataIndex: "startTime",
-            key: "startTime",
-            align: "left",
-            width: "25%",
-            render: (text, record) => <span>
-                {record.startTime?.slice(0, 10)} ~ {record.publishTime?.slice(0, 10)}
-            </span>
-        },
-        {
-            title: "实际发布日期",
-            dataIndex: "relaPublishTime",
-            key: "relaPublishTime",
-            align: "left",
-            render: (text) => <span>{text ? text : "---"}</span>,
-        },
+        // {
+        //     title: "计划日期",
+        //     dataIndex: "startTime",
+        //     key: "startTime",
+        //     align: "left",
+        //     width: "25%",
+        //     render: (text, record) => <span>
+        //         {record.startTime?.slice(0, 10)} ~ {record.publishTime?.slice(0, 10)}
+        //     </span>
+        // },
+        // {
+        //     title: "实际发布日期",
+        //     dataIndex: "relaPublishTime",
+        //     key: "relaPublishTime",
+        //     align: "left",
+        //     render: (text) => <span>{text ? text : "---"}</span>,
+        // },
 
         {
             title: "事项",
@@ -212,6 +212,24 @@ const VersionTable = (props) => {
             )
         },
         {
+            title: "负责人",
+            dataIndex: "master",
+            key: "master",
+            align: "left",
+            render: (text, record) => <>
+                {record?.master.nickname}
+            </>
+        },
+        {
+            title: "创建时间",
+            dataIndex: "createTime",
+            key: "createTime",
+            align: "left",
+            render: (text, record) => <>
+                {text}
+            </>
+        },
+        {
             title: "操作",
             key: "action",
             width: "100px",
@@ -239,9 +257,9 @@ const VersionTable = (props) => {
                         selectTabs={selectTabs}
                         {...props}
                     />
-                    <PrivilegeProjectButton code={'ProjectVersionDelete'} domainId={projectId}  {...props}>
+                    {/*<PrivilegeProjectButton code={'ProjectVersionDelete'} domainId={projectId}  {...props}>*/}
                         <DeleteModal deleteFunction={deletVersionList} id={record.id} />
-                    </PrivilegeProjectButton>
+                    {/*</PrivilegeProjectButton>*/}
 
 
                 </Space>
@@ -356,7 +374,7 @@ const VersionTable = (props) => {
                         <Breadcumb
                             firstText="版本"
                         >
-                            <PrivilegeProjectButton code={'ProjectVersionAdd'} domainId={projectId}  {...props}>
+                            {/*<PrivilegeProjectButton code={'ProjectVersionAdd'} domainId={projectId}  {...props}>*/}
                                 <VersionAddmodal
                                     name="添加版本"
                                     type="add"
@@ -368,7 +386,7 @@ const VersionTable = (props) => {
                                     selectTabs={selectTabs}
                                     {...props}
                                 />
-                            </PrivilegeProjectButton>
+                            {/*</PrivilegeProjectButton>*/}
 
                         </Breadcumb>
                         <div className="version-filter">

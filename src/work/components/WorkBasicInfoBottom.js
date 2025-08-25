@@ -14,13 +14,9 @@ import "./WorkBasicInfoBottom.scss"
 import WorkAttachPage from "./WorkAttachPage";
 
 const WorkBasicInfoBottom = (props) => {
-    const {workStore, workRelationStore, store, workInfo, workTypeText, deep, setTabValue, taskType, closeModal,getTransitionList} = props;
+    const {workStore, workRelationStore, store, workInfo, workTypeText, deep, setTabValue, taskType, closeModal,getTransitionList,detailTabRef} = props;
     const path = props.match.path;
-    const { workId, workList, setWorkList, findWorkAttachList, createWorkAttach,
-        attachList, findFormConfig, formList, moduleList, selectVersionList, sprintList, priorityList, editWork,
-        findFieldList, findCanBeRelationParentWorkItemList, findCanBeRelationPerWorkItemList,
-        userList, searchWorkById, findChildrenLevel, stageList, createSelectItemRelation,
-        createCheckboxSelectItemRelation, deleteWorkAttach, findFlow, permissionFieldList, viewType
+    const { workId, attachList, searchWorkById, viewType
     } = workStore;
     const { relateAndChildNum } = workRelationStore;
     const [visible, setVisible] = useState(false)
@@ -49,21 +45,21 @@ const WorkBasicInfoBottom = (props) => {
             label: "附件",
             id: 4
         },
-        {
-            label: "任务",
-            id: 5
-        },
+        // {
+        //     label: "任务",
+        //     id: 5
+        // },
         {
             label: "工时",
             id: 6
         },
         {
-            label: "文档",
-            id: 7
-        },
-        {
             label: "测试",
             id: 8
+        },
+        {
+            label: "文档",
+            id: 7
         },
     ]
 
@@ -130,12 +126,38 @@ const WorkBasicInfoBottom = (props) => {
                 setVisible(true);
                 setTitle(label);
                 break;
+            case 5:
+                setSelectTab(5)
+                setVisible(true);
+                setTitle(label);
+                break;
+            case 6:
+                setSelectTab(6)
+                setVisible(true);
+                setTitle(label);
+                break;
+            case 7:
+                setSelectTab(7)
+                setVisible(true);
+                setTitle(label);
+                break;
+            case 8:
+                setSelectTab(8)
+                setVisible(true);
+                setTitle(label);
+                break;
             default:
                 setSelectTab(null)
                 setVisible(false);
                 setTitle(label);
                 break;
         }
+    }
+
+    const handleClear = () => {
+        setSelectTab(0)
+        // setVisible(false);
+        // setTitle("");
     }
 
     const [finalTabValue, setFinalTabValue] = useState([]);
@@ -161,7 +183,7 @@ const WorkBasicInfoBottom = (props) => {
             <div className="work-basic-info-bottom-tab">
                 {
                     finalTabValue.map((item, index) => {
-                        if (index <= 4){
+                        if (index <= 5){
                             return <>
                                 <div
                                     key={item.id}
@@ -179,7 +201,7 @@ const WorkBasicInfoBottom = (props) => {
                     })
                 }
                 {
-                    finalTabValue.length > 4 &&
+                    finalTabValue.length > 5 &&
                     <Select
                         bordered={false}
                         // style={{backgroundColor: '#f0f0f0'}}
@@ -189,10 +211,12 @@ const WorkBasicInfoBottom = (props) => {
                         className="work-select"
                         key="selectProject"
                         onSelect={handleTabClick}
+                        onClear={handleClear}
+                        getPopupContainer={() => detailTabRef.current}
                     >
                         {
                             finalTabValue && finalTabValue.map((item, index) => {
-                                if (index > 4){
+                                if (index > 5){
                                     return <Select.Option value={item.id} key={item.id}>
                                         <div
                                             key={item.id}

@@ -229,7 +229,7 @@ const VersionBasicInfo = props => {
                                     <Form.Item name="startTime" label="计划日期" {...rangeConfig} >
                                         <RangePicker locale={locale} />
                                     </Form.Item>
-                                    <PrivilegeProjectButton code={'ProjectVersionEdit'} domainId={projectId}  {...props}>
+                                    {/*<PrivilegeProjectButton code={'ProjectVersionEdit'} domainId={projectId}  {...props}>*/}
                                         <Form.Item {...formTailLayout} >
                                             <Button onClick={() => cancel()}>
                                                 取消
@@ -238,7 +238,7 @@ const VersionBasicInfo = props => {
                                                 保存
                                             </Button>
                                         </Form.Item>
-                                    </PrivilegeProjectButton>
+                                    {/*</PrivilegeProjectButton>*/}
 
                                 </Form>
                             </div>
@@ -248,11 +248,11 @@ const VersionBasicInfo = props => {
                                 <div className="version-set-icon-block">
                                     删除版本，包含版本与事项的关联关系
                                 </div>
-                                <PrivilegeProjectButton code={'ProjectVersionDelete'} domainId={projectId}  {...props}>
+                                {/*<PrivilegeProjectButton code={'ProjectVersionDelete'} domainId={projectId}  {...props}>*/}
                                     <div className="change-button delete-button" onClick={() => showModal()}>
                                         删除版本
                                     </div>
-                                </PrivilegeProjectButton>
+                                {/*</PrivilegeProjectButton>*/}
 
                             </div>
                         </Panel>

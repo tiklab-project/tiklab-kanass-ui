@@ -1,0 +1,11 @@
+.work-detail-modal-view {
+  height: 80vh;
+  // width: 1000;
+  .ant-modal-body{
+    padding: 0!important;
+  }
+  .work-detail-info-row{
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}

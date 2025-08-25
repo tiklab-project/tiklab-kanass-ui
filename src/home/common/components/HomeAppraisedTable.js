@@ -2,10 +2,10 @@ import {observer, Provider} from "mobx-react";
 import {withRouter} from "react-router";
 import {Col, Progress, Row, Space, Table, Tooltip} from "antd";
 import InputSearch from "../../../common/input/InputSearch";
-import AppraisedWorkItemStatusDrawer from "../../../project/appraised/components/AppraisedWorkItemStatusDrawer";
+import AppraisedWorkItemStatusDrawer from "../../../project/appraised/components/AppraisedItemStatusDrawer";
 import WorkDetailDrawer from "../../../work/components/WorkDetailDrawer";
 import React, {useEffect, useState} from "react";
-import AppraisedWorkItemStore from "../../../project/appraised/store/AppraisedWorkItemStore";
+import AppraisedItemStore from "../../../project/appraised/store/AppraisedItemStore";
 import WorkCalendarStore from "../../../work/store/WorkCalendarStore";
 import WorkStore from "../../../work/store/WorkStore";
 import ProjectStore from "../../../project/project/store/ProjectStore";
@@ -20,7 +20,7 @@ import ColorIcon from "../../../common/colorIcon/ColorIcon";
 
 const HomeAppraisedTable = (props) => {
     const store = {
-        appraisedWorkItemStore: AppraisedWorkItemStore,
+        appraisedItemStore: AppraisedItemStore,
         workStore: WorkStore,
         workCalendarStore: WorkCalendarStore,
         projectStore: ProjectStore
@@ -28,7 +28,7 @@ const HomeAppraisedTable = (props) => {
 
     const [tableList, setTableList] = useState([]);
     const {searchAppraisedWorkItemPage, searchCondition,
-        total, setRecordId, deleteAppraisedWorkItem, appraisedWorkItemList} = AppraisedWorkItemStore;
+        total, setRecordId, deleteAppraisedWorkItem, appraisedWorkItemList} = AppraisedItemStore;
     const {setWorkId, workId} = WorkStore;
     const {searchAppraisedById, status} = AppraisedStores;
     const {findProjectList, projectList} = ProjectStore

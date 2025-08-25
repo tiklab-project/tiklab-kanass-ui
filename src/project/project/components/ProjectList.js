@@ -351,9 +351,9 @@ const ProjectList = (props) => {
             <Breadcumb
                 firstText="项目"
             >
-                <PrivilegeButton code={'ProjectAdd'}  {...props}>
+                {/*<PrivilegeButton code={'ProjectAdd'}  {...props}>*/}
                     <Button type="primary" onClick={() => {setProjectAddVisible(true)}} buttonText={"添加项目"} />
-                </PrivilegeButton>
+                {/*</PrivilegeButton>*/}
 
             </Breadcumb>
             <div className="project-recent-box">

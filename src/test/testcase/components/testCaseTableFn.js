@@ -7,7 +7,10 @@ import {useHistory} from "react-router";
 import {UserOutlined} from "@ant-design/icons";
 import HideDelete from "../../../common/caseCommon/hideDelete/HideDelete";
 import {Avatar, Space} from "antd";
+import testcaseStore from "../store/testcaseStore";
 
+
+const {findTestCaseList} = testcaseStore;
 
 //再根据不同的用例类型跳到不同的页面
 export const switchCaseTypeFn = (record,history)=>{
@@ -26,6 +29,10 @@ export const switchCaseTypeFn = (record,history)=>{
     }
 }
 
+
+export const findTestCaseTableListFn = (params) =>{
+    return findTestCaseList(params);
+}
 
 
 

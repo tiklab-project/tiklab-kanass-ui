@@ -225,14 +225,14 @@ const FunctionDetail = (props) => {
             }
         ];
 
-        items.push({
-            label: <span>测试历史</span>,
-            key: "2",
-            children: <FunctionInstanceList
-                functionId={functionId}
-                testPlanId={testPlanId}
-            />
-        })
+        // items.push({
+        //     label: <span>测试历史</span>,
+        //     key: "2",
+        //     children: <FunctionInstanceList
+        //         functionId={functionId}
+        //         testPlanId={testPlanId}
+        //     />
+        // })
 
         items.push({
             label: <span>关联缺陷</span>,

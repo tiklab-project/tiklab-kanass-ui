@@ -1,6 +1,35 @@
 .appraised-state{
   padding: 10px 20px;
 
+  .appraised-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px 24px;
+  }
+  .detail-item {
+    display: flex;
+    align-items: center;
+  }
+  .detail-label {
+    color: #666;
+    margin-right: 8px;
+    font-weight: 500;
+  }
+  .detail-value {
+    color: #333;
+  }
+
+  .detail-title {
+    cursor: pointer;
+  }
+  .detail-title:hover {
+    color: var(--tiklab-blue);
+  }
+
+  .appraised-state-top{
+
+  }
+
   .appraised-state-top-title{
     font-size: 17px;
     font-weight: 600;

@@ -11,7 +11,7 @@ const setDevRouter= [
     {
         title: "用户",
         icon: 'systemuser',
-        purviewCode: "SysUserPrivilege",
+        // purviewCode: "user",
         id: '/setting/orga',
         code: "userPrivilege",
         children: [
@@ -19,7 +19,7 @@ const setDevRouter= [
                 title: '用户',
                 id: '/setting/user',
                 easId: '/user/user',
-                purviewCode: "SysUser",
+                purviewCode: "user",
                 islink: true,
                 code: "user",
             },
@@ -27,7 +27,7 @@ const setDevRouter= [
                 title: "部门",
                 id: '/setting/orga',
                 easId: '/user/orga',
-                purviewCode: "SysOrga",
+                purviewCode: "orga",
                 islink: true,
                 code: "orga",
                 
@@ -36,7 +36,7 @@ const setDevRouter= [
                 title: '用户组',
                 id: '/setting/userGroup',
                 easId: '/user/userGroup',
-                purviewCode: "SysUsergroup",
+                purviewCode: "user_group",
                 islink: true,
                 code: "userGroup",
             },
@@ -45,7 +45,7 @@ const setDevRouter= [
                 title: "用户目录",
                 id: '/setting/dir',
                 easId: '/user/dir',
-                purviewCode: "SysDir",
+                purviewCode: "user_dir",
                 islink: true,
                 code: "dir",
             }
@@ -55,29 +55,36 @@ const setDevRouter= [
         title: '权限',
         icon: 'systempermissions',
         id: "/setting/systemRole",
-        purviewCode: "SysPermission",
+        // purviewCode: "permission",
         code: "systemRole"
     },
+    // {
+    //     title: "消息",
+    //     icon: 'systemmessage',
+    //     id: '/setting/messageNotice',
+    //     purviewCode: "SysMessage",
+    //     code: "message",
+    //     children: [
+    //         {
+    //             title: "消息通知方案",
+    //             id: '/setting/messageNotice',
+    //             purviewCode: "SysMessageNotice",
+    //             code: "messageNotice"
+    //         },
+    //         {
+    //             title: '消息发送方式',
+    //             id: '/setting/messageSendType',
+    //             purviewCode: "SysMessageSendType",
+    //             code: "messageSendType",
+    //         }
+    //     ]
+    // },
     {
         title: "消息",
         icon: 'systemmessage',
-        id: '/setting/messageNotice',
-        purviewCode: "SysMessage",
+        id: '/setting/message',
+        // purviewCode: "message",
         code: "message",
-        children: [
-            {
-                title: "消息通知方案",
-                id: '/setting/messageNotice',
-                purviewCode: "SysMessageNotice",
-                code: "messageNotice"
-            },
-            {
-                title: '消息发送方式',
-                id: '/setting/messageSendType',
-                purviewCode: "SysMessageSendType",
-                code: "messageSendType",
-            }
-        ]
     },
     {
         title: '事项类型',
@@ -140,7 +147,7 @@ const setDevRouter= [
         icon: 'systemIntergrtion',
         id: '/setting/loadData',
         code: "systemIntergrtion",
-        purviewCode: "SysIntergrtion",
+        // purviewCode: "SysIntergrtion",
         children: [
             {
                 title: '服务集成',
@@ -177,20 +184,20 @@ const setDevRouter= [
         title: "安全",
         icon: 'systemlog',
         id: '/setting/log',
-        purviewCode: "SysSecure",
+        // purviewCode: "SysSecure",
         code: "log",
         children: [
             {
                 title: '操作日志',
                 id: '/setting/log',
-                purviewCode: "SysLog",
+                purviewCode: "log",
                 code: "logList",
             }, 
             {
                 title: "备份与恢复",
                 id: '/setting/backups',
                 code: "backups",
-                purviewCode: "SysBackups"
+                purviewCode: "backups_and_recover"
             },
             {
                 title: "IP黑白名单",
@@ -204,19 +211,19 @@ const setDevRouter= [
         title: "系统",
         icon: 'systemversion',
         id: '/setting/version',
-        purviewCode: "SysApplication",
+        // purviewCode: "SysApplication",
         code: "application",
         children: [
             {
                 title: "版本与许可证",
                 id: '/setting/version',
-                purviewCode: "SysVersion",
+                purviewCode: "licence",
                 code: "version",
             },
             {
                 title: "应用访问权限",
                 id: '/setting/productAuth',
-                purviewCode: "SysProductAuth",
+                purviewCode: "apply_limits",
                 code: "productAuth",
             },
             {
@@ -360,7 +367,7 @@ const setPrdRouter= [
     {
         title: "用户",
         icon: 'systemuser',
-        purviewCode: "SysUserPrivilege",
+        // purviewCode: "user",
         id: '/setting/orga',
         code: "userPrivilege",
         children: [
@@ -368,7 +375,7 @@ const setPrdRouter= [
                 title: '用户',
                 id: '/setting/user',
                 easId: '/user/user',
-                purviewCode: "SysUser",
+                purviewCode: "user",
                 islink: true,
                 code: "user",
             },
@@ -376,7 +383,7 @@ const setPrdRouter= [
                 title: "部门",
                 id: '/setting/orga',
                 easId: '/user/orga',
-                purviewCode: "SysOrga",
+                purviewCode: "orga",
                 islink: true,
                 code: "orga",
                 
@@ -385,7 +392,7 @@ const setPrdRouter= [
                 title: '用户组',
                 id: '/setting/userGroup',
                 easId: '/user/userGroup',
-                purviewCode: "SysUsergroup",
+                purviewCode: "user_group",
                 islink: true,
                 code: "userGroup",
             },
@@ -394,7 +401,7 @@ const setPrdRouter= [
                 title: "用户目录",
                 id: '/setting/dir',
                 easId: '/user/dir',
-                purviewCode: "SysDir",
+                purviewCode: "user_dir",
                 islink: true,
                 code: "dir",
             }
@@ -405,29 +412,36 @@ const setPrdRouter= [
         title: '权限',
         icon: 'systempermissions',
         id: "/setting/systemRole",
-        purviewCode: "SysPermission",
+        // purviewCode: "permission",
         code: "systemRole"
     },
+    // {
+    //     title: "消息",
+    //     icon: 'systemmessage',
+    //     id: '/setting/messageNotice',
+    //     purviewCode: "SysMessage",
+    //     code: "message",
+    //     children: [
+    //         {
+    //             title: "消息通知方案",
+    //             id: '/setting/messageNotice',
+    //             purviewCode: "SysMessageNotice",
+    //             code: "messageNotice"
+    //         },
+    //         {
+    //             title: '消息发送方式',
+    //             id: '/setting/messageSendType',
+    //             purviewCode: "SysMessageSendType",
+    //             code: "messageSendType",
+    //         }
+    //     ]
+    // },
     {
         title: "消息",
         icon: 'systemmessage',
-        id: '/setting/messageNotice',
-        purviewCode: "SysMessage",
+        id: '/setting/message',
+        // purviewCode: "message",
         code: "message",
-        children: [
-            {
-                title: "消息通知方案",
-                id: '/setting/messageNotice',
-                purviewCode: "SysMessageNotice",
-                code: "messageNotice"
-            },
-            {
-                title: '消息发送方式',
-                id: '/setting/messageSendType',
-                purviewCode: "SysMessageSendType",
-                code: "messageSendType",
-            }
-        ]
     },
     {
         title: '事项类型',
@@ -490,7 +504,7 @@ const setPrdRouter= [
         icon: 'systemIntergrtion',
         id: '/setting/loadData',
         code: "systemIntergrtion",
-        purviewCode: "SysIntergrtion",
+        // purviewCode: "SysIntergrtion",
         children: [
             {
                 title: '服务集成',
@@ -519,7 +533,8 @@ const setPrdRouter= [
             {
                 title: 'OpenApi',
                 id: '/setting/openApi',
-
+                code: "openApi",
+                purviewCode: "openapi"
             }
         ]
     },
@@ -527,26 +542,26 @@ const setPrdRouter= [
         title: "安全",
         icon: 'systemlog',
         id: '/setting/log',
-        purviewCode: "SysSecure",
+        // purviewCode: "SysSecure",
         code: "log",
         children: [
             {
                 title: '操作日志',
                 id: '/setting/log',
-                purviewCode: "SysLog",
+                purviewCode: "log",
                 code: "logList",
             }, 
             {
                 title: "备份与恢复",
                 id: '/setting/backups',
                 code: "backups",
-                purviewCode: "SysBackups"
+                purviewCode: "backups_and_recover"
             },
             {
                 title: "IP黑白名单",
                 id: '/setting/ipRoster',
-                // code: "backups",
-                // purviewCode: "SysBackups"
+                code: "ip_whitelist",
+                purviewCode: "ip_whitelist"
             },
         ]
     }, 
@@ -554,26 +569,26 @@ const setPrdRouter= [
         title: "系统",
         icon: 'systemversion',
         id: '/setting/version',
-        purviewCode: "SysApplication",
+        // purviewCode: "SysApplication",
         code: "application",
         children: [
             {
                 title: "版本与许可证",
                 id: '/setting/version',
-                purviewCode: "SysVersion",
+                purviewCode: "licence",
                 code: "version",
             },
             {
                 title: "应用访问权限",
                 id: '/setting/productAuth',
-                purviewCode: "SysProductAuth",
+                purviewCode: "apply_limits",
                 code: "productAuth",
             },
             {
                 title: "自定义Logo",
                 id: '/setting/logo',
-                // purviewCode: "SysCustomProductLogo",
-                // code: "productLogo",
+                purviewCode: "custom_logo",
+                code: "productLogo",
             },
         ]
     }

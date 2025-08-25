@@ -19,6 +19,7 @@ import ProjectStore from "../store/ProjectStore";
 import { useDebounce } from "../../../common/utils/debounce";
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
 import ProductStore from "../../../product/product/store/ProductStore";
+import ProjectSetStore from "../../../projectSet/projectSet/store/ProjectSetStore";
 
 const { TextArea } = Input;
 const { RangePicker } = DatePicker;
@@ -31,9 +32,10 @@ const layout = {
 
 
 const ProjectAddInfo = (props) => {
-    const { createProject, workType, setCurrentStep, setLoading, onCancel, productId } = props;
+    const { createProject, workType, setCurrentStep, setLoading, onCancel, productId, projectSetId } = props;
     const {findIconList, creatIcon, creatProjectKey} = ProjectStore;
     const {findProduct, getProductlist, productList} = ProductStore;
+    const {findProjectSet, getProjectSetlist, projectSetList} = ProjectSetStore;
     const [form] = Form.useForm();
     const rangeConfig = {
         rules: [
@@ -51,10 +53,10 @@ const ProjectAddInfo = (props) => {
     const [key, setKey] = useState();
 
     const [product, setProduct] = useState(null);
-   
+    const [projectSet, setProjectSet] = useState(null);
+
     useEffect(() => {
         getIconList()
-        console.log("productId:      ", productId)
         if (productId){
             // 有指定的产品信息
             findProduct(productId).then(res => {
@@ -63,6 +65,15 @@ const ProjectAddInfo = (props) => {
         }else {
             // 没有指定的产品信息
             getProductlist();
+        }
+        if (projectSetId){
+            // 有指定的项目集信息
+            findProjectSet(projectSetId).then(res => {
+                setProjectSet(res.data)
+            })
+        }else {
+            // 没有指定的项目集信息
+            getProjectSetlist();
         }
         return;
     },[])
@@ -139,7 +150,8 @@ const ProjectAddInfo = (props) => {
                 projectLimits: values.projectLimits,
                 // iconUrl: iconUrl
                 iconUrl: workType.iconUrl,
-                productId: productId ? productId : values.product
+                productId: productId ? productId : values.product,
+                projectSetId: projectSetId ? projectSetId : values.projectSet
             }
             createProject(data).then(res => {
                 setLoading(false);
@@ -330,6 +342,42 @@ const ProjectAddInfo = (props) => {
                                 bordered={false}
                             >
                                 {product?.name}
+                            </Form.Item>
+                        }
+                        {
+                            !projectSetId &&
+                            <Form.Item
+                                label="所属项目集"
+                                name="projectSet"
+                                // rules={[{ required: true, message: '请选择产品!' }]}
+                                bordered={false}
+                            >
+                                <Select
+                                    bordered={false}
+                                    style={{backgroundColor: '#f0f0f0'}}
+                                    placeholder="项目集"
+                                    allowClear
+                                    className="project-select"
+                                    key="selectProduct"
+                                    // onSelect={selectProject}
+                                >
+                                    {
+                                        projectSetList && projectSetList.map((item) => {
+                                            return <Select.Option project={item} value={item.id} key={item.id}>{item.name}</Select.Option>
+                                        })
+                                    }
+                                </Select>
+                            </Form.Item>
+                        }
+                        {
+                            projectSetId &&
+                            <Form.Item
+                                label="所属项目集"
+                                name="projectSet"
+                                // rules={[{ required: true, message: '请选择产品!' }]}
+                                bordered={false}
+                            >
+                                {projectSet?.name}
                             </Form.Item>
                         }
                         <Form.Item

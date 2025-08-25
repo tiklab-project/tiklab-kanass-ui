@@ -132,11 +132,11 @@ const ModuleList = (props) => {
         width: "15%",
         render: (text, record) => (
             <Space size="middle">
-                <PrivilegeProjectButton code={'ModuleAdd'} domainId={projectId}  {...props}>
+                {/*<PrivilegeProjectButton code={'ModuleAdd'} domainId={projectId}  {...props}>*/}
                     <svg className="svg-icon" aria-hidden="true" onClick={() => showModal(record, "添加子模块")} style={{ cursor: "pointer" }}>
                         <use xlinkHref="#icon-add2"></use>
                     </svg>
-                </PrivilegeProjectButton>
+                {/*</PrivilegeProjectButton>*/}
                 <svg className="svg-icon" aria-hidden="true" onClick={() => showEditModule(record)} style={{ cursor: "pointer" }}>
                     <use xlinkHref="#icon-edit"></use>
                 </svg>
@@ -160,11 +160,11 @@ const ModuleList = (props) => {
                     <Breadcumb
                         firstText="模块"
                     >
-                        <PrivilegeProjectButton code={'ModuleAdd'} domainId={projectId}  {...props}>
+                        {/*<PrivilegeProjectButton code={'ModuleAdd'} domainId={projectId}  {...props}>*/}
                             <Button type="primary" onClick={() => showModal(null, "添加模块")}>
                                 添加模块
                             </Button>
-                        </PrivilegeProjectButton>
+                        {/*</PrivilegeProjectButton>*/}
                     </Breadcumb>
                     <div className="project-module-contant">
                         <div className="search-add">

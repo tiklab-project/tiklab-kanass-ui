@@ -25,16 +25,16 @@ const ProjectSetGide = (props) => {
             <div className="gide-right">
                 <div>
                     您还没有项目集合
-                    <PrivilegeButton code={'ProjectSetAdd'}  {...props}>
+                    {/*<PrivilegeButton code={'ProjectSetAdd'}  {...props}>*/}
                         <span>，请先</span>
-                    </PrivilegeButton>
+                    {/*</PrivilegeButton>*/}
                 </div>
-                <PrivilegeButton code={'ProjectSetAdd'}  {...props}>
+                {/*<PrivilegeButton code={'ProjectSetAdd'}  {...props}>*/}
                     <Button
                         style={{ width: "fit-content" }}
                         type="primary" onClick={() => props.history.push("/projectSetAdd")} buttonText={name} >
                     </Button>
-                </PrivilegeButton>
+                {/*</PrivilegeButton>*/}
 
             </div>
 

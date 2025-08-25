@@ -6,22 +6,27 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2024-12-27 15:01:36
  */
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { Modal, Select, Space, DatePicker, Input, Form } from 'antd';
 import { observer, inject } from "mobx-react";
 import moment from 'moment';
 import locale from 'antd/es/date-picker/locale/zh_CN';
 import Button from "../../../common/button/Button";
+import StageList from "../../stage/stageList/components/StageList";
+import StageListStore from "../../stage/stageList/store/StageListStore";
 const { RangePicker } = DatePicker;
+
 const AppraisedAddModal = (props) => {
-    const { appraisedStore, userList, getUserList, setActiveTabs, selectTabs } = props;
-    const { editAppraised, addAppraised, searchAppraisedById, status, getAppraisedList } = appraisedStore;
+    const { appraisedStore, userList, getUserList, setActiveTabs, selectTabs, type } = props;
+    const { editAppraised, addAppraised, searchAppraisedById, status, getAppraisedList, appraisedTypeList } = appraisedStore;
+    const {findStageListTile} = StageListStore;
     const [form] = Form.useForm();
     const dateFormat = "YYYY-MM-DD HH:mm:ss";
     // 弹窗显示
     const [visible, setVisible] = React.useState(false);
     // 项目id
     const projectId = props.match.params.id;
+    const project = JSON.parse(localStorage.getItem("project"));
     const layout = {
         labelCol: {
             span: 6,
@@ -30,7 +35,15 @@ const AppraisedAddModal = (props) => {
             span: 24,
         },
     };
+    const [stageList, setStageList] = useState(null);
 
+    useEffect(() => {
+        findStageListTile({projectId:projectId}).then(res => {
+            if (res.code === 0){
+                setStageList(res.data)
+            }
+        })
+    }, [projectId]);
 
     /**
      * 表单提交，编辑或者添加评审
@@ -38,20 +51,26 @@ const AppraisedAddModal = (props) => {
     const submitAppraised = () => {
         form.validateFields().then((fieldsValue) => {
             const time = fieldsValue["startTime"]
-            const values = {
+            let values = {
                 ...fieldsValue,
                 master: {
                     id: fieldsValue.master
                 },
-                appraisedState: fieldsValue.appraisedState,// 0未开始 1进行中 2已完成
                 project: {
                     id: projectId
+                },
+                appraisedType: {
+                    id: fieldsValue.appraisedType
+                },
+                stage: {
+                    id: fieldsValue.stage,
                 },
                 description: fieldsValue.description,
                 startTime: time[0].format(dateFormat),
                 endTime: time[1].format(dateFormat),
             };
-            if (props.type === "edit") {
+            if (type === "edit") {
+                values = { appraisedState: fieldsValue.appraisedState, ...values } // 0未开始 1进行中 2已完成
                 values.id = props.id
                 editAppraised(values).then(() => {
                     form.resetFields();
@@ -59,6 +78,7 @@ const AppraisedAddModal = (props) => {
                     getAppraisedList({ projectId: projectId, name: null, appraisedState: null });
                 })
             } else {
+                values = { appraisedState: "0", ...values }
                 addAppraised(values).then((res) => {
                     if (res.code === 0) {
                         setActiveTabs("all")
@@ -86,12 +106,14 @@ const AppraisedAddModal = (props) => {
     const showModal = () => {
         getUserList(projectId)
         setVisible(true);
-        if (props.type === "edit") {
+        if (type === "edit") {
             searchAppraisedById(props.id).then((res) => {
                 form.setFieldsValue({
                     name: res.data.name,
                     project: res.data.project.id,
                     master: res.data.builder.id,
+                    appraisedType: res.data.appraisedType.id,
+                    stage:res.data.stage.id,
                     startTime: res.data.startTime ? [moment(res.data.startTime, dateFormat), moment(res.data.endTime, dateFormat)] : null,
                     appraisedState: res.data.appraisedState,
                     description: res.data.description
@@ -105,7 +127,7 @@ const AppraisedAddModal = (props) => {
     return (
         <>
             <div className="addmodel">
-                {props.type !== "edit" ?
+                {type !== "edit" ?
                     <Button onClick={showModal} type="primary" >
                         添加评审
                     </Button>
@@ -148,27 +170,78 @@ const AppraisedAddModal = (props) => {
                         </Form.Item>
 
                         <Form.Item
-                            label="评审状态"
-                            name="appraisedState"
+                            label="评审类型"
+                            name="appraisedType"
                             rules={[
                                 {
                                     required: true,
-                                    message: '请选择评审状态',
+                                    message: '请选择评审类型',
                                 },
                             ]}
                         >
                             <Select
-                                placeholder="评审状态"
+                                placeholder="评审类型"
                                 allowClear
-
                             >
                                 {
-                                    status && status.map((item, index) => {
-                                        return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
-                                    })
+                                    appraisedTypeList?.map((item) => (
+                                        (item.id === "222222" || item.id === "333333")
+                                            ? (project.projectType.type === "ipd" && <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>)
+                                            : <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
+                                    ))
                                 }
                             </Select>
                         </Form.Item>
+
+                        {
+                            project.projectType.type === "ipd" &&
+                            <Form.Item
+                                label="阶段"
+                                name="stage"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: '请选择阶段',
+                                    },
+                                ]}
+                            >
+                                <Select
+                                    placeholder="阶段"
+                                    allowClear
+                                >
+                                    {
+                                        stageList && stageList.map((item, index) => {
+                                            return <Select.Option value={item.id} key={item.id}>{item.stageName}</Select.Option>
+                                        })
+                                    }
+                                </Select>
+                            </Form.Item>
+                        }
+
+                        {
+                            type === "edit" &&
+                            <Form.Item
+                                label="评审状态"
+                                name="appraisedState"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: '请选择评审状态',
+                                    },
+                                ]}
+                            >
+                                <Select
+                                    placeholder="评审状态"
+                                    allowClear
+                                >
+                                    {
+                                        status && status.map((item, index) => {
+                                            return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
+                                        })
+                                    }
+                                </Select>
+                            </Form.Item>
+                        }
 
                         <Form.Item
                             label="负责人"
@@ -200,9 +273,6 @@ const AppraisedAddModal = (props) => {
                                    ]}>
                             <RangePicker
                                 locale={locale}
-                                showTime={{
-                                    defaultValue: [moment('09:00:00', 'HH:mm:ss'), moment('18:00:00', 'HH:mm:ss')]
-                                }}
                             />
                         </Form.Item>
                         <Form.Item name="description" label="描述"

@@ -9,6 +9,11 @@
         background-color: #fff;
     }
 
+    .project-operate-button{
+        display: flex;
+        gap: 10px;
+    }
+
     .workTable {
         .ant-table {
             margin: 0 !important;

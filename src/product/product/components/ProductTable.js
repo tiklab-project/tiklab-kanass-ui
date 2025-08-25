@@ -201,6 +201,7 @@ const ProductTable = (props) => {
             dataIndex: "progress",
             key: "progress",
             align: "left",
+            width: "10%",
             render: (text, record) => (
                 <>
                     <CircleProgress

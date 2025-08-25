@@ -4,6 +4,7 @@ import UserIcon from "../../common/UserIcon/UserIcon";
 import { withRouter } from "react-router";
 import React, {useRef} from "react";
 import WorkDetailDrawer from "./WorkDetailDrawer";
+import WorkDetailModalView from "./workDetailModalView/WorkDetailModalView";
 
 const WorkBodarContent = (props) => {
     const {loading, dragover, isSameFlowBox, changeStatus, cancelDrag, moveWorkId, delectCurrentWorkItem,
@@ -183,7 +184,7 @@ const WorkBodarContent = (props) => {
                             }
                         )
                     }
-                <WorkDetailDrawer
+                <WorkDetailModalView
                     isModalVisible={isModalVisible}
                     setIsModalVisible={setIsModalVisible}
                     modelRef={modelRef}

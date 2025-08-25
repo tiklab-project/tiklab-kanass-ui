@@ -1,0 +1,31 @@
+.work-detail-drawer-view {
+  height: 100%;
+  // width: 1000;
+  .ant-drawer-body {
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .ant-drawer-content-wrapper {
+    min-width: 660px !important;
+    box-shadow: none !important;
+  }
+
+  @media screen and (min-width: 1200px){
+    .ant-drawer-content-wrapper {
+      min-width: 690px !important;
+    }
+  }
+
+  @media screen and (min-width: 1600px){
+    .ant-drawer-content-wrapper {
+      min-width: 760px !important;
+    }
+  }
+
+  @media screen and (min-width: 1900px){
+    .ant-drawer-content-wrapper {
+      min-width: 860px !important;
+    }
+  }
+}

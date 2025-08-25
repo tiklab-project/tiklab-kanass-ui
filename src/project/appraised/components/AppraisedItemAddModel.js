@@ -6,13 +6,20 @@ import UserIcon from "../../../common/UserIcon/UserIcon";
 import WorkTypeTab from "../../../work/components/WorkTypeTab";
 import WorkTableFilter from "../../../work/components/WorkTableFilter";
 import InputSearch from "../../../common/input/InputSearch";
-import "./AppraisedWorkItemAddModel.scss"
-const AppraisedWorkItemAddModel = (props) => {
+import "./AppraisedItemAddModel.scss"
+import {inject, observer} from "mobx-react";
+import IconCommon from "../../../common/caseCommon/IconCommon";
+const AppraisedItemAddModel = (props) => {
 
-    const {showAddModel ,setShowAddModel, appraisedWorkItemStore, projectId, appraisedId, searchTable } = props
-    const { searchCanConnectWorkItem, canConnectWorkItemList, workItemSearchCondition, workItemTotal,createAppraisedWorkItem, appraisedWorkItemList } = appraisedWorkItemStore
+    const {showAddModel ,setShowAddModel, appraisedItemStore, projectId, appraisedId, searchTable, appraisedStores } = props
+    const { searchCanConnectWorkItem, canConnectItemList, canConnectSearchCondition,
+        total,createAppraisedItem, appraisedItemList,
+        searchCanConnectTestCase, searchCanConnectDocument
+    } = appraisedItemStore
+    const { searchAppraisedById } = appraisedStores;
 
     const [tableList, setTableList] = useState();
+    const [appraised, setAppraised] = useState();
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const handleOk = () => {
         // console.log("绑定")
@@ -20,22 +27,25 @@ const AppraisedWorkItemAddModel = (props) => {
     }
 
     // 初始化
-    useEffect(() => {
-        searchModalTable();
-        setSelectedRowKeys([]);
-        // selectTabs(activeTabs, 1);
-        // getUserList(projectId);
-        // console.log(JSON.stringify(userList));
+    useEffect(async () => {
+
+        if (showAddModel){
+            setSelectedRowKeys([]);
+            const res = await searchAppraisedById(appraisedId)
+            if (res.code === 0){
+                setAppraised(res.data);
+            }
+            searchModalTable(res.data);
+        }
         return;
-    }, [appraisedWorkItemList]);
+    }, [showAddModel]);
 
     const handleCancel = () => {
         // form.resetFields();
         setShowAddModel(false);
     }
-    // const [form] = Form.useForm();
 
-    const columns = [
+    const workItemColumns = [
         {
             title: '序号',
             dataIndex: 'code',
@@ -93,6 +103,90 @@ const AppraisedWorkItemAddModel = (props) => {
         },
     ];
 
+    const documentColumns = [
+        {
+            title: '标题',
+            dataIndex: ["kanassDocument","documentName"],
+            key: 'documentName',
+            width: "20%",
+            render: (text, record, index) => <Space >
+                <IconCommon icon={"file"} className={"menu-icon"} />
+                <div className="appraised-key">{record?.kanassDocument.documentName}</div>
+            </Space>
+        },
+        {
+            title: '知识库',
+            dataIndex: ["kanassDocument","kanassRepositoryName"],
+            key: 'title',
+            render: (text, record) => <Tooltip title={text}>
+                {text.length > 15 ? text.substring(0, 15) + "..." : text}
+            </Tooltip>
+        },
+        {
+            title: '作者',
+            dataIndex: ["kanassDocument","userName"],
+            key: 'userName',
+            render: (text, record) => <Space>
+                <UserIcon name={record.kanassDocument?.userName} />
+                {record.kanassDocument?.userName}
+            </Space>
+        },
+        {
+            title: '创建时间',
+            dataIndex: ["kanassDocument","createTime"],
+            key: 'createTime',
+            render: (text, record) => <div className="appraised-info-text">
+                {text.slice(0, 10)}
+            </div>
+        },
+    ];
+
+    const testCaseColumns = [
+        {
+            title: '序号',
+            dataIndex: 'caseKey',
+            key: 'caseKey',
+            width: "20%",
+            render: (text, record, index) => <Space >
+                <IconCommon icon={"gongneng1"} className={"menu-icon"} />
+                <div className="appraised-key">{record.caseKey}</div>
+            </Space>
+        },
+        {
+            title: '标题',
+            dataIndex: 'name',
+            key: 'name',
+            render: (text, record) => <Tooltip title={text}>
+                {text.length > 15 ? text.substring(0, 15) + "..." : text}
+            </Tooltip>
+        },
+        {
+            title: '用例类型',
+            dataIndex: 'caseType',
+            key: 'caseType',
+            render: (text, record) => <Space >
+                {"功能用例"}
+            </Space>
+        },
+        {
+            title: '创建人',
+            dataIndex: ["createUser", "name"],
+            key: 'createUser',
+            render: (text, record) => <Space>
+                <UserIcon userInfo={record.createUser?.id} name={record.createUser?.nickname} />
+                {record.createUser?.nickname}
+            </Space>
+        },
+        {
+            title: '创建时间',
+            dataIndex: 'createTime',
+            key: 'createTime',
+            render: (text, record) => <div className="appraised-info-text">
+                {text.slice(0, 10)}
+            </div>
+        },
+    ];
+
     const setStatuStyle = (id) => {
         let name;
         switch (id) {
@@ -121,19 +215,42 @@ const AppraisedWorkItemAddModel = (props) => {
             appraised: {
               id: appraisedId
             },
-            workItemIds: selectedRowKeys
+            targetIds: selectedRowKeys,
+            appraisedType: {
+                id: appraised?.appraisedType.id
+            }
         }
-        createAppraisedWorkItem(value).then(res => {
-            searchModalTable();
+        createAppraisedItem(value).then(res => {
+            searchModalTable(appraised, {});
             setShowAddModel(false);
             searchTable();
         });
     }
 
-    const searchModalTable = (value) => {
-        searchCanConnectWorkItem({ projectId: projectId, appraisedId: appraisedId, ...value }).then(res => {
-            setTableList(res.data.dataList);
-        })
+    const searchModalTable = (appraised, value) => {
+
+        const param = { projectId: projectId, appraisedId: appraisedId, ...value }
+        console.log("appraised:      --------",appraised)
+        switch (appraised?.appraisedType.id){
+            case "000000":
+                searchCanConnectWorkItem(param).then(res => {
+                    setTableList(res.data.dataList);
+                })
+                break;
+            case "111111":
+                searchCanConnectTestCase(param).then(res => {
+                    setTableList(res.data.dataList);
+                })
+                break;
+            case "222222":
+            case "333333":
+                searchCanConnectDocument(param).then(res => {
+                    setTableList(res.data.dataList);
+                })
+                break;
+        }
+
+
     }
 
     const changePage = (page, pageSize) => {
@@ -143,7 +260,7 @@ const AppraisedWorkItemAddModel = (props) => {
                 currentPage: page,
             }
         }
-        searchModalTable(values);
+        searchModalTable(appraised, values);
     }
 
     // 表格多选框配置
@@ -156,9 +273,18 @@ const AppraisedWorkItemAddModel = (props) => {
         },
     };
 
+    // 表格列
+    const getTableColumn = () => {
+        switch (appraised?.appraisedType.id) {
+            case "000000" :return workItemColumns;
+            case "111111" :return testCaseColumns;
+            case "222222" :
+            case "333333" :return documentColumns;
+        }
+    }
     return (
         <Modal
-            title={"关联需求"}
+            title={`${appraised?.appraisedType.name}`}
             visible={showAddModel}
             width={1000}
             height={450}
@@ -190,14 +316,14 @@ const AppraisedWorkItemAddModel = (props) => {
                             <div className="work-add-table">
                                 <Table
                                     className={"appraised-table-box"}
-                                    columns={columns}
+                                    columns={getTableColumn()}
                                     rowSelection={rowSelection}
-                                    dataSource={canConnectWorkItemList}
+                                    dataSource={canConnectItemList}
                                     rowKey={(record) => record.id}
                                     pagination={{
-                                        total: workItemTotal,
-                                        pageSize: workItemSearchCondition?.pageParam?.pageSize,
-                                        current: workItemSearchCondition?.pageParam?.currentPage,
+                                        total: total,
+                                        pageSize: canConnectSearchCondition?.pageParam?.pageSize,
+                                        current: canConnectSearchCondition?.pageParam?.currentPage,
                                         onChange: changePage,
                                         position: ["bottomCenter"],
                                         hideOnSinglePage: true,
@@ -217,4 +343,4 @@ const AppraisedWorkItemAddModel = (props) => {
         </Modal>
     )
 }
-export default AppraisedWorkItemAddModel;
+export default inject("appraisedItemStore", "appraisedStores")(observer(AppraisedItemAddModel));

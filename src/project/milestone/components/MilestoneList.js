@@ -75,9 +75,9 @@ const MilestoneList = (props) => {
                         id={record.id}
                         {...props}
                     />
-                    <PrivilegeProjectButton code={'MilestoneDele'} disabled={"hidden"} domainId={projectId}  {...props}>
+                    {/*<PrivilegeProjectButton code={'MilestoneDele'} disabled={"hidden"} domainId={projectId}  {...props}>*/}
                         <DeleteModal deleteFunction={deleMilestone} id={record.id} />
-                    </PrivilegeProjectButton>
+                    {/*</PrivilegeProjectButton>*/}
 
                 </Space>
             ),

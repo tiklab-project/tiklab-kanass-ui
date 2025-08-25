@@ -3,18 +3,24 @@ import {Drawer, Form, Radio, Input, Button, Empty, Space} from "antd";
 import { observer, inject } from "mobx-react";
 import AppraisedHistoryStore from "../store/AppraisedHistoryStore";
 import UserIcon from "../../../common/UserIcon/UserIcon";
-import "./AppraisedWorkItemStatusDrawer.scss"
-import {getUser} from "tiklab-core-ui";
+import "./AppraisedItemStatusDrawer.scss"
+import { getUser, applyJump } from "tiklab-core-ui";
 import moment from "moment/moment";
+import {showTextStatus} from "../../../common/caseCommon/CaseCommonFn";
+import {setSessionStorage} from "../../../common/utils/setSessionStorage";
+import WorkDetailDrawer from "../../../work/components/WorkDetailDrawer";
+import WorkStore from "../../../work/store/WorkStore";
+import WikiRepositoryStore from "../../wiki/repository/store/WikiRepositoryStore";
+import FunctionContentDrawerView from "../../../test/function/components/drawerView/FunctionContentDrawerView";
 
-const AppraisedWorkItemStatusDrawer = (props) => {
+const AppraisedItemStatusDrawer = (props) => {
     const { appraisedHistoryList, createAppraisedHistory, searchAppraisedHistoryPage, totalPage } = AppraisedHistoryStore
-    const {visible, setVisible, appraisedWorkItemStore, searchTable} = props;
-    const {getRecordId, setRecordId, updateAppraisedWorkItem, recordId, findAppraisedWorkItemById} = appraisedWorkItemStore;
+    const {visible, setVisible, appraisedItemStore, searchTable} = props;
+    const {getRecordId, setRecordId, updateAppraisedWorkItem, recordId, findAppraisedItemById} = appraisedItemStore;
+    const {setWorkId, workId} = WorkStore;
+    const { findSystemUrl } = WikiRepositoryStore;
     const detailRef = useRef();
-
     const {TextArea} = Input
-
     const [selectedValue, setSelectedValue] = useState();
     const [workTitle, setWorkTitle] = useState("");
     const [appraisedInfo, setAppraisedInfo] = useState(null);
@@ -23,9 +29,12 @@ const AppraisedWorkItemStatusDrawer = (props) => {
     const [pageSize, setPageSize] = useState(5);
     const [form] = Form.useForm();
     const [appraisedFormData, setAppraisedFormData] = useState({
-        workItemAppraisedState:"",
+        appraisedItemState:"",
         advice:""
     })
+    const [workItemDetailVisible, setWorkItemDetailVisible] = useState(false);
+    const [testCaseDetailVisible, setTestCaseDetailVisible] = useState(false);
+    const [caseId, setCaseId] = useState();
     /**
      * 更新评审事项
      * @param formData
@@ -34,7 +43,7 @@ const AppraisedWorkItemStatusDrawer = (props) => {
         const recordId = getRecordId();
         const param = {
             id:recordId,
-            workItemAppraisedState:formData.workItemAppraisedState,
+            appraisedItemState:formData.appraisedItemState,
             advice:formData.advice
         }
         console.log(JSON.stringify(param));
@@ -42,27 +51,27 @@ const AppraisedWorkItemStatusDrawer = (props) => {
             // setVisible(false)
             setEdit(false)
             searchTable();
-            findAppraisedWorkItemById(getRecordId()).then(data => {
+            findAppraisedItemById(getRecordId()).then(data => {
                 if (data.code === 0){
                     setAppraisedInfo(data.data)
                     form.setFieldsValue({
-                        workItemAppraisedState:data.data.workItemAppraisedState,
+                        appraisedItemState:data.data.appraisedItemState,
                         advice:data.data.advice,
                     })
-                    setSelectedValue(data.data.workItemAppraisedState)
+                    setSelectedValue(data.data.appraisedItemState)
                 }
             })
             // 新增历史记录
             const historyParam = {
-                workAppraised:{id: getRecordId()},
-                workItemAppraisedState:formData.workItemAppraisedState,
+                appraisedItemId: getRecordId(),
+                appraisedItemState:formData.appraisedItemState,
                 advice:formData.advice,
                 creater: {id: getUser().userId},
             }
             createAppraisedHistory(historyParam).then(res => {
                 setCurrentPage(1)
                 searchAppraisedHistoryPage({
-                    workAppraisedId: getRecordId(),
+                    appraisedItemId: getRecordId(),
                     pageParam:{
                         pageSize: 5,
                         currentPage: 1
@@ -75,7 +84,7 @@ const AppraisedWorkItemStatusDrawer = (props) => {
     const loadNextPage = () => {
         setCurrentPage(currentPage + 1)
         searchAppraisedHistoryPage({
-            workAppraisedId: getRecordId(),
+            appraisedItemId: getRecordId(),
             pageParam:{
                 pageSize: 5,
                 currentPage: currentPage + 1
@@ -86,26 +95,26 @@ const AppraisedWorkItemStatusDrawer = (props) => {
 
     useEffect(() => {
         if (visible){
-            findAppraisedWorkItemById(getRecordId()).then(data => {
+            findAppraisedItemById(getRecordId()).then(data => {
                 if (data.code === 0){
-                    setWorkTitle(data.data.workItem.title)
+                    // setWorkTitle(data.data.workItem.title)
                     setAppraisedInfo(data.data)
-                    if (data.data.workItemAppraisedState === "1" || data.data.workItemAppraisedState === "2"){
+                    if (data.data.appraisedItemState === "1" || data.data.appraisedItemState === "2"){
                         setEdit(false)
                     }else {
                         setEdit(true)
                     }
                     form.setFieldsValue({
-                        workItemAppraisedState:data.data.workItemAppraisedState,
+                        appraisedItemState:data.data.appraisedItemState,
                         advice:data.data.advice,
                     })
                 }
-                setSelectedValue(data.data.workItemAppraisedState)
+                setSelectedValue(data.data.appraisedItemState)
                 // cleanAppraisedHistoryList();
             })
             setCurrentPage(1)
             searchAppraisedHistoryPage({
-                workAppraisedId: getRecordId(),
+                appraisedItemId: getRecordId(),
                 pageParam:{
                     pageSize: 5,
                     currentPage: 1
@@ -115,6 +124,92 @@ const AppraisedWorkItemStatusDrawer = (props) => {
         // setSelectedValue()
     },[visible])
 
+    const goWorkItemDetail = (workItem) => {
+        setWorkId(workItem.id)
+        const pathname = props.match.url;
+        setSessionStorage("detailCrumbArray", [{ id: workItem.id, code: workItem.code, title: workItem.title, iconUrl: workItem.workTypeSys.iconUrl }])
+        props.history.push(`${pathname}/work/${workItem.id}`)
+        setWorkItemDetailVisible(true);
+    }
+
+    const goTestCaseDetail = (testCase) => {
+        const pathname = props.match.url;
+        props.history.push(`${pathname}/testCase/${testCase.id}`)
+        setCaseId(testCase.id)
+        setTestCaseDetailVisible(true);
+    }
+
+    const goDocumentDetail = (data) => {
+        if (data.exist) {
+            findSystemUrl({ name: "sward" }).then(res => {
+                let kanassUrl;
+                if (res.code === 0 && res.data.length > 0) {
+                    kanassUrl = res.data[0]?.systemUrl
+                }
+                if (data.documentType === "document") {
+                    applyJump(`${kanassUrl}/#/repository/${data.kanassRepositoryId}/doc/rich/${data.id}`);
+                } else {
+                    applyJump(`${kanassUrl}/#/repository/${data.kanassRepositoryId}/doc/markdown/${data.id}`);
+                }
+            })
+        } else {
+            return
+        }
+
+    }
+
+    const renderAppraisedContent = () => {
+        if (!appraisedInfo) {return (<></>);}
+        switch (appraisedInfo?.appraisedType.id) {
+            case "000000" :{
+                const workItem = appraisedInfo?.workItem;
+                return (
+                    <div className="appraised-detail-grid" onClick={() => {goWorkItemDetail(workItem)}}>
+                        <DetailItem className={"detail-title"} onClick={() => {goWorkItemDetail(workItem)}}
+                                    label="事项名称" value={workItem?.title} />
+                        <DetailItem label="事项类型" value={workItem?.workTypeSys?.name} />
+                        <DetailItem label="状态" value={workItem?.workStatusNode.name} />
+                        <DetailItem label="负责人" value={workItem?.assigner?.nickname} />
+                    </div>
+                )
+            }
+            case "111111":{
+                const testCase = appraisedInfo?.testCase;
+                return (
+                    <div className="appraised-detail-grid">
+                        <DetailItem  className={"detail-title"} onClick={() => {goTestCaseDetail(testCase)}}
+                            label="用例名称" value={testCase?.name} />
+                        <DetailItem label="用例类型" value={"功能用例"} />
+                        <DetailItem label="状态" value={showTextStatus(testCase?.status)} />
+                        <DetailItem label="负责人" value={testCase?.updateUser?.nickname} />
+                    </div>
+                )
+            }
+            case "222222":
+            case "333333":{
+                const projectDocument = appraisedInfo?.projectDocument;
+                return (
+                    <div className="appraised-detail-grid">
+                        <DetailItem className={"detail-title"} onClick={() => {goDocumentDetail(projectDocument?.kanassDocument)}}
+                                    label="文档名称" value={projectDocument?.kanassDocument?.documentName} />
+                        <DetailItem label="知识库" value={projectDocument?.kanassDocument?.kanassRepositoryName} />
+                        <DetailItem label="作者" value={projectDocument?.kanassDocument?.userName} />
+                    </div>
+                )
+            }
+        }
+    }
+
+
+    const DetailItem = ({ label, value, className, onClick }) => {
+        const itemClass = `detail-item ${className}`.trim();
+        return(
+            <div className={itemClass} onClick={onClick}>
+                <span className="detail-label">{label}:</span>
+                <span className="detail-value">{value || '-'}</span>
+            </div>
+        );
+    };
     /**
      * 关闭详情抽屉
      */
@@ -149,12 +244,12 @@ const AppraisedWorkItemStatusDrawer = (props) => {
                         form={form}
                         layout="vertical"
                         onFinish={updateItem}>
-                        <Form.Item name="title" label="评审事项">
-                            {workTitle}
+                        <Form.Item name="title" label="评审对象">
+                            {renderAppraisedContent()}
                         </Form.Item>
-                        <Form.Item name="workItemAppraisedState" label="评审意见">
+                        <Form.Item name="appraisedItemState" label="评审意见">
                             {
-                                appraisedInfo?.workItemAppraisedState === "0" ?
+                                appraisedInfo?.appraisedItemState === "0" ?
                                     <Radio.Group onChange={(e) => setSelectedValue(e.target.value)}>
                                         <Radio value="1">通过</Radio>
                                         <Radio value="2">不通过</Radio>
@@ -162,7 +257,7 @@ const AppraisedWorkItemStatusDrawer = (props) => {
                                     :
                                     <Space>
                                         {
-                                            appraisedInfo?.workItemAppraisedState === "1" ?
+                                            appraisedInfo?.appraisedItemState === "1" ?
                                                 <>
                                                     <svg className="icon-20" aria-hidden="true">
                                                         <use xlinkHref="#icon-pass"></use>
@@ -247,8 +342,20 @@ const AppraisedWorkItemStatusDrawer = (props) => {
                             <Empty description={"暂无评审记录"}></Empty>
                     }
                 </div>
+                <WorkDetailDrawer
+                    isModalVisible={workItemDetailVisible}
+                    setIsModalVisible={setWorkItemDetailVisible}
+                    searchTable={searchTable}
+                    {...props}
+                />
+                <FunctionContentDrawerView
+                    isModalVisible={testCaseDetailVisible}
+                    setIsModalVisible={setTestCaseDetailVisible}
+                    caseId={caseId}
+                    {...props}
+                />
             </div>
         </Drawer>
     )
 }
-export default inject("appraisedWorkItemStore")(observer(AppraisedWorkItemStatusDrawer));
+export default inject("appraisedItemStore")(observer(AppraisedItemStatusDrawer));

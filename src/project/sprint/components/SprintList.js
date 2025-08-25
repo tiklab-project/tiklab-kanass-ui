@@ -275,7 +275,7 @@ const Sprint = (props) => {
             title: "迭代名称",
             dataIndex: "sprintName",
             key: "sprintName",
-            width: "25%",
+            width: "45%",
             render: (text, record) => (
                 <div className="sprint-item" onClick={() => goSprintDetail(record.id, text)}>
 
@@ -284,14 +284,14 @@ const Sprint = (props) => {
                 </div>
             ),
         },
-        {
-            title: "计划日期",
-            dataIndex: "data",
-            key: "startTime",
-            align: "left",
-            width: "25%",
-            render: (text, record) => <span>{record.startTime?.slice(0, 10)} ~ {record.endTime?.slice(0, 10)}</span>,
-        },
+        // {
+        //     title: "计划日期",
+        //     dataIndex: "data",
+        //     key: "startTime",
+        //     align: "left",
+        //     width: "25%",
+        //     render: (text, record) => <span>{record.startTime?.slice(0, 10)} ~ {record.endTime?.slice(0, 10)}</span>,
+        // },
         {
             title: "事项",
             dataIndex: "workNumber",
@@ -323,6 +323,24 @@ const Sprint = (props) => {
             )
         },
         {
+            title: "负责人",
+            dataIndex: "master",
+            key: "master",
+            align: "left",
+            render: (text, record) => <>
+                {record?.master.nickname}
+            </>
+        },
+        {
+            title: "创建时间",
+            dataIndex: "createTime",
+            key: "createTime",
+            align: "left",
+            render: (text, record) => <>
+                {text}
+            </>
+        },
+        {
             title: "操作",
             key: "action",
             width: "100px",
@@ -341,9 +359,9 @@ const Sprint = (props) => {
                     <svg className="svg-icon" aria-hidden="true" onClick={() => showModal("edit", record.id)}>
                         <use xlinkHref="#icon-edit"></use>
                     </svg>
-                    <PrivilegeProjectButton code={'SprintDelete'} domainId={projectId}  {...props}>
+                    {/*<PrivilegeProjectButton code={'SprintDelete'} domainId={projectId}  {...props}>*/}
                         <DeleteModal deleteFunction={deleSprintList} id={record.id} />
-                    </PrivilegeProjectButton>
+                    {/*</PrivilegeProjectButton>*/}
 
                 </Space>
 
@@ -360,11 +378,11 @@ const Sprint = (props) => {
                             firstText="迭代"
                         >
                             <div className="sprint-botton">
-                                <PrivilegeProjectButton code={'SpintAdd'} domainId={projectId}  {...props}>
+                                {/*<PrivilegeProjectButton code={'SpintAdd'} domainId={projectId}  {...props}>*/}
                                     <Button type="primary" className="sprint-botton-add" onClick={() => showModal("add")}>
                                         添加迭代
                                     </Button>
-                                </PrivilegeProjectButton>
+                                {/*</PrivilegeProjectButton>*/}
 
                             </div>
                         </Breadcumb>

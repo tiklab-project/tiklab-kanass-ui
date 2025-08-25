@@ -66,19 +66,22 @@ const ProjectSetSettingDetailAside = (props) => {
                     <ul className="projectSet-menu">
                         {
                             prorouter && prorouter.map(item => {
-                                return <PrivilegeProjectButton code={item.purviewCode} disabled={"hidden"} domainId={projectSetId}  {...props}>
-                                    <div className={`projectSet-menu-submenu ${item.id === selectKey ? "projectSet-menu-select" : ""}`}
-                                        key={item.key}
-                                        onClick={() => selectKeyFun(item.id)}
-                                    >
-                                        {/* <svg className="svg-icon" aria-hidden="true">
+                                return
+                                // <PrivilegeProjectButton code={item.purviewCode} disabled={"hidden"} domainId={projectSetId}  {...props}>
+                                    <>
+                                        <div className={`projectSet-menu-submenu ${item.id === selectKey ? "projectSet-menu-select" : ""}`}
+                                             key={item.key}
+                                             onClick={() => selectKeyFun(item.id)}
+                                        >
+                                            {/* <svg className="svg-icon" aria-hidden="true">
                                         <use xlinkHref={`#icon-${item.icon}`}></use>
                                     </svg> */}
-                                        <span className={`${isShowText ? "" : "projectSet-notext"}`}>
+                                            <span className={`${isShowText ? "" : "projectSet-notext"}`}>
                                             {item.title}
                                         </span>
-                                    </div>
-                                </PrivilegeProjectButton>
+                                        </div>
+                                    </>
+                                // </PrivilegeProjectButton>
 
                             })
                         }

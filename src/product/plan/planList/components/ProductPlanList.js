@@ -333,9 +333,9 @@ const ProductPlanList = (props) => {
                     <svg className="svg-icon" aria-hidden="true" onClick={() => showModal("edit", record.id)}>
                         <use xlinkHref="#icon-edit"></use>
                     </svg>
-                    <PrivilegeProjectButton code={'ProductPlanDelete'} domainId={productId}  {...props}>
+                    {/*<PrivilegeProjectButton code={'ProductPlanDelete'} domainId={productId}  {...props}>*/}
                         <DeleteModal deleteFunction={deleProductPlanList} id={record.id} />
-                    </PrivilegeProjectButton>
+                    {/*</PrivilegeProjectButton>*/}
 
                 </Space>
 
@@ -352,11 +352,11 @@ const ProductPlanList = (props) => {
                                 firstText="计划"
                             >
                                 <div className="productPlan-botton">
-                                    <PrivilegeProjectButton code={'SpintAdd'} domainId={productId}  {...props}>
+                                    {/*<PrivilegeProjectButton code={'SpintAdd'} domainId={productId}  {...props}>*/}
                                         <Button type="primary" className="productPlan-botton-add" onClick={() => showModal("add")}>
                                             添加计划
                                         </Button>
-                                    </PrivilegeProjectButton>
+                                    {/*</PrivilegeProjectButton>*/}
 
                                 </div>
                             </Breadcumb>

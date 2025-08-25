@@ -16,6 +16,7 @@ import StageAddModal from "./StageAddModal";
 import StageEditModal from "./StageEditModal";
 import WorkStore from "../../../../work/store/WorkStore";
 import "./StageList.scss"
+import AppraisedStore from "../../../appraised/store/AppraisedStores";
 
 const StageList = (props) => {
     const store = {
@@ -25,6 +26,7 @@ const StageList = (props) => {
     const { findStageListTreePage, findStagePage, updateStage, stageList,setStageList, findWorkTypeDmList, workTypeList,
         deleteStage, stageCondition, total } = StageListStore;
     const { deleteWorkItem, deleteWorkItemAndChildren, workId } = WorkStore;
+    const {status} = AppraisedStore;
     // 添加子级的上级id
     const [parentId, setParentId] = useState();
     // 添加类型 子级，顶级
@@ -34,6 +36,7 @@ const StageList = (props) => {
     const [showStageEditModal, setShowStageEditModal] = useState(false);
     // 项目id
     const projectId = props.match.params.id;
+    const project = JSON.parse(localStorage.getItem("project"));
     const [isModalVisible, setIsModalVisible] = useState(false);
     const modelRef = useRef();
     const [graph, setGraph] = useState();
@@ -143,6 +146,18 @@ const StageList = (props) => {
         setShowStageEditModal(true)
     }
 
+    const goAppraisedDetail = (id) => {
+        props.history.push(`/project/${projectId}/appraised/${id}`)
+        localStorage.setItem("appraisedId", id);
+    }
+
+    const [expandedKeys, setExpandedKeys] = useState([]);
+    const toggleExpand = (id) => {
+        setExpandedKeys(prev =>
+            prev.includes(id) ? prev.filter(k => k !== id) : [...prev, id]
+        );
+    };
+
     const columns = [
         {
             title: "迭代名称",
@@ -151,8 +166,24 @@ const StageList = (props) => {
             width: "25%",
             className: "stage-first-col",
             render: (text, record) => (
-                <div className="stage-title stage-first-col" onClick={() => goStageDetail(record.id, text)}>
+                <div className="stage-title stage-first-col">
+                    {
+                        record.appraisedList && record.appraisedList.length > 0 ? expandedKeys.includes(record.id) ?
+                                <svg className="icon-10" aria-hidden="true"
+                                     onClick={e => toggleExpand(record.id)}>
+                                    <use xlinkHref="#icon-workDown"></use>
+                                </svg> :
+                                <svg className="icon-10" aria-hidden="true"
+                                     onClick={e => toggleExpand(record.id)}>
+                                    <use xlinkHref="#icon-workRight"></use>
+                                </svg>
+                            :
+                            <>
+                                <svg className="icon-10">
 
+                                </svg>
+                            </>
+                    }
                     <ColorIcon name={text} className="icon-32" color={record.color} />
                     <span className="stage-name" onClick={() => goStageDetail(record.id, text)}>{text}</span>
                 </div>
@@ -166,12 +197,6 @@ const StageList = (props) => {
             width: "25%",
             render: (text, record) => <span>{record.startTime?.slice(0, 10)} ~ {record.endTime?.slice(0, 10)}</span>,
         },
-        // {
-        //     title: "事项",
-        //     dataIndex: "workNumber",
-        //     key: "workNumber",
-        //     align: "left"
-        // },
         {
             title: "状态",
             dataIndex: ["stageState", "name"],
@@ -212,6 +237,47 @@ const StageList = (props) => {
         },
     ];
 
+    const appraisedColumns = [
+        {
+            title: "评审名称",
+            dataIndex: "name",
+            key: "name",
+            width: "25%",
+            render: (text, record) => (
+                <div className="appraised-master" onClick={() => goAppraisedDetail(record.id)}>
+                    <ColorIcon name={text} className="icon-32" color={record.color} />
+                    <span className="appraised-name" >{text}</span>
+                </div>
+
+            ),
+        },
+        {
+            title: "评审周期",
+            dataIndex: "startTime",
+            key: "startTime",
+            align: "left",
+            width: "25%",
+            render: (text, record) => <span>
+                {record.startTime?.slice(0, 10)} ~ {record.endTime?.slice(0, 10)}
+            </span>
+        },
+        {
+            title: "状态",
+            dataIndex: "appraisedState",
+            key: "appraisedState",
+            align: "left",
+            render: (text, record) => <div className={`appraised-status ${setStatuStyle(record.appraisedState)}`}>
+                {status[text].name}
+            </div>
+        },
+        {
+            title: "评审类型",
+            dataIndex: ["appraisedType", "name"],
+            key: "appraisedType",
+            align: "left"
+        }
+    ];
+
     return (
         <Provider {...store}>
             <Row style={{ height: "100%", overflowY: "auto" }}>
@@ -230,10 +296,10 @@ const StageList = (props) => {
                                 />
 
                                 <div className="stage-action-right">
-                                    <div className="stage-view">
-                                        <div className={`stage-view-item stage-view-tile ${viewType === "tile" ? "stage-view-select" : ""}`} onClick={() => setViewType("tile")}>平铺</div>
-                                        <div className={`stage-view-item stage-view-tree ${viewType === "tree" ? "stage-view-select" : ""}`} onClick={() => setViewType("tree")}>树状</div>
-                                    </div>
+                                    {/*<div className="stage-view">*/}
+                                    {/*    <div className={`stage-view-item stage-view-tile ${viewType === "tile" ? "stage-view-select" : ""}`} onClick={() => setViewType("tile")}>平铺</div>*/}
+                                    {/*    <div className={`stage-view-item stage-view-tree ${viewType === "tree" ? "stage-view-select" : ""}`} onClick={() => setViewType("tree")}>树状</div>*/}
+                                    {/*</div>*/}
 
                                     <Button type="primary" onClick={() => addStage()}>
                                         添加阶段
@@ -250,7 +316,6 @@ const StageList = (props) => {
                                     rowKey={(record) => record.id}
                                     showSorterTooltip={false}
                                     loading={loading}
-                                    // rowClassName={(record, index) => record.id === workId ? "work-table-select" : ""}
                                     pagination={{
                                         total: total,
                                         pageSize: stageCondition.pageParam.pageSize,
@@ -261,24 +326,28 @@ const StageList = (props) => {
                                     }}
                                     // onChange={(pagination, filters, sorter, extra) => sorterTable(pagination, filters, sorter, extra)}
                                     expandable={
-                                        viewType === "tree" && {
-                                            expandIcon: ({expanded, onExpand, record}) => (
-                                                record.children && record.children.length > 0 ? expanded ?
-                                                        <svg className="icon-10" aria-hidden="true"
-                                                             onClick={e => onExpand(record, e)}>
-                                                            <use xlinkHref="#icon-workDown"></use>
-                                                        </svg> :
-                                                        <svg className="icon-10" aria-hidden="true"
-                                                             onClick={e => onExpand(record, e)}>
-                                                            <use xlinkHref="#icon-workRight"></use>
-                                                        </svg>
-                                                    :
-                                                    <>
-                                                        <svg className="icon-10">
-
-                                                        </svg>
-                                                    </>
-                                            )
+                                        project.projectType.type === "ipd" && {
+                                            expandIconColumnIndex: -1,
+                                            expandIcon: ({expanded, onExpand, record}) => null,
+                                            expandedRowKeys: expandedKeys,
+                                            onExpand: (expanded, record) => toggleExpand(record.id),
+                                            expandedRowRender: (record) => (
+                                                <div style={{ margin: 0, paddingLeft: 40 }}>
+                                                    {record.appraisedList && record.appraisedList.length > 0 ? (
+                                                        <Table
+                                                            columns={appraisedColumns}
+                                                            dataSource={record.appraisedList}
+                                                            rowKey={(item) => item.id}
+                                                            showHeader={false}
+                                                            pagination={false}
+                                                            size="small"
+                                                            className="appraised-table"
+                                                        />
+                                                    ) : (
+                                                        <></>
+                                                    )}
+                                                </div>
+                                            ),
                                         }
                                     }
                                 />

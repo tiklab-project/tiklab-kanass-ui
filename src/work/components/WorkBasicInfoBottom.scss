@@ -18,6 +18,15 @@
     margin-left: 5px;
     font-size: 12px;
   }
+
+  .work-select{
+    .ant-select-arrow{
+      right: 15px;
+    }
+    .ant-select-clear{
+      right: 15px;
+    }
+  }
 }
 
 .work-basic-info-bottom-content{

@@ -9,7 +9,7 @@ export const toDiffCaseFn = (record, history) => {
     switch (record.caseType) {
         case CASE_TYPE.FUNCTION:
             history.push({
-                pathname: `/project/${projectId}/testcase/function/${record.id}`,
+                pathname: `/project/${projectId}/testcase/caseDetail/function/${record.id}`,
                 state: { caseName: record.name }
             });
             sessionStorage.setItem('functionId',record.id);

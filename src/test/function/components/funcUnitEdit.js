@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 import { observer, inject } from "mobx-react";
 import {Form, Modal, Input, TreeSelect, Button} from 'antd';
 import {useHistory} from "react-router";
+import FuncUnitStepTable from "./FunctionStepList";
 const { TreeNode } = TreeSelect;
 
 // 添加与编辑
@@ -114,7 +115,14 @@ const FuncUnitEdit = (props) => {
                         </TreeSelect>
 
                     </Form.Item>
+                    {/*<Form.Item*/}
+                    {/*    label="前置条件"*/}
+                    {/*    name="precondition"*/}
+                    {/*>*/}
+                    {/*    <Input.TextArea placeholder="请输入前置条件" />*/}
+                    {/*</Form.Item>*/}
                 </Form>
+                {/*<FuncUnitStepTable  {...props} />*/}
             </Modal>
         </>
     );

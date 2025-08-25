@@ -15,10 +15,9 @@ import {EditOutlined} from "@ant-design/icons";
 
 const AppraisedTable = (props) => {
     const store = {appraisedStore : AppraisedStore}
-    const project = JSON.parse(localStorage.getItem("project"));
     const { appraisedList, setAppraisedList, getAppraisedList, deleteAppraised, createRecent,
         userList, getUserList, searchCondition,
-        total, findAllVersionState, status } = AppraisedStore;
+        total, findAllAppraisedType, status } = AppraisedStore;
     // 项目id
     const projectId = props.match.params.id;
     // tab的key
@@ -107,7 +106,7 @@ const AppraisedTable = (props) => {
         getAppraisedList({ projectId: projectId, name: null, appraisedState: null })
         selectTabs(activeTabs, 1);
         getUserList(projectId);
-        // console.log(JSON.stringify(userList));
+        findAllAppraisedType();
         return;
     }, []);
 
@@ -154,6 +153,12 @@ const AppraisedTable = (props) => {
             </span>
         },
         {
+            title: "评审类型",
+            dataIndex: ["appraisedType", "name"],
+            key: "appraisedType",
+            align: "left"
+        },
+        {
             title: "状态",
             dataIndex: "appraisedState",
             key: "appraisedState",
@@ -162,12 +167,6 @@ const AppraisedTable = (props) => {
                 {status[text].name}
             </div>
         },
-        // {
-        //     title: "描述",
-        //     dataIndex: "description",
-        //     key: "description",
-        //     align: "left"
-        // },
         {
             title: "创建者",
             dataIndex: "builder",

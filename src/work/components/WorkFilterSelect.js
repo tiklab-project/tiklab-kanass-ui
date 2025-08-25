@@ -32,6 +32,10 @@ const WorkFilterSelect = (props) =>{
             label: "我的已办"
         },
         {
+            value: "assigner",
+            label: "我负责的"
+        },
+        {
             value: "creat",
             label: "我创建的"
         },
@@ -73,6 +77,9 @@ const WorkFilterSelect = (props) =>{
                     break;
                 case "overdue":
                     getOverdueWorkItem();
+                    break;
+                case "assigner":
+                    getAssignerWorkItem();
                     break;
                 default:
                     break;
@@ -173,6 +180,26 @@ const WorkFilterSelect = (props) =>{
             sprintId: sprintId,
             overdue: true,
             builderId: userId,
+            assignerId: userId,
+            workStatusIds: [],
+            pageParam: {
+                pageSize: 20,
+                currentPage: 1,
+            }
+        }
+        setSearchCondition(initValues)
+        getWorkList(initValues);
+    }
+
+    /**
+     * 获取我负责的事项
+     */
+    const getAssignerWorkItem = () => {
+        let initValues = {
+            projectId: projectId,
+            sprintId: sprintId,
+            overdue: false,
+            builderId: null,
             assignerId: userId,
             workStatusIds: [],
             pageParam: {

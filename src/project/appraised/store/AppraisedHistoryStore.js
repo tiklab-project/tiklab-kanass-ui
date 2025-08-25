@@ -48,7 +48,7 @@ export class AppraisedHistoryStore {
     @observable
     searchCondition = {
         orderParams: [{
-            name: "createTime",
+            name: "ah.createTime",
             orderType: "desc"
         }],
         pageParam: {

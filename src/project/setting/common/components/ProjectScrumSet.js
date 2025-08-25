@@ -52,21 +52,21 @@ const ProjectScrumSet = (props) => {
             icon: 'survey',
             id: `/project/${projectId}/set/user`,
             encoded: "User",
-            purviewCode: "ProjectUser"
+            // purviewCode: "ProjectUser"
         },
         {
             title: `${t('privilege')}`,
             icon: 'survey',
             id: `/project/${projectId}/set/projectDomainRole`,
             encoded: "Privilege",
-            purviewCode: "ProjectPrivilege"
+            // purviewCode: "ProjectPrivilege"
         },
         {
             title: `消息`,
             icon: 'survey',
             id: `/project/${projectId}/set/messagenotice`,
             encoded: "messagenotice",
-            purviewCode: "ProjectMessagenotice"
+            // purviewCode: "ProjectMessagenotice"
         },
         {
             title: "事项类型",
@@ -101,6 +101,7 @@ const ProjectScrumSet = (props) => {
             icon: 'survey',
             id: `/project/${projectId}/set/integration`,
             encoded: "integration",
+            purviewCode: "ProjectIntegration"
         },
 
     ];

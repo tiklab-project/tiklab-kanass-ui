@@ -18,7 +18,7 @@ import workStore from "../store/WorkStore";
 import {withRouter} from "react-router";
 const Work = (props) => {
     // const { WorkGantt } = props;
-    const { workShowType, setWorkShowType } = WorkStore;
+    const { workShowType, setWorkShowType , setWorkTypeVisible, setQuickFilterVisible, setTableTitle} = WorkStore;
     const store = {
         workStore: WorkStore,
         workCalendarStore: WorkCalendarStore
@@ -32,6 +32,9 @@ const Work = (props) => {
      */
     const view = () => {
         let dom = <WorkTable />;
+        setTableTitle("所有事项")
+        setWorkTypeVisible(false)
+        setQuickFilterVisible(true)
         if (project?.projectType.type === "kanban"){
             setWorkShowType("bodar")
             dom = <WorkBodar />;

@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Col, Empty, Input, message, Row, Space, Table} from "antd";
 import {inject, observer} from "mobx-react";
 import {showCaseTypeTable, showCaseTypeView, showTextStatus} from "../../../common/caseCommon/CaseCommonFn";
 import "../../common/styles/caseContantStyle.scss"
 import "../../common/styles/unitcase.scss"
 import PaginationCommon from "../../../common/caseCommon/pagination/Page";
-import {rowStyle, showCreateUser} from "./testCaseTableFn";
+import {findTestCaseTableListFn, rowStyle, showCreateUser} from "./testCaseTableFn";
 import IconCommon from "../../../common/caseCommon/IconCommon";
 import {useHistory} from "react-router";
 import {debounce} from "../../../common/caseCommon/CaseCommonFn";
@@ -14,6 +14,8 @@ import {toDiffCaseFn} from "../../common/caseCommonFn";
 import FuncUnitEdit from "../../function/components/funcUnitEdit";
 import {SearchOutlined} from "@ant-design/icons";
 import CaseCategoryTree from "../../category/components/CaseCategoryTree";
+import FunctionContentDrawerView from "../../function/components/drawerView/FunctionContentDrawerView";
+import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 
 
 const TestCaseTable = (props) => {
@@ -29,9 +31,11 @@ const TestCaseTable = (props) => {
         setTestType,
         testType,
         caseTypeList,
-        setCaseTypeList
+        setCaseTypeList,
+        searchCondition,
+        detailWidth
     } = testcaseStore;
-    const {categoryIds} = categoryStore;
+    const {categoryIds, setCategoryIds, tableTitle, treeCollapsed} = categoryStore;
 
     const history = useHistory()
     const [tableLoading,setTableLoading] = useState(true);
@@ -39,12 +43,20 @@ const TestCaseTable = (props) => {
     const [totalRecord, setTotalRecord] = useState();
     const [pageSize] = useState(20);
     const [creatorAndDirectorNum, setCreatorAndDirectorNum] = useState();
-
+    const [testCaseDetailVisible, setTestCaseDetailVisible] = useState(false);
+    const [caseId, setCaseId] = useState();
     let projectId = localStorage.getItem("projectId")
+
+    const goTestCaseDetail = (record) => {
+        // const pathname = props.match.url;
+        // props.history.push(`${pathname}/${record.id}`)
+        setCaseId(record.id)
+        setTestCaseDetailVisible(true);
+    }
 
     useEffect(()=>{
         findPage()
-    },[projectId])
+    },[projectId, categoryIds, searchCondition])
 
 
     const findPage = (params) =>{
@@ -55,16 +67,18 @@ const TestCaseTable = (props) => {
                 currentPage:currentPage
             },
             projectId:projectId,
-            categoryIds:categoryIds,
+            moduleIds:categoryIds,
             // categoryId:selectCategory,
             ...params
         }
 
-        findTestCaseList(param).then((res)=>{
-            setTotalPage(res.totalPage);
-            setTotalRecord(res.totalRecord)
-            setTableLoading(false)
-        })
+        const res = findTestCaseTableListFn(param);
+        setTableLoading(false)
+        // findTestCaseList(param).then((res)=>{
+        //     setTotalPage(res.totalPage);
+        //     setTotalRecord(res.totalRecord)
+        //     setTableLoading(false)
+        // })
     }
 
 
@@ -119,42 +133,59 @@ const TestCaseTable = (props) => {
 
     const column = [
         {
-            title: `名称`,
-            dataIndex: "name",
-            key: "name",
-            width: "45%",
+            title: `ID`,
+            dataIndex: "caseKey",
+            key: "caseKey",
+            width: "15%",
             render: (text,record) =>(
-                <Space size="middle">
+                <Space size="small">
                     <div style={{
                         marginTop: "3px",
                         borderRadius: "5px",
-                        width: "28px",
-                        height: "28px",
+                        width: "20px",
+                        height: "20px",
                         overflow: "hidden"
                     }}>
-                        {showCaseTypeView(record.caseType)}
+                        {showCaseTypeView(record.caseType, "icon-20")}
                     </div>
 
                     <div className="case-info-container">
-                        <div className="case-name">
+                        <div className="case-key">
                             <div
                                 className={"link-text"}
-                                onClick={()=>toDiffCaseFn(record,history)}
+                                // onClick={()=>toDiffCaseFn(record,history)}
+                                onClick={()=> goTestCaseDetail(record)}
                             >
-                                {record.name}
+                                <span>{record?.caseKey}</span>
                             </div>
                         </div>
-                        <div className="case-meta-info">
-                            <span>{record?.caseKey}</span>
-                            <span>{showCaseTypeTable(record?.caseType)}</span>
-                        </div>
                     </div>
-
                 </Space>
 
             )
         },
+        {
+            title: `名称`,
+            dataIndex: "name",
+            key: "name",
+            width: "30%",
+            render: (text,record) =>(
+                <Space size="middle">
+                    <div className="case-info-container">
+                        <div className="case-name">
+                            <div
+                                className={"link-text"}
+                                // onClick={()=>toDiffCaseFn(record,history)}
+                                onClick={()=>goTestCaseDetail(record)}
+                            >
+                                {record.name}
+                            </div>
+                        </div>
+                    </div>
+                </Space>
 
+            )
+        },
         {
             title: `状态`,
             dataIndex: "status",
@@ -170,13 +201,6 @@ const TestCaseTable = (props) => {
             ellipsis: true,
             render: (text, record) => (showCreateUser(record.director))
         },
-        // {
-        //     title: `最近执行`,
-        //     dataIndex: "recentInstance",
-        //     key: "recentInstance",
-        //     width:"10%",
-        //     render:(text,record)=>(<CaseInstanceSingleDrawer caseData={record} {...props}/>)
-        // },
         {
             title: `创建时间`,
             dataIndex: "createTime",
@@ -190,93 +214,79 @@ const TestCaseTable = (props) => {
             width: 50,
             render: (text, record) => (
                 <Space size="small">
-                    {/*<ShowQuickExe record={record} {...props}/>*/}
-                    {/*<ShowDeleteView record={record} deleteFn={deleteFn} />*/}
                     <HideDelete deleteFn={() =>deleteFn(record)}/>
                 </Space>
             )
         },
     ]
 
-    // 模块筛选
-    const changeCategory = (category) => {
-        setCategoryIds(category?.moduleIds);
-        const targetPath = `/project/${projectId}/testcase/cases`;
-        if (location.pathname !== targetPath) history.push(targetPath);
-    };
-
-
     return (
-        <div style={{display: "flex", height:"100%", flex:"1 1 0%"}}>
-            <CaseCategoryTree
-                creatorAndDirectorNum={creatorAndDirectorNum}
-                onNodeClick={changeCategory}
-                setTestType={setTestType}
-                testType={testType}
-                caseTypeList={caseTypeList}
-                setCaseTypeList={setCaseTypeList}
-                add={true}
-            />
-            <div style={{display: "flex", height:"100%", flex:"1 1 0%"}}>
-                <Row style={{height:"100%", width: "100%", overflowY: "auto"}}>
-                    <Col
-                        md={{ span: 24, offset: 0 }}
-                        lg={{ span: 20, offset: 2 }}
-                        xl={{ span: 20, offset: 2 }}
-                        xll={{ span: 16, offset: 4 }}
-                    >
-                        <div className={"content-box-center"}>
-                            <div className={"display-flex-between"}>
-                                <Input
-                                    placeholder={`搜索用例名`}
-                                    onPressEnter={onSearch}
-                                    className='search-input-common'
-                                    prefix={<SearchOutlined />}
-                                    onChange={debounce(onSearch, 500)}
-                                    style={{width: '180px'}}
-                                    allowClear
-                                />
+        <Row style={{height:"100%", position: "relative"}}>
+            <Col
+                md={{ span: 24, offset: 0 }}
+                lg={{ span: 20, offset: 2 }}
+                xl={{ span: 20, offset: 2 }}
+                xll={{ span: 16, offset: 4 }}
+            >
+                <div className={"content-box-center"}>
+                    <Breadcumb firstText={tableTitle}/>
+                    <div style={{marginTop: "10px"}} className={"display-flex-between"}>
+                        <Input
+                            placeholder={`搜索用例名`}
+                            onPressEnter={onSearch}
+                            className='search-input-common'
+                            prefix={<SearchOutlined />}
+                            onChange={debounce(onSearch, 500)}
+                            style={{width: '180px'}}
+                            allowClear
+                        />
 
-                                <Space>
-                                    <FuncUnitEdit
-                                        findPage={findPage}
-                                        categoryStore={categoryStore}
-                                        name={"添加功能"}
-                                        type={"add"}
-                                        {...props}
+                        <Space>
+                            <FuncUnitEdit
+                                findPage={findPage}
+                                categoryStore={categoryStore}
+                                name={"添加用例"}
+                                type={"add"}
+                                {...props}
+                            />
+                        </Space>
+                    </div>
+                    <div className={"table-list-box"}>
+                        <Table
+                            columns={column}
+                            dataSource={testcaseList}
+                            rowKey={record => record.id}
+                            pagination={false}
+                            loading={tableLoading}
+                            onRow={(record) => ({style: rowStyle(record.caseType)})}
+                            locale={{
+                                emptyText: !tableLoading
+                                    ? <Empty
+                                        imageStyle={{height: 100}}
+                                        description={<span>暂无用例</span>}
                                     />
-                                </Space>
-                            </div>
-                            <div className={"table-list-box"}>
-                                <Table
-                                    columns={column}
-                                    dataSource={testcaseList}
-                                    rowKey={record => record.id}
-                                    pagination={false}
-                                    loading={tableLoading}
-                                    onRow={(record) => ({style: rowStyle(record.caseType)})}
-                                    locale={{
-                                        emptyText: !tableLoading
-                                            ? <Empty
-                                                imageStyle={{height: 100}}
-                                                description={<span>暂无用例</span>}
-                                            />
-                                            : <div style={{height: 100}}/>,
-                                    }}
-                                />
-                                <PaginationCommon
-                                    currentPage={currentPage}
-                                    totalPage={totalPage}
-                                    changePage={onTableChange}
-                                    totalRecord={totalRecord}
-                                    findPage={findPage}
-                                />
-                            </div>
-                        </div>
-                    </Col>
-                </Row>
-            </div>
-        </div>
+                                    : <div style={{height: 100}}/>,
+                            }}
+                        />
+                        <PaginationCommon
+                            currentPage={currentPage}
+                            totalPage={totalPage}
+                            changePage={onTableChange}
+                            totalRecord={totalRecord}
+                            findPage={findPage}
+                        />
+                    </div>
+                </div>
+            </Col>
+            <FunctionContentDrawerView
+                isModalVisible={testCaseDetailVisible}
+                setIsModalVisible={setTestCaseDetailVisible}
+                caseId={caseId}
+                inTestCase={true}
+                detailWidth={detailWidth}
+                {...props}
+            />
+        </Row>
     )
 }
 
