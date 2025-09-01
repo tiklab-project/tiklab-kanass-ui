@@ -700,7 +700,7 @@ const WorkModuleFilter = (props) => {
                             <div className="work-module-filter-sider-title">
                                 模块筛选
 
-                                <div style={{color: "var(--tiklab-black)"}}>
+                                <div style={{cursor: "pointer"}}>
                                     <svg className="icon-18" aria-hidden="true" onClick={() => setModuleTreeVisible(!moduleTreeVisible)}>
                                         {
                                             moduleTreeVisible ?

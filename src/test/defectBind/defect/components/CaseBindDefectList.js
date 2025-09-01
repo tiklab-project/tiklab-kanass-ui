@@ -11,13 +11,14 @@ import WorkDetailDrawer from "../../workItemInfo/WorkDetailDrawer";
 import {EllipsisOutlined, DeleteOutlined, LinkOutlined} from "@ant-design/icons";
 import workStore from "../../workItemDefectAdd/WorkStore";
 import {toWorkItem} from "../../common/util/workItemCommonFn";
+import {deleteWorkTestCaseFn} from "../../../testcase/components/testCaseTableFn";
 
 
 /**
  * 绑定的缺陷列表
  */
 const CaseBindDefectList = (props) =>{
-    const {caseId,notShow,testPlanId,startTime,endTime} = props;
+    const {caseId,notShow,testPlanId,startTime,endTime,smallTableHead} = props;
     const {findWorkItemBindPage,workItemBindList,deleteWorkItemBind} = workItemBindStore
     const {deleteWork} = workStore
 
@@ -28,7 +29,7 @@ const CaseBindDefectList = (props) =>{
             dataIndex: ["workItem","title"],
             key: "name",
             ellipsis:true,
-            width: "40%",
+            width: "35%",
             render:(text,record)=> (
                 <WorkDetailDrawer
                     workItemId={record.workItem?.id}
@@ -71,7 +72,7 @@ const CaseBindDefectList = (props) =>{
             dataIndex: "createTime",
             key: "createTime",
             ellipsis:true,
-            width: "10%",
+            width: "15%",
         },
 
     ]
@@ -103,7 +104,8 @@ const CaseBindDefectList = (props) =>{
                             title="确定删除？"
                             onConfirm={async () => {
                                 await deleteWorkItemBind(record.id)
-                                await deleteWork(record.workItem?.id)
+                                // await deleteWork(record.workItem?.id)
+                                await deleteWorkTestCaseFn(caseId, record.workItem?.id)
                                 await findWorkItemBindPage({
                                     caseId: caseId,
                                     testPlanId: testPlanId
@@ -141,7 +143,7 @@ const CaseBindDefectList = (props) =>{
     const [tableLoading,setTableLoading] = useState(true);
     const [totalPage, setTotalPage] = useState();
     const [totalRecord, setTotalRecord] = useState();
-    const [pageSize] = useState(15);
+    const [pageSize] = useState(20);
     const [currentPage, setCurrentPage] = useState(1);
 
     useEffect(async ()=>{
@@ -188,54 +190,54 @@ const CaseBindDefectList = (props) =>{
 
 
     return(
-        <div style={{padding: "0 0 20px"}}>
-
-            {
-                notShow
-                    ? null
-                    : <div className={"display-flex-between"} style={{margin: "10px 5px"}}>
-                        <div className={"list-size-title"}>共{workItemBindList.length}个</div>
-
-                        <Space>
-                            <WorkAddModel
-                                caseId={caseId}
-                                testPlanId={testPlanId}
-                            />
-
-                            <DefectSelect
-                                caseId={caseId}
-                                testPlanId={testPlanId}
-                            />
-                        </Space>
-                    </div>
-            }
-
-            <div className={"table-list-box"} style={{margin: "16px 0"}}>
-                <Table
-                    className="tablelist"
-                    columns={notShow ? columns : [...columns, actionColumn]}
-                    dataSource={workItemBindList}
-                    rowKey={record => record.id}
-                    loading={tableLoading}
-                    pagination={false}
-                    locale={{
-                        emptyText: !tableLoading
-                            ? <Empty
-                                imageStyle={{height: 100}}
-                                description={<span>暂无缺陷</span>}
-                            />
-                            :<div style={{height: 100}}/>,
-                    }}
-                />
+        <>
+            <div className={"title-bold"}>
+                关联缺陷
             </div>
-            <PaginationCommon
-                currentPage={currentPage}
-                totalPage={totalPage}
-                changePage={onTableChange}
-                totalRecord={totalRecord}
-                findPage={findPage}
-            />
-        </div>
+            <div style={{padding: "0 0 20px"}}>
+
+                {
+                    notShow
+                        ? null
+                        : <div className={"display-flex-between"} style={{margin: "10px 5px"}}>
+                            <div className={"list-size-title"}>共{workItemBindList.length}个</div>
+
+                            <Space>
+                                <WorkAddModel
+                                    caseId={caseId}
+                                    testPlanId={testPlanId}
+                                />
+
+                                <DefectSelect
+                                    caseId={caseId}
+                                    testPlanId={testPlanId}
+                                />
+                            </Space>
+                        </div>
+                }
+
+                <div className={"table-list-box"} style={{margin: "16px 0"}}>
+                    <Table
+                        className={`${smallTableHead ? 'case-bind-table-list':'tablelist'}`}
+                        columns={notShow ? columns : [...columns, actionColumn]}
+                        dataSource={workItemBindList}
+                        rowKey={record => record.id}
+                        loading={tableLoading}
+                        pagination={false}
+                        locale={{
+                            emptyText: <div style={{height: 100}}/>,
+                        }}
+                    />
+                </div>
+                {/*<PaginationCommon*/}
+                {/*    currentPage={currentPage}*/}
+                {/*    totalPage={totalPage}*/}
+                {/*    changePage={onTableChange}*/}
+                {/*    totalRecord={totalRecord}*/}
+                {/*    findPage={findPage}*/}
+                {/*/>*/}
+            </div>
+        </>
     )
 }
 

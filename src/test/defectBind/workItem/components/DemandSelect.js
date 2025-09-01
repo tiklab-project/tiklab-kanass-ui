@@ -4,17 +4,19 @@ import {inject, observer} from "mobx-react";
 import PaginationCommon from "../../../../common/caseCommon/pagination/Page";
 import IconCommon from "../../../../common/caseCommon/IconCommon";
 import {debounce} from "../../../../common/caseCommon/CaseCommonFn";
+import WorkItemStore from "../store/WorkItemStore";
+import {createWorkTestCaseFn} from "../../../testcase/components/testCaseTableFn";
 // import projectBindStore from "../../../../repository/setting/projectIntegration/ProjectBindStore";
 // const {findProjectBind} = projectBindStore
 
 
 const DemandSelect = (props) =>{
-    const {workItemStore,caseInfo,updateFn,setDemandInfo,onCancel} = props;
+    const {caseInfo,updateFn,setDemandInfo,onCancel} = props;
     const {
         findWorkItemList,
         findWorkItem,
-    } = workItemStore;
-
+    } = WorkItemStore;
+    const projectId = localStorage.getItem("projectId")
     const [selectProjectId, setSelectProjectId] = useState();
     const [workItemList, setWorkItemList] = useState([]);
     const repositoryId = sessionStorage.getItem("repositoryId")
@@ -30,7 +32,7 @@ const DemandSelect = (props) =>{
             width:"40%"
         },
         {
-            title:`经办人`,
+            title:`负责人`,
             dataIndex: ["assigner","name"],
             key: "director",
             width:"20%"
@@ -49,25 +51,19 @@ const DemandSelect = (props) =>{
     ]
 
     useEffect(async ()=>{
-        let data =await findProjectBind(repositoryId,"kanass")
-
-        if(data) {
-            setSelectProjectId(data.project?.id)
-            findDemandList({projectId: data.project?.id})
-        }
+        setSelectProjectId(projectId)
+        findDemandList({projectId: projectId})
     },[])
 
     const onFinish = (id) => {
-        setSelectProjectId(id)
-        caseInfo.testCase.workItemId = id;
-        updateFn(caseInfo).then(()=>{
-            findWorkItem(id,repositoryId).then(res=>{
-                if(res.code === 0) {
-                    setDemandInfo(res.data)
-                }
-            })
-        })
-
+        let param = {
+            ...caseInfo.testCase,
+            id:caseInfo.id,
+            demand:{id: id}
+        }
+        updateFn(param)
+        // 事项下--新增一条关联关系
+        createWorkTestCaseFn(caseInfo.id, id, projectId)
         onCancel()
     };
 
@@ -112,62 +108,66 @@ const DemandSelect = (props) =>{
                 pageSize: pageSize,
                 currentPage:current
             },
+            projectId:projectId,
         }
 
         findDemandList(param)
     }
 
-    // return(
-    //     <>
-    //         <div style={{padding:"0 0 15px"}}>
-    //             <Row gutter={16}>
-    //                 <Col className="gutter-row" span={18}>
-    //                     <Input
-    //                         placeholder={`搜索需求名称`}
-    //                         onPressEnter={onSearch}
-    //                         onChange={onSearch}
-    //                         className='demand_project_search'
-    //                         prefix={<IconCommon
-    //                             icon={"sousuo"}
-    //                             className={"icon-s"}
-    //                         />}
-    //                         onChange={debounce(onSearch,500) }
-    //                         allowClear
-    //                     />
-    //                 </Col>
-    //                 <Col className="gutter-row" span={6}>
-    //                     {/*<ProjectSelect*/}
-    //                     {/*    clickProject={clickProject}*/}
-    //                     {/*    {...props}*/}
-    //                     {/*/>*/}
-    //                 </Col>
-    //
-    //             </Row>
-    //         </div>
-    //         <div style={{"overflow": "auto","height": "350px"}}>
-    //             <div className={"table-list-box"} >
-    //                 <Table
-    //                     columns={columns}
-    //                     dataSource={workItemList}
-    //                     rowKey = {record => record.id}
-    //                     onRow={(record) => {
-    //                         return {
-    //                             onClick: () => {onFinish(record.id)},
-    //                             style: {cursor: 'pointer'}
-    //                         };
-    //                     }}
-    //                     pagination={false}
-    //                 />
-    //                 <PaginationCommon
-    //                     currentPage={currentPage}
-    //                     totalPage={totalPage}
-    //                     changePage={onTableChange}
-    //                 />
-    //             </div>
-    //         </div>
-    //
-    //     </>
-    // )
+    return(
+        <>
+            <div style={{padding:"0 0 15px"}}>
+                <Row gutter={16}>
+                    <Col className="gutter-row" span={18}>
+                        <Input
+                            placeholder={`搜索需求名称`}
+                            onPressEnter={onSearch}
+                            onChange={onSearch}
+                            className='search-input-common'
+                            style={{width: '250px'}}
+                            prefix={
+                                <IconCommon
+                                    icon={"search"}
+                                    className={"img-icon-right"}
+                                />
+                            }
+                            onChange={debounce(onSearch,500) }
+                            allowClear
+                        />
+                    </Col>
+                    <Col className="gutter-row" span={6}>
+                        {/*<ProjectSelect*/}
+                        {/*    clickProject={clickProject}*/}
+                        {/*    {...props}*/}
+                        {/*/>*/}
+                    </Col>
+
+                </Row>
+            </div>
+            <div>
+                <div className={"table-list-box"} >
+                    <Table
+                        columns={columns}
+                        dataSource={workItemList}
+                        rowKey = {record => record.id}
+                        onRow={(record) => {
+                            return {
+                                onClick: () => {onFinish(record.id)},
+                                style: {cursor: 'pointer'}
+                            };
+                        }}
+                        pagination={false}
+                    />
+                    <PaginationCommon
+                        currentPage={currentPage}
+                        totalPage={totalPage}
+                        changePage={onTableChange}
+                    />
+                </div>
+            </div>
+
+        </>
+    )
 }
 
-export default inject("workItemStore")(observer(DemandSelect));
+export default observer(DemandSelect);

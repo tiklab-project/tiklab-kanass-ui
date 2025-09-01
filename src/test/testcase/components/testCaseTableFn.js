@@ -8,6 +8,7 @@ import {UserOutlined} from "@ant-design/icons";
 import HideDelete from "../../../common/caseCommon/hideDelete/HideDelete";
 import {Avatar, Space} from "antd";
 import testcaseStore from "../store/testcaseStore";
+import WorkTestStore from "../../../work/store/WorkTestStore";
 
 
 const {findTestCaseList} = testcaseStore;
@@ -127,4 +128,24 @@ export const showCreateUser = (director) =>{
             </div>
         </div>
     }
+}
+
+const {createWorkTestCase, deleteWorkTestCaseRele} = WorkTestStore;
+
+export const createWorkTestCaseFn = (testCaseId, workItemId, projectId) => {
+    const param = [{
+        testCaseId: testCaseId,
+        workItemId: workItemId,
+        projectId: projectId
+    }]
+    createWorkTestCase(param)
+}
+
+export const deleteWorkTestCaseFn = (testCaseId, workItemId) => {
+    const param = {
+        testCaseId: testCaseId,
+        workItemId: workItemId,
+        // projectId: projectId
+    }
+    deleteWorkTestCaseRele(param)
 }

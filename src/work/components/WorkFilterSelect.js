@@ -4,6 +4,8 @@ import React, {useEffect, useRef, useState} from "react";
 import {searchWorkList, setWorkDeatilInList} from "./WorkSearch";
 import {getUser} from "tiklab-core-ui";
 import "./WorkFilterSelect.scss"
+import {Dropdown, Menu} from "antd";
+import {DownOutlined} from "@ant-design/icons";
 
 const WorkFilterSelect = (props) =>{
     const { workStore } = props;
@@ -19,22 +21,30 @@ const WorkFilterSelect = (props) =>{
     const [showDropdown, setShowDropdown] = useState(false);
     const dropdownRef = useRef();
     const dropDown = useRef();
+    const [title, setTitle] = useState("")
 
-    const [selectTab, setSelectTab] = useState();
+    const [selectTab, setSelectTab] = useState("all");
 
     const quickFilterList = [
+        {
+            value: "all",
+            label: "所有"
+        },
         {
             value: "pending",
             label: "我的待办"
         },
-        {
-            value: "ending",
-            label: "我的已办"
-        },
+        // {
+        //     value: "ending",
+        //     label: "我的已办"
+        // },
         {
             value: "assigner",
             label: "我负责的"
         },
+    ]
+
+    const quickFilterDropDownList = [
         {
             value: "creat",
             label: "我创建的"
@@ -55,7 +65,8 @@ const WorkFilterSelect = (props) =>{
      * @param {快速筛选} value
      */
     const selectType = (value) => {
-        setQuickFilterValue(value)
+        // setQuickFilterValue(value)
+        setSelectTab(value)
         console.log("筛选条件++++++" + JSON.stringify(value))
         if (!value) {
             getAllWorkItem();
@@ -267,49 +278,89 @@ const WorkFilterSelect = (props) =>{
         }
     }
 
-    return (<div className="worktype-select" ref={dropdownRef}>
-                <div
-                    className="select-content"
-                    onClick={() => setShowDropdown(!showDropdown)}
-                >
-                    <span className="select-view-text">
-                      {!selectTab ? "所有事项" : selectTab}
-
-                    </span>
-                    <div className="select-view-icon">
-                        {
-                            selectTab ?
-                            <svg className="svg-icon" aria-hidden="true" onClick={(e) => clearSelect(e)}>
-                                <use xlinkHref="#icon-cancel"></use>
-                            </svg>
-                            :
-                            <svg className="svg-icon" aria-hidden="true">
-                                <use xlinkHref="#icon-downdrop"></use>
-                            </svg>
-                        }
+    return (
+        <div className={"work-filter-tabs"}>
+            {
+                quickFilterList.map(item => {
+                    return <div
+                        className={`filter-tab ${selectTab === item.value ? "active-tabs" : ""}`}
+                        key={item.value}
+                        onClick={() => {
+                            selectType(item.value)
+                            setTitle("")
+                        }}
+                    >
+                        {item.label}
+                        {/*<span className="tabs-bar-num">{projectCount[item.value]}</span>*/}
                     </div>
-
-                </div>
-
-                {showDropdown && (
-                    <div className="worktype-dropdown" ref={dropDown}>
-                        {/* 系统类型选项 */}
-                        {quickFilterList?.map(item => (
-                            <div
+                })
+            }
+            <Dropdown
+                overlay={
+                    <Menu>
+                        {quickFilterDropDownList.map(item => (
+                            <Menu.Item
                                 key={item.value}
-                                className={`worktype-option ${selectTab === item.value ? "selected" : ""}`}
                                 onClick={() => {
-                                    setSelectTab(item.label)
-                                    selectType(item.value);
-                                    setShowDropdown(false);
+                                    selectType(item.value)
+                                    setTitle(item.label)
                                 }}
                             >
                                 {item.label}
-                            </div>
+                            </Menu.Item>
                         ))}
-                    </div>
-                )}
+                    </Menu>
+                }
+                placement="bottomLeft"
+            >
+                <div className={`filter-tab ${title !== "" ? "active-tabs":""}`}>
+                    {title} <DownOutlined />
+                </div>
+            </Dropdown>
         </div>
+        // <div className="worktype-select" ref={dropdownRef}>
+        //         <div
+        //             className="select-content"
+        //             onClick={() => setShowDropdown(!showDropdown)}
+        //         >
+        //             <span className="select-view-text">
+        //               {!selectTab ? "所有事项" : selectTab}
+        //
+        //             </span>
+        //             <div className="select-view-icon">
+        //                 {
+        //                     selectTab ?
+        //                     <svg className="svg-icon" aria-hidden="true" onClick={(e) => clearSelect(e)}>
+        //                         <use xlinkHref="#icon-cancel"></use>
+        //                     </svg>
+        //                     :
+        //                     <svg className="svg-icon" aria-hidden="true">
+        //                         <use xlinkHref="#icon-downdrop"></use>
+        //                     </svg>
+        //                 }
+        //             </div>
+        //
+        //         </div>
+        //
+        //         {showDropdown && (
+        //             <div className="worktype-dropdown" ref={dropDown}>
+        //                 {/* 系统类型选项 */}
+        //                 {quickFilterList?.map(item => (
+        //                     <div
+        //                         key={item.value}
+        //                         className={`worktype-option ${selectTab === item.value ? "selected" : ""}`}
+        //                         onClick={() => {
+        //                             setSelectTab(item.label)
+        //                             selectType(item.value);
+        //                             setShowDropdown(false);
+        //                         }}
+        //                     >
+        //                         {item.label}
+        //                     </div>
+        //                 ))}
+        //             </div>
+        //         )}
+        // </div>
     );
 }
 

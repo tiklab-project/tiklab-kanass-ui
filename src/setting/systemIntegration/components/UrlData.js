@@ -6,6 +6,7 @@ import "./UrlData.scss";
 import { observer, Provider } from "mobx-react";
 import UrlAddData from "./UrlAddData";
 import UrlDataStore from "../store/UrlDataStore";
+import {PrivilegeButton} from "tiklab-privilege-ui";
 
 const { Panel } = Collapse;
 
@@ -25,7 +26,7 @@ const UrlData = () => {
     // 预定义的系统列表
     const systemList = [
         { name: "sward", description: "sward知识库文档服务地址配置" },
-        { name: "testhubo", description: "testhubo测试系统地址配置" }
+        // { name: "testhubo", description: "testhubo测试系统地址配置" }
     ];
 
     // 获取系统数据
@@ -126,22 +127,26 @@ const UrlData = () => {
                                             {/*)}*/}
                                             <div className="action-buttons">
                                                 <Space>
-                                                    <Button
-                                                        type="primary"
-                                                        size="small"
-                                                        icon={<EditOutlined />}
-                                                        onClick={(e) => editSystemUrl(systemData.id, system.name, e)}
-                                                    >
-                                                        编辑
-                                                    </Button>
-                                                    <Button
-                                                        danger
-                                                        size="small"
-                                                        icon={<DeleteOutlined />}
-                                                        onClick={(e) => deleSystemUrl(systemData.id, e)}
-                                                    >
-                                                        删除
-                                                    </Button>
+                                                    <PrivilegeButton code={"url_data_update"}>
+                                                        <Button
+                                                            type="primary"
+                                                            size="small"
+                                                            icon={<EditOutlined />}
+                                                            onClick={(e) => editSystemUrl(systemData.id, system.name, e)}
+                                                        >
+                                                            编辑
+                                                        </Button>
+                                                    </PrivilegeButton>
+                                                    <PrivilegeButton code={"url_data_delete"}>
+                                                        <Button
+                                                            danger
+                                                            size="small"
+                                                            icon={<DeleteOutlined />}
+                                                            onClick={(e) => deleSystemUrl(systemData.id, e)}
+                                                        >
+                                                            删除
+                                                        </Button>
+                                                    </PrivilegeButton>
                                                 </Space>
                                             </div>
                                         </div>

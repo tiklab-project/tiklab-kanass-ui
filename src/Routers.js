@@ -153,6 +153,9 @@ const ProductProjectList = AsyncComponent(() => import('./product/projectList/co
 const ProductModule = AsyncComponent(() => import('./product/module/components/ProductModuleList'))
 const ProductLineMap = AsyncComponent(() => import('./product/lineMap/components/ProductLineMap'))
 const ProductBasicInfo = AsyncComponent(() => import("./product/setting/basicInfo/components/ProductBasicInfo"))
+const ProductDomainRole = AsyncComponent(() => import('./product/user/ProductDomainRole'));
+const ProductUser = AsyncComponent(() => import('./product/user/ProductUser'));
+const ProductSet = AsyncComponent(() => import("./product/setting/common/ProductSetting"))
 // 产品计划
 const ProductPlanList = AsyncComponent(() => import('./product/plan/planList/components/ProductPlanList'))
 const ProductPlanLayout = AsyncComponent(() => import('./product/plan/common/components/ProductPlanLayout'))
@@ -1424,11 +1427,43 @@ const Routers = [
                         key: "ProductWork"
                     },
                     {
-                        path: "/product/:productId/set/basicInfo",
+                        path: "/product/:productId/set",
                         exact: false,
-                        component: ProductBasicInfo,
-                        key: "ProductBasicInfo"
+                        component: ProductSet,
+                        key: "ProductDetailAdide",
+                        routes: [
+                            {
+                                path: "/product/:productId/set/basicInfo",
+                                exact: false,
+                                component: ProductBasicInfo,
+                                key: "ProductBasicInfo"
+                            },
+                            {
+                                path: "/product/:productId/set/dominRole",
+                                exact: false,
+                                component: ProductDomainRole,
+                                key: "ProductDomainRole"
+                            },
+                            {
+                                path: "/product/:productId/set/user",
+                                exact: false,
+                                component: ProductUser,
+                                key: "ProductUser"
+                            },
+                            {
+                                exact: false,
+                                path: "/product/:productId/set/noaccess",
+                                component: NoAccessPage,
+                                key: "ProjectSetNoaccess"
+                            },
+                        ]
                     },
+                    // {
+                    //     path: "/product/:productId/set/basicInfo",
+                    //     exact: false,
+                    //     component: ProductBasicInfo,
+                    //     key: "ProductBasicInfo"
+                    // },
                     {
                         path: "/product/:productId/plan",
                         exact: false,

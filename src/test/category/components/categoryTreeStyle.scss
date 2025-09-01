@@ -81,7 +81,7 @@
 }
 
 .case-category-tree-box{
-    width: 240px;
+    width: 250px;
     height: 100%;
     background: #f1f3fa69;
     display: flex;
@@ -338,5 +338,23 @@
             padding: 4px 8px;
             height: 32px;
         }
+    }
+}
+
+@media (max-width: 768px) {
+    .case-category-tree-box {
+        width: 200px;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1280px) {
+    .case-category-tree-box {
+        width: 220px;
+    }
+}
+
+@media (min-width: 1281px) {
+    .case-category-tree-box {
+        width: 250px;
     }
 }

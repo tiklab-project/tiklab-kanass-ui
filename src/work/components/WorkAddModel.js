@@ -51,18 +51,35 @@ const WorkAddModel = (props) => {
         setShowAddModel: setShowAddModel
     }))
 
+    const getModalWidth = () => {
+        const width = window.innerWidth;
+
+        if (width >= 1600) {
+            return 1100;
+        } else if (width < 1600 && width >= 1200) {
+            return 1000;
+        } else if (width < 1200 && width >= 992) {
+            return 900;
+        } else if (width < 992 && width >= 768) {
+            return 700;
+        } else if (width < 768 && width >= 576) {
+            return 500;
+        } else if (width < 576) {
+            return 400;
+        }
+    }
 
     return (
         <Modal
             visible={showAddModel}
-            width={730}
+            width={getModalWidth()}
             className="work-addmodel"
             destroyOnClose={true}
             onOk={handleOk}
             onCancel={handleCancel}
             cancelText="取消"
             okText="确定"
-            closable={false}
+            closable={true}
             footer={null}
             maskClosable={false}
         >

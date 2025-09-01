@@ -2,13 +2,13 @@
 //     padding: var(--tiklab-padding);
 // }
 .work-table-small {
-    padding: var(--tiklab-padding);
+    padding: 20px 0;
 }
 .work-table {
     padding-top: var(--tiklab-padding);
     padding-bottom: var(--tiklab-padding);
     .work-table-content {
-        padding-top: var(--tiklab-padding);
+        //padding-top: var(--tiklab-padding);
         .ant-table-measure-row {
             display: none;
         }

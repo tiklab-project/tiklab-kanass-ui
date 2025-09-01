@@ -37,7 +37,19 @@
             overflow: auto;
             padding: 0 var(--tiklab-padding);
             min-height: calc(100% - 120px);
+            display: flex;
+            gap: 20px;
+
+            .left{
+                flex: 1;
+            }
+
+            .right{
+                width: 250px;
+            }
         }
+
+
 
         .work-add-form {
             flex: 1;
@@ -114,7 +126,8 @@
 
 
         .ant-upload-drag {
-            background: var(--tiklab-gray-300);
+            background: #fafafa;
+            border: 1px solid #d9d9d9;
 
         }
     }

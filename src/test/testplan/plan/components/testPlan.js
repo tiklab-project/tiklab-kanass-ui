@@ -79,7 +79,8 @@ const TestPlan = (props) => {
             render: (text, record) => (
                 <Space size="middle">
                     <TestPlanEdit
-                        name={`${t('tcedit')}`}
+                        // name={`${t('tcedit')}`}
+                        name={`${t('编辑计划')}`}
                         testPlanId={record.id}
                         type={"edit"}
                         findPage={findPage}

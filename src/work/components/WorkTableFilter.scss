@@ -8,19 +8,24 @@
     .work-table-row {
         flex: 1;
     }
+    .select-group-title {
+        display: flex;
+        gap: 5px;
+        font-weight: 600;
+        color: var(--tiklab-gray-500);
+        font-size: 12px;
+        padding: 10px 10px 5px;
+    }
+
+    .workTable-filter-select{
+        width: 130px;
+    }
     .work-table-filter {
         display: flex;
         align-items: center;
         gap: 10px;
        
-        .select-group-title {
-            display: flex;
-            gap: 5px;
-            font-weight: 600;
-            color: var(--tiklab-gray-500);
-            font-size: 12px;
-            padding: 10 10px 5px;
-        }
+
         .worklist-icon {
             width: 15px;
             height: 15px;

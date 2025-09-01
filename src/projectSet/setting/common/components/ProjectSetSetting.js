@@ -48,14 +48,14 @@ const ProjectSetting = (props) => {
             icon: 'survey',
             id: `/projectSet/${projectSetId}/set/user`,
             encoded: "DominRole",
-            purviewCode: "ProjectSetUser",
+            // purviewCode: "ProjectSetUser",
         },
         {
             title: `${t('privilege')}`,
             icon: 'survey',
             id: `/projectSet/${projectSetId}/set/dominRole`,
             encoded: "User",
-            purviewCode: "ProjectSetPrivilege",
+            // purviewCode: "ProjectSetPrivilege",
         }
     ];
 

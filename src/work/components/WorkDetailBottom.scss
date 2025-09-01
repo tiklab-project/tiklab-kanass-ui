@@ -1,15 +1,18 @@
 .workitem-detail-row {
     .work-info {
+        display: flex;
         height: 100%;
     }
     .work-info-left {
+        flex: 1;
         padding-right: 15px;
         height: 100%;
-        //overflow-y: auto;
-        //scrollbar-gutter: stable;
+        overflow-y: auto;
+        scrollbar-gutter: stable;
     }
     .work-info-right {
-        padding-left: 15px;
+        width: 250px;
+        padding: 0 15px;
         height: 100%;
         overflow-y: auto;
         scrollbar-gutter: stable;
@@ -26,6 +29,11 @@
             display: flex;
             justify-content: space-between;
             gap: 23px;
+
+            .ant-form-item-control-input{
+                min-height: 35px;
+            }
+
             .work-item-title {
                 border-bottom: 1px solid rgb(223, 225, 230);
             }
@@ -35,29 +43,6 @@
                 width: 50%;
                 border-radius: 4px;
                 flex: 1;
-
-                .work-status {
-                    margin-left: 11px;
-                    padding: 2px 3px;
-                    border-radius: 11px;
-                    font-size: 14px;
-                    width: fit-content;
-                }
-
-                .work-status-todo {
-                    background: #e2e1e4;
-                    color: #2b333e;
-                }
-
-                .work-status-process {
-                    background: #b0d5dfa1;
-                    color: #132c33;
-                }
-
-                .work-status-done {
-                    background: #dfecd5e3;
-                    color: #5e5314;
-                }
             }
 
             .builder-and-more-info {
@@ -73,6 +58,28 @@
                 border-radius: 4px;
             }
 
+            .work-status {
+                margin-left: 11px;
+                padding: 2px 3px;
+                border-radius: 5px;
+                font-size: 14px;
+                width: fit-content;
+            }
+
+            .work-status-todo {
+                background: #e2e1e4;
+                color: #2b333e;
+            }
+
+            .work-status-process {
+                background: #b0d5dfa1;
+                color: #132c33;
+            }
+
+            .work-status-done {
+                background: #dfecd5e3;
+                color: #5e5314;
+            }
             
             .ant-empty {
                 margin-bottom: 10px;
@@ -262,7 +269,7 @@
 
         .desc-preview {
             padding: 10px;
-            min-height: 80px;
+            min-height: 250px;
             background-color: var(--tiklab-gray-800);
         }
 
@@ -274,23 +281,35 @@
             max-height: 342px;
             overflow-y: hidden;
             overflow-x: hidden;
-            .edit-small-content{
-                width: 100%;
+            .edit-small{
+                height: auto;
+                .edit-small-content{
+                    width: 100%;
+                    height: auto;
 
-                .edit-toolbar{
-                    padding: 0;
-                    gap: 0;
-
-                    .editor-drop-down{
-                        min-width: 20px;
+                    .edit-box{
+                        overflow: unset;
                     }
-                    .editor-drop-down-box {
-                        z-index: 50;
-                    }
-                }
 
-                .edit-toolbar > .block-menu:last-child > .editor-drop-down-box {
-                    left: -200px !important;
+                    //.edit-toolbar{
+                    //    padding: 0;
+                    //    gap: 0;
+                    //
+                    //    .editor-drop-down{
+                    //        min-width: 20px;
+                    //    }
+                    //    .editor-drop-down-box {
+                    //        z-index: 50;
+                    //    }
+                    //    .block-menu {
+                    //        padding-left: 5px;
+                    //        gap: 8px;
+                    //    }
+                    //}
+                    //
+                    //.edit-toolbar > .block-menu:last-child > .editor-drop-down-box {
+                    //    left: -200px !important;
+                    //}
                 }
             }
         }

@@ -19,11 +19,16 @@ import ImgComponent from "../../../common/imgComponent/ImgComponent";
 import UserIcon from "../../../common/UserIcon/UserIcon";
 import CircleProgress from "../../../common/progress/CircleProgress";
 import WorkDetailModalView from "../workDetailModalView/WorkDetailModalView";
+import WorkDetailDrawer from "../WorkDetailDrawer";
+import {removeNodeInTree} from "../../../common/utils/treeDataAction";
+import {setWorkDeatilInList} from "../WorkSearch";
+import {setSessionStorage} from "../../../common/utils/setSessionStorage";
 
 const Gantt = (props) => {
     // 获取当前年月日
     const { workList, workStore, WorkDetailDrawer, setImageUrl, projectId, useDebounce, archiveView } = props;
-    const { setWorkId, setWorkIndex, createRecent, editWork, totalPage, currentPage, total, getWorkConditionPageTree, viewType } = workStore;
+    const { setWorkId, setWorkIndex, createRecent, editWork, totalPage, currentPage, total,
+        getWorkConditionPageTree, viewType, deleteWorkItem, setWorkList } = workStore;
 
     const todayDate = new Date()
     const currentYear = todayDate.getFullYear()
@@ -610,6 +615,53 @@ const Gantt = (props) => {
         getWorkConditionPageTree(values)
     }
 
+    /**
+     * 删除事项
+     */
+    const deleteWork = (deleteWorkItem, removeTree, workId) => {
+        console.log("second", workList)
+        deleteWorkItem(workId).then(() => {
+            // 当第当前页被删完, 总页数大于当前页
+            if (workList.length === 1) {
+                // const currentPage = searchCondition.pageParam.currentPage
+                // 当前页被删完, 总页数等于当前页， 往前移动一页
+                if (currentPage === total && currentPage > 1) {
+                    const params = {
+                        pageParam: {
+                            pageSize: 20,
+                            currentPage: currentPage - 1
+                        }
+                    }
+                    setWorkDeatilInList(workStore, params)
+                } else if (currentPage === total && currentPage <= 1) {
+                    // 当前页被删完, 总页数等于当前页，而且是第一页
+                    setWorkId(0)
+                    setWorkIndex(0)
+                    setIsModalVisible(false)
+                } else if (currentPage < total) {
+                    setWorkDeatilInList(workStore)
+                }
+            } else {
+                const node = removeTree(workList, null, workId);
+                if (node != null) {
+                    setWorkId(node.id)
+                    setSessionStorage("detailCrumbArray",
+                        [{ id: node.id, code: node.code, title: node.title, iconUrl: node.workTypeSys?.iconUrl }])
+                }
+            }
+            setWorkList([...workList])
+        })
+    }
+
+    /**
+     * 删除当前事项，并关闭详情弹窗
+     */
+
+    const delectCurrentWorkItem = (workId) => {
+        deleteWork(deleteWorkItem, removeNodeInTree, workId)
+        // setDeleteSelectModal(false)
+    }
+
     return (
         <>
             <div>
@@ -738,13 +790,21 @@ const Gantt = (props) => {
                 />
             </div>
 
-            <WorkDetailModalView
+            <WorkDetailDrawer
                 isModalVisible={isModalVisible}
                 setIsModalVisible={setIsModalVisible}
                 modelRef={modelRef}
                 showPage={true}
+                delectCurrentWorkItem={delectCurrentWorkItem}
                 {...props}
             />
+            {/*<WorkDetailModalView*/}
+            {/*    isModalVisible={isModalVisible}*/}
+            {/*    setIsModalVisible={setIsModalVisible}*/}
+            {/*    modelRef={modelRef}*/}
+            {/*    showPage={true}*/}
+            {/*    {...props}*/}
+            {/*/>*/}
 
 
         </>

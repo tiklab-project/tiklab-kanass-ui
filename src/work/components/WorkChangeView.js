@@ -100,7 +100,7 @@ const WorkChangeView = (props) => {
         setWorkShowType(item.value)
         setWorkId()
 
-        setQuickFilterVisible(true)
+        setQuickFilterVisible(false)
         setWorkTypeVisible(true)
 
         removeSessionStorage("detailCrumbArray");

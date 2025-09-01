@@ -87,10 +87,10 @@ const FunctionContentDrawerView = (props) => {
                 mask={!inTestCase}
                 style={{
                     transform: 'translateX(0)',//子抽屉打开后父抽屉不被推动
-                    position: 'absolute',
-                    height: 'calc(100% - 55px)', // 限制高度为父容器高度
-                    top: "55px", // 从顶部开始
-                    right: 0, // 从右侧开始
+                    // position: 'absolute',
+                    // height: 'calc(100% - 55px)', // 限制高度为父容器高度
+                    // top: "55px", // 从顶部开始
+                    // right: 0, // 从右侧开始
                 }}
                 bodyStyle={{
                     padding: "0",

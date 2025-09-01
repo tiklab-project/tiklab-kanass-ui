@@ -210,6 +210,27 @@
     background: var(--tiklab-gray-800);
   }
 
+  @media (max-width: 768px) {
+    .work-module-filter-sider {
+      min-width: 200px;
+      max-width: 200px;
+    }
+  }
+
+  @media (min-width: 769px) and (max-width: 1280px) {
+    .work-module-filter-sider {
+      min-width: 220px;
+      max-width: 220px;
+    }
+  }
+
+  @media (min-width: 1281px) {
+    .work-module-filter-sider {
+      min-width: 250px;
+      max-width: 250px;
+    }
+  }
+
   .work-module-filter-open-icon{
     width: 30px;
     height: 30px;

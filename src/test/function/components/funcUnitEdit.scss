@@ -1,0 +1,56 @@
+.func-add-form{
+    display: flex;
+    //padding: 0 20px;
+    gap: 10px;
+
+    .func-add-form-left{
+        flex: 1;
+
+        overflow-y: auto;
+        scrollbar-gutter: stable;
+    }
+
+    .func-add-form-right{
+        width: 250px;
+
+        .func-select {
+            background-color: #f0f0f0 !important;
+            .ant-select-selector{
+                padding: 0 2px;
+            }
+            .ant-select-arrow{
+                right: 5px
+            }
+            .ant-select-clear{
+                right: 5px
+            }
+
+            .ant-select-selection-item {
+                padding-left: 5px;
+            }
+        }
+
+        .func-select .ant-select-arrow {
+            opacity: 0;  /* 默认隐藏 */
+            transition: opacity 0.3s;
+        }
+        .func-select:hover .ant-select-arrow {
+            opacity: 1;  /* 悬停时显示 */
+        }
+    }
+
+    .func-add-form-left::-webkit-scrollbar,
+    .func-add-form-right::-webkit-scrollbar {
+        width: 5px;
+    }
+    .func-add-form-left::-webkit-scrollbar-thumb,
+    .func-add-form-right::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        background: var(--tiklab-gray-400);
+    }
+    .func-add-form-left::-webkit-scrollbar-track,
+    .func-add-form-right::-webkit-scrollbar-track {
+        border-radius: 0;
+        background: var(--tiklab-gray-800);
+    }
+}

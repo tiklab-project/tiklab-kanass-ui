@@ -33,6 +33,8 @@ const ProjectSetSettingDetailAside = (props) => {
     useEffect(() => {
         // 初次进入激活导航菜单
         setSelectKey(props.location.pathname)
+        console.log("进入项目集设置")
+        console.log(prorouter)
         return
     }, [projectSetId])
 
@@ -63,25 +65,28 @@ const ProjectSetSettingDetailAside = (props) => {
                         </svg> */}
                         项目集设置
                     </div>
+                    {/*<PrivilegeProjectButton code={item.purviewCode} disabled={"hidden"} domainId={projectSetId}  {...props}>*/}
                     <ul className="projectSet-menu">
                         {
                             prorouter && prorouter.map(item => {
-                                return
-                                // <PrivilegeProjectButton code={item.purviewCode} disabled={"hidden"} domainId={projectSetId}  {...props}>
-                                    <>
-                                        <div className={`projectSet-menu-submenu ${item.id === selectKey ? "projectSet-menu-select" : ""}`}
-                                             key={item.key}
-                                             onClick={() => selectKeyFun(item.id)}
-                                        >
-                                            {/* <svg className="svg-icon" aria-hidden="true">
-                                        <use xlinkHref={`#icon-${item.icon}`}></use>
-                                    </svg> */}
-                                            <span className={`${isShowText ? "" : "projectSet-notext"}`}>
-                                            {item.title}
-                                        </span>
-                                        </div>
-                                    </>
-                                // </PrivilegeProjectButton>
+                                return (
+                                        <>
+                                            <div className={`projectSet-menu-submenu ${item.id === selectKey ? "projectSet-menu-select" : ""}`}
+                                                 key={item.key}
+                                                 onClick={() => selectKeyFun(item.id)}
+                                            >
+                                                {/* <svg className="svg-icon" aria-hidden="true">
+                                            <use xlinkHref={`#icon-${item.icon}`}></use>
+                                        </svg> */}
+                                                <span className={`${isShowText ? "" : "projectSet-notext"}`}>
+                                                {item.title}
+                                            </span>
+                                            </div>
+                                        </>
+                                    )
+
+
+
 
                             })
                         }

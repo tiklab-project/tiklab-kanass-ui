@@ -55,7 +55,7 @@ const setDevRouter= [
         title: '权限',
         icon: 'systempermissions',
         id: "/setting/systemRole",
-        // purviewCode: "permission",
+        purviewCode: "permission",
         code: "systemRole"
     },
     // {
@@ -83,21 +83,21 @@ const setDevRouter= [
         title: "消息",
         icon: 'systemmessage',
         id: '/setting/message',
-        // purviewCode: "message",
+        purviewCode: "message",
         code: "message",
     },
     {
         title: '事项类型',
         icon: 'systemmanage',
         id: "/setting/worktype",
-        purviewCode: "SysWorkType",
+        purviewCode: "work_type",
         code: "worktype",
     },
     {
         title: '表单',
         icon: 'systemform',
         id: "/setting/form",
-        purviewCode: "SysForm",
+        // purviewCode: "SysForm",
         code: "SysForm",
         children: [
             
@@ -110,13 +110,13 @@ const setDevRouter= [
             {
                 title: '字段',
                 id: '/setting/preliminary',
-                purviewCode: "SysField",
+                purviewCode: "field",
                 code: "preliminary",
             },
             {
                 title: '表单',
                 id: '/setting/form',
-                purviewCode: "SysFormList",
+                purviewCode: "form",
                 code: "form",
             }
         ]
@@ -125,19 +125,19 @@ const setDevRouter= [
         title: "流程",
         icon: 'systemflow',
         id: '/setting/systemFlow',
-        purviewCode: "SysFlow",
+        // purviewCode: "SysFlow",
         code: "flow",
         children: [
             {
                 title: "流程",
                 id: '/setting/systemFlow',
-                purviewCode: "SysFlowList",
+                purviewCode: "flow",
                 code: "systemFlow",
             },
             {
                 title: "状态",
                 id: '/setting/nodestatus',
-                purviewCode: "SysFlowNode",
+                purviewCode: "status",
                 code: "nodestatus"
             }
         ]
@@ -153,7 +153,7 @@ const setDevRouter= [
                 title: '服务集成',
                 id: '/setting/urlData',
                 code: "urlData",
-                purviewCode: "SysUrlData"
+                purviewCode: "url_data"
             },
             // {
             //     title: 'JIRA导入',
@@ -171,11 +171,11 @@ const setDevRouter= [
                 title: '导入外部数据',
                 id: '/setting/loadData',
                 code: "loadData",
-                purviewCode: "SysJira"
+                purviewCode: "import"
             },
             {
                 title: 'OpenApi',
-                id: '/setting/openApi',
+                id: '/setting/openapi',
 
             }
         ]
@@ -412,7 +412,7 @@ const setPrdRouter= [
         title: '权限',
         icon: 'systempermissions',
         id: "/setting/systemRole",
-        // purviewCode: "permission",
+        purviewCode: "permission",
         code: "systemRole"
     },
     // {
@@ -440,21 +440,21 @@ const setPrdRouter= [
         title: "消息",
         icon: 'systemmessage',
         id: '/setting/message',
-        // purviewCode: "message",
+        purviewCode: "message",
         code: "message",
     },
     {
         title: '事项类型',
         icon: 'systemmanage',
         id: "/setting/worktype",
-        purviewCode: "SysWorkType",
+        purviewCode: "work_type",
         code: "worktype",
     },
     {
         title: '表单',
         icon: 'systemform',
         id: "/setting/form",
-        purviewCode: "SysForm",
+        // purviewCode: "SysForm",
         code: "SysForm",
         children: [
 
@@ -467,13 +467,13 @@ const setPrdRouter= [
             {
                 title: '字段',
                 id: '/setting/preliminary',
-                purviewCode: "SysField",
+                purviewCode: "field",
                 code: "preliminary",
             },
             {
                 title: '表单',
                 id: '/setting/form',
-                purviewCode: "SysFormList",
+                purviewCode: "form",
                 code: "form",
             }
         ]
@@ -482,19 +482,19 @@ const setPrdRouter= [
         title: "流程",
         icon: 'systemflow',
         id: '/setting/systemFlow',
-        purviewCode: "SysFlow",
+        // purviewCode: "SysFlow",
         code: "flow",
         children: [
             {
                 title: "流程",
                 id: '/setting/systemFlow',
-                purviewCode: "SysFlowList",
+                purviewCode: "flow",
                 code: "systemFlow",
             },
             {
                 title: "状态",
                 id: '/setting/nodestatus',
-                purviewCode: "SysFlowNode",
+                purviewCode: "status",
                 code: "nodestatus"
             }
         ]
@@ -510,7 +510,7 @@ const setPrdRouter= [
                 title: '服务集成',
                 id: '/setting/urlData',
                 code: "urlData",
-                purviewCode: "SysUrlData"
+                purviewCode: "url_data"
             },
             // {
             //     title: 'JIRA导入',
@@ -528,7 +528,7 @@ const setPrdRouter= [
                 title: '导入外部数据',
                 id: '/setting/loadData',
                 code: "loadData",
-                purviewCode: "SysJira"
+                purviewCode: "import"
             },
             {
                 title: 'OpenApi',

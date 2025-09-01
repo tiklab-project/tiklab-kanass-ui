@@ -33,6 +33,12 @@ export class WorkItemBindStore {
 		await Axios.post("/workItemBind/deleteWorkItemBind",param);
 	}
 
+	@action
+	deleteWorkItemBindByCondition = async (values) => {
+
+		await Axios.post("/workItemBind/deleteWorkItemBindByCondition",values);
+	}
+
     @action
 	createWorkItemBind =async (values) => await Axios.post("/workItemBind/createWorkItemBind",values);
 

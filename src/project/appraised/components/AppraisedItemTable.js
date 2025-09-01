@@ -312,7 +312,7 @@ const AppraisedItemTable = (props) => {
             title: '序号',
             dataIndex: 'caseKey',
             key: 'caseKey',
-            width: "20%",
+            width: "15%",
             render: (text, record, index) => <Space onClick={() => goAppraisedStatus(record)}>
                 <IconCommon icon={"gongneng1"} className={"menu-icon"} />
                 <div className="appraised-key">{record.testCase.caseKey}</div>
@@ -322,8 +322,10 @@ const AppraisedItemTable = (props) => {
             title: '标题',
             dataIndex: 'name',
             key: 'name',
+            width: "25%",
+            ellipsis: true,
             render: (text, record) => <Tooltip title={record.testCase.name}>
-                {record.testCase.name.length > 15 ? record.testCase.name.substring(0, 15) + "..." : record.testCase.name}
+                {record.testCase.name}
             </Tooltip>
         },
         {

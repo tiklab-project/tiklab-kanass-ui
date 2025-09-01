@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
-import {Col, Empty, Input, message, Row, Space, Table} from "antd";
+import {Col, Dropdown, Empty, Input, Menu, message, Row, Space, Table} from "antd";
 import {inject, observer} from "mobx-react";
 import {showCaseTypeTable, showCaseTypeView, showTextStatus} from "../../../common/caseCommon/CaseCommonFn";
 import "../../common/styles/caseContantStyle.scss"
@@ -12,10 +12,10 @@ import {debounce} from "../../../common/caseCommon/CaseCommonFn";
 import HideDelete from "../../../common/caseCommon/hideDelete/HideDelete";
 import {toDiffCaseFn} from "../../common/caseCommonFn";
 import FuncUnitEdit from "../../function/components/funcUnitEdit";
-import {SearchOutlined} from "@ant-design/icons";
+import {DownOutlined, SearchOutlined} from "@ant-design/icons";
 import CaseCategoryTree from "../../category/components/CaseCategoryTree";
-import FunctionContentDrawerView from "../../function/components/drawerView/FunctionContentDrawerView";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
+import FunctionContentModalView from "../../function/components/modalView/FunctionContentModalView";
 
 
 const TestCaseTable = (props) => {
@@ -44,6 +44,7 @@ const TestCaseTable = (props) => {
     const [pageSize] = useState(20);
     const [creatorAndDirectorNum, setCreatorAndDirectorNum] = useState();
     const [testCaseDetailVisible, setTestCaseDetailVisible] = useState(false);
+    const [selectTab, setSelectTab] = useState( "all");
     const [caseId, setCaseId] = useState();
     let projectId = localStorage.getItem("projectId")
 
@@ -58,6 +59,46 @@ const TestCaseTable = (props) => {
         findPage()
     },[projectId, categoryIds, searchCondition])
 
+    const statusFilterList = [
+        {
+            value: "all",
+            label: "所有"
+        },
+        {
+            value: 0,
+            label: "未开始"
+        },
+        {
+            value: 1,
+            label: "进行中"
+        },
+        {
+            value: 2,
+            label: "已完成"
+        }
+    ]
+
+    // const quickFilterDropDownList = [
+    //     {
+    //         value: "creat",
+    //         label: "我创建的"
+    //     }
+    // ]
+
+    const getQuickFilterRangeTestCase = (value,label) => {
+        let params;
+        if (value === "all"){
+            params = {
+                status: null,
+            }
+        }else{
+            params = {
+                status: value,
+            }
+        }
+        setSelectTab(value)
+        findPage(params)
+    }
 
     const findPage = (params) =>{
         setTableLoading(true)
@@ -229,18 +270,8 @@ const TestCaseTable = (props) => {
                 xll={{ span: 16, offset: 4 }}
             >
                 <div className={"content-box-center"}>
-                    <Breadcumb firstText={tableTitle}/>
-                    <div style={{marginTop: "10px"}} className={"display-flex-between"}>
-                        <Input
-                            placeholder={`搜索用例名`}
-                            onPressEnter={onSearch}
-                            className='search-input-common'
-                            prefix={<SearchOutlined />}
-                            onChange={debounce(onSearch, 500)}
-                            style={{width: '180px'}}
-                            allowClear
-                        />
-
+                    <div className={"display-flex-between"}>
+                        <Breadcumb firstText={tableTitle}/>
                         <Space>
                             <FuncUnitEdit
                                 findPage={findPage}
@@ -251,7 +282,34 @@ const TestCaseTable = (props) => {
                             />
                         </Space>
                     </div>
-                    <div className={"table-list-box"}>
+                    <div style={{marginTop: "10px"}} className={"display-flex-between"}>
+                        <div className={"work-filter-tabs"}>
+                            {
+                                statusFilterList.map(item => {
+                                    return <div
+                                        className={`filter-tab ${selectTab === item.value ? "active-tabs" : ""}`}
+                                        key={item.value}
+                                        onClick={() => {
+                                            getQuickFilterRangeTestCase(item.value)
+                                        }}
+                                    >
+                                        {item.label}
+                                        {/*<span className="tabs-bar-num">{projectCount[item.value]}</span>*/}
+                                    </div>
+                                })
+                            }
+                        </div>
+                        <Input
+                            placeholder={`搜索用例名`}
+                            onPressEnter={onSearch}
+                            className='search-input-common'
+                            prefix={<SearchOutlined />}
+                            onChange={debounce(onSearch, 500)}
+                            style={{width: '180px'}}
+                            allowClear
+                        />
+                    </div>
+                    <div className={"table-list-box"} style={{marginTop: "10px"}}>
                         <Table
                             columns={column}
                             dataSource={testcaseList}
@@ -278,7 +336,7 @@ const TestCaseTable = (props) => {
                     </div>
                 </div>
             </Col>
-            <FunctionContentDrawerView
+            <FunctionContentModalView
                 isModalVisible={testCaseDetailVisible}
                 setIsModalVisible={setTestCaseDetailVisible}
                 caseId={caseId}

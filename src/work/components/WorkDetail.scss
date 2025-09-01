@@ -54,24 +54,24 @@
     }
 
     .ant-drawer-content-wrapper {
-        min-width: 660px !important;
+        min-width: 900px !important;
     }
 
     @media screen and (min-width: 1200px){
         .ant-drawer-content-wrapper {
-            min-width: 690px !important;
+            min-width: 1050px !important;
         }
     }
 
     @media screen and (min-width: 1600px){
         .ant-drawer-content-wrapper {
-            min-width: 760px !important;
+            min-width: 1050px !important;
         }
     }
 
     @media screen and (min-width: 1900px){
         .ant-drawer-content-wrapper {
-            min-width: 860px !important;
+            min-width: 1200px !important;
         }
     }
 
@@ -95,8 +95,8 @@
             flex: 1;
             padding-top: 5px;
 
-            overflow-y: auto;
-            scrollbar-gutter: stable;
+            //overflow-y: auto;
+            //scrollbar-gutter: stable;
         }
         .work-detail-info-row-border {
             border-top: 5px solid var(--tiklab-gray-200);
@@ -211,7 +211,8 @@
         justify-content: flex-start;
         align-items: center;
         //padding-bottom: 10px;
-        padding: 10px 15px;
+        //padding: 10px 15px;
+        padding-bottom: 15px;
         overflow: hidden;
         .edit-status-modal {
             .ant-modal-body {
@@ -235,6 +236,7 @@
                     flex: 1;
                 }
                 .work-item-code{
+                    font-size: 12px;
                     color: #999;
                 }
             }

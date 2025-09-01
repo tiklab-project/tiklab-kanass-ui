@@ -14,7 +14,7 @@ const IntegrationContent = (props) => {
     const [wikiAddvisible, setWikiAddvisible] = useState(false)
     const [testAddvisible, setTestAddvisible] = useState(false)
     return (
-        <Row>
+        <Row className={"integration-content-row"} style={{height: "100%", overflow: "unset"}}>
             <Col
                 sm={24}
                 md={24}
@@ -59,17 +59,17 @@ const IntegrationContent = (props) => {
                             />
 
                         </TabPane>
-                        <TabPane
-                            tab="testhubo"
-                            key="testhubo"
-                        >
-                            <BindTestHubo
-                                activeKey={activeKey}
-                                setTestAddvisible={setTestAddvisible}
-                                testAddvisible={testAddvisible}
-                                {...props}
-                            />
-                        </TabPane>
+                        {/*<TabPane*/}
+                        {/*    tab="testhubo"*/}
+                        {/*    key="testhubo"*/}
+                        {/*>*/}
+                        {/*    <BindTestHubo*/}
+                        {/*        activeKey={activeKey}*/}
+                        {/*        setTestAddvisible={setTestAddvisible}*/}
+                        {/*        testAddvisible={testAddvisible}*/}
+                        {/*        {...props}*/}
+                        {/*    />*/}
+                        {/*</TabPane>*/}
                     </Tabs>
                 </div>
             </Col>

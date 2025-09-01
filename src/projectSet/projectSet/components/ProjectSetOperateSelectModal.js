@@ -4,6 +4,7 @@ import moment from "moment/moment";
 import {withRouter} from "react-router";
 import DeleteProjectSetModal from "./DeleteProjectSetModal";
 import EditProjectSetModal from "./EditProjectSetModal";
+import {PrivilegeButton} from "tiklab-privilege-ui";
 
 const ProjectSetOperateSelectModal = (props) => {
 
@@ -98,18 +99,23 @@ const ProjectSetOperateSelectModal = (props) => {
 
     const moreMenu = () => {
         return <Menu onClick={(value) => selectAction(value)}>
-            <Menu.Item key="edit">
-                <svg style={{marginRight:"5px"}} className="icon-16" aria-hidden="true">
-                    <use xlinkHref="#icon-edit"></use>
-                </svg>
-                <span>编辑</span>
-            </Menu.Item>
-            <Menu.Item key="delete">
-                <svg style={{marginRight:"5px"}} className="icon-16" aria-hidden="true">
-                    <use xlinkHref="#icon-delete"></use>
-                </svg>
-                <span>删除</span>
-            </Menu.Item>
+            <PrivilegeButton code={"project_set_update"}>
+                <Menu.Item key="edit">
+                    <svg style={{marginRight:"5px"}} className="icon-16" aria-hidden="true">
+                        <use xlinkHref="#icon-edit"></use>
+                    </svg>
+                    <span>编辑</span>
+                </Menu.Item>
+            </PrivilegeButton>
+            <PrivilegeButton code={"project_set_delete"}>
+                <Menu.Item key="delete">
+                    <svg style={{marginRight:"5px"}} className="icon-16" aria-hidden="true">
+                        <use xlinkHref="#icon-delete"></use>
+                    </svg>
+                    <span>删除</span>
+                </Menu.Item>
+            </PrivilegeButton>
+
         </Menu>
     };
 

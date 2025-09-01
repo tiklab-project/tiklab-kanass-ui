@@ -46,6 +46,7 @@ const ProjectScrumSet = (props) => {
             icon: 'survey',
             id: `/project/${projectId}/set/basicInfo`,
             encoded: "Survey",
+            // purviewCode: "ProjectBasicInfo"
         },
         {
             title: `${t('user')}`,
@@ -73,35 +74,35 @@ const ProjectScrumSet = (props) => {
             icon: 'survey',
             id: `/project/${projectId}/set/projectWorkType`,
             encoded: "WorkType",
-            purviewCode: "ProjectWorkType",
+            // purviewCode: "ProjectWorkType",
         },
         {
             title: "流程",
             icon: 'survey',
             id: `/project/${projectId}/set/projectFlow`,
             encoded: "WorkFlow",
-            purviewCode: "ProjectFlow"
+            // purviewCode: "ProjectFlow"
         },
         {
             title: "表单",
             icon: 'survey',
             id: `/project/${projectId}/set/projectForm`,
             encoded: "WorkForm",
-            purviewCode: "ProjectForm"
+            // purviewCode: "ProjectForm"
         },
         {
             title: `${t('module')}`,
             icon: 'survey',
             id: `/project/${projectId}/set/module`,
             encoded: "Module",
-            purviewCode: "ProjectModule"
+            // purviewCode: "ProjectModule"
         },
         {
             title: "集成",
             icon: 'survey',
             id: `/project/${projectId}/set/integration`,
             encoded: "integration",
-            purviewCode: "ProjectIntegration"
+            // purviewCode: "ProjectIntegration"
         },
 
     ];

@@ -431,7 +431,8 @@ const WorkDetail = (props) => {
                                 <>
                                     {workInfo &&
                                         <div className="work-detail">
-                                            <Row className={`work-detail-top-row ${modalView ? "work-detail-top-row-background":""}`}>
+                                            <Row className={`work-detail-top-row ${modalView ? "work-detail-top-row-background":""}`}
+                                            style={{borderBottom: "1px solid var(--tiklab-gray)"}}>
                                                 <Col {...rowSpan} style={{
                                                     // background: "#fff",
                                                     width: "100%",
@@ -461,67 +462,61 @@ const WorkDetail = (props) => {
                                                 >
                                                     <Skeleton loading={infoLoading} active>
 
-                                                        <div className="work-detail-top" ref={workDetailTop} >
-                                                            <div className="work-detail-top-name">
-                                                                <div className="work-item-title-top">
-                                                                    <div className={"work-item-title-top-info"}>
-                                                                        {/*<ImgComponent*/}
-                                                                        {/*    src={workInfo?.workTypeSys.iconUrl}*/}
-                                                                        {/*    alt=""*/}
-                                                                        {/*    className="img-icon-right"*/}
-                                                                        {/*/>*/}
-                                                                        {/*<span className={"work-item-code"}>{workInfo.code}</span>*/}
-                                                                        <div className={"title-top-info-content"}>
-                                                                            <div
-                                                                                className={`work-item-title ${isFocus ? "work-item-title-focus" : ""}`}
-                                                                                onClick={() => focusTitleInput()}
-                                                                            >
-                                                                                <div
-                                                                                    contentEditable={isPermissionField("title")}
-                                                                                    suppressContentEditableWarning
-                                                                                    onBlur={() => updateByBlur(event, "blur")}
-                                                                                    onKeyDown={() => updateNameByKey(event, workInfo.id)}
-                                                                                    ref={inputRef}
-                                                                                    className="work-item-title-left"
-                                                                                >
-                                                                                    {workInfo?.title}
-                                                                                </div>
-                                                                            </div>
-                                                                            <div className={"work-item-code"}>
-                                                                                由 {workInfo.builder.nickname} 于 {workInfo.buildTime.slice(0,19)} 创建
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
+                                                        {/*<div className="work-detail-top" ref={workDetailTop} >*/}
+                                                        {/*    <div className="work-detail-top-name">*/}
+                                                        {/*        <div className="work-item-title-top">*/}
+                                                        {/*            <div className={"work-item-title-top-info"}>*/}
+                                                        {/*                <div className={"title-top-info-content"}>*/}
+                                                        {/*                    <div*/}
+                                                        {/*                        className={`work-item-title ${isFocus ? "work-item-title-focus" : ""}`}*/}
+                                                        {/*                        onClick={() => focusTitleInput()}*/}
+                                                        {/*                    >*/}
+                                                        {/*                        <div*/}
+                                                        {/*                            contentEditable={isPermissionField("title")}*/}
+                                                        {/*                            suppressContentEditableWarning*/}
+                                                        {/*                            onBlur={() => updateByBlur(event, "blur")}*/}
+                                                        {/*                            onKeyDown={() => updateNameByKey(event, workInfo.id)}*/}
+                                                        {/*                            ref={inputRef}*/}
+                                                        {/*                            className="work-item-title-left"*/}
+                                                        {/*                        >*/}
+                                                        {/*                            {workInfo?.title}*/}
+                                                        {/*                        </div>*/}
+                                                        {/*                    </div>*/}
+                                                        {/*                    <div className={"work-item-code"}>*/}
+                                                        {/*                        {workInfo.builder.nickname} 创建于 {workInfo.buildTime.slice(0,19)}*/}
+                                                        {/*                    </div>*/}
+                                                        {/*                </div>*/}
+                                                        {/*            </div>*/}
 
-                                                                    <div className="work-detail-tab-botton">
-                                                                        <Dropdown
-                                                                            overlay={menu}
-                                                                            trigger={"click"}
-                                                                            getPopupContainer={() => workDetailTop.current}
-                                                                            onVisibleChange={(open) => console.log(open)}
-                                                                        >
-                                                                            <Button className="botton-background" style={{ marginRight: "10px" }}>
-                                                                                {workStatus}
-                                                                                <svg className="svg-icon" aria-hidden="true">
-                                                                                    <use xlinkHref="#icon-downdrop"></use>
-                                                                                </svg>
-                                                                            </Button>
-                                                                        </Dropdown>
-                                                                        <WorkPrivilegeComponent code={'WorkItemDelete'} workId ={workId}  {...props}>
-                                                                            <WorkDeleteSelectModal
-                                                                                getPopupContainer={workDetailTop}
-                                                                                delectCurrentWorkItem={delectCurrentWorkItem}
-                                                                                haveChildren={haveChildren}
-                                                                                workId={workId}
-                                                                                setWorkId={setWorkId}
-                                                                            />
-                                                                        </WorkPrivilegeComponent>
+                                                        {/*            <div className="work-detail-tab-botton">*/}
+                                                        {/*                <Dropdown*/}
+                                                        {/*                    overlay={menu}*/}
+                                                        {/*                    trigger={"click"}*/}
+                                                        {/*                    getPopupContainer={() => workDetailTop.current}*/}
+                                                        {/*                    onVisibleChange={(open) => console.log(open)}*/}
+                                                        {/*                >*/}
+                                                        {/*                    <Button className="botton-background" style={{ marginRight: "10px" }}>*/}
+                                                        {/*                        {workStatus}*/}
+                                                        {/*                        <svg className="svg-icon" aria-hidden="true">*/}
+                                                        {/*                            <use xlinkHref="#icon-downdrop"></use>*/}
+                                                        {/*                        </svg>*/}
+                                                        {/*                    </Button>*/}
+                                                        {/*                </Dropdown>*/}
+                                                        {/*                <WorkPrivilegeComponent code={'WorkItemDelete'} workId ={workId}  {...props}>*/}
+                                                        {/*                    <WorkDeleteSelectModal*/}
+                                                        {/*                        getPopupContainer={workDetailTop}*/}
+                                                        {/*                        delectCurrentWorkItem={delectCurrentWorkItem}*/}
+                                                        {/*                        haveChildren={haveChildren}*/}
+                                                        {/*                        workId={workId}*/}
+                                                        {/*                        setWorkId={setWorkId}*/}
+                                                        {/*                    />*/}
+                                                        {/*                </WorkPrivilegeComponent>*/}
 
-                                                                    </div>
-                                                                </div>
+                                                        {/*            </div>*/}
+                                                        {/*        </div>*/}
 
-                                                            </div>
-                                                        </div>
+                                                        {/*    </div>*/}
+                                                        {/*</div>*/}
 
 
                                                         <WorkPrivilegeComponent roleId = {userId} domainId = {projectId} workTypeId = {workInfo.workType.id}/>

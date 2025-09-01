@@ -20,7 +20,7 @@ const ReviewResultDisplay = ({ value }) => {
         }
     };
 
-    return <span style={{margin: "0 10px"}}>{getReviewStatusText(value)}</span>;
+    return <span >{getReviewStatusText(value)}</span>;
 };
 
 

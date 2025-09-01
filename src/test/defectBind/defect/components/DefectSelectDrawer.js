@@ -136,11 +136,12 @@ const DefectSelectDrawer = (props) =>{
 
     return(
         <>
-            <IconBtn
-                className="pi-icon-btn-grey"
-                name={"关联缺陷"}
-                onClick={showModal}
-            />
+            <div onClick={showModal} style={{cursor:"pointer", display:"flex", alignItems:"center"}}>
+                <svg className="icon-16" aria-hidden="true">
+                    <use xlinkHref={`#icon-link`}></use>
+                </svg>
+                <span>关联缺陷</span>
+            </div>
             <Drawer
                 title="关联缺陷"
                 placement="right"
@@ -159,8 +160,8 @@ const DefectSelectDrawer = (props) =>{
                                     onPressEnter={onSearch}
                                     className='demand_project_search'
                                     prefix={<IconCommon
-                                        icon={"sousuo"}
-                                        className={"icon-s"}
+                                        icon={"search"}
+                                        className={"img-icon-right"}
                                     />}
                                     onChange={debounce(onSearch,500) }
                                     allowClear

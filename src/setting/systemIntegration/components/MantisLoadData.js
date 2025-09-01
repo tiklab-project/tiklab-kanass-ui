@@ -9,6 +9,7 @@ import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import {getAPIgateway, getUser} from 'tiklab-core-ui';
 import { observer } from "mobx-react";
 import UrlDataStore from "../store/UrlDataStore"
+import {PrivilegeButton} from "tiklab-privilege-ui";
 const LoadData = (props) => {
     const { findMantisInputSchedule } = UrlDataStore;
     const ticket = getUser().ticket;
@@ -137,7 +138,10 @@ const LoadData = (props) => {
                 <div className="load-box">
                     上传Mantis zip包：
                     <Upload {...uploadProps}>
-                        <Button icon={<UploadOutlined />}>导入Mantis数据</Button>
+                        <PrivilegeButton code={"import_mantis"}>
+                            <Button icon={<UploadOutlined />}>导入Mantis数据</Button>
+                        </PrivilegeButton>
+
                     </Upload>
                 </div>
                 <div>

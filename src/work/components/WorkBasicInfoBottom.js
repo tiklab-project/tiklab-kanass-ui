@@ -41,18 +41,11 @@ const WorkBasicInfoBottom = (props) => {
             label: "关联事项",
             id: 3
         },
-        {
-            label: "附件",
-            id: 4
-        },
+
         // {
         //     label: "任务",
         //     id: 5
         // },
-        {
-            label: "工时",
-            id: 6
-        },
         {
             label: "测试",
             id: 8
@@ -61,6 +54,15 @@ const WorkBasicInfoBottom = (props) => {
             label: "文档",
             id: 7
         },
+        {
+            label: "工时",
+            id: 6
+        },
+        {
+            label: "附件",
+            id: 4
+        },
+
     ]
 
     const getNum = (id) => {

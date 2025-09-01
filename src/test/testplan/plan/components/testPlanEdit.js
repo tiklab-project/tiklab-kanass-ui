@@ -86,7 +86,7 @@ const TestPlanEdit = (props) => {
                 </Button>
             ) : (
                 <IconCommon
-                    icon="bianji11"
+                    icon="edit"
                     className="icon-s edit-icon"
                     onClick={showModal}
                 />

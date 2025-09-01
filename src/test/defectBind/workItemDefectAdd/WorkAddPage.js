@@ -1,8 +1,8 @@
 /*
  * @Descripttion: 事项添加信息页面
  */
-import React, { useState, useEffect, useImperativeHandle, Fragment } from "react";
-import {Form, Input, Select, DatePicker, message, Button} from "antd";
+import React, {useState, useEffect, useImperativeHandle, Fragment, useRef} from "react";
+import {Form, Input, Select, DatePicker, message, Button, Tooltip, Space, Table} from "antd";
 import { observer } from "mobx-react";
 import 'moment/locale/zh-cn';
 import moment from 'moment';
@@ -13,6 +13,10 @@ import {useHistory} from "react-router-dom";
 import workItemBindStore from "../defect/store/WorkItemBindStore";
 import {getUser} from "tiklab-core-ui";
 import "tiklab-slate-ui/es/tiklab-slate.css";
+import setImageUrl from "../../../common/utils/setImageUrl";
+import DeleteModal from "../../../common/deleteModal/deleteModal";
+import Dragger from "antd/es/upload/Dragger";
+import {createWorkTestCaseFn} from "../../testcase/components/testCaseTableFn";
 
 const { RangePicker } = DatePicker;
 
@@ -25,9 +29,10 @@ const WorkAddPage = (props) => {
         priorityList, workId,
         setWorkId,
         selectVersionList,
-        findWorkItemCreateMetaData
+        findWorkItemCreateMetaData, createWorkAttach
     } = workItemStore;
     const {createWorkItemBind,findWorkItemBindPage} = workItemBindStore;
+    const editorRef = useRef(null);
 
 
     const { ticket,tenant } =getUser()
@@ -38,7 +43,7 @@ const WorkAddPage = (props) => {
 
     const [projectType, setProjectType] = useState( {});
     const [slateValue, setSlateValue] = useState("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]");
-    const [selectItem, setSelectItem] = useState();
+    const [selectItem, setSelectItem] = useState([]);
     const [loading, setLoading] = useState(false);
     const history = useHistory()
     const [workType, setWorkType] = useState();
@@ -46,6 +51,9 @@ const WorkAddPage = (props) => {
     const repositoryId = sessionStorage.getItem("repositoryId")
     const path = history.location.pathname;
 
+    // 上传附件的信息
+    const upload_url = env === "local" ? base_url : "";
+    const formRef = useRef();
 
     useEffect(() => {
         form.setFieldsValue({
@@ -192,6 +200,16 @@ const WorkAddPage = (props) => {
         return;
     }, [projectId])
 
+    const containerRef = useRef(null);
+    const [isEditorFocused, setIsEditorFocused] = useState(false);
+
+    const handleMouseEnter = () => {
+        setIsEditorFocused(true);
+    };
+
+    const handleMouseLeave = () => {
+        setIsEditorFocused(false);
+    };
 
     /**
      * 在项目内添加事项或者选择项目之后， 设置表单初始化值
@@ -245,6 +263,17 @@ const WorkAddPage = (props) => {
             addWork(values).then((res) => {
                 setWorkId(res.data)
 
+                for (let attach of attachList) {
+                    attach = {
+                        ...attach,
+                        workItem: {
+                            id: res.data
+                        }
+                    }
+
+                    createWorkAttach(attach)
+                }
+
                 if (res.code === 0) {
                     message.success({
                         content: '添加成功',
@@ -258,6 +287,8 @@ const WorkAddPage = (props) => {
                     setShowAddModel(false)
 
                     bindWorkItem(res.data)
+
+                    createWorkTestCaseFn(caseId, res.data, projectId)
                 } else {
                     message.error({
                         content: '添加失败',
@@ -294,6 +325,79 @@ const WorkAddPage = (props) => {
         })
     };
 
+    const [attachList, setAttachList] = useState([])
+    // 上传附件
+    const filesParams = {
+        name: 'uploadFile',
+        multiple: true,
+        action: `${upload_url}/dfs/upload`,
+        showUploadList: false,
+        headers: {
+            ticket: ticket,
+            tenant: tenant
+        },
+        onChange(info) {
+            const { status } = info.file;
+            if (status === 'done') {
+                const res = info.file.response;
+                const params = {
+                    attachId: res.data,
+                    attachmentName: info.file.name,
+                    attachmentUrl: res.data,
+                    type: info.file.type
+                }
+                setAttachList([...attachList, params])
+                message.success(`${info.file.name} 文件上传成功.`);
+            } else if (status === 'error') {
+                message.error(`${info.file.name} 文件上传失败.`);
+            }
+        }
+    }
+    // 文件列表的
+    const attachColums = [
+        {
+            title: '文件',
+            dataIndex: 'attachmentName',
+            key: 'name',
+            width: "30%",
+            render: (text, record) => {
+                return (
+                    record.type.indexOf("image") === -1 ?
+                        <a href={setImageUrl("/file/" + record.attachmentUrl)}
+                           target="_blank"
+                        >
+                            {text}
+                        </a>
+                        :
+                        <a href={setImageUrl("/image/" + record.attachmentUrl)}
+                           target="_blank"
+                        >
+                            {text}
+                        </a>
+                )
+            }
+        },
+        {
+            title: '文件类型',
+            dataIndex: "type",
+            key: 'type',
+            width: "10%",
+            render: (text, record) => <Tooltip title={record.attachmentName.split('.').pop()}>{record.attachmentName.split('.').pop()}</Tooltip>
+        },
+        {
+            title: '操作',
+            dataIndex: 'action',
+            key: 'action',
+            width: "10%",
+            render: (text, record) => <Space size="middle">
+                <DeleteModal deleteFunction={deleteAttach} id={record.attachId} getPopupContainer={formRef.current} />
+            </Space>
+        }
+    ]
+
+    const deleteAttach = (attachId) => {
+        setAttachList(attachList.filter(item => item.attachId !== attachId))
+    }
 
     // 暴露方法给父级组件
     useImperativeHandle(workAddPageRef, () => ({
@@ -357,221 +461,303 @@ const WorkAddPage = (props) => {
             <div className="work-add-page">
                 <div className="work-add-page-content">
                     <div className="work-add-page-form">
-                        <Form
-                            initialValues={{ remember: true }}
-                            form={form}
-                            className="work-add-form"
-                            layout="vertical"
-                            labelAlign="right"
-                            labelCol={{
-                                span: 24,
-                            }}
-                            onValuesChange={(changedValues, allValues) => changeWorkItem(changedValues)}
-                        >
-                            <Form.Item
-                                label="标题"
-                                name="title"
-                                rules={[{ required: true, message: '请输入标题!' }]}
+                        <div className="left">
+                            <Form
+                                initialValues={{ remember: true }}
+                                form={form}
+                                className="work-add-form"
+                                layout="vertical"
+                                labelAlign="right"
+                                onValuesChange={(changedValues, allValues) => changeWorkItem(changedValues)}
                             >
-                                <Input placeholder="事项标题" />
-                            </Form.Item>
-                            <Form.Item
-                                label="描述"
-                            >
-                                <div className="work-item-desc" style={{ border: " #f0f0f0 solid 1px" }}>
-                                    <DocumentEditor
-                                        focusEditor={true}
-                                        value={slateValue}
-                                        onChange={(value) => changeDesc(value)}
-                                        minHeight={300}
-                                        ticket={ticket}
-                                        tenant={tenant}
-                                        base_url={base_url}
-                                        viewImageUrl = "/image"
-                                        img_url = {base_url}
-                                        maxHeight={500}
-                                        {...props}
-                                    />
-                                </div>
-
-                            </Form.Item>
-
-                            {
-                                selectItem && <Form.Item
-                                    label={selectItem?.name}
-                                    name="eachType"
-                                    wrapperCol={{
-                                        span: 10,
-                                    }}
-                                >
-                                    <Select
-                                        placeholder="无"
-                                        className="work-select"
-                                        key="selectEachType"
-                                        allowClear
-                                        wrapperCol={{
-                                            span: 10,
-                                        }}
-                                    >
-                                        {
-                                            selectItem && selectItem?.selectItemList.map((item) => {
-                                                return <Select.Option value={item.id} key={item.id}>
-                                                    <img
-                                                        src={('images/project1.png')}
-                                                        alt=""
-                                                        className="img-icon-right"
-                                                    />
-                                                    {item.name}
-                                                </Select.Option>
-                                            })
-                                        }
-                                    </Select>
-                                </Form.Item>
-                            }
-                            <Form.Item
-                                label="优先级"
-                                name="workPriority"
-                                rules={[{ required: false, message: '请输入优先级!' }]}
-                                wrapperCol={{
-                                    span: 10,
-                                }}
-                            >
-                                <Select
-                                    placeholder="优先级"
-                                    allowClear
-                                    className="work-select"
-                                    key="selectWorkPriority"
-                                >
-                                    {
-                                        priorityList && priorityList.map((item) => {
-                                            return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
-                                        })
-                                    }
-                                </Select>
-                            </Form.Item>
-                            <Form.Item
-                                label="负责人"
-                                name="assigner"
-                                rules={[{ required: true, message: '请输入负责人!' }]}
-                                wrapperCol={{
-                                    span: 10,
-                                }}
-                            >
-                                <Select
-                                    placeholder="负责人"
-                                    className="work-select"
-                                    key="selectWorkUser"
-                                    showSearch
-                                >
-                                    {
-                                        userList && userList.map((item) => {
-                                            return <Select.Option value={item.user?.id} key={item.user?.id}>{item.user?.nickname ? item.user?.nickname : item.user?.name}</Select.Option>
-                                        })
-                                    }
-                                </Select>
-                            </Form.Item>
-
-                            <Form.Item
-                                name="planTime"
-                                label="计划日期"
-                                wrapperCol={{
-                                    span: 10,
-                                }}
-                            >
-                                <RangePicker />
-                            </Form.Item>
-                            <Form.Item
-                                label="所属模块"
-                                name="module"
-                                rules={[{ required: false, message: '请输入所属模块!' }]}
-                            >
-                                <Select
-                                    placeholder="模块"
-                                    allowClear
-                                    className="work-select"
-                                    key="selectModule"
-                                >
-                                    {
-                                        moduleList && moduleList.map((item) => {
-                                            return <Select.Option value={item.id} key={item.id}>{item.moduleName}</Select.Option>
-                                        })
-                                    }
-                                </Select>
-                            </Form.Item>
-                            {
-                                (projectType === "nomal" || projectType === "hybrid" || projectType === "ipd") && <Form.Item
-                                    label="所属阶段"
-                                    name="stage"
-                                    rules={[{ required: true, message: '请输入所属阶段!' }]}
-                                    wrapperCol={{
-                                        span: 16,
-                                    }}
-                                >
-                                    <Select
-                                        placeholder="阶段"
-                                        allowClear
-                                        className="work-select"
-                                        key="selectSprint"
-                                        // onSearch={searchStage}
-                                        // showSearch
-                                    >
-                                        {
-                                            stageList && stageList.map((item) => {
-                                                return <Select.Option value={item.id} key={item.id}>{item.stageName}</Select.Option>
-                                            })
-                                        }
-                                    </Select>
-                                </Form.Item>
-                            }
-
-                            {
-                                (projectType === "scrum" || projectType === "kanban" || projectType === "hybrid") && <Form.Item
-                                    label="所属迭代"
-                                    name="sprint"
-                                    rules={[{ required: false, message: '请输入所属迭代!' }]}
-                                    wrapperCol={{
-                                        span: 16,
-                                    }}
-                                >
-                                    <Select
-                                        placeholder="迭代"
-                                        allowClear
-                                        className="work-select"
-                                        key="selectSprint"
-                                    >
-                                        {
-                                            selectSprintList && selectSprintList.map((item) => {
-                                                return <Select.Option value={item.id} key={item.id}>{item.sprintName}</Select.Option>
-                                            })
-                                        }
-                                    </Select>
-                                </Form.Item>
-                            }
-
-                            {
-                                (projectType !== "nomal" && projectType !== "ipd") &&
                                 <Form.Item
-                                    label="所属版本"
-                                    name="projectVersion"
-                                    rules={[{ required: false, message: '请输入所属版本!' }]}
+                                    label="标题"
+                                    name="title"
+                                    rules={[{ required: true, message: '请输入标题!' }]}
+                                >
+                                    <Input placeholder="事项标题" />
+                                </Form.Item>
+
+                                <Form.Item
+                                    label="描述"
+                                >
+                                    {
+                                        <div className="work-desc">
+                                            <div
+                                                ref={containerRef}
+                                                onMouseEnter={handleMouseEnter}
+                                                onMouseLeave={handleMouseLeave} className="work-item-desc" style={{ width: "100%", border: " #f0f0f0 solid 1px" }}>
+                                                <DocumentEditor
+                                                    ref={editorRef}
+                                                    focusEditor={true}
+                                                    value={slateValue}
+                                                    onChange={(value) => changeDesc(value)}
+                                                    minHeight={150}
+                                                    ticket={ticket}
+                                                    tenant={tenant}
+                                                    base_url={base_url}
+                                                    viewImageUrl = "/image"
+                                                    img_url = {base_url === '/' ? '' : base_url}
+                                                    maxHeight={150}
+                                                    {...props}
+                                                />
+                                            </div>
+                                        </div>
+                                    }
+                                </Form.Item>
+
+                                <Form.Item
+                                    label={"附件"}
+                                >
+                                    <Fragment>
+                                        <div ref={formRef}>
+                                            {
+                                                attachList && attachList.length > 0 && (
+                                                    <Fragment>
+                                                        <Table columns={attachColums}
+                                                               dataSource={attachList}
+                                                               pagination={false}
+                                                               bordered={false}
+                                                               rowKey={(record) => record.attachId}
+                                                               scroll={{x: "100%"}}
+                                                        />
+                                                    </Fragment>
+                                                )
+                                            }
+                                        </div>
+                                        <div className="work-detail-upload">
+                                            <Dragger className="work-detail-upload" {...filesParams}>
+                                                <p className="ant-upload-drag-icon">
+                                                    <svg className="icon-20" aria-hidden="true">
+                                                        <use xlinkHref="#icon-uploadImg-gray"></use>
+                                                    </svg>上传附件
+                                                </p>
+                                            </Dragger>
+                                        </div>
+                                    </Fragment>
+                                </Form.Item>
+                            </Form>
+                        </div>
+                        <div className="right">
+                            <Form
+                                initialValues={{ remember: true }}
+                                form={form}
+                                className="work-add-form"
+                                layout="vertical"
+                                labelAlign="right"
+                                onValuesChange={(changedValues, allValues) => changeWorkItem(changedValues)}
+                            >
+                                {
+                                    (path.includes("/projectSet") || path.includes("/product") || path === "/worklist" || path === "/workbodar") &&
+                                    <Form.Item
+                                        label="所属项目"
+                                        name="project"
+                                        rules={[{ required: true, message: '请输入!' }]}
+                                        bordered={false}
+                                    >
+                                        <Select
+                                            bordered={false}
+                                            style={{backgroundColor: '#f0f0f0'}}
+                                            placeholder="项目"
+                                            allowClear
+                                            className="work-select"
+                                            key="selectProject"
+                                            onSelect={selectProject}
+                                        >
+                                            {
+                                                projectList && projectList.map((item) => {
+                                                    return <Select.Option project={item} value={item.id} key={item.id}>{item.projectName}</Select.Option>
+                                                })
+                                            }
+                                        </Select>
+                                    </Form.Item>
+                                }
+                                {
+                                    selectItem &&
+                                    <Form.Item
+                                        label={selectItem?.name || "事项类型"}
+                                        name="eachType"
+                                        // wrapperCol={{
+                                        //     span: 10,
+                                        // }}
+                                    >
+                                        <Select
+                                            bordered={false}
+                                            style={{backgroundColor: '#f0f0f0'}}
+                                            placeholder="无"
+                                            className="work-select"
+                                            key="selectEachType"
+                                            allowClear
+                                        >
+                                            {
+                                                selectItem && selectItem?.selectItemList?.map((item) => {
+                                                    return <Select.Option value={item.id} key={item.id}>
+                                                        <img
+                                                            src={('images/project1.png')}
+                                                            alt=""
+                                                            className="img-icon-right"
+                                                        />
+                                                        {item.name}
+                                                    </Select.Option>
+                                                })
+                                            }
+                                        </Select>
+                                    </Form.Item>
+                                }
+                                <Form.Item
+                                    label="优先级"
+                                    name="workPriority"
+                                    rules={[{ required: false, message: '请输入优先级!' }]}
+                                    // wrapperCol={{
+                                    //     span: 10,
+                                    // }}
                                 >
                                     <Select
-                                        placeholder="版本"
+                                        bordered={false}
+                                        style={{backgroundColor: '#f0f0f0'}}
+                                        placeholder="优先级"
                                         allowClear
                                         className="work-select"
-                                        key="selectProjectVersion"
+                                        key="selectWorkPriority"
                                     >
                                         {
-                                            selectVersionList && selectVersionList.map((item) => {
+                                            priorityList && priorityList.map((item) => {
                                                 return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
                                             })
                                         }
                                     </Select>
                                 </Form.Item>
-                            }
+                                <Form.Item
+                                    label="负责人"
+                                    name="assigner"
+                                    rules={[{ required: true, message: '请输入负责人!' }]}
+                                    // wrapperCol={{
+                                    //     span: 10,
+                                    // }}
+                                >
+                                    <Select
+                                        bordered={false}
+                                        style={{backgroundColor: '#f0f0f0'}}
+                                        placeholder="负责人"
+                                        className="work-select"
+                                        key="selectWorkUser"
+                                        showSearch
+                                    >
+                                        {
+                                            userList && userList.map((item) => {
+                                                return <Select.Option value={item.user?.id} key={item.user?.id}>{item.user?.nickname ? item.user?.nickname : item.user?.name}</Select.Option>
+                                            })
+                                        }
+                                    </Select>
+                                </Form.Item>
+                                <Form.Item
+                                    name="planTime"
+                                    label="计划日期"
+                                    // wrapperCol={{
+                                    //     span: 10,
+                                    // }}
+                                >
+                                    <RangePicker />
+                                </Form.Item>
 
+                                <Form.Item
+                                    label="所属模块"
+                                    name="module"
+                                    rules={[{ required: false, message: '请输入所属模块!' }]}
+                                >
+                                    <Select
+                                        bordered={false}
+                                        style={{backgroundColor: '#f0f0f0'}}
+                                        placeholder="模块"
+                                        allowClear
+                                        className="work-select"
+                                        key="selectModule"
+                                    >
+                                        {
+                                            moduleList && moduleList.map((item) => {
+                                                return <Select.Option value={item.id} key={item.id}>{item.moduleName}</Select.Option>
+                                            })
+                                        }
+                                    </Select>
+                                </Form.Item>
+                                {
+                                    (projectType === "nomal" || projectType === "ipd" || projectType === "hybrid") && <Form.Item
+                                        label="所属阶段"
+                                        name="stage"
+                                        rules={[{ required: true, message: '请输入所属阶段!' }]}
+                                    >
+                                        <Select
+                                            bordered={false}
+                                            style={{backgroundColor: '#f0f0f0'}}
+                                            placeholder="阶段"
+                                            allowClear
+                                            className="work-select"
+                                            key="selectSprint"
+                                            onSearch={searchStage}
+                                            showSearch
+                                        >
+                                            {
+                                                stageList && stageList.map((item) => {
+                                                    return <Select.Option value={item.id} key={item.id}>{item.stageName}</Select.Option>
+                                                })
+                                            }
+                                        </Select>
+                                    </Form.Item>
+                                }
+                                {
+                                    (projectType === "scrum" || projectType === "kanban" || projectType === "hybrid") && <Form.Item
+                                        label="所属迭代"
+                                        name="sprint"
+                                        rules={[{ required: false, message: '请输入所属迭代!' }]}
+                                    >
+                                        <Select
+                                            bordered={false}
+                                            style={{backgroundColor: '#f0f0f0'}}
+                                            placeholder="迭代"
+                                            allowClear
+                                            className="work-select"
+                                            key="selectSprint"
+                                        >
+                                            {
+                                                selectSprintList && selectSprintList.map((item) => {
+                                                    return <Select.Option value={item.id} key={item.id}>{item.sprintName}</Select.Option>
+                                                })
+                                            }
+                                        </Select>
+                                    </Form.Item>
+                                }
 
-                        </Form>
+                                {
+                                    (projectType !== "nomal" && projectType !== "ipd") &&
+                                    <Form.Item
+                                        label="所属版本"
+                                        name="projectVersion"
+                                        rules={[{ required: false, message: '请输入所属版本!' }]}
+                                    >
+                                        <Select
+                                            placeholder="版本"
+                                            allowClear
+                                            className="work-select"
+                                            key="selectProjectVersion"
+                                        >
+                                            {
+                                                selectVersionList && selectVersionList.map((item) => {
+                                                    return <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
+                                                })
+                                            }
+                                        </Select>
+                                    </Form.Item>
+                                }
+
+                                <Form.Item
+                                    name="planTakeupTime"
+                                    label="计划用时"
+                                    hidden={true}
+                                >
+                                    <Input suffix="小时" type="number" className="" />
+                                </Form.Item>
+                            </Form>
+                        </div>
                     </div>
 
                     <div className="work-add-button">

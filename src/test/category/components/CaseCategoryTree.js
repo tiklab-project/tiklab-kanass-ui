@@ -381,7 +381,7 @@ const CaseCategoryTree = ({
                     display: "flex",
                     height: "100%",
                     transition: "width 0.3s ease",
-                    width: collapsed ? 0 : 240,
+                    width: collapsed ? 0 : "auto",
                     position: "relative",
                 }}
             >

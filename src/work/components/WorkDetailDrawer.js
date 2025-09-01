@@ -98,10 +98,8 @@ const WorkDetailDrawer = (props) => {
             destroyOnClose={true}
             // width={"52%"}
             style={{
-                transform: 'translateX(0)',
-                // maxWidth: '800px',
-                // minWidth: '500px'
-            }}//子抽屉打开后父抽屉不被推动
+                transform: 'translateX(0)',//子抽屉打开后父抽屉不被推动
+            }}
             // mask={false}
         >
             <div className="work-detail-drawer" ref={detailRef}>

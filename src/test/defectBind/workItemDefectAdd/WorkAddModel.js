@@ -61,18 +61,42 @@ const WorkAddModel = (props) => {
         setShowAddModel: setShowAddModel
     }))
 
+    const getModalWidth = () => {
+        const width = window.innerWidth;
+
+        if (width >= 1600) {
+            return 1100;
+        } else if (width < 1600 && width >= 1200) {
+            return 1000;
+        } else if (width < 1200 && width >= 992) {
+            return 900;
+        } else if (width < 992 && width >= 768) {
+            return 700;
+        } else if (width < 768 && width >= 576) {
+            return 500;
+        } else if (width < 576) {
+            return 400;
+        }
+    }
+
 
     return (
         <>
-            <IconBtn
-                className="pi-icon-btn-grey"
-                name={"添加缺陷"}
-                onClick={showModal}
-            />
+            {/*<IconBtn*/}
+            {/*    className="pi-icon-btn-grey"*/}
+            {/*    name={"添加缺陷"}*/}
+            {/*    onClick={showModal}*/}
+            {/*/>*/}
+            <div onClick={showModal} style={{cursor:"pointer", display:"flex", alignItems:"center"}}>
+                <svg className="icon-18" aria-hidden="true">
+                    <use xlinkHref={`#icon-add2`}></use>
+                </svg>
+                <span>添加缺陷</span>
+            </div>
             <Modal
                 title="添加缺陷"
                 visible={showAddModel}
-                width={830}
+                width={getModalWidth()}
                 className="work-addmodel"
                 destroyOnClose={true}
                 onOk={handleOk}
@@ -83,13 +107,13 @@ const WorkAddModel = (props) => {
                 footer={null}
                 maskClosable={false}
                 bodyStyle={{
-                    maxHeight: 'calc(100vh - 200px)',
-                    overflow: 'auto',
+                    // maxHeight: 'calc(100vh - 200px)',
+                    // overflow: 'auto',
                     padding: '16px'
                 }}
-                style={{
-                    top: '50px'
-                }}
+                // style={{
+                //     top: '50px'
+                // }}
             >
                 <WorkAddPage
                     projectId={projectId}

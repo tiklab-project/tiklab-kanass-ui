@@ -16,11 +16,16 @@ import WorkTestStore from "../store/WorkTestStore";
 import DeleteModal from "../../common/deleteModal/deleteModal";
 import WorkPrivilegeComponent from "./WorkPrivilegeComponent";
 import WorkTestCaseCreateDropDown from "./WorkTestCaseCreateDropDown";
+import FuncUnitEdit from "../../test/function/components/funcUnitEdit";
+import CategoryStore from "../../test/category/store/CategoryStore";
+import FuncUnitStore from "../../test/function/store/funcUnitStore";
+import {deleteWorkItemBindByConditionFn} from "./WorkTestCaseFn";
 const WorkTestCaseList = (props) => {
     const store = {
-        workTestStore: WorkTestStore
+        workTestStore: WorkTestStore,
+        funcUnitStore: FuncUnitStore
     }
-    const { workStore, projectId } = props;
+    const { workStore, projectId, workInfo } = props;
     const { findTestCasePageByWorkItemId, deleteWorkTestCaseRele, findSystemUrl } = WorkTestStore;
     const { workId, getSelectUserList } = workStore;
     const [testCaseList, setWorkTestCaseList] = useState([])
@@ -40,6 +45,10 @@ const WorkTestCaseList = (props) => {
     const delectRepository = (id) => {
         deleteWorkTestCaseRele({ workItemId: workId, testCaseId: id }).then((data) => {
             if (data.code === 0) {
+                // 如果是缺陷的话，测试那边删除一条缺陷与用例的关系
+                if (workInfo.workTypeCode === "defect"){
+                    deleteWorkItemBindByConditionFn(id, workId)
+                }
                 findTestCasePageByWorkItemId({ workItemId: workId }).then((data) => {
                     setWorkTestCaseList([...data])
                 })
@@ -49,14 +58,14 @@ const WorkTestCaseList = (props) => {
 
     const columns = [
         {
-            title: "标题",
-            dataIndex: "testCaseName",
+            title: "ID",
+            dataIndex: "testCaseKey",
             key: "name",
             width: 150,
             render: (text, record) => (
                 <div className="testcase-title">
                     <svg className="menu-icon" aria-hidden="true">
-                        <use xlinkHref="#icon-testcase"></use>
+                        <use xlinkHref="#icon-gongneng1"></use>
                     </svg>
                     {text}
                     {/*<span onClick={() => goCaseDetail(record)} className={`${record.exist ? "span-botton" : ""}`} >{text}</span>*/}
@@ -65,19 +74,19 @@ const WorkTestCaseList = (props) => {
             ),
         },
         {
-            title: "目录",
+            title: "用例",
             dataIndex: "testCaseName",
             key: "testCaseName",
             width: 150
         },
         {
-            title: "仓库",
-            dataIndex: ["repository", "name"],
+            title: "模块",
+            dataIndex: "moduleName",
             key: "repository",
             width: 150
         },
         {
-            title: "作者",
+            title: "负责人",
             dataIndex: "createUser",
             key: "createUser",
             width: 150
@@ -157,20 +166,33 @@ const WorkTestCaseList = (props) => {
                     {/*    <WorkTestCaseCreateDropDown/>*/}
                     {/*</WorkPrivilegeComponent>*/}
                     <WorkPrivilegeComponent workId={workId} code="WorkTestAdd">
-                        <Button
-                            style={{
-                                display: "flex",
-                                textAlign: "center",
-                                alignItems: "center",
-                                justifyContent: "center",
-                            }}
-                            type="text"
-                            onClick={() => { showSelectTestCase(true) }}>
-                            <svg className="img-icon-right" aria-hidden="true" style={{ cursor: "pointer", marginRight: "10px" }}>
-                                <use xlinkHref="#icon-add2"></use>
-                            </svg>
-                            关联用例
-                        </Button>
+                        <div style={{ display: "flex", alignItems: "center", justifyContent:"flex-end", gap:"10px" }}>
+                            {
+                                workInfo.workTypeCode === "demand" &&
+                                <FuncUnitEdit
+                                    categoryStore={CategoryStore}
+                                    name={"添加用例"}
+                                    type={"add"}
+                                    demand={workId}
+                                    workInfo={workInfo}
+                                />
+                            }
+
+                            <Button
+                                style={{
+                                    display: "flex",
+                                    textAlign: "center",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                }}
+                                type="text"
+                                onClick={() => { showSelectTestCase(true) }}>
+                                <svg className="img-icon-right" aria-hidden="true" style={{ cursor: "pointer", marginRight: "10px" }}>
+                                    <use xlinkHref="#icon-link"></use>
+                                </svg>
+                                关联用例
+                            </Button>
+                        </div>
                     </WorkPrivilegeComponent>
 
                 </div>

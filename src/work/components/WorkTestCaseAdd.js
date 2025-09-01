@@ -12,8 +12,9 @@ import "./WorkTestCaseAdd.scss";
 import InputSearch from "../../common/input/InputSearch"
 import { SelectSimple, SelectItem } from "../../common/select";
 import {LeftOutlined, RightOutlined} from "@ant-design/icons";
+import {createWorkItemBindFn} from "./WorkTestCaseFn";
 const WorkTestCaseAddmodal = (props) => {
-    const { workTestStore, workStore, setWorkTestCaseList, projectId, showSelectTestCase, selectTestCase } = props;
+    const { workTestStore, workStore, setWorkTestCaseList, projectId, showSelectTestCase, selectTestCase, workInfo } = props;
     const { workId } = workStore;
 
     const { findTestCasePageByWorkItemId, createWorkTestCase,
@@ -33,57 +34,77 @@ const WorkTestCaseAddmodal = (props) => {
     
     useEffect(() => {
         if (selectTestCase === true) {
-            getSelectUserList(projectId)
-            //获取项目内测试用例库
-            findProjectTestRepositoryList({ projectId: projectId }).then(res => {
-                if (res.code === 0) {
-                    setRepositoryaList(res.data)
-                    let list = []
-                    if (res.data.length > 0) {
-                        res.data.map(item => {
-                            list.push(item.id)
-                        })
-                        setRepositoryallIdList(list)
-                        //获取项目内测试用例库未关联事项的测试用例
-                        findUnRelationWorkTestCaseList({
-                            workItemId: workId,
-                            repositoryIds: list,
-                            name: "",
-                            repositoryId: null,
-                            pageParam: {
-                                pageSize: 5,
-                                currentPage: 1
-                            }
-                        }).then((data) => {
-                            if (data.code === 0) {
-                                setTestCaseList(data.data.dataList)
-                                setCurrentPage(data.data.currentPage)
-                                setTotalPage(data.data.totalPage)
-                            }
-                        })
-                        // //获取用例库作者
-                        // findTesthuboRepositoryUserList(list).then(res => {
-                        //     if(res.code === 0){
-                        //         setTestCaseUserList(res.data)
-                        //     }
-                        // })
-                    }else {
-                        Modal.confirm({
-                            title: '提示?',
-                            content: "该项目没有关联测试项目，是否先去添加测试项目",
-                            centered: true,
-                            okText: "去添加",
-                            cancelText: "取消",
-                            getContainer: testCaseAdd ? () => testCaseAdd.current : null,
-                            onOk() { props.history.push({
-                                pathname: `/project/${projectId}/test`,
-                                state: { activeKey: "repository" }
-                            }) }
-                        });
-                    }
-
+            getSelectUserList(projectId).then(res => {
+                setTestCaseUserList(res.data.dataList)
+            })
+            //获取项目内测试用例库未关联事项的测试用例
+            findUnRelationWorkTestCaseList({
+                workItemId: workId,
+                name: "",
+                projectId: projectId,
+                pageParam: {
+                    pageSize: 5,
+                    currentPage: 1
+                }
+            }).then((data) => {
+                if (data.code === 0) {
+                    setTestCaseList(data.data.dataList)
+                    setCurrentPage(data.data.currentPage)
+                    setTotalPage(data.data.totalPage)
                 }
             })
+
+
+            //获取项目内测试用例库
+            // findProjectTestRepositoryList({ projectId: projectId }).then(res => {
+            //     if (res.code === 0) {
+            //         setRepositoryaList(res.data)
+            //         let list = []
+            //         if (res.data.length > 0) {
+            //             res.data.map(item => {
+            //                 list.push(item.id)
+            //             })
+            //             setRepositoryallIdList(list)
+            //             //获取项目内测试用例库未关联事项的测试用例
+            //             findUnRelationWorkTestCaseList({
+            //                 workItemId: workId,
+            //                 repositoryIds: list,
+            //                 name: "",
+            //                 repositoryId: null,
+            //                 pageParam: {
+            //                     pageSize: 5,
+            //                     currentPage: 1
+            //                 }
+            //             }).then((data) => {
+            //                 if (data.code === 0) {
+            //                     setTestCaseList(data.data.dataList)
+            //                     setCurrentPage(data.data.currentPage)
+            //                     setTotalPage(data.data.totalPage)
+            //                 }
+            //             })
+            //             // //获取用例库作者
+            //             // findTesthuboRepositoryUserList(list).then(res => {
+            //             //     if(res.code === 0){
+            //             //         setTestCaseUserList(res.data)
+            //             //     }
+            //             // })
+            //         }else {
+            //             Modal.confirm({
+            //                 title: '提示?',
+            //                 content: "该项目没有关联测试项目，是否先去添加测试项目",
+            //                 centered: true,
+            //                 okText: "去添加",
+            //                 cancelText: "取消",
+            //                 getContainer: testCaseAdd ? () => testCaseAdd.current : null,
+            //                 onOk() { props.history.push({
+            //                     pathname: `/project/${projectId}/test`,
+            //                     state: { activeKey: "repository" }
+            //                 }) }
+            //             });
+            //         }
+            //
+            //     }
+            // })
         }
         
         return;
@@ -103,8 +124,8 @@ const WorkTestCaseAddmodal = (props) => {
         },
         {
             title: "模块",
-            dataIndex: "testCategoryName",
-            key: "testCategoryName",
+            dataIndex: "moduleName",
+            key: "moduleName",
             width: "20%",
             render: (text, record) => (
                 <div className="testCase-add-table-item">
@@ -112,12 +133,12 @@ const WorkTestCaseAddmodal = (props) => {
                 </div>
             )
         },
-        {
-            title: "项目",
-            dataIndex: ["repository", "name"],
-            key: "repository",
-            width: "10%"
-        },
+        // {
+        //     title: "项目",
+        //     dataIndex: ["repository", "name"],
+        //     key: "repository",
+        //     width: "10%"
+        // },
         {
             title: "负责人",
             dataIndex: "createUser",
@@ -142,7 +163,7 @@ const WorkTestCaseAddmodal = (props) => {
         const param = [{
             testCaseId: record.id,
             workItemId: workId,
-            repositoryId: record.kanassRepositoryId,
+            // repositoryId: record.kanassRepositoryId,
             projectId: projectId
         }]
         createWorkTestCase(param).then((data) => {
@@ -151,6 +172,10 @@ const WorkTestCaseAddmodal = (props) => {
                 findTestCasePageByWorkItemId({ workItemId: workId }).then((data) => {
                     setWorkTestCaseList([...data])
                 })
+                // 如果是缺陷的话，测试那边新增一条缺陷与用例的关系
+                if (workInfo.workTypeCode === "defect"){
+                    createWorkItemBindFn(record.id, workId, projectId)
+                }
                 showSelectTestCase(false)
             }
         })
@@ -304,24 +329,24 @@ const WorkTestCaseAddmodal = (props) => {
                 </div>
                 <div className="testCase-add-search">
                     <InputSearch style={{ minWidth: "100px", maxWidth: "300px", flex: 1 }} onChange={(value) => searchSelectWorkRepository(value)} placeholder={"搜索用例"} />
-                    <SelectSimple
-                        name="repository"
-                        onChange={(value) => searchUnselectWorkRepository(value)}
-                        title={"项目"}
-                        suffixIcon = {true}
-                        value = {repositoryValue}
-                    >
-                        {
-                            repositoryallList.map(item => {
-                                return <SelectItem
-                                    value={item.id}
-                                    label={item.testRepositoryName}
-                                    key={item.id}
-                                    // imgUrl={`${base_url}/${item.iconUrl}`}
-                                />
-                            })
-                        }
-                    </SelectSimple>
+                    {/*<SelectSimple*/}
+                    {/*    name="repository"*/}
+                    {/*    onChange={(value) => searchUnselectWorkRepository(value)}*/}
+                    {/*    title={"项目"}*/}
+                    {/*    suffixIcon = {true}*/}
+                    {/*    value = {repositoryValue}*/}
+                    {/*>*/}
+                    {/*    {*/}
+                    {/*        repositoryallList.map(item => {*/}
+                    {/*            return <SelectItem*/}
+                    {/*                value={item.id}*/}
+                    {/*                label={item.testRepositoryName}*/}
+                    {/*                key={item.id}*/}
+                    {/*                // imgUrl={`${base_url}/${item.iconUrl}`}*/}
+                    {/*            />*/}
+                    {/*        })*/}
+                    {/*    }*/}
+                    {/*</SelectSimple>*/}
                     {
                         testCaseUserList && testCaseUserList.length > 0 && <SelectSimple name="user"
                             onChange={(value) => searchUnselectUser(value)}

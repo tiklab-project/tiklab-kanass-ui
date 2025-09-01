@@ -8,6 +8,7 @@ import {getUser, getVersionInfo} from "tiklab-core-ui";
 import DeleteModal from "../../../common/deleteModal/deleteModal";
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
 import WorkTypeFree from "./WorkTypeFree";
+import {PrivilegeButton} from "tiklab-privilege-ui";
 
 const WorkTypeList = (props) => {
     const store = {
@@ -135,19 +136,37 @@ const WorkTypeList = (props) => {
             title: '流程',
             dataIndex: ['flow', 'name'],
             key: 'flow',
-            render: (text, record) => <div onClick={() => goFlow(record.flow.id, record.grouper)} className="span-botton">流程配置</div>
+            render: (text, record) => {
+                return(
+                    <PrivilegeButton code={"work_type_update_flow"} {...props}>
+                        <div onClick={() => goFlow(record.flow.id, record.grouper)} className="span-botton">流程配置</div>
+                    </PrivilegeButton>
+                )
+            }
         },
         {
             title: '表单',
             dataIndex: ['form', 'name'],
             key: 'form',
-            render: (text, record) => <div onClick={() => goForm(record.form.id, record.grouper)} className="span-botton">表单配置</div>
+            render: (text, record) => {
+                return (
+                    <PrivilegeButton code={"work_type_update_form"} {...props}>
+                        <div onClick={() => goForm(record.form.id, record.grouper)} className="span-botton">表单配置</div>
+                    </PrivilegeButton>
+                )
+            }
         },
         {
             title: '权限',
             dataIndex: 'useNumber',
             key: 'flow',
-            render: (text, record) => <div onClick={() => viewPrivilege(record)} className="span-botton">权限配置</div>
+            render: (text, record) => {
+                return(
+                    <PrivilegeButton code={"work_type_update_permissions"} {...props}>
+                        <div onClick={() => viewPrivilege(record)} className="span-botton">权限配置</div>
+                    </PrivilegeButton>
+                )
+            }
         },
         {
             title: '使用到的项目',
@@ -185,17 +204,22 @@ const WorkTypeList = (props) => {
                     </svg> */}
                     {
                         record.grouper === "custom" ? <>
-                            <WorkTypeAddmodal
-                                name="编辑"
-                                type="edit"
-                                id={record.id}
-                                grouper="custom"
-                                visibleFree={visibleFree}
-                                setVisibleFree={setVisibleFree}
-                            >
-                                编辑
-                            </WorkTypeAddmodal>
-                            <DeleteModal deleteFunction={deleWorkType} id={record.id} getPopupContainer={workType.current} />
+                            <PrivilegeButton code={"work_type_update"} {...props}>
+                                <WorkTypeAddmodal
+                                    name="编辑"
+                                    type="edit"
+                                    id={record.id}
+                                    grouper="custom"
+                                    visibleFree={visibleFree}
+                                    setVisibleFree={setVisibleFree}
+                                >
+                                    编辑
+                                </WorkTypeAddmodal>
+                            </PrivilegeButton>
+                            <PrivilegeButton code={"work_type_delete"} {...props}>
+                                <DeleteModal deleteFunction={deleWorkType} id={record.id} getPopupContainer={workType.current} />
+                            </PrivilegeButton>
+
 
 
                         </>
@@ -214,15 +238,17 @@ const WorkTypeList = (props) => {
                 firstText="事项类型"
             >
                 <div className="add-botton">
-                    <WorkTypeAddmodal
-                        name="添加事项类型"
-                        type="add"
-                        grouper="custom"
-                        bottonType="primary"
-                        formIds = {formIds}
-                        visibleFree={visibleFree}
-                        setVisibleFree={setVisibleFree}
-                    ></WorkTypeAddmodal>
+                    <PrivilegeButton code={"work_type_add"} {...props}>
+                        <WorkTypeAddmodal
+                            name="添加事项类型"
+                            type="add"
+                            grouper="custom"
+                            bottonType="primary"
+                            formIds = {formIds}
+                            visibleFree={visibleFree}
+                            setVisibleFree={setVisibleFree}
+                        ></WorkTypeAddmodal>
+                    </PrivilegeButton>
                 </div>
             </Breadcumb>
             <div style={{ padding: "20px 0" }}>

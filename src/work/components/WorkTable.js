@@ -443,23 +443,23 @@ const WorkTable = (props) => {
                                     </Spin>
                                 </div>
                             </div>
-                            {/*<WorkDetailDrawer*/}
-                            {/*    isModalVisible={isModalVisible}*/}
-                            {/*    setIsModalVisible={setIsModalVisible}*/}
-                            {/*    modelRef={modelRef}*/}
-                            {/*    showPage={true}*/}
-                            {/*    delectCurrentWorkItem={delectCurrentWorkItem}*/}
-                            {/*    {...props}*/}
-                            {/*/>*/}
-                            <WorkDetailModalView
+                            <WorkDetailDrawer
                                 isModalVisible={isModalVisible}
                                 setIsModalVisible={setIsModalVisible}
                                 modelRef={modelRef}
                                 showPage={true}
                                 delectCurrentWorkItem={delectCurrentWorkItem}
-                                detailWidth={detailWidth}
                                 {...props}
                             />
+                            {/*<WorkDetailModalView*/}
+                            {/*    isModalVisible={isModalVisible}*/}
+                            {/*    setIsModalVisible={setIsModalVisible}*/}
+                            {/*    modelRef={modelRef}*/}
+                            {/*    showPage={true}*/}
+                            {/*    delectCurrentWorkItem={delectCurrentWorkItem}*/}
+                            {/*    detailWidth={detailWidth}*/}
+                            {/*    {...props}*/}
+                            {/*/>*/}
                         </Col>
                     </Row>
                 </div>

@@ -43,6 +43,20 @@ const WorkDetailModalView = (props) => {
         }
     }
 
+    const getModalHeight = () => {
+        const height = window.innerHeight;
+
+        if (height >= 900) {
+            return 800;
+        } else if (height >= 768) {
+            return 700;
+        } else if (height >= 576) {
+            return 600;
+        } else {
+            return 500;
+        }
+    };
+
     /**
      * 暴露给父组件的方法
      */
@@ -122,6 +136,7 @@ const WorkDetailModalView = (props) => {
                 closable={false}
                 destroyOnClose={true}
                 width={getModalWidth()}
+                height={getModalHeight()}
                 mask={true}
                 footer={null}
             >

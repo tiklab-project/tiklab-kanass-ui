@@ -139,7 +139,7 @@ const WorkDocumentList = (props) => {
                             type="text"
                             onClick={() => { showSelectDocument(true) }}>
                             <svg className="img-icon-right" aria-hidden="true" style={{ cursor: "pointer", marginRight: "10px" }}>
-                                <use xlinkHref="#icon-add2"></use>
+                                <use xlinkHref="#icon-link"></use>
                             </svg>
                             关联文档
                         </Button>

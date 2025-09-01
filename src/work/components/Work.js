@@ -33,8 +33,8 @@ const Work = (props) => {
     const view = () => {
         let dom = <WorkTable />;
         setTableTitle("所有事项")
-        setWorkTypeVisible(false)
-        setQuickFilterVisible(true)
+        setWorkTypeVisible(true)
+        setQuickFilterVisible(false)
         if (project?.projectType.type === "kanban"){
             setWorkShowType("bodar")
             dom = <WorkBodar />;

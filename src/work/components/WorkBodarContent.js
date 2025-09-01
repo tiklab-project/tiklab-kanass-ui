@@ -184,7 +184,16 @@ const WorkBodarContent = (props) => {
                             }
                         )
                     }
-                <WorkDetailModalView
+                {/*<WorkDetailModalView*/}
+                {/*    isModalVisible={isModalVisible}*/}
+                {/*    setIsModalVisible={setIsModalVisible}*/}
+                {/*    modelRef={modelRef}*/}
+                {/*    showPage={true}*/}
+                {/*    delectCurrentWorkItem={delectCurrentWorkItem}*/}
+                {/*    {...props}*/}
+                {/*/>*/}
+
+                <WorkDetailDrawer
                     isModalVisible={isModalVisible}
                     setIsModalVisible={setIsModalVisible}
                     modelRef={modelRef}
@@ -192,7 +201,6 @@ const WorkBodarContent = (props) => {
                     delectCurrentWorkItem={delectCurrentWorkItem}
                     {...props}
                 />
-
                 {/*</div>*/}
             </Spin>
 

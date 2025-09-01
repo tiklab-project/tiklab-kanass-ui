@@ -4,7 +4,7 @@
     }
 }
 
-/* 在分辨率大于 768px 且小于等于 1280px 时应用的样式 */
+/* 在分辨率大于 768px 且小于等于 1024px 时应用的样式 */
 @media (min-width: 769px) and (max-width: 1280px) {
     .work-add-page {
         height: calc(100% - 60px);
@@ -37,9 +37,15 @@
             overflow: auto;
             padding: 0 var(--tiklab-padding);
             min-height: calc(100% - 120px);
+            display: flex;
+            gap: 20px;
 
-            .ant-picker-range{
-                width: 100%;
+            .left{
+                flex: 1;
+            }
+
+            .right{
+                width: 250px;
             }
         }
 
@@ -54,21 +60,9 @@
                 flex: 1;
             }
             .work-item-desc {
-                .edit-menu{
-                    .edit-toolbar {
-                        gap: 0;
-                        .tool-item{
-                            padding: 0;
-                            min-width: 23px;
-                        }
-                    }
+                .edit-toolbar {
+                    padding-right: 10px;
                 }
-
-            }
-
-            .desc-preview {
-                padding: 10px;
-                background-color: var(--tiklab-gray-800);
             }
             .ant-form-item {
                 // flex-direction: row;
@@ -100,9 +94,12 @@
             padding: 10px var(--tiklab-padding);
             justify-content: flex-end;
         }
+        .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+            border: none;
+            background: #f0f0f0;
+        }
 
         .desc-botton {
-            margin-top: 10px;
             display: flex;
             gap: 10px;
             height: 40px;
@@ -127,13 +124,14 @@
 
 
         .ant-upload-drag {
-            background: var(--tiklab-gray-300);
+            background: #fafafa;
+            border: 1px solid #d9d9d9;
 
         }
     }
 
     .work-add-page-right {
-        background-color: var(--tiklab-gray-800);
+        background-color: var(--tiklab-gray-600);
         flex: 1;
         padding: 15px;
         overflow: auto;
