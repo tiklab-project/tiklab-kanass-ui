@@ -294,6 +294,51 @@ const FunctionStepList = ({functionId,funcUnitStore}) => {
                 {/*</div>*/}
 
                 {/* 添加步骤表单 */}
+
+
+                <DragDropContext onDragEnd={onDragEnd}>
+                    <Droppable droppableId="list">
+                        {(provided) => (
+                            <div
+                                ref={provided.innerRef}
+                                {...provided.droppableProps}
+                                style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                }}
+                            >
+                                {/*<div className={"step-item-box"}>*/}
+                                {/*    <Row*/}
+                                {/*        gutter={[10, 0]}*/}
+                                {/*        className={"step-item-content-header"}*/}
+                                {/*        style={{padding: "5px 10px"}}*/}
+                                {/*    >*/}
+                                {/*        <Col span={1}>*/}
+                                {/*            <MenuOutlined/>*/}
+                                {/*        </Col>*/}
+                                {/*        <Col span={1} className={"case-step-header-title"}>序号</Col>*/}
+                                {/*        <Col span={8} className={"case-step-header-title"}>描述</Col>*/}
+                                {/*        <Col span={7} className={"case-step-header-title"}>期望</Col>*/}
+                                {/*        {pathname.startsWith('/plan') && (*/}
+                                {/*            <Col span={4} className={"case-step-header-title"}>实际结果</Col>*/}
+                                {/*        )}*/}
+                                {/*        <Col style={{marginLeft: "auto", height: "20px"}}*/}
+                                {/*             className={"case-step-header-title"}>操作</Col>*/}
+                                {/*    </Row>*/}
+                                {/*</div>*/}
+                                <div>
+                                    {
+                                        stepList && stepList.length > 0
+                                            ? renderItems(stepList)
+                                            // : <Empty description={<span>暂无步骤</span>}/>
+                                            : <div style={{height: "0px"}}/>
+                                    }
+                                </div>
+                                {provided.placeholder}
+                            </div>
+                        )}
+                    </Droppable>
+                </DragDropContext>
                 <div style={{
                     marginTop: "5px",
                     padding: "7px",
@@ -364,50 +409,6 @@ const FunctionStepList = ({functionId,funcUnitStore}) => {
                     )}
 
                 </div>
-
-                <DragDropContext onDragEnd={onDragEnd}>
-                    <Droppable droppableId="list">
-                        {(provided) => (
-                            <div
-                                ref={provided.innerRef}
-                                {...provided.droppableProps}
-                                style={{
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                }}
-                            >
-                                {/*<div className={"step-item-box"}>*/}
-                                {/*    <Row*/}
-                                {/*        gutter={[10, 0]}*/}
-                                {/*        className={"step-item-content-header"}*/}
-                                {/*        style={{padding: "5px 10px"}}*/}
-                                {/*    >*/}
-                                {/*        <Col span={1}>*/}
-                                {/*            <MenuOutlined/>*/}
-                                {/*        </Col>*/}
-                                {/*        <Col span={1} className={"case-step-header-title"}>序号</Col>*/}
-                                {/*        <Col span={8} className={"case-step-header-title"}>描述</Col>*/}
-                                {/*        <Col span={7} className={"case-step-header-title"}>期望</Col>*/}
-                                {/*        {pathname.startsWith('/plan') && (*/}
-                                {/*            <Col span={4} className={"case-step-header-title"}>实际结果</Col>*/}
-                                {/*        )}*/}
-                                {/*        <Col style={{marginLeft: "auto", height: "20px"}}*/}
-                                {/*             className={"case-step-header-title"}>操作</Col>*/}
-                                {/*    </Row>*/}
-                                {/*</div>*/}
-                                <div>
-                                    {
-                                        stepList && stepList.length > 0
-                                            ? renderItems(stepList)
-                                            // : <Empty description={<span>暂无步骤</span>}/>
-                                            : <div style={{height: "100px"}}/>
-                                    }
-                                </div>
-                                {provided.placeholder}
-                            </div>
-                        )}
-                    </Droppable>
-                </DragDropContext>
 
 
 

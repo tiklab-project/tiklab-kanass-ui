@@ -19,7 +19,8 @@ const WorkDetailPage = (props) => {
     const detailRef = useRef()
     const projectId = props.match.params.id;
     useEffect(() => {
-        setWorkShowType("list")
+        // setWorkShowType("list")
+        setWorkShowType("table")
         return;
     }, [])
     const rowSpan = {

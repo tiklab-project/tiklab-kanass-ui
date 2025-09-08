@@ -69,7 +69,7 @@ const getStore = (project) =>{
     }
 }
 const WorkBasicInfo = (props) => {
-    const { detailForm, getTransitionList } = props;
+    const { detailForm, getTransitionList, viewFlow } = props;
     // const [detailForm] = Form.useForm();
     const [extDataForm] = Form.useForm();
     const formRef = useRef();
@@ -719,7 +719,7 @@ const WorkBasicInfo = (props) => {
         <Provider {...store}>
             <div className="work-info">
                 <div className="work-info-left">
-                    <WorkDetailTitle workInfo={workInfo} workStore={workStore} detailForm={detailForm} {...props} />
+                    <WorkDetailTitle getTransitionList={getTransitionList} viewFlow={viewFlow} workInfo={workInfo} workStore={workStore} detailForm={detailForm} {...props} />
 
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <div className="other-title">描述</div>
@@ -806,7 +806,7 @@ const WorkBasicInfo = (props) => {
                                         hasFeedback={showValidateStatus === "workType" ? true : false}
                                         validateStatus={validateStatus}
                                     >
-                                        <div style={{ padding: "0 11px" }}>
+                                        <div style={{ padding: "0" }}>
                                             <ImgComponent
                                                 src={workInfo.workTypeSys?.iconUrl}
                                                 alt=""
@@ -817,35 +817,38 @@ const WorkBasicInfo = (props) => {
                                     </Form.Item>
 
                                     <Form.Item label="负责人" name="assigner">
-                                        <div className="builder-and-more-info">
-                                            <Select
-                                                placeholder="未设置"
-                                                className="work-select"
-                                                key="selectAssigner"
-                                                bordered={fieldName === "assigner" ? true : false}
-                                                suffixIcon={fieldName === "assigner" || hoverFieldName == "assigner" ? <CaretDownOutlined /> : false}
-                                                onFocus={() => changeStyle("assigner", "assigner")}
-                                                onBlur={() => setFieldName("")}
-                                                onMouseEnter={() => onMouseEnter("assigner")}
-                                                onMouseLeave={() => setHoverFieldName("")}
-                                                getPopupContainer={() => formRef.current}
-                                                disabled={!isPermissionField("assigner")}
-                                                dropdownMatchSelectWidth={false}
-                                            >
-                                                {userList && userList.map((item) => (
-                                                    <Select.Option value={item.user?.id} key={item.user?.id}>
-                                                        <div style={{ display: "flex", alignItems: "center", gap: "3px" }}>
-                                                            <UserIcon name={item.user?.nickname} size={"small"} />
-                                                            {item.user?.nickname ? item.user?.nickname : item.user?.name}
-                                                        </div>
-                                                    </Select.Option>
-                                                ))}
-                                            </Select>
-                                        </div>
+                                        <Select
+                                            placeholder={
+                                                <div style={{ display: "flex", alignItems: "center", gap: "3px" }}>
+                                                    <UserIcon name={"未"} size={"small"} />
+                                                    <span>未设置</span>
+                                                </div>
+                                            }
+                                            className="work-select"
+                                            key="selectAssigner"
+                                            bordered={fieldName === "assigner" ? true : false}
+                                            suffixIcon={fieldName === "assigner" || hoverFieldName == "assigner" ? <CaretDownOutlined /> : false}
+                                            onFocus={() => changeStyle("assigner", "assigner")}
+                                            onBlur={() => setFieldName("")}
+                                            onMouseEnter={() => onMouseEnter("assigner")}
+                                            onMouseLeave={() => setHoverFieldName("")}
+                                            getPopupContainer={() => formRef.current}
+                                            disabled={isPermissionField("assigner")}
+                                            dropdownMatchSelectWidth={false}
+                                        >
+                                            {userList && userList.map((item) => (
+                                                <Select.Option value={item.user?.id} key={item.user?.id}>
+                                                    <div style={{ display: "flex", alignItems: "center", gap: "3px" }}>
+                                                        <UserIcon name={item.user?.nickname} size={"small"} />
+                                                        {item.user?.nickname ? item.user?.nickname : item.user?.name}
+                                                    </div>
+                                                </Select.Option>
+                                            ))}
+                                        </Select>
                                     </Form.Item>
 
                                     <Form.Item label="状态" name="workStatus">
-                                        <div className={`work-status ${setStatuStyle(workInfo.workStatusNode?.status)}`} style={{ padding: "0 11px" }}>
+                                        <div className={`work-status ${setStatuStyle(workInfo.workStatusNode?.status)}`} style={{ padding: "0 11px", marginLeft: "0" }}>
                                             {workInfo.workStatusNode?.name}
                                         </div>
                                     </Form.Item>
@@ -867,7 +870,7 @@ const WorkBasicInfo = (props) => {
                                             onMouseLeave={() => setHoverFieldName("")}
                                             allowClear
                                             getPopupContainer={() => formRef.current}
-                                            disabled={!isPermissionField("workPriority")}
+                                            disabled={isPermissionField("workPriority")}
                                             dropdownMatchSelectWidth={false}
                                         >
                                             {priorityList && priorityList.map((item) => (
@@ -903,7 +906,12 @@ const WorkBasicInfo = (props) => {
                                         >
                                             {selectItemList && selectItemList.map((item) => (
                                                 <Select.Option value={item.id} key={item.id}>
-                                                    <Space>{item.name}</Space>
+                                                    <img
+                                                        src={('images/project1.png')}
+                                                        alt=""
+                                                        className="img-icon-right"
+                                                    />
+                                                    {item.name}
                                                 </Select.Option>
                                             ))}
                                         </Select>
@@ -917,7 +925,7 @@ const WorkBasicInfo = (props) => {
                                     >
                                         <Select
                                             placeholder="未设置"
-                                            className="work-select"
+                                            className="work-select module-select"
                                             key="selectModule"
                                             bordered={fieldName === "module" ? true : false}
                                             suffixIcon={fieldName === "module" || hoverFieldName == "module" ? <CaretDownOutlined /> : false}
@@ -1050,7 +1058,7 @@ const WorkBasicInfo = (props) => {
                                                hasFeedback={showValidateStatus === "percent" ? true : false}
                                                validateStatus={validateStatus}
                                     >
-                                        <div style={{ padding: "0 11px" }}>
+                                        <div style={{ padding: "0" }}>
                                             <CircleProgress
                                                 percent={
                                                     workInfo?.estimateTime === 0 || null ? 0 : (workInfo?.estimateTime - workInfo?.surplusTime) * 100 / workInfo?.estimateTime
@@ -1064,35 +1072,37 @@ const WorkBasicInfo = (props) => {
                                                hasFeedback={showValidateStatus === "estimateTime" ? true : false}
                                                validateStatus={validateStatus}
                                     >
-                                        <Input
-                                            type="number"
-                                            className="workLog-input"
-                                            suffix="小时"
-                                            bordered={fieldName === "estimateTime" ? true : false}
-                                            suffixIcon={fieldName === "estimateTime" || hoverFieldName == "estimateTime" ? <CaretDownOutlined /> : false}
-                                            onFocus={() => changeStyle("estimateTime", "estimateTime")}
-                                            onBlur={() => setFieldName("")}
-                                            onMouseEnter={() => setHoverFieldName("estimateTime")}
-                                            onMouseLeave={() => setHoverFieldName("")}
-                                            onChange={(value) => updataEstimateTime(value)}
-                                            value={estimateTimeValue}
-                                            disabled={isPermissionField("estimateTime")}
-                                        />
+                                        <Space>
+                                            <Input
+                                                type="number"
+                                                className="workLog-input"
+                                                suffix="小时"
+                                                bordered={fieldName === "estimateTime" ? true : false}
+                                                suffixIcon={fieldName === "estimateTime" || hoverFieldName == "estimateTime" ? <CaretDownOutlined /> : false}
+                                                onFocus={() => changeStyle("estimateTime", "estimateTime")}
+                                                onBlur={() => setFieldName("")}
+                                                onMouseEnter={() => setHoverFieldName("estimateTime")}
+                                                onMouseLeave={() => setHoverFieldName("")}
+                                                onChange={(value) => updataEstimateTime(value)}
+                                                value={estimateTimeValue}
+                                                disabled={isPermissionField("estimateTime")}
+                                            />
 
-                                        <Input
-                                            type="number"
-                                            className="workLog-input"
-                                            suffix="小时"
-                                            bordered={fieldName === "surplusTime" ? true : false}
-                                            suffixIcon={fieldName === "surplusTime" || hoverFieldName == "surplusTime" ? <CaretDownOutlined /> : false}
-                                            onFocus={() => changeStyle("surplusTime", "surplusTime")}
-                                            onBlur={() => setFieldName("")}
-                                            onMouseEnter={() => setHoverFieldName("surplusTime")}
-                                            onMouseLeave={() => setHoverFieldName("")}
-                                            onChange={(value) => updataSurplusTime(value)}
-                                            value={surplusTimeValue}
-                                            disabled={isPermissionField("surplusTime")}
-                                        />
+                                            <Input
+                                                type="number"
+                                                className="workLog-input"
+                                                suffix="小时"
+                                                bordered={fieldName === "surplusTime" ? true : false}
+                                                suffixIcon={fieldName === "surplusTime" || hoverFieldName == "surplusTime" ? <CaretDownOutlined /> : false}
+                                                onFocus={() => changeStyle("surplusTime", "surplusTime")}
+                                                onBlur={() => setFieldName("")}
+                                                onMouseEnter={() => setHoverFieldName("surplusTime")}
+                                                onMouseLeave={() => setHoverFieldName("")}
+                                                onChange={(value) => updataSurplusTime(value)}
+                                                value={surplusTimeValue}
+                                                disabled={isPermissionField("surplusTime")}
+                                            />
+                                        </Space>
 
                                     </Form.Item>
 

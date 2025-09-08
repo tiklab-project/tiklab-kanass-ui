@@ -1,4 +1,4 @@
-.function-drawer-view {
+.function-detail {
   height: 100%;
   // width: 1000;
   .ant-drawer-body {
@@ -19,6 +19,7 @@
       .func-top-title {
         .ant-typography {
           padding-left: 0 !important;
+          margin-bottom: 0 !important;
         }
       }
 
@@ -68,7 +69,7 @@
 
   .func-detail-left::-webkit-scrollbar,
   .func-detail-right::-webkit-scrollbar {
-    width: 5px;
+    width: 0;
   }
   .func-detail-left::-webkit-scrollbar-thumb,
   .func-detail-right::-webkit-scrollbar-thumb {

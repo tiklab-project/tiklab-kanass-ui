@@ -16,7 +16,7 @@ import {showCaseTypeView} from "../../../common/caseCommon/CaseCommonFn";
 import { toDiffCaseFn } from "../../common/caseCommonFn";
 import {CASE_TYPE} from "../../../common/dictionary/dictionary"
 import { getUser } from 'tiklab-core-ui'
-import {findTestCaseTableListFn} from "../../testcase/components/testCaseTableFn";
+import {findTestCaseStatusCountFn, findTestCaseTableListFn} from "../../testcase/components/testCaseTableFn";
 
 const transformData = (
     data = [],
@@ -254,6 +254,7 @@ const CaseCategoryTree = ({
         setSearchCondition(initValues)
         setTableTitle("所有用例")
         const res = findTestCaseTableListFn(initValues)
+        const countRes = findTestCaseStatusCountFn(initValues)
     }
 
     const getPendingTestCase = () => {
@@ -272,6 +273,7 @@ const CaseCategoryTree = ({
         setSearchCondition(initValues)
         setTableTitle("我的待办")
         const res = findTestCaseTableListFn(initValues)
+        const countRes = findTestCaseStatusCountFn(initValues)
     }
 
     const getCreatTestCase = () => {
@@ -290,6 +292,7 @@ const CaseCategoryTree = ({
         setSearchCondition(initValues)
         setTableTitle("我创建的")
         const res = findTestCaseTableListFn(initValues)
+        const countRes = findTestCaseStatusCountFn(initValues)
     }
 
     const getAssignerTestCase = () => {
@@ -308,6 +311,7 @@ const CaseCategoryTree = ({
         setSearchCondition(initValues)
         setTableTitle("我负责的")
         const res = findTestCaseTableListFn(initValues)
+        const countRes = findTestCaseStatusCountFn(initValues)
     }
 
     const findList = async (projectId,name) => {

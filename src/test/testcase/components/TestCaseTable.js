@@ -5,7 +5,12 @@ import {showCaseTypeTable, showCaseTypeView, showTextStatus} from "../../../comm
 import "../../common/styles/caseContantStyle.scss"
 import "../../common/styles/unitcase.scss"
 import PaginationCommon from "../../../common/caseCommon/pagination/Page";
-import {findTestCaseTableListFn, rowStyle, showCreateUser} from "./testCaseTableFn";
+import {
+    findTestCaseStatusCountFn,
+    findTestCaseTableListFn,
+    rowStyle,
+    showCreateUser
+} from "./testCaseTableFn";
 import IconCommon from "../../../common/caseCommon/IconCommon";
 import {useHistory} from "react-router";
 import {debounce} from "../../../common/caseCommon/CaseCommonFn";
@@ -15,7 +20,7 @@ import FuncUnitEdit from "../../function/components/funcUnitEdit";
 import {DownOutlined, SearchOutlined} from "@ant-design/icons";
 import CaseCategoryTree from "../../category/components/CaseCategoryTree";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
-import FunctionContentModalView from "../../function/components/modalView/FunctionContentModalView";
+import FunctionContentDrawerView from "../../function/components/drawerView/FunctionContentDrawerView";
 
 
 const TestCaseTable = (props) => {
@@ -33,7 +38,8 @@ const TestCaseTable = (props) => {
         caseTypeList,
         setCaseTypeList,
         searchCondition,
-        detailWidth
+        detailWidth,
+        testCaseStatusCount
     } = testcaseStore;
     const {categoryIds, setCategoryIds, tableTitle, treeCollapsed} = categoryStore;
 
@@ -47,6 +53,7 @@ const TestCaseTable = (props) => {
     const [selectTab, setSelectTab] = useState( "all");
     const [caseId, setCaseId] = useState();
     let projectId = localStorage.getItem("projectId")
+    const [statusCount, setStatusCount] = useState()
 
     const goTestCaseDetail = (record) => {
         // const pathname = props.match.url;
@@ -114,6 +121,7 @@ const TestCaseTable = (props) => {
         }
 
         const res = findTestCaseTableListFn(param);
+        const countRes = findTestCaseStatusCountFn(param)
         setTableLoading(false)
         // findTestCaseList(param).then((res)=>{
         //     setTotalPage(res.totalPage);
@@ -210,20 +218,17 @@ const TestCaseTable = (props) => {
             dataIndex: "name",
             key: "name",
             width: "30%",
+            ellipsis: true,
             render: (text,record) =>(
-                <Space size="middle">
-                    <div className="case-info-container">
-                        <div className="case-name">
-                            <div
-                                className={"link-text"}
-                                // onClick={()=>toDiffCaseFn(record,history)}
-                                onClick={()=>goTestCaseDetail(record)}
-                            >
-                                {record.name}
-                            </div>
-                        </div>
+                <div className="case-name">
+                    <div
+                        className={"link-text"}
+                        // onClick={()=>toDiffCaseFn(record,history)}
+                        onClick={()=>goTestCaseDetail(record)}
+                    >
+                        {record.name}
                     </div>
-                </Space>
+                </div>
 
             )
         },
@@ -247,6 +252,11 @@ const TestCaseTable = (props) => {
             dataIndex: "createTime",
             key: "createTime",
             width:"15%",
+            render: (text, record) => (
+                <div>
+                    {text.slice(0, 10)}
+                </div>
+            )
         },
         {
             title: '操作',
@@ -261,14 +271,31 @@ const TestCaseTable = (props) => {
         },
     ]
 
+
+    const setTestCaseNum = (label) => {
+        let num ;
+        if (label === "all"){
+            num = testCaseStatusCount?.total_count;
+        }else if (label === 0){
+            num = testCaseStatusCount?.todo_count;
+        }else if (label === 1){
+            num = testCaseStatusCount?.progress_count;
+        }else if (label === 2){
+            num = testCaseStatusCount?.done_count;
+        }
+
+        let showNum;
+        const isMax = Math.floor(num / 1000);
+        if(isMax >= 1){
+            showNum = `${isMax}k+`
+        }else {
+            showNum = num;
+        }
+        return showNum;
+    }
     return (
-        <Row style={{height:"100%", position: "relative"}}>
-            <Col
-                md={{ span: 24, offset: 0 }}
-                lg={{ span: 20, offset: 2 }}
-                xl={{ span: 20, offset: 2 }}
-                xll={{ span: 16, offset: 4 }}
-            >
+        <Row style={{height:"100%", position: "relative", overflow: "auto"}}>
+            <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "22", offset: "1" }} xxl={{ span: "18", offset: "3"}}>
                 <div className={"content-box-center"}>
                     <div className={"display-flex-between"}>
                         <Breadcumb firstText={tableTitle}/>
@@ -294,7 +321,9 @@ const TestCaseTable = (props) => {
                                         }}
                                     >
                                         {item.label}
-                                        {/*<span className="tabs-bar-num">{projectCount[item.value]}</span>*/}
+                                        <span className="select-number">
+                                            {setTestCaseNum(item.value)}
+                                        </span>
                                     </div>
                                 })
                             }
@@ -336,12 +365,11 @@ const TestCaseTable = (props) => {
                     </div>
                 </div>
             </Col>
-            <FunctionContentModalView
+            <FunctionContentDrawerView
                 isModalVisible={testCaseDetailVisible}
                 setIsModalVisible={setTestCaseDetailVisible}
                 caseId={caseId}
                 inTestCase={true}
-                detailWidth={detailWidth}
                 {...props}
             />
         </Row>

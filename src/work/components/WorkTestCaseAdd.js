@@ -34,9 +34,9 @@ const WorkTestCaseAddmodal = (props) => {
     
     useEffect(() => {
         if (selectTestCase === true) {
-            getSelectUserList(projectId).then(res => {
-                setTestCaseUserList(res.data.dataList)
-            })
+            // getSelectUserList(projectId).then(res => {
+            //     setTestCaseUserList(res.data.dataList)
+            // })
             //获取项目内测试用例库未关联事项的测试用例
             findUnRelationWorkTestCaseList({
                 workItemId: workId,
@@ -48,7 +48,11 @@ const WorkTestCaseAddmodal = (props) => {
                 }
             }).then((data) => {
                 if (data.code === 0) {
-                    setTestCaseList(data.data.dataList)
+                    if (data.data.currentPage === 1){
+                        setTestCaseList(data.data.dataList);
+                    }else if (data.data.currentPage > 1){
+                        setTestCaseList(testCaseList.concat(data.data.dataList));
+                    }
                     setCurrentPage(data.data.currentPage)
                     setTotalPage(data.data.totalPage)
                 }
@@ -115,7 +119,8 @@ const WorkTestCaseAddmodal = (props) => {
             title: "标题",
             dataIndex: "testCaseName",
             key: "title",
-            width: "25%",
+            width: "30%",
+            ellipsis: true,
             render: (text, record) => (
                 <div className="testCase-add-table-item">
                     {text}
@@ -145,18 +150,18 @@ const WorkTestCaseAddmodal = (props) => {
             key: "createUser",
             width: "10%"
         },
-        {
-            title: '操作',
-            width: "10%",
-            key: 'action',
-            render: (text, record) => (
-                <div style={{ display: "flex", gap: "15px" }}>
-                    <svg className="svg-icon projectSet-action-icon" aria-hidden="true" onClick={() => addWorkItemTestCase(record)}>
-                        <use xlinkHref="#icon-add2"></use>
-                    </svg>
-                </div>
-            ),
-        }
+        // {
+        //     title: '操作',
+        //     width: "10%",
+        //     key: 'action',
+        //     render: (text, record) => (
+        //         <div style={{ display: "flex", gap: "15px" }}>
+        //             <svg className="svg-icon projectSet-action-icon" aria-hidden="true" onClick={() => addWorkItemTestCase(record)}>
+        //                 <use xlinkHref="#icon-add2"></use>
+        //             </svg>
+        //         </div>
+        //     ),
+        // }
     ];
 
     const addWorkItemTestCase = (record) => {
@@ -207,7 +212,11 @@ const WorkTestCaseAddmodal = (props) => {
         setRepositoryValue(value)
         findUnRelationWorkTestCaseList(params).then((data) => {
             if (data.code === 0) {
-                setTestCaseList(data.data.dataList)
+                if (data.data.currentPage === 1){
+                    setTestCaseList(data.data.dataList);
+                }else if (data.data.currentPage > 1){
+                    setTestCaseList(testCaseList.concat(data.data.dataList));
+                }
                 setCurrentPage(data.data.currentPage)
                 setTotalPage(data.data.totalPage)
             }
@@ -228,7 +237,11 @@ const WorkTestCaseAddmodal = (props) => {
         }
         findUnRelationWorkTestCaseList(categoryQuery).then((data) => {
             if (data.code === 0) {
-                setTestCaseList(data.data.dataList)
+                if (data.data.currentPage === 1){
+                    setTestCaseList(data.data.dataList);
+                }else if (data.data.currentPage > 1){
+                    setTestCaseList(testCaseList.concat(data.data.dataList));
+                }
                 setCurrentPage(data.data.currentPage)
                 setTotalPage(data.data.totalPage)
             }
@@ -245,7 +258,11 @@ const WorkTestCaseAddmodal = (props) => {
         }
         findUnRelationWorkTestCaseList(categoryQuery).then((data) => {
             if (data.code === 0) {
-                setTestCaseList(data.data.dataList)
+                if (data.data.currentPage === 1){
+                    setTestCaseList(data.data.dataList);
+                }else if (data.data.currentPage > 1){
+                    setTestCaseList(testCaseList.concat(data.data.dataList));
+                }
                 setCurrentPage(data.data.currentPage)
                 setTotalPage(data.data.totalPage)
             }
@@ -303,7 +320,33 @@ const WorkTestCaseAddmodal = (props) => {
         })
         findUnRelationWorkTestCaseList().then((data) => {
             if (data.code === 0) {
-                setTestCaseList(data.data.dataList)
+                if (data.data.currentPage === 1){
+                    setTestCaseList(data.data.dataList);
+                }else if (data.data.currentPage > 1){
+                    setTestCaseList(testCaseList.concat(data.data.dataList));
+                }
+                setCurrentPage(data.data.currentPage)
+                setTotalPage(data.data.totalPage)
+            }
+        })
+    }
+
+    const loadNextPage = () => {
+        setUnRelationWorkCondition({
+            pageParam:{
+                pageSize:5,
+                currentPage: currentPage + 1
+            }
+        })
+        findUnRelationWorkTestCaseList().then((data) => {
+            if (data.code === 0) {
+                if (data.data.currentPage === 1){
+                    console.log("111111", data.data.dataList)
+                    setTestCaseList(data.data.dataList);
+                }else if (data.data.currentPage > 1){
+                    setTestCaseList(testCaseList.concat(data.data.dataList));
+                }
+                // setTestCaseList(data.data.dataList)
                 setCurrentPage(data.data.currentPage)
                 setTotalPage(data.data.totalPage)
             }
@@ -370,47 +413,52 @@ const WorkTestCaseAddmodal = (props) => {
                         columns={columns}
                         dataSource={testCaseList}
                         rowKey={record => record.id}
-                        // rowSelection={{
-                        //     selectedRow,
-                        //     onChange: selectWorkRepository,
-                        //     getCheckboxProps: (record) => ({
-                        //         disabled: record.rele === true
-                        //     })
-                        // }}
-                        okText="确定"
-                        cancelText="取消"
+                        onRow={(record, index) => {
+                            return {
+                                onClick: (event) => {
+                                    // 处理行点击事件
+                                    addWorkItemTestCase(record)
+                                },
+                            };
+                        }}
                         pagination={false}
                         scroll={{x: "100%"}}
                     />
-                    <div className="testCase-add-page">
-                        <div className="testCase-add-page-total">
-                            共{unRelationTotal}条
-                        </div>
-                        <div className="testCase-add-bottom" >
-                            <div className="page-button" onClick={() => changePage(currentPage - 1)}>
-                                <LeftOutlined className={`${currentPage === 1 ? "page-disable" : ""}`} />
-                            </div>
+                    {
+                        unRelationTotal > currentPage * 5 ?
+                            <div className="testCase-item-more" onClick={loadNextPage}>加载更多</div>
+                            :
+                            <div className="testCase-item-more">到底啦~</div>
+                    }
+                    {/*<div className="testCase-add-page">*/}
+                    {/*    <div className="testCase-add-page-total">*/}
+                    {/*        共{unRelationTotal}条*/}
+                    {/*    </div>*/}
+                    {/*    <div className="testCase-add-bottom" >*/}
+                    {/*        <div className="page-button" onClick={() => changePage(currentPage - 1)}>*/}
+                    {/*            <LeftOutlined className={`${currentPage === 1 ? "page-disable" : ""}`} />*/}
+                    {/*        </div>*/}
 
-                            <span>
-                                {currentPage}
-                            </span>
-                            <span>
-                                &nbsp; / &nbsp;
-                            </span>
-                            <span>
-                                {totalPage}
-                            </span>
-                            <div className="page-button" onClick={() => changePage(currentPage + 1)}>
-                                <RightOutlined className={`${currentPage === totalPage ? "page-disable" : ""}`} />
-                            </div>
+                    {/*        <span>*/}
+                    {/*            {currentPage}*/}
+                    {/*        </span>*/}
+                    {/*        <span>*/}
+                    {/*            &nbsp; / &nbsp;*/}
+                    {/*        </span>*/}
+                    {/*        <span>*/}
+                    {/*            {totalPage}*/}
+                    {/*        </span>*/}
+                    {/*        <div className="page-button" onClick={() => changePage(currentPage + 1)}>*/}
+                    {/*            <RightOutlined className={`${currentPage === totalPage ? "page-disable" : ""}`} />*/}
+                    {/*        </div>*/}
 
-                        </div>
-                        {/*<div className="testCase-add-page-ref" onClick={() => refresh()} >*/}
-                        {/*    <svg className="svg-icon" aria-hidden="true">*/}
-                        {/*        <use xlinkHref="#icon-refresh"></use>*/}
-                        {/*    </svg>*/}
-                        {/*</div>*/}
-                    </div>
+                    {/*    </div>*/}
+                    {/*    /!*<div className="testCase-add-page-ref" onClick={() => refresh()} >*!/*/}
+                    {/*    /!*    <svg className="svg-icon" aria-hidden="true">*!/*/}
+                    {/*    /!*        <use xlinkHref="#icon-refresh"></use>*!/*/}
+                    {/*    /!*    </svg>*!/*/}
+                    {/*    /!*</div>*!/*/}
+                    {/*</div>*/}
                 </div>
 
             </div>

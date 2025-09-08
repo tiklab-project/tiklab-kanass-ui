@@ -13,20 +13,35 @@ import Button from "../../../common/button/Button";
 import "./ProductProjectList.scss"
 import ProjectAdd from "../../../project/project/components/ProjectAdd";
 import ColorIcon from "../../../common/colorIcon/ColorIcon";
+import { getUser } from 'tiklab-core-ui';
 
 const ProductProjectList = (props) => {
     const store = {
         productProjectStore: ProductProjectStore
     }
-    const { findProjectPage, updateProject, projectRelevance, total, projectPageParams } = ProductProjectStore;
+    const { findProjectCount, findProjectPage, updateProject, projectRelevance, total, projectPageParams } = ProductProjectStore;
     const [productId, setProductId] = useState(props.match.params.productId);
     useEffect(() => {
-        findProjectPage({ productId: productId })
+        findPage({ productId: productId })
         return;
     }, [productId])
     const [projectAddVisible, setProjectAddVisible] = useState(false)
+    const [activeTabs, setActiveTabs] = useState("1");
+    const [projectCount,  setProjectCount] = useState({
+        total: 0,
+        myCreated: 0,
+        myFocus: 0,
+    });
+    const userId = getUser().userId;
 
-
+    const findPage = (values) => {
+        findProjectPage(values);
+        findProjectCount().then(res => {
+            if (res.code === 0){
+                setProjectCount(res.data)
+            }
+        })
+    }
     /**
      * 删除产品
      * @param {*} id
@@ -39,7 +54,7 @@ const ProductProjectList = (props) => {
 
         updateProject(values).then((data) => {
             if (data.code === 0) {
-                findProjectPage(productId)
+                findPage({productId: productId})
             }
         })
 
@@ -90,7 +105,7 @@ const ProductProjectList = (props) => {
             align: "left",
             render: (text, record) =>
                 <div className="project-name">
-                    <div >{text.substring(0,2)}</div>
+                    <div >{text === 'IPD项目' ? text.substring(0,3) : text.substring(0,2)}</div>
                 </div>
         },
         {
@@ -233,7 +248,17 @@ const ProductProjectList = (props) => {
     ]
 
     const onSearch = (value) => {
-        findProjectPage({ projectName: value })
+        switch (activeTabs) {
+            case "1":
+                findPage({ focusUser: null, creator: null, projectName: value });
+                break;
+            case "3":
+                findPage({ focusUser: userId, creator: null, projectName: value });
+                break;
+            case "4":
+                findPage({ focusUser: null, creator: userId, projectName: value });
+                break
+        }
     }
 
     const changePage = (page, pageSize) => {
@@ -244,9 +269,47 @@ const ProductProjectList = (props) => {
             }
         }
 
-        findProjectPage(values);
+        findPage(values);
 
     }
+    const selectTabs = (key) => {
+        setActiveTabs(key)
+        switch (key) {
+            case "1":
+                findPage({ focusUser: null, creator: null, projectName: null })
+                break;
+            case "3":
+                findPage({ focusUser: userId, creator: null, projectName: null })
+                break;
+            case "4":
+                findPage({ focusUser: null, creator: userId, projectName: null });
+                break
+            default:
+                break;
+        }
+    }
+
+    const projectTab = [
+        {
+            title: '所有',
+            key: '1',
+            icon: "project",
+            value: "total",
+        },
+        // {
+        //     title: '我收藏的',
+        //     key: '3',
+        //     icon: "programconcern",
+        //     value: "myFocus",
+        // },
+        {
+            title: '我创建的',
+            key: '4',
+            icon: "programbuild",
+            value: "myCreated",
+        }
+    ]
+
     return <Provider {...store}>
         <Row className="product-project">
             <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
@@ -262,7 +325,7 @@ const ProductProjectList = (props) => {
                     </Breadcumb>
                     <div>
                         <div className="search-add">
-                            <div>
+                            <div className={"project-filter"}>
                                 {/* <Select defaultValue="产品列表" style={{ width: 120 }} onChange={(value) => changeProduct(value)}>
                                 {
                                     productAllList && productAllList.map((item) => {
@@ -270,12 +333,27 @@ const ProductProjectList = (props) => {
                                     })
                                 }
                             </Select> */}
-                                <InputSearch
-                                    placeholder="搜索项目"
-                                    allowClear
-                                    style={{ width: 190 }}
-                                    onChange={onSearch}
-                                />
+                                <div className="project-tabs">
+                                    {
+                                        projectTab.map(item => {
+                                            return <div
+                                                className={`project-tab ${activeTabs === item.key ? "active-tabs" : ""}`}
+                                                key={item.key}
+                                                onClick={() => selectTabs(item.key)}
+                                            >
+                                                {item.title}<span className="tabs-bar-num">{projectCount[item.value]}</span>
+                                            </div>
+                                        })
+                                    }
+                                </div>
+                                <div className="project-search">
+                                    <InputSearch
+                                        placeholder="搜索项目"
+                                        allowClear
+                                        style={{ width: 190 }}
+                                        onChange={onSearch}
+                                    />
+                                </div>
                             </div>
                         </div>
 

@@ -11,7 +11,7 @@ import testcaseStore from "../store/testcaseStore";
 import WorkTestStore from "../../../work/store/WorkTestStore";
 
 
-const {findTestCaseList} = testcaseStore;
+const {findTestCaseList, findTestCaseStatusNum} = testcaseStore;
 
 //再根据不同的用例类型跳到不同的页面
 export const switchCaseTypeFn = (record,history)=>{
@@ -33,6 +33,10 @@ export const switchCaseTypeFn = (record,history)=>{
 
 export const findTestCaseTableListFn = (params) =>{
     return findTestCaseList(params);
+}
+
+export const findTestCaseStatusCountFn = (params) =>{
+    return findTestCaseStatusNum(params);
 }
 
 
@@ -132,13 +136,13 @@ export const showCreateUser = (director) =>{
 
 const {createWorkTestCase, deleteWorkTestCaseRele} = WorkTestStore;
 
-export const createWorkTestCaseFn = (testCaseId, workItemId, projectId) => {
+export const createWorkTestCaseFn = async (testCaseId, workItemId, projectId) => {
     const param = [{
         testCaseId: testCaseId,
         workItemId: workItemId,
         projectId: projectId
     }]
-    createWorkTestCase(param)
+    await createWorkTestCase(param)
 }
 
 export const deleteWorkTestCaseFn = (testCaseId, workItemId) => {

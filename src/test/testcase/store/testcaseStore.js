@@ -8,6 +8,7 @@ export class TestCaseStore {
     @observable currentPage=1;
     @observable createUserAndDirectorNum={}
     @observable detailWidth=0;
+    @observable testCaseStatusCount = {};
 
     @observable searchCondition = {
         pageParam: {
@@ -34,6 +35,16 @@ export class TestCaseStore {
 
         if (res.code === 0) {
             this.testcaseList = res.data.dataList;
+            return res.data
+        }
+    }
+
+    @action
+    findTestCaseStatusNum = async (values) => {
+        Object.assign(this.searchCondition, {...values})
+        const res = await Axios.post("/testCase/findTestCaseStatusNum", this.searchCondition);
+        if (res.code === 0) {
+            this.testCaseStatusCount = res.data;
             return res.data
         }
     }
@@ -92,6 +103,8 @@ export class TestCaseStore {
 
     @action
     updateTestCase = async (values) => await Axios.post("/testCase/updateTestCase", values)
+
+    updateTestCaseList = async (values) => await Axios.post("/testCase/updateTestCaseList", values)
 
     @action
     deleteTestCase = async (id,caseType) => {

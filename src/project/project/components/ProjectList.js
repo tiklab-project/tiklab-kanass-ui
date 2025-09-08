@@ -256,7 +256,7 @@ const ProjectList = (props) => {
             width: "8%",
             render: (text, record) =>
                 <div className="project-name">
-                    <div >{text.substring(0,2)}</div>
+                    <div >{text === 'IPD项目' ? text.substring(0,3) : text.substring(0,2)}</div>
                 </div>
         },
         {

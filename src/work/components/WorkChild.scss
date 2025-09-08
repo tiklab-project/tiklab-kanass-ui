@@ -42,6 +42,7 @@
         .child-create-submit {
             display: flex;
             gap: 10px;
+            align-items: center;
             .create-submit {
                 cursor: pointer;
                 color: var(--tiklab-blue);

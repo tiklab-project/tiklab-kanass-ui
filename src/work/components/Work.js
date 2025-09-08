@@ -50,7 +50,8 @@ const Work = (props) => {
                 dom = <WorkTable />;
                 break;
             case "list":
-                dom = <WorkList />;
+                // dom = <WorkList />;
+                dom = <WorkTable />;
                 break;
             case "bodar":
                 dom = <WorkBodar />;

@@ -4,6 +4,58 @@
 .projectSetDetail {
     padding: var(--tiklab-padding);
 
+    .project-filter {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 40px;
+        line-height: 40px;
+        gap: 20px;
+        width: 100%;
+
+        .vertical-bar {
+            width: 1px;
+            height: 15px;
+            background-color: #d7d7d7;
+            margin: 0 10px;
+        }
+        .active-tabs {
+            color: #000;
+            border-bottom: 2px solid var(--tiklab-blue);
+        }
+        .filter-search {
+            width: 150px;
+            border-radius: 4px;;
+        }
+        .project-search {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+    }
+    .project-tabs {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        height: 40px;
+        line-height: 40px;
+        .project-tab{
+            font-size: var(--tiklab-font-13);;
+            cursor: pointer;
+            height: 40px;
+            line-height: 40px;
+            margin-right: 20px;
+            .tabs-bar-num {
+                font-size: 12px;
+                padding-left: 3px;
+                color: #999;
+            }
+        }
+        .project-tab:last-child {
+            margin-right: 0;
+        }
+    }
+
     .ant-col {
         padding: 20px;
         background-color: #fff;

@@ -78,6 +78,7 @@ const WorkDocumentList = (props) => {
             dataIndex: "documentName",
             key: "name",
             width: 150,
+            ellipsis: true,
             render: (text, record) => (
                 <div className="document-title">
 

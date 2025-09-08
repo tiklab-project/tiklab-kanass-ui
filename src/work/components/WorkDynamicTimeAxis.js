@@ -130,7 +130,7 @@ const WorkDynamicTimeAxis = (props) => {
                 totalRecord > currentPage * pageSize ?
                     <div className="work-dyncmic-more" onClick={loadNextPage}>加载更多</div>
                     :
-                    <div className="work-dyncmic-more">到底啦~</div>
+                    <div className="work-dyncmic-more"></div>
             }
         </div>
 

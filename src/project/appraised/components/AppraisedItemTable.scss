@@ -101,19 +101,21 @@
   }
 
   .appraised-top-info {
-    padding: 15px;
-    background-color: var(--tiklab-gray-800);
+    //padding: 15px;
+    //background-color: var(--tiklab-gray-800);
     border-radius: 8px;
     margin: 15px 0;
 
     .top-info-content{
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
+      align-items: center;
+      gap: 30px;
 
       .left-info{
-        display: grid;
-        grid-template-columns: 80px 1fr 80px 1fr;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         gap: 8px 15px;
         flex: 1;
 
@@ -140,17 +142,22 @@
         }
 
       }
+      .info-content{
+        margin-top: 5px;
+      }
       .info-title{
         color: var(--tiklab-gray-500);
+
       }
       .right-progress{
-        min-width: 200px;
+        width: 45%;
         text-align: left;
 
         .progress-info{
           display: flex;
           align-items: center;
           gap: 10px;
+          justify-content: flex-end;
           .progress-info-content{
             display: flex;
             align-items: center;

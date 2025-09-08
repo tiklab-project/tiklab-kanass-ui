@@ -287,6 +287,30 @@ const FunctionStepAddList = (props) => {
                 {/*</div>*/}
 
                 {/* 添加步骤表单 */}
+
+                <DragDropContext onDragEnd={onDragEnd}>
+                    <Droppable droppableId="list">
+                        {(provided) => (
+                            <div
+                                ref={provided.innerRef}
+                                {...provided.droppableProps}
+                                style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                }}
+                            >
+                                <div>
+                                    {
+                                        stepList && stepList.length > 0
+                                            ? renderItems(stepList)
+                                            : <div style={{height: "0px"}}/>
+                                    }
+                                </div>
+                                {provided.placeholder}
+                            </div>
+                        )}
+                    </Droppable>
+                </DragDropContext>
                 <div style={{
                     marginTop: "5px",
                     padding: "7px",
@@ -357,31 +381,6 @@ const FunctionStepAddList = (props) => {
                         </Form>
                     )}
                 </div>
-
-                <DragDropContext onDragEnd={onDragEnd}>
-                    <Droppable droppableId="list">
-                        {(provided) => (
-                            <div
-                                ref={provided.innerRef}
-                                {...provided.droppableProps}
-                                style={{
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                }}
-                            >
-                                <div>
-                                    {
-                                        stepList && stepList.length > 0
-                                            ? renderItems(stepList)
-                                            : <div style={{height: "100px"}}/>
-                                    }
-                                </div>
-                                {provided.placeholder}
-                            </div>
-                        )}
-                    </Droppable>
-                </DragDropContext>
-
 
             </div>
         </>

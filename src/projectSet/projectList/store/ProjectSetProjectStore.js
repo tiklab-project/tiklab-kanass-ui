@@ -31,7 +31,18 @@ export class ProjectSetProjectStore {
             currentPage: 1
         }
     }
+    @observable notRelateProjectPageParams = {
+        orderParams: [{
+            name: "createTime",
+            orderType: "desc"
+        }],
+        pageParam: {
+            pageSize: 10,
+            currentPage: 1
+        }
+    }
     @observable total = 0;
+    @observable notRelateTotal = 0;
 
     @observable type = "add";
     @observable visible = false;
@@ -123,6 +134,24 @@ export class ProjectSetProjectStore {
     addRelevance = async (value) => {
         const data = await Service("/projectSet/addRelevance", value);
 
+        return data;
+    }
+
+    @action
+    findProjectCount = async() => {
+        const data = await Service("/project/findProjectCount", this.projectPageParams)
+        return data;
+    }
+
+    @action
+    findNotRelateProjectPage = async (values) => {
+        Object.assign(this.notRelateProjectPageParams, { ...values })
+        const data = await Service("/projectSet/findNotRelateProjectPage", this.notRelateProjectPageParams);
+
+        if (data.code === 0){
+            this.noRelatedProjects = data.data.dataList
+            this.notRelateTotal = data.data.totalRecord
+        }
         return data;
     }
 }

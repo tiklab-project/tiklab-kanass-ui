@@ -1,6 +1,10 @@
-.log-filter {
+.log-tab-filter-operate {
     display: flex;
     padding: 10px;
+    .ant-picker-range {
+        background-color: #f0f0f0;
+        border: 0;
+    }
     .ant-form-inline .ant-form-item-with-help {
         margin-bottom: 0; 
     }

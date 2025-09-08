@@ -7,39 +7,55 @@
  * @LastEditTime: 2024-12-18 17:49:39
  */
 import React, { useState,useEffect } from "react";
-import { Modal, Divider,Tooltip } from 'antd';
+import {Modal, Divider, Tooltip, Table, Space} from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import "./ProjectSetRelevance.scss";
 import Button from "../../../common/button/Button";
 import ProjectSetProjectStore from "../store/ProjectSetProjectStore";
 import ProjectSetStore from "../../../projectSet/projectSet/store/ProjectSetStore";
 import { observer } from 'mobx-react';
+import InputSearch from "../../../common/input/InputSearch";
+import ColorIcon from "../../../common/colorIcon/ColorIcon";
+import UserIcon from "../../../common/UserIcon/UserIcon";
+import PaginationCommon from "../../../common/caseCommon/pagination/Page";
 const ProjectSetRelevance = (props) => {
     const { projectSetId } = props;
-    const { findProjectIsOrNotRe, noRelatedProjects, relatedProjects, addRelevance, findProjectList } = ProjectSetProjectStore;
+    const { findProjectIsOrNotRe, noRelatedProjects, relatedProjects, addRelevance, findProjectList, findNotRelateProjectPage, notRelateTotal } = ProjectSetProjectStore;
     const [visible, setVisible] = useState(false)
     const [checkedList, setCheckedList] = useState([]);
     const [projectSetName, setProjectSetName] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPage, setTotalPage] = useState(1);
 
     // 在组件挂载时获取项目集名称
     useEffect(() => {
-        const fetchData = async () => {
-            if (projectSetId) {
-                const res = await ProjectSetStore.findProjectSet(projectSetId); // 调用 ProjectSetStore 的方法
-                if (res.code === 0) {
-                    setProjectSetName(res.data.name || "未命名项目集"); // 假设接口返回的名称字段为 "name"
-                }
-            }
-        };
         fetchData();
     }, [projectSetId]);
+
+    const fetchData = async () => {
+        if (projectSetId) {
+            const res = await ProjectSetStore.findProjectSet(projectSetId); // 调用 ProjectSetStore 的方法
+            if (res.code === 0) {
+                setProjectSetName(res.data.name || "未命名项目集"); // 假设接口返回的名称字段为 "name"
+            }
+        }
+    };
+
+    const findPage = (values) => {
+        findNotRelateProjectPage(values).then(res => {
+            if (res.code === 0){
+                setCurrentPage(res.data.currentPage)
+                setTotalPage(res.data.totalPage)
+            }
+        })
+    }
 
     /**
      * 添加项目集
      */
     const addProjectSet = () => {
         setVisible(true)
-        findProjectIsOrNotRe()
+        findPage()
 
     }
 
@@ -147,23 +163,83 @@ const ProjectSetRelevance = (props) => {
         }
     };
 
-    /*const deleteRelevance = (id) => {
-        // 右边删除，左边多选框变为未选中
-        const noSelect = document.getElementById(id)
-        noSelect.checked = false;
+    const status = {
+        1: "未开始",
+        2: "进行中",
+        3: "已结束",
+    }
 
-        // 把删除项从已选择数组中移除
-        let check = [];
-        check = checkedList.filter((item) => {
-            return item.id !== id
-        })
-        setCheckedList([...check])
+    // 列数据
+    const columns = [
+        {
+            title: "名称",
+            dataIndex: "projectName",
+            key: "projectName",
+            align: "left",
+            render: (text, record) => <div className="project-name" >
+                <div className="project-icon">
+                    <ColorIcon color={record?.color} name={record.projectName} className={"img-32"} />
+                </div>
+                <div>
+                    {
+                        text.length > 10 ?
+                            <Tooltip title={text}>
+                                <div className="project-text">{text.substring(0, 10) + "..."}</div>
+                            </Tooltip>
+                            :<div className="project-text">{text}</div>
+                    }
+                </div>
 
-        const all = document.getElementsByName("all")[0]
-        if (all.checked = true) {
-            all.checked = false
-        }
-    }*/
+            </div>
+        },
+        {
+            title: "项目类型",
+            width: "15%",
+            dataIndex: ["projectType", "name"],
+            key: "projectType",
+            align: "left",
+            render: (text, record) =>
+                <div className="project-name">
+                    <div >{text === 'IPD项目' ? text.substring(0,3) : text.substring(0,2)}</div>
+                </div>
+        },
+        {
+            title: "项目状态",
+            dataIndex: "projectState",
+            key: "projectState",
+            align: "left",
+            width: "10%",
+            render: (text, record) => (
+                <div className={`project-status project-status${text === "1" ? "-todo" : text === "2" ? "-process" : "-done"}`}>{status[text]}</div>
+            )
+        },
+        {
+            title: "负责人",
+            dataIndex: ["master", "nickname"],
+            key: "master",
+            align: "left",
+            width: "8%",
+            render: (text, record) => (
+                <Space>
+                    <UserIcon name={text} />
+                    {text}
+                </Space>
+            )
+        },
+        {
+            title: "创建时间",
+            dataIndex: "createTime",
+            key: "createTime",
+            align: "left",
+            width: "15%",
+            render: (text, record) => (
+                <>
+                    {text}
+                </>
+            )
+        },
+    ]
+
     const deleteRelevance = (id) => {
         const noSelect = document.getElementById(id);
         noSelect.checked = false;
@@ -176,6 +252,34 @@ const ProjectSetRelevance = (props) => {
         }
     };
 
+    const onSearch = (e) => {
+        const params = {projectName: e.target.value}
+        findPage(params);
+    };
+
+    const onPageChange = (currentPage) => {
+        const params = {
+            pageParam: {
+                currentPage: currentPage
+            }
+
+        }
+        findPage(params)
+    }
+
+    const handleRowClick = (record) => {
+        const changeList = [];
+        changeList.push(record.id);
+        addRelevance({
+            id: projectSetId,
+            ids: changeList
+        }).then((data) => {
+            if (data.code === 0) {
+                findProjectList(projectSetId)
+                setVisible(false)
+            }
+        })
+    }
 
     return <div >
         <Button type="primary" onClick={() => addProjectSet()}>关联项目</Button>
@@ -186,78 +290,48 @@ const ProjectSetRelevance = (props) => {
             onCancel={submitCancel}
             cancelText="取消"
             okText="确定"
+            footer={null}
             width={800}
             className="projectSet-relevance"
             destroyOnClose={true}
             closable = {false}
         >
-            <div className="projectSet-box">
-                <div className="projectSet-box-left">
-                    <div className="checkbox">
-                        <label htmlFor="all">全选</label>
-                        <input type="checkbox" name="all" value="all" onChange={(e) => onCheckAllChange(e)} />
+            <div className="projectSet-relate-box">
+                <div className={"projectSet-relate-top"}>
+                    <div className="project-search">
+                        <InputSearch
+                            placeholder="搜索项目"
+                            allowClear
+                            style={{ width: 190 }}
+                            onChange={onSearch}
+                        />
                     </div>
-                    <Divider />
-
-                    <p>未关联项目</p>
-                    {
-                        noRelatedProjects && noRelatedProjects.map((item) => {
-                            return (
-                                <div className="checkbox" key={item.id}>
-                                    <label htmlFor={item.id}>
-                                        <Tooltip title={item.projectName}>
-                                            <span style={{ display: 'inline-block', maxWidth: '150px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                                                {item.projectName}
-                                            </span>
-                                        </Tooltip>
-                                    </label>
-                                    <input type="checkbox" name="noSelectProject" id={item.id} value={item.id} onChange={(e) => onCheckChange(e)} />
-                                </div>
-                            )
-                        })
-                    }
-                    <Divider />
-
-                    <p>已关联项目</p>
-                    {
-                        relatedProjects && relatedProjects.map((item) => {
-                            return (
-                                <div className="checkbox" key={item.id}>
-                                    <label htmlFor={item.id}>
-                                        <Tooltip title={item.projectName}>
-                                            <span style={{ display: 'inline-block', maxWidth: '150px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                                                {item.projectName}
-                                            </span>
-                                        </Tooltip>
-                                    </label>
-                                    <input type="checkbox" name="relevanceProject" value={item.id} disabled />
-                                </div>
-                            )
-                        })
-                    }
                 </div>
-                <div className="projectSet-box-right">
-                    <div className="projectSet-box-right-title">
-                        <span>已选项目</span>
-                        <span className="project-clear" onClick={() => handleClearChecked()}>清空</span>
-                    </div>
-                    <Divider />
-                    {
-                        checkedList && checkedList.map((item,) => {
-                            return (
-                                <div className="checkbox" key={item.id}>
-                                    <label htmlFor={item.id}>
-                                        <Tooltip title={item.projectName}>
-                                            <span style={{ display: 'inline-block', maxWidth: '150px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                                                {item.projectName}
-                                            </span>
-                                        </Tooltip>
-                                    </label>
-                                    <span onClick={() => deleteRelevance(item.id)}><DeleteOutlined /></span>
-                                </div>
-                            )
-                        })
-                    }
+                <div className={"projectSet-relate-content"}>
+                    <Table
+                        className="projectSet-table-box"
+                        columns={columns}
+                        dataSource={noRelatedProjects}
+                        rowKey={record => record.id}
+                        onRow={(record) => ({
+                            onClick: () => {
+                                console.log("点击了", record.id)
+                                handleRowClick(record)
+                            },
+                        })}
+                        pagination={false}
+                        scroll={{
+                            x: "100%"
+                        }}
+                    />
+                    <PaginationCommon
+                        currentPage={currentPage}
+                        changePage={onPageChange}
+                        totalPage={totalPage}
+                        total={notRelateTotal}
+                        // findPage={findPage}
+                        // showRefer={false}
+                    />
                 </div>
             </div>
         </Modal>

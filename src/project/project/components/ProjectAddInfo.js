@@ -223,22 +223,6 @@ const ProjectAddInfo = (props) => {
     }
     return (
         <Fragment>
-            <div className="project-select-type">
-                <div className="project-type-head">项目类型</div>
-                <div className="project-type-content">
-                    <div className="project-type-box">
-                        <div>
-                            <ImgComponent src={`${workType.iconUrl}`} alt="" className="type-icon" />
-                        </div>
-                        <div className="type-info">
-                            <div className="type-name">{workType.name}</div>
-                            <div className="type-desc">{workType.desc}</div>
-                        </div>
-                    </div>
-                    {/*<Button onClick={() => setCurrentStep(0)}>更改类型</Button>*/}
-                </div>
-
-            </div>
             <div className="project-addinfo">
                 <Form
                     {...layout}
@@ -252,6 +236,23 @@ const ProjectAddInfo = (props) => {
                     layout="vertical"
                 >
                     <div className={"project-add-form-item"}>
+
+                        <div className="project-select-type">
+                            <div className="project-type-head">项目类型</div>
+                            <div className="project-type-content">
+                                <div className="project-type-box">
+                                    <div>
+                                        <ImgComponent src={`${workType.iconUrl}`} alt="" className="type-icon" />
+                                    </div>
+                                    <div className="type-info">
+                                        <div className="type-name">{workType.name}</div>
+                                        <div className="type-desc">{workType.desc}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
                         <Form.Item
                             label="项目名称"
                             name="projectName"

@@ -70,9 +70,11 @@
   height: 16px;
   line-height: 16px;
   text-align: center;
-  background: #e3e8f0;
-  border-radius: 16px;
+  //background: #e3e8f0;
+  //border-radius: 16px;
   font-size: 12px;
+  padding-left: 3px;
+  color: #999;
 }
 
 .worktype-selector:hover {

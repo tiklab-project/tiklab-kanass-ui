@@ -1,6 +1,7 @@
 .projectSet-relevance {
     .ant-modal-body {
-        height: calc(100% - 200px);
+        height: fit-content;
+        padding: 0 15px 20px;
         overflow: auto;
     }
     .projectSet-box {
@@ -30,5 +31,59 @@
             height: 40px;
         }
     }
+
+    .projectSet-relate-box {
+        .projectSet-relate-top {
+
+        }
+        .projectSet-relate-content {
+            .projectSet-table-box {
+                margin-top: 15px;
+
+                .project-status {
+                    padding: 5px 6px;
+                    background: var(--tiklab-gray-400);
+                    border-radius: 4px;
+                    font-size: 12px;
+                    width: fit-content;
+                    &-todo {
+                        background: #e2e1e4;
+                    }
+                    &-process {
+                        background: #b0d5dfa1;
+                    }
+                    &-done {
+                        background: #dfecd5e3;
+                    }
+                }
+
+                .project-name {
+                    display: flex;
+                    align-items: center;
+
+                    .project-icon {
+                        margin-right: 10px;
+                    }
+
+                    .project-key {
+                        color: var(--tiklab-gray-500);
+                        line-height: 25px;
+                    }
+
+                    .project-text {
+                        cursor: pointer;
+
+                        line-height: 25px;
+                    }
+
+                    .project-text:hover {
+                        color: var(--tiklab-blue);
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+    }
+
 
 }

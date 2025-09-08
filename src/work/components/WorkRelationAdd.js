@@ -14,6 +14,7 @@ import { SelectSimple, SelectItem } from "../../common/select";
 import { getUser } from "tiklab-core-ui";
 import ImgComponent from "../../common/imgComponent/ImgComponent";
 import ProjectEmpty from "../../common/component/ProjectEmpty";
+import UserIcon from "../../common/UserIcon/UserIcon";
 const WorkRelationAddModal = (props) => {
     const { workStore, workRelation, selectIds, showAddRelation, selectChild, projectId } = props;
 
@@ -158,7 +159,7 @@ const WorkRelationAddModal = (props) => {
                                         value={item.workType.id}
                                         label={item.workType.name}
                                         key={item.workType.id}
-                                        imgUrl={`${upload_url}${item.workType.iconUrl}`}
+                                        imgUrl={`${item.workType.iconUrl}`}
                                     />
                                 })
                             }
@@ -217,13 +218,10 @@ const WorkRelationAddModal = (props) => {
                                         } else {
                                             return <div></div>
                                         }
-
                                     })
                                 }
                             </SelectSimple>
                         }
-
-
                     </div>
                     <div className="relation-add-table">
                         {
@@ -233,26 +231,21 @@ const WorkRelationAddModal = (props) => {
                                         workRelationList && workRelationList.map(item => {
                                             return <div className="relation-add-work-item" onClick={() => creatWorkRelation(item.id)} key={item.id}>
                                                 <div className="work-item-icon">
-                                                    <ImgComponent
-                                                        alt=""
-                                                        className="svg-icon"
-                                                        src={item.workTypeSys?.iconUrl}
-                                                    />
-                                                    <div>
+                                                    <div style={{display: "flex", alignItems: "center", gap: "10px"}}>
+                                                        <ImgComponent
+                                                            alt=""
+                                                            className="img-icon-right"
+                                                            src={item.workTypeSys?.iconUrl}
+                                                        />
                                                         <div className="work-item-id">{item.code}</div>
-                                                        <div className="work-item-title">{item.title} </div>
                                                     </div>
+                                                    <div className="work-item-title">{item.title} </div>
+
                                                 </div>
                                                 <div className="work-item-right">
-
-
-                                                    <ImgComponent
-                                                        alt=""
-                                                        className="svg-icon"
-                                                        src={item.workPriority?.iconUrl}
-                                                    />
+                                                    <UserIcon name={item.assigner?.nickname}/>
                                                     <div className="work-item-icon">
-                                                        {item.workStatus?.name}
+                                                        {item.assigner?.nickname}
                                                     </div>
                                                 </div>
                                             </div>

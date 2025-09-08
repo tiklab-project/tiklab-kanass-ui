@@ -50,7 +50,7 @@ const TestCaseMenu = (props) => {
             }}>
                 <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "24", offset: "0" }} xxl={{ span: "24", offset: "0" }}>
                     <div style={{
-                        padding: "0px 20px",
+                        padding: "0px 20px 0px 10px",
                         display: "flex",
                         alignItems: "center",
                         // gap: "60px",

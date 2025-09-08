@@ -23,6 +23,7 @@ import ProductStore from "../../product/product/store/ProductStore";
 import ProjectSetStore from "../../projectSet/projectSet/store/ProjectSetStore";
 import setImageUrl from "../../common/utils/setImageUrl";
 import DeleteModal from "../../common/deleteModal/deleteModal";
+import InputWithCount from "../../common/inputWithCount/InputWithCount";
 const { Dragger } = Upload;
 
 const { RangePicker } = DatePicker;
@@ -88,6 +89,7 @@ const WorkAddPage = (props) => {
 
 
     useEffect(() => {
+        console.log("查看workType", workType)
         form.setFieldsValue({
             planTime: [moment(getNowFormatDate(), dateFormat), moment(getNowFormatDate(), dateFormat)]
         })
@@ -561,9 +563,9 @@ const WorkAddPage = (props) => {
     //提交表单
     const onFinish = () => {
         form.validateFields().then((values) => {
-            if (values.title.length > 100) { // 假设标题最大长度为100
+            if (values.title.length > 64) { // 假设标题最大长度为64
                 message.error({
-                    content: '标题长度不能超过100个字符',
+                    content: '标题长度不能超过64个字符',
                     className: 'custom-class',
                     style: {
                         marginTop: '20vh',
@@ -843,9 +845,11 @@ const WorkAddPage = (props) => {
                                 <Form.Item
                                     label="标题"
                                     name="title"
-                                    rules={[{ required: true, message: '请输入标题!' }]}
+                                    rules={[{ required: true, message: '请输入事项标题!' }]}
+                                    // getValueFromEvent={(event) => event.target.value}
                                 >
-                                    <Input placeholder="事项标题" />
+                                    {/*<Input showCount maxLength={64} placeholder="请输入事项标题" />*/}
+                                    <InputWithCount maxLength={64} placeholder="请输入事项标题" />
                                 </Form.Item>
 
                                 <Form.Item

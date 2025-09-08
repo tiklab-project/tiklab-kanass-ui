@@ -128,25 +128,12 @@ const WorkComment = (props) => {
      * 删除评论
      */
     const deleteComment = (id) => {
+        deleteWorkComment({ id: id }).then(res => {
+            if (res.code === 0) {
+                getCommentList()
 
-        Modal.confirm({
-            title: '确定删除?',
-            centered: true,
-            className: "delete-modal",
-            getContainer: workComment.current,
-            onOk() { deleteData(id) },
-            onCancel() { },
-        });
-
-        const deleteData = () => {
-            deleteWorkComment({ id: id }).then(res => {
-                if (res.code === 0) {
-                    getCommentList()
-
-                }
-            })
-        }
-
+            }
+        })
     }
     /**
      * 翻页
@@ -197,34 +184,31 @@ const WorkComment = (props) => {
                                                         onMouseEnter={() => setHoverItem(item.id)}
                                                         onMouseLeave={() => setHoverItem()}
                                             >
-                                                <div className="comment-top">
-                                                    <div className="comment-user">
-                                                        <UserIcon size="big" name={item.user?.nickname ? item.user?.nickname : item.user?.name} />
-                                                        <span className="user-name">{item.user?.nickname ? item.user?.nickname : item.user?.name}</span>
+                                                <UserIcon size="big" name={item.user?.nickname ? item.user?.nickname : item.user?.name} />
+                                                <div style={{width: "100%"}}>
+                                                    <div className="comment-top">
+                                                        <div className="comment-user">
+                                                            <span className="user-name">{item.user?.nickname ? item.user?.nickname : item.user?.name}</span>
+                                                            <span className="user-date">{item.createTime}</span>
+                                                        </div>
+
+                                                        <div ref={logAction}>
+                                                            {
+                                                                hoverItem === item.id &&
+                                                                <div className="comment-operate" >
+                                                                    <DeleteModal deleteFunction={deleteComment} id={item.id} getPopupContainer={logAction.current} />
+                                                                    {/*<div onClick={() => {deleteComment(item.id)}}*/}
+                                                                    {/*     className={"operate-text"}*/}
+                                                                    {/*>*/}
+                                                                    {/*    删除*/}
+                                                                    {/*</div>*/}
+                                                                </div>
+                                                            }
+                                                        </div>
                                                     </div>
-
-                                                </div>
-                                                {
-                                                    <Fragment>
-                                                        <div className="comment-content">
-                                                            {item.details}
-                                                        </div>
-                                                    </Fragment>
-
-                                                }
-                                                <div className="comment-bottom">
-                                                    <span className="user-date">{item.createTime}</span>
-                                                    {
-                                                        hoverItem === item.id &&
-                                                        <div className="comment-operate" ref={logAction}>
-                                                            {/*<DeleteModal deleteFunction={deleteComment} id={item.id} getPopupContainer={logAction.current} />*/}
-                                                            <div onClick={() => {deleteComment(item.id)}}
-                                                                 className={"operate-text"}
-                                                            >
-                                                                删除
-                                                            </div>
-                                                        </div>
-                                                    }
+                                                    <div className="comment-content">
+                                                        {item.details}
+                                                    </div>
                                                 </div>
                                             </div>
                                         // }
@@ -235,7 +219,7 @@ const WorkComment = (props) => {
                                 totalRecord > currentPage * pageSize ?
                                     <div className="work-comment-more" onClick={loadNextPage}>加载更多</div>
                                     :
-                                    <div className="work-comment-more">到底啦~</div>
+                                    <div className="work-comment-more"></div>
                             }
                         </Fragment> :
                         <div style={{textAlign: "center"}}>暂无评论</div>

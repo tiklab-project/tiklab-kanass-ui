@@ -131,8 +131,8 @@ const WorkDetailVersionSelect = (props) => {
         <>
             <div className="work-detail-version-select" ref={dropdownRef}>
                 <div className={`select-input ${showDropdown ? "select-input-focus" : ""} ${disabled ? "select-input-disabled" : ""} `} onClick={(e) => showSelect(e)}>
-                    <div>{selectVersion?.name ? selectVersion?.name : "无"}
-
+                    <div className={"select-input-text"}>
+                        {selectVersion?.name ? selectVersion?.name : "无"}
                     </div>
                     {
                         // && selectVersion

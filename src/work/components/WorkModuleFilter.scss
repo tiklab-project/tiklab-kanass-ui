@@ -123,16 +123,21 @@
         margin-top: 5px;
         overflow-y: auto;
         overflow-x: hidden;
-        padding: 0 12px;
 
         .ant-tree-list{
           background-color: var(--tiklab-gray-800);
         }
         .ant-tree-treenode {
-          width: 220px;
+          width: 100%;
+          padding: 0 12px;
+
+          &:hover{
+            background-color: #edf0f5;
+          }
         }
         .ant-tree-node-content-wrapper{
           width: 100%;
+          transition: unset;
 
           &:hover{
             background-color: #edf0f5;
@@ -199,7 +204,7 @@
     }
   }
   .work-module-filter-sider::-webkit-scrollbar{
-    width: 5px;
+    width: 0;
   }
   .work-module-filter-sider::-webkit-scrollbar-thumb {
     border-radius: 5px;

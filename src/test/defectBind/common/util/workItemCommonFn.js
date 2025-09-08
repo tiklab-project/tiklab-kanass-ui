@@ -1,5 +1,7 @@
 import {applyJump} from "tiklab-core-ui";
+import WorkTestStore from "../../../../work/store/WorkTestStore";
 
+const {createWorkTestCase, deleteWorkTestCaseRele} = WorkTestStore
 /**
  * 跳转到Kanass
  * @param record
@@ -14,4 +16,8 @@ export const toWorkItem = (record)=>{
     }catch {
         applyJump(`${record.projectUrl}/#/project/${record.workItem?.project?.id}/work/${record.workItem.id}`,'_blank')
     }
+}
+
+export const createWorkItemTest = (testCaseId, workItemId) => {
+
 }

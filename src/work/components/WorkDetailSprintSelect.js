@@ -127,7 +127,7 @@ const WorkDetailSprintSelect = (props) => {
         <>
             <div className="work-detail-sprint-select" ref={dropdownRef}>
                 <div className={`select-input ${showDropdown ? "select-input-focus" : ""} ${disabled ? "select-input-disabled" : "" }`} onClick={(e) => showSelect(e)}>
-                    <div>
+                    <div className={"select-input-text"}>
                         {selectSprint?.sprintName ? selectSprint?.sprintName : "无"}
                     </div>
                     {

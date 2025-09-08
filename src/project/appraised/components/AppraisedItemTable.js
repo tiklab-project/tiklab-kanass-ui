@@ -506,16 +506,21 @@ const AppraisedItemTable = (props) => {
                         <div className="appraised-top-info">
                             <div className="top-info-content">
                                 <div className="left-info">
-                                    <div className="info-title">状态：</div>
-                                    <div>{getAppraisedState(appraised?.appraisedState)}</div>
-                                    <div className="info-title">负责人：</div>
-                                    <div>{appraised?.master.nickname}</div>
-                                    <div className="info-title">开始时间：</div>
-                                    <div>{appraised?.startTime.slice(0, 10)}</div>
-                                    <div className="info-title">结束时间：</div>
-                                    <div>{appraised?.endTime.slice(0, 10)}</div>
-                                    <div className="info-title">描述：</div>
-                                    <div style={{gridColumn: "2 / -1"}}>{appraised?.description ? appraised?.description : "-"}</div>
+                                    <div className="info-item">
+                                        <div className="info-title">负责人：</div>
+                                        <div className="info-content" style={{display: "flex", alignItems: "center", gap: "5px"}}>
+                                            <UserIcon name={appraised?.master.nickname}/>
+                                            <div>{appraised?.master.nickname}</div>
+                                        </div>
+                                    </div>
+                                    <div className="info-item">
+                                        <div className="info-title">状态：</div>
+                                        <div className="info-content">{getAppraisedState(appraised?.appraisedState)}</div>
+                                    </div>
+                                    <div className="info-item">
+                                        <div className="info-title">创建时间：</div>
+                                        <div className="info-content">{appraised?.createTime.slice(0, 19)}</div>
+                                    </div>
                                 </div>
                                 <div className="right-progress">
                                     <div className="info-title">评审进度</div>

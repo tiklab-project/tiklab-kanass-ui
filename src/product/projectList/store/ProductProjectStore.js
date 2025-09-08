@@ -117,5 +117,11 @@ export class ProductProjectStore {
 
         return data;
     }
+
+    @action
+    findProjectCount = async() => {
+        const data = await Service("/project/findProjectCount", this.projectPageParams)
+        return data;
+    }
 }
 export default new ProductProjectStore();

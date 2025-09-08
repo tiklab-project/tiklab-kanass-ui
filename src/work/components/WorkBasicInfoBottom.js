@@ -74,9 +74,9 @@ const WorkBasicInfoBottom = (props) => {
             case 6:
                 return dynamicAndCommentAndLogNum.workLogNum;
             case 2:
-                return relateAndChildNum.relateNum;
-            case 3:
                 return relateAndChildNum.childNum;
+            case 3:
+                return relateAndChildNum.relateNum;
             case 5:
                 return relateAndChildNum.taskChildNum;
             case 4:

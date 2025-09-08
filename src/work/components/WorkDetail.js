@@ -195,7 +195,7 @@ const WorkDetail = (props) => {
                 })
                 setNickName(res.assigner?.nickname)
                 setIconUrl(res.workPriority?.iconUrl)
-                getTransitionList(res.workStatusNode.id, res.workType.flow.id)
+                // getTransitionList(res.workStatusNode.id, res.workType.flow.id)
 
                 findWorkItemRelationModelCount({ workItemId: res.id, workTypeCode: res.workTypeCode }).then(res => {
                     if (res.code === 0) {
@@ -273,42 +273,42 @@ const WorkDetail = (props) => {
     }, [workId, workShowType])
 
 
-    const changeStatus = (transition) => {
-        Modal.confirm({
-            title: "修改之后不能撤回，确认修改状态？",
-            className: "edit-status-modal",
-            getContainer: workDetailTop.current,
-            onOk: () => {
-                const value = {
-                    updateField: "workStatusNode",
-                    workStatusNode: transition?.toNode?.id,
-                    transitionId: transition.id,
-                    flowId: transition.flow.id,
-                    id: workId
-                }
-                editWork(value).then((res) => {
-                    if (res.code === 0) {
-                        setWorkStatus(name)
-                        searchWorkById(workId).then((res) => {
-                            if (res) {
-                                detailForm.setFieldsValue({ assigner: res.assigner?.id })
-                                getTransitionList(res.workStatusNode.id, res.workType.flow.id)
-                                setWorkStatus(res.workStatusNode.name ? res.workStatusNode.name : "nostatus")
-
-                                const list = changeWorkItemList(workList, res)
-                                setWorkList([...list])
-                            }
-                        })
-                        
-                    }
-                    if (res.code === 40000) {
-                        message.error(res.msg)
-                    }
-                })
-            }
-        })
-
-    }
+    // const changeStatus = (transition) => {
+    //     Modal.confirm({
+    //         title: "修改之后不能撤回，确认修改状态？",
+    //         className: "edit-status-modal",
+    //         getContainer: workDetailTop.current,
+    //         onOk: () => {
+    //             const value = {
+    //                 updateField: "workStatusNode",
+    //                 workStatusNode: transition?.toNode?.id,
+    //                 transitionId: transition.id,
+    //                 flowId: transition.flow.id,
+    //                 id: workId
+    //             }
+    //             editWork(value).then((res) => {
+    //                 if (res.code === 0) {
+    //                     setWorkStatus(name)
+    //                     searchWorkById(workId).then((res) => {
+    //                         if (res) {
+    //                             detailForm.setFieldsValue({ assigner: res.assigner?.id })
+    //                             getTransitionList(res.workStatusNode.id, res.workType.flow.id)
+    //                             setWorkStatus(res.workStatusNode.name ? res.workStatusNode.name : "nostatus")
+    //
+    //                             const list = changeWorkItemList(workList, res)
+    //                             setWorkList([...list])
+    //                         }
+    //                     })
+    //
+    //                 }
+    //                 if (res.code === 40000) {
+    //                     message.error(res.msg)
+    //                 }
+    //             })
+    //         }
+    //     })
+    //
+    // }
 
 
     const getTransitionList = (nodeId, flowId) => {
@@ -393,19 +393,19 @@ const WorkDetail = (props) => {
         setSessionStorage("detailCrumbArray", newDetailCrumbArray)
         setDetailCrumbArray(getSessionStorage("detailCrumbArray"))
     }
-    const menu = (
-        <div className="work-flow-transition">
-            {
-                transformList.length > 0 && transformList.map(item => {
-                    return <div className="work-flow-item" key={item.id} onClick={() => changeStatus(item)}>{item.name} <SwapRightOutlined />
-                        <span className="work-flow-text">{item.toNode.name}</span>
-                    </div>
-                })
-            }
-            <div className="work-flow-view" onClick={() => viewFlow()}>查看工作流</div>
-        </div>
-
-    );
+    // const menu = (
+    //     <div className="work-flow-transition">
+    //         {
+    //             transformList.length > 0 && transformList.map(item => {
+    //                 return <div className="work-flow-item" key={item.id} onClick={() => changeStatus(item)}>{item.name} <SwapRightOutlined />
+    //                     <span className="work-flow-text">{item.toNode.name}</span>
+    //                 </div>
+    //             })
+    //         }
+    //         <div className="work-flow-view" onClick={() => viewFlow()}>查看工作流</div>
+    //     </div>
+    //
+    // );
 
     const changPage = (page) => {
         const workDetail = workList[page - 1]
@@ -534,6 +534,7 @@ const WorkDetail = (props) => {
                                                             setTabValue={setTabValue}
                                                             tabValue={tabValue}
                                                             closeModal={closeModal}
+                                                            viewFlow={viewFlow}
                                                             {...props}
                                                         />
 

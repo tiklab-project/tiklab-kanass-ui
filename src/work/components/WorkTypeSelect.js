@@ -156,7 +156,9 @@ const WorkTypeSelect = (props) =>{
                     onClick={() => selectType("all")}
                 >
                     {"所有"}
-                    {/*<span className="tabs-bar-num">{projectCount[item.value]}</span>*/}
+                    <span className="select-number">
+                            {setWorkNum(eveWorkTypeNum['all'])}
+                    </span>
                 </div>
             }
             {
@@ -170,7 +172,9 @@ const WorkTypeSelect = (props) =>{
                         }}
                     >
                         {item.workType.name}
-                        {/*<span className="tabs-bar-num">{projectCount[item.value]}</span>*/}
+                        <span className="select-number">
+                            {setWorkNum(eveWorkTypeNum[item.workType.code])}
+                        </span>
                     </div>
                 })
             }
@@ -187,6 +191,9 @@ const WorkTypeSelect = (props) =>{
                                     }}
                                 >
                                     {item.workType.name}
+                                    <span className="select-number">
+                                        {setWorkNum(eveWorkTypeNum[item.workType.code])}
+                                    </span>
                                 </Menu.Item>
                             ))}
                         </Menu>

@@ -56,7 +56,7 @@ const ProductSettingDetailAside = (props) => {
 
     return (
         <Fragment>
-            <Sider trigger={null} width="200">
+            <Sider trigger={null}>
                 <div className="product-aside">
 
                     <div className="product-title title">

@@ -86,7 +86,7 @@ const UrlData = () => {
                     <Collapse
                         expandIconPosition="right"
                         className="url-collapse"
-                        defaultActiveKey={[]}
+                        defaultActiveKey={["sward"]}
                     >
                         {systemList.map(system => {
                             const systemData = getSystemData(system.name);

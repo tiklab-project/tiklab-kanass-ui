@@ -7,6 +7,7 @@ import PaginationCommon from "../../../../common/caseCommon/pagination/Page";
 import IconCommon from "../../../../common/caseCommon/IconCommon";
 import {debounce} from "../../../../common/caseCommon/CaseCommonFn";
 import workItemStore from "../../workItem/store/WorkItemStore";
+import {createWorkTestCaseFn} from "../../../testcase/components/testCaseTableFn";
 
 const {createWorkItemBind,findWorkItemBindPage} = workItemBindStore;
 
@@ -74,7 +75,8 @@ const DefectSelectDrawer = (props) =>{
             projectId:projectId,
             testCase:{id:caseId},
             workItem:{id:id},
-            testPlanId:testPlanId,
+            // testPlanId:testPlanId,
+            // 暂时不考虑一个用例对应多个计划的关系
         }
         createWorkItemBind(param).then(()=> {
             findWorkItemBindPage({
@@ -84,6 +86,8 @@ const DefectSelectDrawer = (props) =>{
             findDemandList({projectId:projectId})
             findFuncUnit(caseId)
         })
+
+        createWorkTestCaseFn(caseId, id, projectId);
     };
 
 

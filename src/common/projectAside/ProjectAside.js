@@ -123,7 +123,7 @@ const ProjectAside = (props) => {
     }
     return (
         <Fragment>
-            <Sider trigger={null} collapsible collapsed={!isShowText} collapsedWidth="75" width="200"
+            <Sider trigger={null} collapsible collapsed={!isShowText} collapsedWidth="75"
                 className={`project-detail-side ${themeClass}`}
             >
                 <div className={`project-aside ${isShowText ? "" : "project-icon"}`}>

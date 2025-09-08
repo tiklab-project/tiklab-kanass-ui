@@ -1,3 +1,12 @@
 .projectSet-add {
-    padding: 0 15px 20px;
+    padding: 0 0 20px;
+
+    .ant-input {
+        border: 0;
+        background: #f9f9f9;
+    }
+    .ant-picker {
+        border: 0;
+        background: #f9f9f9;
+    }
 }

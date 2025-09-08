@@ -23,7 +23,7 @@ import WorkCommentStore from "../store/WorkCommentStore";
 
 const WorkDetailBottom = (props) => {
     const { workStore, workInfo, setWorkInfo,  detailForm, getTransitionList, 
-        tabValue, setTabValue, closeModal, workDetailMetaData, setWorkDetailMetaData } = props;
+        tabValue, setTabValue, closeModal, workDetailMetaData, setWorkDetailMetaData, viewFlow } = props;
     const treePath = workInfo.treePath;
     const deep = treePath ? treePath.split(";").length : 1;
     const { workId, findDmWorkTypeByCode, viewType, searchWorkById } = workStore;
@@ -97,6 +97,7 @@ const WorkDetailBottom = (props) => {
                         taskType={taskType}
                         workTypeText={workTypeText}
                         workRelationStore={WorkRelationStore}
+                        viewFlow={viewFlow}
                     />;
                 case "demand":
                 case "epic":
@@ -112,6 +113,7 @@ const WorkDetailBottom = (props) => {
                         taskType={taskType}
                         workTypeText={workTypeText}
                         workRelationStore={WorkRelationStore}
+                        viewFlow={viewFlow}
                     />
                 case "defect":
                     return <WorkBasicInfoDefect
@@ -126,6 +128,7 @@ const WorkDetailBottom = (props) => {
                         taskType={taskType}
                         workTypeText={workTypeText}
                         workRelationStore={WorkRelationStore}
+                        viewFlow={viewFlow}
                     />
                 default:
                     return <WorkBasicInfoNomal
@@ -140,6 +143,7 @@ const WorkDetailBottom = (props) => {
                         taskType={taskType}
                         workTypeText={workTypeText}
                         workRelationStore={WorkRelationStore}
+                        viewFlow={viewFlow}
                     />
             }
         }

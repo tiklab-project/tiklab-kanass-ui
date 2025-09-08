@@ -27,6 +27,12 @@
             visibility: visible;
             opacity: 1;
         }
+        .select-input-text {
+            width: 95%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
         .select-close {
             width: 15px;
             height: 15px;
@@ -93,7 +99,7 @@
             height: 30px;
         }
         .more-item {
-            height: 30px;
+            min-height: 30px;
             line-height: 30px;
         }
     }

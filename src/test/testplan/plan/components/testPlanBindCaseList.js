@@ -15,6 +15,8 @@ import {FunctionResultSelect} from "../../function/components/FunctionResultSele
 import FunctionSetResultDrawer from "../../function/components/FunctionSetResultDrawer"
 import PlanToFuncUnitPage from "../../common/planToCase/planToFuncUnitPage";
 import {SearchOutlined} from "@ant-design/icons";
+import FunctionContentDrawerView from "../../../function/components/drawerView/FunctionContentDrawerView";
+import TestPlanCaseSetDirectorModal from "./TestPlanCaseSetDirectorModal";
 
 
 const TestPlanBindCaseList = (props) =>{
@@ -22,6 +24,13 @@ const TestPlanBindCaseList = (props) =>{
     const {setFunctionResult} = functionInstanceStore
     const {TestPlanTestType,findTestPlan} = testPlanStore
     const pathname = useParams().pathname
+    const [testCaseDetailVisible, setTestCaseDetailVisible] = useState(false);
+    const [caseId, setCaseId] = useState();
+    const goTestCaseDetail = (record) => {
+        setCaseId(record.id)
+        setTestCaseDetailVisible(true);
+    }
+    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
     const commonColumns = [
         {
@@ -33,7 +42,16 @@ const TestPlanBindCaseList = (props) =>{
             render: (text,record) =>(
                 <div className={"display-flex-gap"}>
                     <>{showCaseTypeView(record.caseType)}</>
-                    <PlanToFuncUnitPage testPlanId={testPlanId} record={record}/>
+                    {/*<PlanToFuncUnitPage testPlanId={testPlanId} record={record}/>*/}
+                    <div className="case-key">
+                        <div
+                            className={"link-text"}
+                            // onClick={()=>toDiffCaseFn(record,history)}
+                            onClick={()=> goTestCaseDetail(record)}
+                        >
+                            <span>{record?.name}</span>
+                        </div>
+                    </div>
                 </div>
             )
         },
@@ -46,17 +64,17 @@ const TestPlanBindCaseList = (props) =>{
         },
         {
             title: `模块`,
-            dataIndex: ["module","name"],
+            dataIndex: ["module","moduleName"],
             key: "module",
             width:"20%",
             ellipsis: true,
         },{
-            title: `创建人`,
-            dataIndex:  ["createUser"],
+            title: `负责人`,
+            dataIndex:  ["director"],
             key: "user",
             width:"12%",
             ellipsis: true,
-            render: (text, record) => (showCreateUser(record.createUser))
+            render: (text, record) => (showCreateUser(record.director))
         },
         {
             title: `实际结果`,
@@ -206,15 +224,25 @@ const TestPlanBindCaseList = (props) =>{
 
         <div style={{margin: "10px 0"}}>
             <div className='display-flex-between' style={{marginBottom: "16px"}}>
-                <Input
-                    placeholder={`搜索用例`}
-                    onPressEnter={onSearch}
-                    className='search-input-common'
-                    style={{width: '180px'}}
-                    prefix={<SearchOutlined />}
-                    onChange={debounce(onSearch, 500)}
-                    allowClear
-                />
+                <div style={{display: "flex", alignItems: "center", gap: "10px"}}>
+                    {
+                        selectedRowKeys.length > 0 && (
+                            <TestPlanCaseSetDirectorModal
+                                selectChange={selectResultFun}
+                                selectedRowKeys={selectedRowKeys}
+                            />
+                        )
+                    }
+                    <Input
+                        placeholder={`搜索用例`}
+                        onPressEnter={onSearch}
+                        className='search-input-common'
+                        style={{width: '180px'}}
+                        prefix={<SearchOutlined />}
+                        onChange={debounce(onSearch, 500)}
+                        allowClear
+                    />
+                </div>
                 <Space>
                     {testPlanType === "function"&&(
                         <FunctionResultSelect
@@ -238,6 +266,13 @@ const TestPlanBindCaseList = (props) =>{
                     columns={commonColumns }
                     dataSource={planBindCaseList}
                     rowKey={record => record.id}
+                    rowSelection={{
+                        selectedRowKeys,
+                        onChange: (selectedKeys) => {
+                            console.log("选中的id", selectedKeys)
+                            setSelectedRowKeys(selectedKeys);
+                        },
+                    }}
                     pagination={false}
                     loading={tableLoading}
                     onRow={(record) => ({style: rowStyle(record.caseType)})}
@@ -258,6 +293,14 @@ const TestPlanBindCaseList = (props) =>{
                     findPage={findPage}
                 />
             </div>
+            <FunctionContentDrawerView
+                isModalVisible={testCaseDetailVisible}
+                setIsModalVisible={setTestCaseDetailVisible}
+                caseId={caseId}
+                inTestCase={true}
+                testPlanId={testPlanId}
+                {...props}
+            />
         </div>
 
     )

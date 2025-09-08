@@ -18,6 +18,7 @@ import ImgComponent from "../../common/imgComponent/ImgComponent";
 import ProjectEmpty from "../../common/component/ProjectEmpty";
 import WorkRelationStore from "../store/WorkRelationStore";
 import Breadcumb from "../../common/breadcrumb/Breadcrumb";
+import UserIcon from "../../common/UserIcon/UserIcon";
 const WorkChildAddmodal = (props) => {
     const { workType, treePath, workStore, workChild, showSelectChild, setChildWorkList,
         selectChild, projectId, demandId, stageId, titile } = props;
@@ -327,26 +328,21 @@ const WorkChildAddmodal = (props) => {
                                 selectWorkChildList && selectWorkChildList.map(item => {
                                     return <div className="child-add-work-item" onClick={() => determineAdd(item)} key={item.id}>
                                         <div className="work-item-icon">
-                                            <ImgComponent
-                                                alt=""
-                                                className="svg-icon"
-                                                src={item.workTypeSys?.iconUrl}
-                                            />
-                                            <div>
+                                            <div style={{display: "flex", alignItems: "center", gap: "10px"}}>
+                                                <ImgComponent
+                                                    alt=""
+                                                    className="svg-icon"
+                                                    src={item.workTypeSys?.iconUrl}
+                                                />
                                                 <div className="work-item-id">{item.code}</div>
-                                                <div className="work-item-title">{item.title} </div>
                                             </div>
+                                            <div className="work-item-title">{item.title} </div>
 
                                         </div>
                                         <div className="work-item-right">
-                                            <ImgComponent
-                                                src={item.workPriority?.iconUrl}
-                                                alt=""
-                                                className="svg-icon"
-
-                                            />
+                                            <UserIcon name={item.assigner?.nickname}/>
                                             <div className="work-item-icon">
-                                                {item.workStatus?.name}
+                                                {item.assigner?.nickname}
                                             </div>
                                         </div>
                                     </div>
@@ -359,7 +355,7 @@ const WorkChildAddmodal = (props) => {
                                         selectChildToTal > current ?
                                             <div className="child-add-table-page loading-more" onClick={() => loadNextPage()}>{pageText}</div>
                                             :
-                                            <div className="child-add-table-page">到底啦~</div>
+                                            <div className="child-add-table-page"></div>
                                     }
                                 </>
                             }

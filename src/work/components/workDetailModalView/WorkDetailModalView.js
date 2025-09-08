@@ -31,7 +31,7 @@ const WorkDetailModalView = (props) => {
         if (width >= 1600) {
             return 1000;
         } else if (width < 1600 && width >= 1200) {
-            return 900;
+            return 987;
         } else if (width < 1200 && width >= 992) {
             return 750;
         } else if (width < 992 && width >= 768) {

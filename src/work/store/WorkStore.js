@@ -159,6 +159,7 @@ export class WorkStore {
     @observable detailCrumbArray = [];
     @observable isWorkList = true;
     @observable eveWorkTypeNum = {};
+    @observable eveFilterNum = {};
     @observable workBoardCurrentPage = [];
     @observable workItemStatusCurrentPage = [];
     @observable permissionFieldList = [];
@@ -684,7 +685,10 @@ export class WorkStore {
     // 获取我的待办和我创建的事项数量
     @action
     findUserCreateAndTodoWorkNum = async(value) => {
-        const data = await Service("/workItem/findUserCreateAndTodoWorkNum",value);
+        this.setSearchCondition(value)
+        console.log(this.searchCondition)
+        const data = await Service("/workItem/findUserCreateAndTodoWorkNum",this.searchCondition);
+        this.eveFilterNum = data.data;
         return data;
     }
 
@@ -958,6 +962,7 @@ export class WorkStore {
     //获取事项类型
     @action
     getWorkTypeList = async(value) => {
+        console.log("11111", value)
         const data = await Service("/workTypeDm/findWorkTypeDmList",value);
         if(data.code === 0){
             this.workTypeList = data.data;
@@ -974,6 +979,7 @@ export class WorkStore {
     //获取自定义的数据类型
     @action
     findWorkTypeList = async(value) => {
+        console.log("222222", value)
        const data = await Service("/workTypeDm/findWorkTypeDmList",value);
        return data;
     }
@@ -1129,6 +1135,7 @@ export class WorkStore {
     //获取项目内事项类型
     @action
     findWorkTypeDmList = async (value) => {
+        console.log("333333", value)
         const data = await Service("/workTypeDm/findWorkTypeDmList", value);
         return data;
 
@@ -1310,7 +1317,7 @@ export class WorkStore {
         }
         const data = await Service("/workItemMetaData/findCreateMetaData", param);
         if(data.code === 0){
-            this.formList = data.data.form.customFieldList;
+            this.formList = data.data.form?.customFieldList;
 
             this.stageList = data.data.stageList;
 
@@ -1360,7 +1367,7 @@ export class WorkStore {
 
             this.selectSprintList = data.data.sprintList;
 
-            this.formList = data.data.form.customFieldList;
+            this.formList = data.data.form?.customFieldList;
 
             this.stageList = data.data.stageList;
 

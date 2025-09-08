@@ -8,10 +8,12 @@ import DefectSelect from "./DefectSelectDrawer";
 import PaginationCommon from "../../../../common/caseCommon/pagination/Page";
 import WorkAddModel from "../../workItemDefectAdd/WorkAddModel";
 import WorkDetailDrawer from "../../workItemInfo/WorkDetailDrawer";
-import {EllipsisOutlined, DeleteOutlined, LinkOutlined} from "@ant-design/icons";
+import {EllipsisOutlined, DeleteOutlined, LinkOutlined, DisconnectOutlined} from "@ant-design/icons";
 import workStore from "../../workItemDefectAdd/WorkStore";
 import {toWorkItem} from "../../common/util/workItemCommonFn";
 import {deleteWorkTestCaseFn} from "../../../testcase/components/testCaseTableFn";
+import ImgComponent from "../../../../common/imgComponent/ImgComponent";
+import testPlanDetailStore from "../../../testplan/plan/store/testPlanDetailStore";
 
 
 /**
@@ -21,6 +23,23 @@ const CaseBindDefectList = (props) =>{
     const {caseId,notShow,testPlanId,startTime,endTime,smallTableHead} = props;
     const {findWorkItemBindPage,workItemBindList,deleteWorkItemBind} = workItemBindStore
     const {deleteWork} = workStore
+    const {findBindTestCaseList} = testPlanDetailStore
+
+    const setStatuStyle = (id) => {
+        let name;
+        switch (id) {
+            case "todo":
+                name = "work-status-todo";
+                break;
+            case "done":
+                name = "work-status-done";
+                break;
+            default:
+                name = "work-status-process";
+                break;
+        }
+        return name;
+    }
 
     //列表头
     const columns = [
@@ -39,34 +58,52 @@ const CaseBindDefectList = (props) =>{
                 />
             )
         },
+        // {
+        //     title: `计划名称`,
+        //     dataIndex: ["testPlan","name"],
+        //     key: "testPlan",
+        //     ellipsis:true,
+        //     width: "20%",
+        //     render:(text,record)=>(
+        //         <>
+        //             {
+        //                 record.testPlan
+        //                     ? <span>{record.testPlan.name}</span>
+        //                     : <span style={{color:"#999"}}>---</span>
+        //             }
+        //         </>
+        //     )
+        // },
         {
-            title: `计划名称`,
-            dataIndex: ["testPlan","name"],
-            key: "testPlan",
-            ellipsis:true,
-            width: "20%",
+            title: `状态`,
+            dataIndex: ["workItem","workStatusNode","name"],
+            key: "status",
+            width: "10%",
+            render:(text,record)=>(
+                <div className={`work-status ${setStatuStyle(record.workItem.workStatusNode.id)}`}>
+                    {text}
+                </div>
+            )
+        },
+        {
+            title: `优先级`,
+            dataIndex: ["workItem","workPriority","name"],
+            key: "priority",
+            width: "10%",
             render:(text,record)=>(
                 <>
-                    {
-                        record.testPlan
-                            ? <span>{record.testPlan.name}</span>
-                            : <span style={{color:"#999"}}>---</span>
-                    }
+                    <div style={{display:"flex",alignItems:"center"}}>
+                        <ImgComponent
+                            src={record.workItem.workPriority?.iconUrl}
+                            alt=""
+                            // isRemote={true}
+                            className="img-icon-right"
+                        />
+                        <div className="work-info-text">{text || "暂无设置"}</div>
+                    </div>
                 </>
             )
         },
-        // {
-        //     title: `状态`,
-        //     dataIndex: ["workItem","workStatusNode","name"],
-        //     key: "status",
-        //     width: "10%",
-        // },
-        // {
-        //     title: `优先级`,
-        //     dataIndex: ["workItem","workPriority","name"],
-        //     key: "priority",
-        //     width: "10%",
-        // },
         {
             title: `创建时间`,
             dataIndex: "createTime",
@@ -84,14 +121,20 @@ const CaseBindDefectList = (props) =>{
         render: (text, record) => {
             const menu = (
                 <Menu>
-                    <Menu.Item key="unbind" icon={<LinkOutlined />}>
+                    <Menu.Item key="unbind" icon={<DisconnectOutlined />}>
                         <Popconfirm
                             title="确定解绑该缺陷？"
                             onConfirm={() => {
-                                deleteWorkItemBind(record.id).then(() => findWorkItemBindPage({
-                                    caseId: caseId,
-                                    testPlanId: testPlanId
-                                }))
+                                deleteWorkItemBind(record.id).then(() => {
+                                    findPage()
+                                }
+                                // findWorkItemBindPage({
+                                //     // caseId: caseId,
+                                //     // testPlanId: testPlanId
+                                //     // 暂时不考虑一个用例对应多个计划的关系
+                                // })
+                                )
+                                deleteWorkTestCaseFn(caseId, record.workItem?.id)
                             }}
                             okText='确定'
                             cancelText='取消'
@@ -104,12 +147,14 @@ const CaseBindDefectList = (props) =>{
                             title="确定删除？"
                             onConfirm={async () => {
                                 await deleteWorkItemBind(record.id)
-                                // await deleteWork(record.workItem?.id)
-                                await deleteWorkTestCaseFn(caseId, record.workItem?.id)
-                                await findWorkItemBindPage({
-                                    caseId: caseId,
-                                    testPlanId: testPlanId
-                                })
+                                await deleteWork(record.workItem?.id)
+                                // await deleteWorkTestCaseFn(caseId, record.workItem?.id)
+                                findPage()
+                                // await findWorkItemBindPage({
+                                //     caseId: caseId,
+                                //     // testPlanId: testPlanId
+                                //     // 暂时不考虑一个用例对应多个计划的关系
+                                // })
                             }}
                             okText='确定'
                             cancelText='取消'
@@ -145,9 +190,26 @@ const CaseBindDefectList = (props) =>{
     const [totalRecord, setTotalRecord] = useState();
     const [pageSize] = useState(20);
     const [currentPage, setCurrentPage] = useState(1);
+    const [testCaseIdList, setTestCaseIdList] = useState()
 
     useEffect(async ()=>{
-        findPage()
+        if (!caseId){
+            findBindTestCaseList({testPlanId: testPlanId}).then(res => {
+                console.log("testPlanRes:   ",res)
+                let idList = [];
+                res.map(item => {
+                    idList.push(item.id)
+                })
+                setTestCaseIdList(idList)
+                findPage({caseIds: idList})
+            })
+        }else {
+            const idList = [];
+            idList.push(caseId);
+            setTestCaseIdList(idList)
+            findPage({caseIds: idList})
+        }
+
     },[])
 
 
@@ -160,8 +222,10 @@ const CaseBindDefectList = (props) =>{
             },
             startTime:startTime,
             endTime:endTime,
-            caseId:caseId,
-            testPlanId:testPlanId,
+            caseIds:testCaseIdList,
+            // caseId:caseId,
+            // testPlanId:testPlanId,
+            // 暂时不考虑一个用例对应多个计划的关系
             ...params
         }
         findWorkItemBindPage(param).then((res)=>{

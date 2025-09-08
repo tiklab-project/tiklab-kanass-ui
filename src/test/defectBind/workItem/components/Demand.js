@@ -51,7 +51,7 @@ const Demand = (props)=>{
                         </div>
                     </div>
 
-                    :<span onClick={showModal} style={{padding:"0 10px",cursor:"pointer"}}>未设置</span>
+                    :<span onClick={showModal} style={{padding:"0",cursor:"pointer"}}>未设置</span>
             }
 
             <Modal

@@ -11,13 +11,17 @@ import {Axios} from "tiklab-core-ui";
 import "./funcUnitEdit.scss"
 import IconCommon from "../../../common/caseCommon/IconCommon";
 import {createWorkTestCaseFn} from "../../testcase/components/testCaseTableFn";
+import Demand from "../../defectBind/workItem/components/Demand";
+import WorkItemStore from "../../defectBind/workItem/store/WorkItemStore";
+import {createWorkItemBindFn} from "../../../work/components/WorkTestCaseFn";
 
 // 添加与编辑
 const FuncUnitEdit = (props) => {
-    const { funcUnitStore,categoryStore,findPage, demand, workInfo} = props;
+    const { funcUnitStore,categoryStore,findPage, demand, workInfo, searchWorkTestPage} = props;
     const {createFuncUnit,} = funcUnitStore
     const {findCategoryListTreeTable,categoryTableList} = categoryStore;
     const {createFuncUnitStep} = funcUnitStepStore;
+    const { findWorkItemList, findWorkItem, } = WorkItemStore;
 
     const history = useHistory()
     const [form] = Form.useForm();
@@ -25,10 +29,19 @@ const FuncUnitEdit = (props) => {
     const projectId = localStorage.getItem("projectId")
     const [stepList, setStepList] = useState([]);
     const [userList, setUserList] = useState([]);
+    const [workItemList, setWorkItemList] = useState([]);
+    const [totalPage, setTotalPage] = useState(1);
     const formRef = useRef();
     // 弹框展示
     const showModal = () => {
-        findCategoryListTreeTable({projectId: projectId})
+        findCategoryListTreeTable({projectId: projectId}).then(res=>{
+            if (res.length > 0){
+                console.log("初始化模块：  ",res[0]?.id)
+                form.setFieldsValue({
+                    category: res[0]?.id
+                })
+            }
+        })
         setStepList([]);
         setVisible(true);
     };
@@ -39,7 +52,7 @@ const FuncUnitEdit = (props) => {
         if (width >= 1600) {
             return 1000;
         } else if (width < 1600 && width >= 1200) {
-            return 900;
+            return 987;
         } else if (width < 1200 && width >= 992) {
             return 700;
         } else if (width < 992 && width >= 768) {
@@ -48,6 +61,20 @@ const FuncUnitEdit = (props) => {
             return 700;
         }
     }
+
+    const getModalHeight = () => {
+        const height = window.innerHeight;
+
+        if (height >= 900) {
+            return 600;
+        } else if (height >= 768) {
+            return 550;
+        } else if (height >= 576) {
+            return 480;
+        } else {
+            return 480;
+        }
+    };
 
     // 提交
     const onFinish = async () => {
@@ -62,7 +89,7 @@ const FuncUnitEdit = (props) => {
             precondition: values.precondition,
             director: {id: values.director},
             priorityLevel: values.priorityLevel,
-            demand: {id:demand ? demand : null},
+            demand: {id:demand ? demand : values.demand},
         }
         delete values.name
         delete values.desc
@@ -81,12 +108,18 @@ const FuncUnitEdit = (props) => {
                 sessionStorage.setItem(`functionId`,res.data);
                 // history.push(`/project/${projectId}/testcase/function/${res.data}`)
             }
-            if (demand){
+            if (workInfo){
                 // 关联从事项新增的功能用例
                 console.log("testCaseId",res.data)
-                console.log("workItemId",demand)
+                console.log("workItemId",workInfo?.id)
                 console.log("projectId",projectId)
-                createWorkTestCaseFn(res.data, demand, projectId)
+                createWorkTestCaseFn(res.data, workInfo?.id, projectId).then(res=>{
+                    searchWorkTestPage()
+                })
+
+                if (workInfo.workTypeCode === "defect"){
+                    createWorkItemBindFn(res.data, workInfo?.id, projectId)
+                }
             }
         })
 
@@ -96,6 +129,28 @@ const FuncUnitEdit = (props) => {
 
     const onCancel = () => { setVisible(false) };
 
+    /**
+     * 查询需求
+     */
+    const findDemandList = (param)=>{
+        let params = {
+            projectId:projectId,
+            workTypeCode:"demand",
+            pageParam: {
+                pageSize: 10,
+                currentPage:1
+            },
+            ...param
+        }
+        findWorkItemList(params).then(res=>{
+            if(res.code===0){
+                setWorkItemList(res.data.dataList);
+                setTotalPage(res.data.totalPage)
+            }else {
+                // messageFn("error","TeamWire连接失败!")
+            }
+        })
+    }
 
     const moduleTree= (dataList)=>{
         return dataList?.map(item=> {
@@ -118,6 +173,7 @@ const FuncUnitEdit = (props) => {
             if(dmUserRes.code===0){
                 setUserList(dmUserRes.data.dataList)
             }
+            findDemandList();
         }
     }, [visible]);
 
@@ -133,7 +189,7 @@ const FuncUnitEdit = (props) => {
     return (
         <>
             {
-                demand ?
+                workInfo ?
                     <div style={{cursor: "pointer", display: "flex", alignItems: "center"}} onClick={showModal}>
                         <svg className="img-icon-right" aria-hidden="true">
                             <use xlinkHref="#icon-add2"></use>
@@ -154,6 +210,7 @@ const FuncUnitEdit = (props) => {
                 cancelText="取消"
                 centered
                 width={getModalWidth()}
+                bodyStyle={{height:`${getModalHeight()}`}}
                 closable={true}
             >
 
@@ -188,6 +245,33 @@ const FuncUnitEdit = (props) => {
                             preserve={false}
                             layout={"vertical"}
                         >
+                            {
+                                !demand && <Form.Item
+                                    label="关联需求"
+                                    name="demand"
+                                >
+                                    <Select
+                                        getPopupContainer={() => formRef.current}
+                                        dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+                                        placeholder="选择需求"
+                                        allowClear
+                                        className={"func-select"}
+                                        bordered={false}
+                                        showSearch={true}
+                                        optionFilterProp="label"
+                                    >
+                                        {
+                                            workItemList && workItemList.map(item => {
+                                                return <Option key={item?.id}
+                                                               value={item?.id}
+                                                               label={item?.title}
+                                                >{item?.title}</Option>
+                                            })
+                                        }
+                                    </Select>
+                                </Form.Item>
+                            }
+
                             <Form.Item
                                 label="模块"
                                 name="category"
@@ -269,6 +353,23 @@ const FuncUnitEdit = (props) => {
                                                 style={{cursor: "pointer"}}
                                             />
                                             <div>高</div>
+                                        </div>
+                                    </Option>
+                                </Select>
+                            </Form.Item>
+
+                            <Form.Item label={"用例类型"} name="caseTye" >
+                                <Select
+                                    defaultValue={0}
+                                    placeholder={"选择用例类型"}
+                                    style={{flex: 1}}
+                                    getPopupContainer={() => formRef.current}
+                                    className={"func-select"}
+                                    bordered={false}
+                                >
+                                    <Option value={0}>
+                                        <div style={{display: "flex", gap: "10px", alignItems: "center"}}>
+                                            功能用例
                                         </div>
                                     </Option>
                                 </Select>

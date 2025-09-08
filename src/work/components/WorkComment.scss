@@ -60,17 +60,20 @@
 
         .comment-item {
             //margin-bottom: 20px;
+            display: flex;
+            align-items: center;
             padding: 10px 0;
             .comment-top {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
+                padding: 0 15px;
                 .comment-user {
                     display: flex;
                     align-items: center;
                     justify-content: flex-start;
                     //height: 40px;
-                    gap: 10px;
+                    gap: 20px;
                     .user-icon {
                         width: 30px;
                         height: 30px;
@@ -82,13 +85,18 @@
                         color: var(--tiklab-black);
                     }
                 }
+
+                .user-date {
+                    color: #999;
+                    font-size: 13px;
+                }
             }
             .comment-content {
-                margin-left: 35px;
+                padding:0 15px;
                 line-height: 30px;
                 text-overflow: ellipsis;
                 overflow: hidden;
-                width: 70%;
+                width: 100%;
                 display: -webkit-box;
                 -webkit-box-orient: vertical;
                 -webkit-line-clamp: 3;
@@ -113,16 +121,10 @@
                 align-items: center;
                 margin-left: 35px;
 
-                .user-date {
-                    color: #999;
-                    font-size: 13px;
-                }
-
                 .comment-operate {
                     display: flex;
                     align-items: center;
                     justify-content: right;
-                    margin-left: 26px;
                     gap: 10px;
                     .operate-text {
                         color: #999;

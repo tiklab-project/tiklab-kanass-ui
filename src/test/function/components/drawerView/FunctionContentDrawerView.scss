@@ -6,16 +6,86 @@
     overflow: hidden;
   }
 
-  .ant-drawer-content-wrapper {
-    min-width: 660px !important;
-    box-shadow: none !important;
+  .function-content-modal {
+    height: 100%;
+
+    .func-detail-left {
+      flex: 1;
+      padding-right: 20px;
+
+      overflow-y: auto;
+      scrollbar-gutter: stable;
+
+      .func-top-title {
+        .ant-typography {
+          padding-left: 0 !important;
+        }
+      }
+
+      .case-create-info{
+        //padding: 0 8px;
+        color: var(--tiklab-gray-500);
+        font-size: 12px;
+      }
+    }
+
+    .func-detail-right {
+      width: 250px;
+
+      overflow-y: auto;
+      scrollbar-gutter: stable;
+    }
+
+    //overflow-y: auto;
+    //scrollbar-gutter: stable;
+  }
+
+  .func-detail-form {
+    .func-select {
+      .ant-select-selector{
+        padding: 0 2px;
+      }
+      .ant-select-arrow{
+        right: 5px
+      }
+      .ant-select-clear{
+        right: 5px
+      }
+    }
+
+    .func-select:hover{
+      background-color: #F0F0F0;
+    }
+
+    .func-select .ant-select-arrow {
+      opacity: 0;  /* 默认隐藏 */
+      transition: opacity 0.3s;
+    }
+    .func-select:hover .ant-select-arrow {
+      opacity: 1;  /* 悬停时显示 */
+    }
+  }
+
+  .func-detail-left::-webkit-scrollbar,
+  .func-detail-right::-webkit-scrollbar {
+    width: 0;
+  }
+  .func-detail-left::-webkit-scrollbar-thumb,
+  .func-detail-right::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background: var(--tiklab-gray-400);
+  }
+  .func-detail-left::-webkit-scrollbar-track,
+  .func-detail-right::-webkit-scrollbar-track {
+    border-radius: 0;
+    background: var(--tiklab-gray-800);
   }
 
   .testcase-detail-top{
     display: flex;
     line-height: 30px;
     color: #999;
-    justify-content: space-between;
+    justify-content: flex-end;
     padding: 10px 20px;
     //border-bottom: 1px solid var(--tiklab-gray-200);
     border-top: 1px solid var(--tiklab-gray-200);

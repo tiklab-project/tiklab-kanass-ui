@@ -6,8 +6,8 @@
  * @LastEditors: 袁婕轩
  * @LastEditTime: 2024-12-26 14:31:42
  */
-import React, { Fragment, useEffect, useState } from "react";
-import {Input, Table, Row, Col, message, Empty, Button} from 'antd';
+import React, {Fragment, useEffect, useRef, useState} from "react";
+import {Input, Table, Row, Col, message, Empty, Button, Dropdown, Menu} from 'antd';
 import { observer, inject, Provider } from "mobx-react";
 import "./WorkChild.scss"
 import WorkChildAddmodal from "./WorkChildAdd";
@@ -22,6 +22,9 @@ import ImgComponent from "../../common/imgComponent/ImgComponent";
 import WorkPrivilegeComponent from "./WorkPrivilegeComponent";
 import WorkRelationStore from "../store/WorkRelationStore";
 import workRelation from "./WorkRelation";
+import {DownOutlined, EnterOutlined} from "@ant-design/icons";
+import WorkAddModel from "./WorkAddModel";
+import workTypeList from "../../setting/workSeting/components/WorkTypeList";
 const WorkChild = (props) => {
     const store = {
         workChild: WorkChildStore,
@@ -36,8 +39,10 @@ const WorkChild = (props) => {
     const [selectChild, showSelectChild] = useState(false);
     const [addChild, showAddChild] = useState(false);
     const [workItemTitle, setWorkItemTitle] = useState()
+    const workAddModel = useRef();
+    const [addWorkType, setAddWorkType] = useState();
 
-    const { workId, workList, setWorkId, addWork, createRecent, demandtestcaseId,
+    const { workId, workList, setWorkId, addWork, createRecent, demandtestcaseId, workTypeList,
         selectVersionList, sprintList, priorityList, setWorkList, findWorkItemAndChidren } = workStore;
     const { findWorkRelateAndChildNum } = WorkRelationStore;
     const { getWorkChildList, deleWorkChild, findWorkTypeListByCode } = WorkChildStore;
@@ -54,7 +59,7 @@ const WorkChild = (props) => {
      * 根据父级id,查找下级事项
      */
     useEffect(() => {
-        console.log("进入关联子事项页面了")
+        console.log("进入关联子事项页面了   ", workTypeCode)
         if (workTypeCode === "epic") {
             findWorkTypeListByCode().then(res => {
                 setDemand(res.data)
@@ -63,6 +68,9 @@ const WorkChild = (props) => {
         } else {
             findWorkChildList()
         }
+        workTypeList.filter(item => item.workType.id === workType.workType.id).map(item => {
+            setAddWorkType(item)
+        })
         return;
     }, [workId])
 
@@ -229,8 +237,17 @@ const WorkChild = (props) => {
             event.stopPropagation();
             event.preventDefault()
             createChildWorkItem()
+        }else if (event.keyCode === 9){
+            event.stopPropagation();
+            event.preventDefault();
+            setShowFullModal();
         }
 
+    }
+
+    const setShowFullModal = () =>{
+        console.log("传递的workType     ",addWorkType)
+        workAddModel.current.setShowAddModel(true)
     }
 
     /**
@@ -387,35 +404,52 @@ const WorkChild = (props) => {
                 {
                     addChild && <div className="child-create-input">
                         <Input
+                            showCount
+                            maxLength={64}
                             placeholder="输入事项名称"
                             onChange={(value) => setWorkItemTitle(value.target.value)}
-                            onKeyDown={(event) => createChildrenWorkItem(event)}
+                            onKeyDown={(event) => {
+                                if (event.key === 'Enter' && !event.shiftKey) {
+                                    createChildWorkItem();
+                                } else if (event.key === 'Enter' && event.shiftKey) {
+                                    // setShowFullModal();
+                                }
+                            }}
                         />
                         <div className="child-create-submit">
-                            <div className="create-submit" onClick={() => createChildWorkItem()}>
-                                确定
-                            </div>
+                            <EnterOutlined style={{color: "#000"}} />
                             <div className="create-cancel" onClick={() => showAddChild(false)}>
                                 取消
+                            </div>
+                            <div className="create-submit-container">
+                                <div className="create-submit" onClick={() => createChildWorkItem()}>
+                                    新增
+                                    {/*<DownOutlined style={{ marginLeft: 4 }} />*/}
+                                </div>
                             </div>
                         </div>
                     </div>
                 }
                 {
-                    childWorkList?.length > 0 ? <Table
-                        columns={columns}
-                        dataSource={childWorkList}
-                        rowKey={record => record.id}
-                        pagination={false}
-                        showHeader={false}
-                        scroll={{ x: "100%" }}
-                    />
-                        :
-                        <Empty description={`暂无${type}`} />
+                    addChild === true ? <></> :
+                        childWorkList?.length > 0 ?
+                            <Table
+                                columns={columns}
+                                dataSource={childWorkList}
+                                rowKey={record => record.id}
+                                pagination={false}
+                                showHeader={false}
+                                scroll={{ x: "100%" }}
+                                locale={{
+                                    emptyText: <div style={{ height: 0 }}></div> // 完全隐藏（高度为0）
+                                }}
+                            />
+                        :<Empty description={`暂无${type}`} />
                 }
 
             </div>
         </div>
+        <WorkAddModel workAddModel={workAddModel} workType={addWorkType} {...props} />
     </Provider>
 
     )

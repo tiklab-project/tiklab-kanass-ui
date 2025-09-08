@@ -19,7 +19,7 @@ import WorkTestCaseCreateDropDown from "./WorkTestCaseCreateDropDown";
 import FuncUnitEdit from "../../test/function/components/funcUnitEdit";
 import CategoryStore from "../../test/category/store/CategoryStore";
 import FuncUnitStore from "../../test/function/store/funcUnitStore";
-import {deleteWorkItemBindByConditionFn} from "./WorkTestCaseFn";
+import {deleteTestCaseDemandByConditionFn, deleteWorkItemBindByConditionFn} from "./WorkTestCaseFn";
 const WorkTestCaseList = (props) => {
     const store = {
         workTestStore: WorkTestStore,
@@ -32,12 +32,15 @@ const WorkTestCaseList = (props) => {
     const [selectIds, setSelectIds] = useState()
     const [selectTestCase, showSelectTestCase] = useState(false);
     useEffect(() => {
-        findTestCasePageByWorkItemId({ workItemId: workId }).then((data) => {
-            setWorkTestCaseList([...data])
-        })
+        searchTestCasePage()
         return;
     }, [workId])
 
+    const searchTestCasePage = () => {
+        findTestCasePageByWorkItemId({ workItemId: workId }).then((data) => {
+            setWorkTestCaseList([...data])
+        })
+    }
     /**
      * 删除事项测试用例
      * @param {测试用例id} id 
@@ -49,9 +52,11 @@ const WorkTestCaseList = (props) => {
                 if (workInfo.workTypeCode === "defect"){
                     deleteWorkItemBindByConditionFn(id, workId)
                 }
-                findTestCasePageByWorkItemId({ workItemId: workId }).then((data) => {
-                    setWorkTestCaseList([...data])
-                })
+                // 需求的话删除用例绑定的需求
+                if (workInfo.workTypeCode === "demand"){
+                    deleteTestCaseDemandByConditionFn(id, workId)
+                }
+                searchTestCasePage()
             }
         })
     }
@@ -67,8 +72,7 @@ const WorkTestCaseList = (props) => {
                     <svg className="menu-icon" aria-hidden="true">
                         <use xlinkHref="#icon-gongneng1"></use>
                     </svg>
-                    {text}
-                    {/*<span onClick={() => goCaseDetail(record)} className={`${record.exist ? "span-botton" : ""}`} >{text}</span>*/}
+                    <span onClick={() => goCaseDetail(record)} className={`${record.exist ? "span-botton" : ""}`} >{text}</span>
 
                 </div>
             ),
@@ -77,7 +81,10 @@ const WorkTestCaseList = (props) => {
             title: "用例",
             dataIndex: "testCaseName",
             key: "testCaseName",
-            width: 150
+            width: 150,
+            render: (text, record) => (
+                <span onClick={() => goCaseDetail(record)} className={`${record.exist ? "span-botton" : ""}`}>{text}</span>
+            ),
         },
         {
             title: "模块",
@@ -150,9 +157,10 @@ const WorkTestCaseList = (props) => {
      */
     const toCaseDetail = (caseType, data) => {
         findSystemUrl({ name: "testhubo" }).then(res => {
-            console.log(JSON.stringify(res))
-            const testUrl = res.systemUrl
-            applyJump(`${testUrl}/#/project/${data.repository.id}/testcase/${caseType}/${data.id}`)
+            // console.log(JSON.stringify(res))
+            // const testUrl = res.systemUrl
+            // applyJump(`${testUrl}/#/project/${data.repository.id}/testcase/${caseType}/${data.id}`)
+            props.history.push(`/project/${projectId}/testcase/caseDetail/${caseType}/${data.id}`)
         })
     }
 
@@ -168,14 +176,25 @@ const WorkTestCaseList = (props) => {
                     <WorkPrivilegeComponent workId={workId} code="WorkTestAdd">
                         <div style={{ display: "flex", alignItems: "center", justifyContent:"flex-end", gap:"10px" }}>
                             {
-                                workInfo.workTypeCode === "demand" &&
-                                <FuncUnitEdit
-                                    categoryStore={CategoryStore}
-                                    name={"添加用例"}
-                                    type={"add"}
-                                    demand={workId}
-                                    workInfo={workInfo}
-                                />
+                                workInfo.workTypeCode === "demand" ?
+                                    <FuncUnitEdit
+                                        categoryStore={CategoryStore}
+                                        name={"添加用例"}
+                                        type={"add"}
+                                        demand={workId}
+                                        workInfo={workInfo}
+                                        searchWorkTestPage={searchTestCasePage}
+                                    />
+                                    :
+                                    <FuncUnitEdit
+                                        categoryStore={CategoryStore}
+                                        name={"添加用例"}
+                                        type={"add"}
+                                        workInfo={workInfo}
+                                        searchWorkTestPage={searchTestCasePage}
+                                    />
+
+
                             }
 
                             <Button

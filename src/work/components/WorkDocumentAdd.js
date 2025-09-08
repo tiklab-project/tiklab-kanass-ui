@@ -93,13 +93,15 @@ const WorkDocumentAddmodal = (props) => {
             title: "标题",
             dataIndex: "documentName",
             key: "title",
-            width: "35%"
+            width: "40%",
+            ellipsis: true,
         },
         {
             title: "知识库",
             dataIndex: "kanassRepositoryName",
             key: "workStatus",
-            width: "20%"
+            width: "20%",
+            ellipsis: true,
         },
         {
             title: "作者",
@@ -107,18 +109,18 @@ const WorkDocumentAddmodal = (props) => {
             key: "assigner",
             width: "10%"
         },
-        {
-            title: '操作',
-            width: "10%",
-            key: 'action',
-            render: (text, record) => (
-                <div style={{ display: "flex", gap: "15px" }}>
-                    <svg className="svg-icon projectSet-action-icon" aria-hidden="true" onClick={() => addWorkItemDocument(record)}>
-                        <use xlinkHref="#icon-add2"></use>
-                    </svg>
-                </div>
-            ),
-        }
+        // {
+        //     title: '操作',
+        //     width: "10%",
+        //     key: 'action',
+        //     render: (text, record) => (
+        //         <div style={{ display: "flex", gap: "15px" }}>
+        //             <svg className="svg-icon projectSet-action-icon" aria-hidden="true" onClick={() => addWorkItemDocument(record)}>
+        //                 <use xlinkHref="#icon-add2"></use>
+        //             </svg>
+        //         </div>
+        //     ),
+        // }
     ];
     const showAddModal = (record) => {
         setCurrentRecord(record)
@@ -298,23 +300,6 @@ const WorkDocumentAddmodal = (props) => {
                             })
                         }
                     </SelectSimple>
-                    {
-                        userList && userList.length > 0 && <SelectSimple name="user"
-                            onChange={(value) => searchUnselectUser(value)}
-                            title={"文档作者"}
-                            suffixIcon = {true}
-                        >
-                            {
-                                userList.map(item => {
-                                    return <SelectItem
-                                        value={item.user?.id}
-                                        label={item.user.nickname}
-                                        key={item.user?.id}
-                                    />
-                                })
-                            }
-                        </SelectSimple>
-                    }
 
                 </div>
                 <div className="document-add-model">
@@ -329,9 +314,9 @@ const WorkDocumentAddmodal = (props) => {
                         //         disabled: record.rele === true
                         //     })
                         // }}
-                        // onRow={(record) =>({
-                        //     onClick: () => handleRowClick(record)
-                        // })}
+                        onRow={(record) =>({
+                            onClick: () => addWorkItemDocument(record)
+                        })}
                         okText="确定"
                         cancelText="取消"
                         pagination={false}

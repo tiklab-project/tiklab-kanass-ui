@@ -37,7 +37,8 @@ const getStore = (productId) =>{
 const WorkTableFilter = (props) => {
     // 查找表单
     const { workStore } = props;
-    const projectId = JSON.parse(localStorage.getItem("project"))?.id;
+    // const projectId = JSON.parse(localStorage.getItem("project"))?.id;
+    const projectId = props.match.params.id;
     // 解析store数据
     const { searchCondition,
         workStatusList, getWorkConditionPage, getWorkConditionPageTree, setViewType, setWorkShowType,

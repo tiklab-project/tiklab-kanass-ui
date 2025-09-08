@@ -245,7 +245,7 @@ const WorkModuleFilter = (props) => {
                 code: value.code
             })
             setTableTitle(value.name)
-            setQuickFilterValue("all")
+            setQuickFilterValue(null)
             setModuleSelect(null)
             setQuickFilterVisible(true)
             setWorkTypeVisible(false)
@@ -506,9 +506,9 @@ const WorkModuleFilter = (props) => {
                 workTypeId: "",
                 moduleIds: []
             }
-            setQuickFilterVisible(true)
-            setWorkTypeVisible(true)
         }
+        setQuickFilterVisible(true)
+        setWorkTypeVisible(true)
 
         if (viewType === "tree"){
             getWorkConditionPageTree(param).then(res => {
@@ -748,7 +748,7 @@ const WorkModuleFilter = (props) => {
                                 <div className="content-module-tree">
                                     <Tree
                                         onExpand={handleExpand}
-                                        switcherIcon={<DownOutlined style={{ fontSize: '14px' }} />}
+                                        switcherIcon={<DownOutlined style={{ fontSize: '12px' }} />}
                                         showLine={false}
                                     >
                                         {

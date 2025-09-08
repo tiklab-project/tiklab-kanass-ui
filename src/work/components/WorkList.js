@@ -36,7 +36,8 @@ const WorkList = (props) => {
      * 获取事项列表
      */
     useEffect(() => {
-        setWorkShowType("list")
+        // setWorkShowType("list")
+        setWorkShowType("table")
         const params = {
             projectId: projectId,
             sprintId: sprintId,

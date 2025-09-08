@@ -24,6 +24,20 @@ export class TestPlanStore {
     }
 
     @action
+    findTestPlanList = async (param) => {
+        const params = {
+            ...param,
+            orderParams: [{name:'createTime', orderType:'desc'}],
+        };
+        const res = await Axios.post("/testPlan/findTestPlanList",params)
+        if(res.code === 0) {
+            // this.totalPage = res.data.totalPage;
+            // this.testPlanList = res.data;
+            return res.data
+        }
+    }
+
+    @action
     findTestPlan = async (id) => {
         const param = new FormData();
         param.append('id', id);

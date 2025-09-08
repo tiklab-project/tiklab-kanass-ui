@@ -3,14 +3,15 @@ import {Dropdown, message, Modal} from "antd";
 import Button from "../../common/button/Button";
 import WorkPrivilegeComponent from "./WorkPrivilegeComponent";
 import WorkDeleteSelectModal from "./WorkDeleteSelectModal";
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {setWorkTitle} from "./WorkArrayChange";
 import {changeWorkItemList} from "./WorkGetList";
 import {getSessionStorage, setSessionStorage} from "../../common/utils/setSessionStorage";
 import {SwapRightOutlined} from "@ant-design/icons";
+import { getUser } from 'tiklab-core-ui'
 
 const WorkDetailTitle = (props) => {
-    const { workInfo, workStore, detailForm, delectCurrentWorkItem } = props
+    const { workInfo, workStore, detailForm, delectCurrentWorkItem, viewFlow, } = props
 
     const { workList, setWorkList, setWorkId, workShowType, workId, editWork,
         setWorkIndex, getWorkTypeList, getModuleList, findSprintList, getSelectUserList,
@@ -23,6 +24,7 @@ const WorkDetailTitle = (props) => {
     const workDetailTop = useRef();
     const inputRef = useRef()
     const [transformList, setTransformList] = useState([])
+    const userId = getUser().userId;
 
     const isPermissionField = (code) => {
         const isEdit = permissionFieldList.indexOf(code) > -1 ? true : false;
@@ -142,13 +144,17 @@ const WorkDetailTitle = (props) => {
 
     }
 
-    const viewFlow = () => {
-        setShowFlow(true)
-        const newDetailCrumbArray = getSessionStorage("detailCrumbArray")
-        newDetailCrumbArray.push({ code: "流程", iconUrl: "flow.png", type: "flow" })
-        setSessionStorage("detailCrumbArray", newDetailCrumbArray)
-        setDetailCrumbArray(getSessionStorage("detailCrumbArray"))
-    }
+    useEffect(() => {
+        getTransitionList(workInfo.workStatusNode.id, workInfo.workType.flow.id)
+    }, []);
+
+    // const viewFlow = () => {
+    //     setShowFlow(true)
+    //     const newDetailCrumbArray = getSessionStorage("detailCrumbArray")
+    //     newDetailCrumbArray.push({ code: "流程", iconUrl: "flow.png", type: "flow" })
+    //     setSessionStorage("detailCrumbArray", newDetailCrumbArray)
+    //     setDetailCrumbArray(getSessionStorage("detailCrumbArray"))
+    // }
     const menu = (
         <div className="work-flow-transition">
             {

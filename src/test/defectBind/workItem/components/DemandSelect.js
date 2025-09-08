@@ -29,13 +29,15 @@ const DemandSelect = (props) =>{
             title:`需求名`,
             dataIndex: "title",
             key: "name",
-            width:"40%"
+            width:"40%",
+            ellipsis: true,
         },
         {
             title:`负责人`,
-            dataIndex: ["assigner","name"],
+            dataIndex: ["assigner","nickname"],
             key: "director",
-            width:"20%"
+            width:"20%",
+            ellipsis: true,
         },
         {
             title:`状态`,
@@ -81,7 +83,7 @@ const DemandSelect = (props) =>{
      */
     const findDemandList = (param)=>{
         let params = {
-            repositoryId:repositoryId,
+            projectId:projectId,
             workTypeCode:"demand",
             pageParam: {
                 pageSize: pageSize,

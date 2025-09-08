@@ -10,7 +10,7 @@ import {DownOutlined} from "@ant-design/icons";
 const WorkFilterSelect = (props) =>{
     const { workStore } = props;
     // 解析store数据
-    const { findStateNodeList, setSearchCondition,setQuickFilterValue, getWorkBoardList, workShowType } = workStore;
+    const { findStateNodeList, setSearchCondition,setQuickFilterValue, getWorkBoardList, workShowType, eveFilterNum } = workStore;
     const projectId = props.match.params.id ? props.match.params.id : null;
     const project = JSON.parse(localStorage.getItem("project"));
     const projectType = projectId ? project?.projectType?.type : "scrum";
@@ -278,6 +278,22 @@ const WorkFilterSelect = (props) =>{
         }
     }
 
+    /**
+     * 设置事项数量
+     * @param {事项数量} num
+     * @returns {事项数量}
+     */
+    const setWorkNum = (num) => {
+        let showNum;
+        const isMax = Math.floor(num / 1000);
+        if(isMax >= 1){
+            showNum = `${isMax}k+`
+        }else {
+            showNum = num;
+        }
+        return showNum;
+    }
+
     return (
         <div className={"work-filter-tabs"}>
             {
@@ -291,7 +307,9 @@ const WorkFilterSelect = (props) =>{
                         }}
                     >
                         {item.label}
-                        {/*<span className="tabs-bar-num">{projectCount[item.value]}</span>*/}
+                        <span className="select-number">
+                            {setWorkNum(eveFilterNum[item.value])}
+                        </span>
                     </div>
                 })
             }
@@ -307,6 +325,9 @@ const WorkFilterSelect = (props) =>{
                                 }}
                             >
                                 {item.label}
+                                <span className="select-number">
+                                    {setWorkNum(eveFilterNum[item.value])}
+                                </span>
                             </Menu.Item>
                         ))}
                     </Menu>

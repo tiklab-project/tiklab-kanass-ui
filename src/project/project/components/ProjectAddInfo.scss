@@ -1,58 +1,60 @@
-.project-select-type {
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-
-    .project-type-head {
-        font-size: 14px;
-        padding-bottom: 8px;
-        line-height: 30px;
-    }
-
-    .project-type-content {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 60%;
-    }
-
-    .project-type-box {
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        border-radius: 4px;
-        padding: 10px 20px;
-        max-width: 300px;
-        background-color: #f9f9f9;
-        .type-icon {
-            width: 30px;
-            height: 30px;
-        }
-        .type-info {
-            margin-left: 20px;
-
-            .type-name {
-                font-weight: bold;
-                height: 30px;
-                line-height: 30px;
-            }
-
-            .type-desc {
-                font-size: var(--tiklab-font-12);
-                color: var(--tiklab-gray-500);
-            }
-        }
-
-    }
-}
 
 .project-addinfo {
     .project-add-form-item{
         overflow: auto;
-        height: calc(100% - 230px);
+        height: calc(100% - 140px);
         margin-bottom: 30px;
         padding: 10px;
+
+        .project-select-type {
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+
+            .project-type-head {
+                font-size: 14px;
+                padding-bottom: 8px;
+                line-height: 30px;
+            }
+
+            .project-type-content {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 60%;
+            }
+
+            .project-type-box {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                border-radius: 4px;
+                padding: 10px 20px;
+                max-width: 300px;
+                background-color: #f9f9f9;
+                .type-icon {
+                    width: 30px;
+                    height: 30px;
+                }
+                .type-info {
+                    margin-left: 20px;
+
+                    .type-name {
+                        font-weight: bold;
+                        height: 30px;
+                        line-height: 30px;
+                    }
+
+                    .type-desc {
+                        font-size: var(--tiklab-font-12);
+                        color: var(--tiklab-gray-500);
+                    }
+                }
+
+            }
+        }
+
 
         .project-select{
             .ant-select-selector{

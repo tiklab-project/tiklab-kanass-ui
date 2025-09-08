@@ -2,6 +2,8 @@ import React from "react";
 import {withRouter} from "react-router";
 import {observer} from "mobx-react";
 import "./WorkDynamicItem.scss"
+import {Span} from "slate";
+import {Space} from "antd";
 
 const WorkDynamicItem = (props) => {
     const { content, type, time } = props;
@@ -33,184 +35,199 @@ const WorkDynamicItem = (props) => {
             case "KANASS_LOGTYPE_PROJECTADD":
                 dom = (
                     <div className="work-dyncmic-content">
-                        <div className="work-dyncmic-work-action">
-                            添加项目
-                            <div className="work-dyncmic-work-title" onClick={() => goDynamicDetail()}>{projectName}</div>
+                        <div>
+                            <div className="work-dyncmic-work-action">
+                                {master} 添加项目
+                            </div>
+                            <div className="work-dyncmic-work-item">
+                                <div className="work-dyncmic-work-title">{projectName}</div>
+                            </div>
                         </div>
-                        <div className="work-dyncmic-work-item">
-                            {master}  {time}
-                        </div>
+                        <div className="work-dyncmic-work-time">{time}</div>
                     </div>
                 )
                 break;
             case "KANASS_LOGTYPE_WORKITEMADD":
                 dom = (
                     <div className="work-dyncmic-content">
-                        <div className="work-dyncmic-work-action">
-                            添加事项
-                            <div className="work-dyncmic-work-title" onClick={() => goDynamicDetail()}>{workItemTitle}</div>
+                        <div>
+                            <div className="work-dyncmic-work-action">
+                                {master} 添加事项
+                            </div>
+                            <div className="work-dyncmic-work-item">
+                                <div className="work-dyncmic-work-title">{workItemTitle}</div>
+                            </div>
                         </div>
-                        <div className="work-dyncmic-work-item">
-                            {master}  {time}
-                        </div>
+                        <div className="work-dyncmic-work-time">{time}</div>
                     </div>
                 )
                 break;
             case "KANASS_LOGTYPE_WORKUPDATESTATUS":
                 dom = (
                     <div className="work-dyncmic-content">
-                        <div className="work-dyncmic-work-action">
-                            修改事项状态
-                            <div className="work-dyncmic-work-title" onClick={() => goDynamicDetail()}>{workItemTitle}</div>
-                            <div
-                                className="work-dyncmic-work-oldvalue"
-                            >
-                                {oldValue.name}
+                        <div>
+                            <div className="work-dyncmic-work-action">
+                                {master.nickname}   修改事项状态
                             </div>
-                            ——>
-                            <div
-                                className="work-dyncmic-work-newValue">
-                                {newValue.name}
-                            </div>
-                        </div>
-                        <div className="work-dyncmic-work-item">
-                            {master.nickname}  {time}
-                        </div>
+                            <div className="work-dyncmic-work-item">
+                                <div style={{display: "flex"}}>
+                                    <div
+                                        className="work-dyncmic-work-oldvalue"
+                                    >
+                                        {oldValue.name}
+                                    </div>
+                                    修改为
+                                    <div
+                                        className="work-dyncmic-work-newValue">
+                                        {newValue.name}
+                                    </div>
+                                </div>
 
+                            </div>
+                        </div>
+                        <div className="work-dyncmic-work-time">{time}</div>
                     </div>
                 )
                 break;
             case "KANASS_LOGTYPE_WORKUPDATEMASTER":
                 dom = (
                     <div className="work-dyncmic-content">
-                        <div className="work-dyncmic-work-action">
-                            修改事项负责人
-                            <div className="work-dyncmic-work-title" onClick={() => goDynamicDetail()}>{workItemTitle}</div>
-                            <div
-                                className="work-dyncmic-work-oldvalue"
-                            >
-                                {oldValue.nickname}
+                        <div>
+                            <div className="work-dyncmic-work-action">
+                                {master.nickname}  修改事项负责人
                             </div>
-                            ——>
-                            <div
-                                className="work-dyncmic-work-newValue">
-                                {newValue.nickname}
+                            <div className="work-dyncmic-work-item">
+                                <div style={{display: "flex"}}>
+                                    <Space>
+                                        <div className="work-dyncmic-work-oldvalue">
+                                            {oldValue.nickname}
+                                        </div>
+                                        修改为
+                                        <div className="work-dyncmic-work-newValue">
+                                            {newValue.nickname}
+                                        </div>
+                                    </Space>
+                                </div>
                             </div>
                         </div>
-                        <div className="work-dyncmic-work-item">
-                            {master.nickname}  {time}
-                        </div>
-
+                        <div className="work-dyncmic-work-time">{time}</div>
                     </div>
                 )
                 break;
             case "KANASS_LOGTYPE_WORKITEMCOMMENTADD":
                 dom = (
                     <div className="work-dyncmic-content">
-                        <div className="work-dyncmic-work-action">
-                            添加事项评论
-                            <div className="work-dyncmic-work-title" onClick={() => goDynamicDetail()}>{workItemTitle}</div>
-                            <div
-                                className="work-dyncmic-work-newValue"
-                            >
-                                {details.length > 10 ? details.substring(0, 10) + "..." : details}
+                        <div>
+                            <div className="work-dyncmic-work-action">
+                                {master}  添加事项评论
+                            </div>
+                            <div className="work-dyncmic-work-item">
+                                <div className="work-dyncmic-work-newValue">
+                                    {details.length > 10 ? details.substring(0, 10) + "..." : details}
+                                </div>
                             </div>
                         </div>
-                        <div className="work-dyncmic-work-item">
-                            {master}  {time}
-                        </div>
+                        <div className="work-dyncmic-work-time">{time}</div>
                     </div>
                 )
                 break;
             case "KANASS_LOGTYPE_WORKITEMTAKEUPTIMEADD":
                 dom = (
                     <div className="work-dyncmic-content">
-                        <div className="work-dyncmic-work-action">
-                            新增登记工时
-                            <div className="work-dyncmic-work-title" onClick={() => goDynamicDetail()}>{workItemTitle}</div>
-                            <div
-                                className="work-dyncmic-work-oldvalue"
-                            >
-                                {oldValue} 小时
+                        <div>
+                            <div className="work-dyncmic-work-action">
+                                {master.nickname}  新增登记工时
                             </div>
-                            ——>
-                            <div
-                                className="work-dyncmic-work-newValue">
-                                {newValue} 小时
+                            <div className="work-dyncmic-work-item">
+                                <div style={{display: "flex"}}>
+                                    <Space>
+                                        <div className="work-dyncmic-work-oldvalue">
+                                            {oldValue}
+                                        </div>
+                                        修改为
+                                        <div className="work-dyncmic-work-newValue">
+                                            {newValue}
+                                        </div>
+                                    </Space>
+                                </div>
                             </div>
                         </div>
-                        <div className="work-dyncmic-work-item">
-                            {master.nickname}  {time}
-                        </div>
+                        <div className="work-dyncmic-work-time">{time}</div>
                     </div>
                 )
                 break;
             case "KANASS_LOGTYPE_WORKUPDATETAKEUPTIME":
                 dom = (
                     <div className="work-dyncmic-content">
-                        <div className="work-dyncmic-work-action">
-                            修改登记工时
-                            <div className="work-dyncmic-work-title" onClick={() => goDynamicDetail()}>{workItemTitle}</div>
-                            <div
-                                className="work-dyncmic-work-oldvalue"
-                            >
-                                {oldValue} 小时
+                        <div>
+                            <div className="work-dyncmic-work-action">
+                                {master.nickname}  修改登记工时
                             </div>
-                            ——>
-                            <div
-                                className="work-dyncmic-work-newValue">
-                                {newValue} 小时
+                            <div className="work-dyncmic-work-item">
+                                <div style={{display: "flex"}}>
+                                    <Space>
+                                        <div className="work-dyncmic-work-oldvalue">
+                                            {oldValue}
+                                        </div>
+                                        修改为
+                                        <div className="work-dyncmic-work-newValue">
+                                            {newValue}
+                                        </div>
+                                    </Space>
+                                </div>
                             </div>
                         </div>
-                        <div className="work-dyncmic-work-item">
-                            {master.nickname}  {time}
-                        </div>
+                        <div className="work-dyncmic-work-time">{time}</div>
                     </div>
                 )
                 break;
             case "KANASS_LOGTYPE_WORKUPDATESURPLUSTIME":
                 dom = (
                     <div className="work-dyncmic-content">
-                        <div className="work-dyncmic-work-action">
-                            修改剩余工时
-                            <div className="work-dyncmic-work-title" onClick={() => goDynamicDetail()}>{workItemTitle}</div>
-                            <div
-                                className="work-dyncmic-work-oldvalue"
-                            >
-                                {oldValue} 小时
+                        <div>
+                            <div className="work-dyncmic-work-action">
+                                {master.nickname}  修改剩余工时
                             </div>
-                            ——>
-                            <div
-                                className="work-dyncmic-work-newValue">
-                                {newValue} 小时
+                            <div className="work-dyncmic-work-item">
+                                <div style={{display: "flex"}}>
+                                    <Space>
+                                        <div className="work-dyncmic-work-oldvalue">
+                                            {oldValue}
+                                        </div>
+                                        修改为
+                                        <div className="work-dyncmic-work-newValue">
+                                            {newValue}
+                                        </div>
+                                    </Space>
+                                </div>
                             </div>
                         </div>
-                        <div className="work-dyncmic-work-item">
-                            {master.nickname}  {time}
-                        </div>
+                        <div className="work-dyncmic-work-time">{time}</div>
                     </div>
                 )
                 break;
             case "KANASS_LOGTYPE_WORKUPDATEMESTIMATETIME":
                 dom = (
                     <div className="work-dyncmic-content">
-                        <div className="work-dyncmic-work-action">
-                            修改预估工时
-                            <div className="work-dyncmic-work-title" onClick={() => goDynamicDetail()}>{workItemTitle}</div>
-                            <div
-                                className="work-dyncmic-work-oldvalue"
-                            >
-                                {oldValue} 小时
+                        <div>
+                            <div className="work-dyncmic-work-action">
+                                {master.nickname} 修改预估工时
                             </div>
-                            ——>
-                            <div
-                                className="work-dyncmic-work-newValue">
-                                {newValue} 小时
+                            <div className="work-dyncmic-work-item">
+                                <div style={{display: "flex"}}>
+                                    <Space>
+                                        <div className="work-dyncmic-work-oldvalue">
+                                            {oldValue}
+                                        </div>
+                                        修改为
+                                        <div className="work-dyncmic-work-newValue">
+                                            {newValue}
+                                        </div>
+                                    </Space>
+                                </div>
                             </div>
                         </div>
-                        <div className="work-dyncmic-work-item">
-                            {master.nickname}  {time}
-                        </div>
+                        <div className="work-dyncmic-work-time">{time}</div>
                     </div>
                 )
                 break;

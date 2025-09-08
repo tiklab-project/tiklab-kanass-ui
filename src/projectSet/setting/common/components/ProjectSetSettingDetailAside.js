@@ -56,7 +56,7 @@ const ProjectSetSettingDetailAside = (props) => {
 
     return (
         <Fragment>
-            <Sider trigger={null} width="200">
+            <Sider trigger={null} >
                 <div className="projectSet-aside">
 
                     <div className="projectSet-title title">

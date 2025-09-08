@@ -34,7 +34,7 @@
         }
 
         .work-add-page-form {
-            overflow: auto;
+            //overflow: auto;
             padding: 0 var(--tiklab-padding);
             min-height: calc(100% - 120px);
             display: flex;
@@ -42,11 +42,44 @@
 
             .left{
                 flex: 1;
+                overflow-y: auto;
+
+                .edit-box {
+                    .rich-edit {
+                        max-height: fit-content !important;
+                    }
+                }
             }
 
             .right{
                 width: 250px;
+                overflow-y: auto;
             }
+            .left::-webkit-scrollbar,
+            .right::-webkit-scrollbar{
+                width: 0 !important;
+            }
+            .left::-webkit-scrollbar-thumb,
+            .right::-webkit-scrollbar-thumb {
+                border-radius: 5px;
+                background: var(--tiklab-gray-400);
+            }
+            .left::-webkit-scrollbar-track,
+            .right::-webkit-scrollbar-track {
+                border-radius: 5px;
+                background: var(--tiklab-gray-800);
+            }
+        }
+
+        /* 强制显示计数器 */
+        .ant-input-show-count::after {
+            //-webkit-appearance: initial !important; /* 恢复默认渲染 */
+            display: block !important;
+            color: rgba(0, 0, 0, 0.45);
+            font-size: 12px;
+            line-height: 1.5;
+            content: attr(data-count);
+            margin-top: 4px;
         }
 
         .work-add-form {
@@ -125,7 +158,7 @@
 
         .ant-upload-drag {
             background: #fafafa;
-            border: 1px solid #d9d9d9;
+            border: 0 solid #d9d9d9 !important;
 
         }
     }

@@ -142,7 +142,7 @@ const ProjectAdd = (props) => {
         <Modal
             title={"添加项目"}
             visible={projectAddVisible}
-            height={550}
+            bodyStyle={{height: "550px"}}
             width={700}
             footer={null}
             onCancel={onCancel}

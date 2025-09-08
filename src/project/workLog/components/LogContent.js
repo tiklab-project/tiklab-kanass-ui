@@ -116,6 +116,7 @@ const LogContent = (props) => {
             key: "workItem",
             align: "left",
             width: "30%",
+            ellipsis: true,
             render: (text, record, index) => <Space onClick={() => goLogDetail(record.id, index)} className="work-name">
                 <ImgComponent
                     src={record.workItem.workTypeSys?.iconUrl}
@@ -172,6 +173,7 @@ const LogContent = (props) => {
             key: "workItem",
             align: "left",
             width: "30%",
+            ellipsis: true,
             render: (text, record, index) => <Space onClick={() => goLogDetail(record.id, index)} className="work-name">
                 <ImgComponent
                     src={record.workItem.workTypeSys?.iconUrl}
@@ -186,7 +188,8 @@ const LogContent = (props) => {
             dataIndex: ["project", "projectName"],
             key: "projectName",
             align: "left",
-            width: "15%"
+            width: "15%",
+            ellipsis: true,
         },
         {
             title: "记录人",

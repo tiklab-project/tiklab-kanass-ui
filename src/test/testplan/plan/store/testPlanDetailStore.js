@@ -23,6 +23,20 @@ export class TestPlanDetailStore {
         }
     }
 
+    @action
+    findBindTestCaseList = async (param) => {
+        const params = {
+            ...param,
+            orderParams: [{name:'id', orderType:'desc'}],
+        };
+        const res = await Axios.post("/testPlanCase/findPlanCaseList",params)
+        if(res.code === 0) {
+            // this.totalRecord = res.data.totalRecord;
+            // this.testPlanDetailList = res.data.dataList;
+            return  res.data
+        }
+    }
+
 
     //点击添加用例，弹框中的查询
     @action

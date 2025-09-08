@@ -5,6 +5,7 @@ import {withRouter} from "react-router";
 import DeleteProjectSetModal from "./DeleteProjectSetModal";
 import EditProjectSetModal from "./EditProjectSetModal";
 import {PrivilegeButton} from "tiklab-privilege-ui";
+import "./ProjectSetOperateSelectModal.scss"
 
 const ProjectSetOperateSelectModal = (props) => {
 
@@ -98,25 +99,24 @@ const ProjectSetOperateSelectModal = (props) => {
     }
 
     const moreMenu = () => {
-        return <Menu onClick={(value) => selectAction(value)}>
+        return <div className="projectSet-dropdown-more">
             <PrivilegeButton code={"project_set_update"}>
-                <Menu.Item key="edit">
+                <div onClick={() => setEditModalVisible(true)} className="dropdown-more-item">
                     <svg style={{marginRight:"5px"}} className="icon-16" aria-hidden="true">
                         <use xlinkHref="#icon-edit"></use>
                     </svg>
                     <span>编辑</span>
-                </Menu.Item>
+                </div>
             </PrivilegeButton>
             <PrivilegeButton code={"project_set_delete"}>
-                <Menu.Item key="delete">
+                <div onClick={() => setDeleteModalVisible(true)} className="dropdown-more-item">
                     <svg style={{marginRight:"5px"}} className="icon-16" aria-hidden="true">
                         <use xlinkHref="#icon-delete"></use>
                     </svg>
                     <span>删除</span>
-                </Menu.Item>
+                </div>
             </PrivilegeButton>
-
-        </Menu>
+        </div>
     };
 
     return (

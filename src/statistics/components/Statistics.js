@@ -23,7 +23,7 @@ const StatisticsContent = (props) => {
 
     return (<Provider {...store}>
             <Layout className="log">
-                <Sider width={200} className="site-layout-background">
+                <Sider className="site-layout-background">
                     <StatisticsAside />
                 </Sider>
 

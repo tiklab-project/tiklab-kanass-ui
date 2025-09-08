@@ -17,7 +17,7 @@ const ProjectSetStatistics = (props) => {
     const route = props.route
     return (
         <Layout className="statistics">
-            <Sider trigger={null} width="250">
+            <Sider trigger={null}>
                 <ProjectSetStatisticsAside {...props} />
             </Sider>
 
