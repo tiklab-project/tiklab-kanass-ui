@@ -77,6 +77,12 @@ const Setting = (props) => {
                                     config={{title:"IP黑白名单", desc:"允许或禁止特定IP地址访问系统，实现网络访问控制"}}
                                 />
                             }
+                            {
+                                selectKey === "/setting/log" &&
+                                <EnhanceEntranceModal
+                                    config={{title:"操作日志", desc:"确保操作的透明性和可追溯性"}}
+                                />
+                            }
 
                             <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
                                 {renderRoutes(selfRouter)}

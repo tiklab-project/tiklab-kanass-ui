@@ -58,7 +58,7 @@ const ProjectStatisticsAsicde = (props) => {
     ]
     
     return (
-       <StatisticsAside workReportList= {workReportList} logReportList = {logReportList} workKey = "work-statistics" logKey = "log-statistics"/>
+       <StatisticsAside workReportList= {workReportList} logReportList = {logReportList} workKey = "work-statistics" logKey = "log-statistics" {...props}/>
     )
 }
 

@@ -3,7 +3,7 @@ import ProductModuleStore from "../store/ProductModuleStore";
 import React, {useEffect, useState} from "react";
 import Button from "../../../common/button/Button";
 import ProductModuleAddModal from "./ProductModuleAddModal";
-import {Col, message, Row, Space, Table} from "antd";
+import {Col, Empty, message, Row, Space, Table} from "antd";
 import InputSearch from "../../../common/input/InputSearch";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import DeleteModal from "../../../common/deleteModal/deleteModal";
@@ -150,6 +150,12 @@ const ProductModuleList = (props) => {
                                 onSearch={onSearch}
                                 pagination={false}
                                 scroll={{x: "100%"}}
+                                locale={{
+                                    emptyText: <Empty
+                                        imageStyle={{height: 100}}
+                                        description={<span>暂无数据</span>}
+                                    />
+                                }}
                             />
 
                         </div>

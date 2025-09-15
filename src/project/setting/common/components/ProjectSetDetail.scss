@@ -46,6 +46,9 @@
                 .project-menu {
                     list-style-type:none;
                     cursor: pointer;
+                    display: block;
+                    flex-direction: column;
+                    gap: 0;
                     .project-menu-submenu {
                         height: 40px;
                         display: flex;
@@ -53,9 +56,17 @@
                         width: 100%;
                         align-items: center;
                         padding-left: 20px;
+                        padding-right: 20px;
+                        justify-content: space-between;
                         i{
                             margin-right: 10px;
                         }
+                    }
+                    .project-submenu-li {
+                        width: 100%;
+                    }
+                    .project-menu {
+                        width: 100%;
                     }
                     .project-menu-submenu:hover {
                         background-color: var(--tiklab-gray-300);

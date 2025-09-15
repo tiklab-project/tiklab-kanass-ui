@@ -9,6 +9,7 @@
 import React from "react";
 import "./DynamicItem.scss"
 import { withRouter } from "react-router";
+import {Space} from "antd";
 const DynamicListItem = (props) => {
     const { content, type, time } = props;
     const data = JSON.parse(content)
@@ -39,12 +40,13 @@ const DynamicListItem = (props) => {
             case "KANASS_LOGTYPE_PROJECTADD":
                 dom = (
                     <div className="dynamic-content">
-                        <div className="dynamic-work-action">
-                            添加项目
-                            <div className="dynamic-work-title" onClick={() => goDynamicDetail()}>{projectName}</div>
-                        </div>
-                        <div className="dynamic-work-item">
-                            {master}
+                        <div>
+                            <div className="dynamic-work-action">
+                                {master} 添加项目
+                            </div>
+                            <div className="dynamic-work-item">
+                                <div className="dynamic-work-title">{projectName}</div>
+                            </div>
                         </div>
                     </div>
                 )
@@ -52,12 +54,13 @@ const DynamicListItem = (props) => {
             case "KANASS_LOGTYPE_WORKITEMADD":
                 dom = (
                     <div className="dynamic-content">
-                        <div className="dynamic-work-action">
-                            添加事项
-                            <div className="dynamic-work-title" onClick={() => goDynamicDetail()}>{workItemTitle}</div>
-                        </div>
-                        <div className="dynamic-work-item">
-                            {master}
+                        <div>
+                            <div className="dynamic-work-action">
+                                {master} 添加事项
+                            </div>
+                            <div className="dynamic-work-item">
+                                <div className="dynamic-work-title">{workItemTitle}</div>
+                            </div>
                         </div>
                     </div>
                 )
@@ -65,65 +68,65 @@ const DynamicListItem = (props) => {
             case "KANASS_LOGTYPE_WORKUPDATESTATUS":
                 dom = (
                     <div className="dynamic-content">
-                        <div className="dynamic-work-action">
-                            修改事项状态
-                            <div className="dynamic-work-title" onClick={() => goDynamicDetail()}>{workItemTitle}</div>
-                            <div
-                                className="dynamic-work-oldvalue"
-                            >
-                                {oldValue.name}
+                        <div>
+                            <div className="dynamic-work-action">
+                                {master.nickname}   修改  {workItemTitle}  事项状态
                             </div>
-                            ——>
-                            <div
-                                className="dynamic-work-newValue">
-                                {newValue.name}
-                            </div>
-                        </div>
-                        <div className="dynamic-work-item">
-                            {master.nickname}
-                        </div>
+                            <div className="dynamic-work-item">
+                                <div style={{display: "flex"}}>
+                                    <div
+                                        className="dynamic-work-oldvalue"
+                                    >
+                                        {oldValue.name}
+                                    </div>
+                                    修改为
+                                    <div
+                                        className="dynamic-work-newValue">
+                                        {newValue.name}
+                                    </div>
+                                </div>
 
+                            </div>
+                        </div>
                     </div>
                 )
                 break;
             case "KANASS_LOGTYPE_WORKUPDATEMASTER":
                 dom = (
                     <div className="dynamic-content">
-                        <div className="dynamic-work-action">
-                            修改事项负责人
-                            <div className="dynamic-work-title" onClick={() => goDynamicDetail()}>{workItemTitle}</div>
-                            <div
-                                className="dynamic-work-oldvalue"
-                            >
-                                {oldValue.nickname}
+                        <div>
+                            <div className="dynamic-work-action">
+                                {master.nickname}  修改  {workItemTitle}  事项负责人
                             </div>
-                            ——>
-                            <div
-                                className="dynamic-work-newValue">
-                                {newValue.nickname}
+                            <div className="dynamic-work-item">
+                                <div style={{display: "flex"}}>
+                                    <Space>
+                                        <div className="dynamic-work-oldvalue">
+                                            {oldValue.nickname}
+                                        </div>
+                                        修改为
+                                        <div className="dynamic-work-newValue">
+                                            {newValue.nickname}
+                                        </div>
+                                    </Space>
+                                </div>
                             </div>
                         </div>
-                        <div className="dynamic-work-item">
-                            {master.nickname}
-                        </div>
-
                     </div>
                 )
                 break;
             case "KANASS_LOGTYPE_WORKITEMCOMMENTADD":
                 dom = (
                     <div className="dynamic-content">
-                        <div className="dynamic-work-action">
-                            添加事项评论
-                            <div className="dynamic-work-title" onClick={() => goDynamicDetail()}>{workItemTitle}</div>
-                            <div
-                                className="dynamic-work-newValue"
-                            >
-                                {details.length > 10 ? details.substring(0, 10) + "..." : details}
+                        <div>
+                            <div className="dynamic-work-action">
+                                {master}  为 {workItemTitle} 添加评论
                             </div>
-                        </div>
-                        <div className="dynamic-work-item">
-                            {master}  {time}
+                            <div className="dynamic-work-item">
+                                <div className="dynamic-work-newValue">
+                                    {details.length > 10 ? details.substring(0, 10) + "..." : details}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 )
@@ -131,22 +134,23 @@ const DynamicListItem = (props) => {
             case "KANASS_LOGTYPE_WORKITEMTAKEUPTIMEADD":
                 dom = (
                     <div className="dynamic-content">
-                        <div className="dynamic-work-action">
-                            新增登记工时
-                            <div className="dynamic-work-title" onClick={() => goDynamicDetail()}>{workItemTitle}</div>
-                            <div
-                                className="dynamic-work-oldvalue"
-                            >
-                                {oldValue} 小时
+                        <div>
+                            <div className="dynamic-work-action">
+                                {master.nickname}  为 {workItemTitle} 新增登记工时
                             </div>
-                            ——>
-                            <div
-                                className="dynamic-work-newValue">
-                                {newValue} 小时
+                            <div className="dynamic-work-item">
+                                <div style={{display: "flex"}}>
+                                    <Space>
+                                        <div className="dynamic-work-oldvalue">
+                                            {oldValue}
+                                        </div>
+                                        修改为
+                                        <div className="dynamic-work-newValue">
+                                            {newValue}
+                                        </div>
+                                    </Space>
+                                </div>
                             </div>
-                        </div>
-                        <div className="dynamic-work-item">
-                            {master.nickname}  {time}
                         </div>
                     </div>
                 )
@@ -154,22 +158,23 @@ const DynamicListItem = (props) => {
             case "KANASS_LOGTYPE_WORKUPDATETAKEUPTIME":
                 dom = (
                     <div className="dynamic-content">
-                        <div className="dynamic-work-action">
-                            修改登记工时
-                            <div className="dynamic-work-title" onClick={() => goDynamicDetail()}>{workItemTitle}</div>
-                            <div
-                                className="dynamic-work-oldvalue"
-                            >
-                                {oldValue} 小时
+                        <div>
+                            <div className="dynamic-work-action">
+                                {master.nickname}  修改 {workItemTitle} 登记工时
                             </div>
-                            ——>
-                            <div
-                                className="dynamic-work-newValue">
-                                {newValue} 小时
+                            <div className="dynamic-work-item">
+                                <div style={{display: "flex"}}>
+                                    <Space>
+                                        <div className="dynamic-work-oldvalue">
+                                            {oldValue}
+                                        </div>
+                                        修改为
+                                        <div className="dynamic-work-newValue">
+                                            {newValue}
+                                        </div>
+                                    </Space>
+                                </div>
                             </div>
-                        </div>
-                        <div className="dynamic-work-item">
-                            {master.nickname}  {time}
                         </div>
                     </div>
                 )
@@ -177,22 +182,23 @@ const DynamicListItem = (props) => {
             case "KANASS_LOGTYPE_WORKUPDATESURPLUSTIME":
                 dom = (
                     <div className="dynamic-content">
-                        <div className="dynamic-work-action">
-                            修改剩余工时
-                            <div className="dynamic-work-title" onClick={() => goDynamicDetail()}>{workItemTitle}</div>
-                            <div
-                                className="dynamic-work-oldvalue"
-                            >
-                                {oldValue} 小时
+                        <div>
+                            <div className="dynamic-work-action">
+                                {master.nickname}  修改 {workItemTitle} 剩余工时
                             </div>
-                            ——>
-                            <div
-                                className="dynamic-work-newValue">
-                                {newValue} 小时
+                            <div className="dynamic-work-item">
+                                <div style={{display: "flex"}}>
+                                    <Space>
+                                        <div className="dynamic-work-oldvalue">
+                                            {oldValue}
+                                        </div>
+                                        修改为
+                                        <div className="dynamic-work-newValue">
+                                            {newValue}
+                                        </div>
+                                    </Space>
+                                </div>
                             </div>
-                        </div>
-                        <div className="dynamic-work-item">
-                            {master.nickname}  {time}
                         </div>
                     </div>
                 )
@@ -200,22 +206,23 @@ const DynamicListItem = (props) => {
             case "KANASS_LOGTYPE_WORKUPDATEMESTIMATETIME":
                 dom = (
                     <div className="dynamic-content">
-                        <div className="dynamic-work-action">
-                            修改预估工时
-                            <div className="dynamic-work-title" onClick={() => goDynamicDetail()}>{workItemTitle}</div>
-                            <div
-                                className="dynamic-work-oldvalue"
-                            >
-                                {oldValue} 小时
+                        <div>
+                            <div className="dynamic-work-action">
+                                {master.nickname} 修改 {workItemTitle} 预估工时
                             </div>
-                            ——>
-                            <div
-                                className="dynamic-work-newValue">
-                                {newValue} 小时
+                            <div className="dynamic-work-item">
+                                <div style={{display: "flex"}}>
+                                    <Space>
+                                        <div className="dynamic-work-oldvalue">
+                                            {oldValue}
+                                        </div>
+                                        修改为
+                                        <div className="dynamic-work-newValue">
+                                            {newValue}
+                                        </div>
+                                    </Space>
+                                </div>
                             </div>
-                        </div>
-                        <div className="dynamic-work-item">
-                            {master.nickname}  {time}
                         </div>
                     </div>
                 )

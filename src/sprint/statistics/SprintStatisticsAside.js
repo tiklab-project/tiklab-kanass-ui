@@ -58,7 +58,7 @@ const SprintStatisticsAside = (props) => {
     ]
 
 
-    return (<StatisticsAside workReportList= {workReportList} logReportList = {logReportList} workKey = "sprint-statistics" logKey = "sprintlog-statistics"/>
+    return (<StatisticsAside workReportList= {workReportList} logReportList = {logReportList} workKey = "sprint-statistics" logKey = "sprintlog-statistics" {...props}/>
     )
 }
 

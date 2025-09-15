@@ -6,7 +6,7 @@
  * @Description: 事项优先级
  */
 import React, { Fragment, useEffect, useRef, useState } from "react";
-import { Input, Space, message, Row, Col, Table } from "antd";
+import {Input, Space, message, Row, Col, Table, Empty} from "antd";
 import WorkPriorityAddmodal from "./WorkPriorityAddModal";
 import { observer, inject, Provider } from "mobx-react";
 import "./WorkPriority.scss";
@@ -170,6 +170,12 @@ const WorkPriority = (props) => {
                     dataSource={workPrioritylist}
                     pagination={false}
                     scroll={{x: "100%"}}
+                    locale={{
+                        emptyText: <Empty
+                            imageStyle={{height: 100}}
+                            description={<span>暂无数据</span>}
+                        />
+                    }}
                 />
             </div>
         </div>

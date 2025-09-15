@@ -26,6 +26,7 @@
         justify-content: space-between;
         width: 100%;
         margin-bottom: 15px;
+        gap: 20px;
 
         .survey-top-left {
             flex: 1;
@@ -237,6 +238,20 @@
             }
         }
 
+        .burn-down-box {
+            width: 50%;
+            flex: 1;
+            flex-shrink: 0;
+            height: auto;
+            padding: var(--tiklab-padding);
+            background-color: #fff;
+            border-radius: 4px;
+            background-color: var(--tiklab-gray-800);
+            .burn-down {
+                width: calc(100% - 20px);
+                height: calc(100% - 20px);
+            }
+        }
     }
 
     .projectSet-survey-middle {

@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-04-09 15:27:15
  */
 import React, { useEffect } from "react";
-import { Breadcrumb, Input, Table, Space, Button, Divider, Layout, Row, Col, } from 'antd';
+import {Breadcrumb, Input, Table, Space, Button, Divider, Layout, Row, Col, Empty,} from 'antd';
 import PlanWorkItemAddmodal from "./PlanWorkItemAdd";
 import { observer, inject } from "mobx-react";
 import { PrivilegeProjectButton } from "tiklab-privilege-ui";
@@ -107,6 +107,12 @@ const PlanWorkItem = (props) => {
                 rowKey={record => record.id}
                 pagination = {false}
                 scroll={{x: "100%"}}
+                locale={{
+                    emptyText: <Empty
+                        imageStyle={{height: 100}}
+                        description={<span>暂无数据</span>}
+                    />
+                }}
             />
 
         </div>

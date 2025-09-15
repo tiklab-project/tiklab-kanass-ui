@@ -1,7 +1,7 @@
 import React from "react";
 import { Provider } from 'mobx-react';
 import CategoryStore from "../../category/store/CategoryStore";
-import FuncUnitStore from "../../function/store/funcUnitStore";
+import FuncUnitStore from "../../function/function/store/funcUnitStore";
 import testPlanStore from "../plan/store/testPlanStore";
 // import WorkItemStore from "../../integrated/teamwire/workItem/store/WorkItemStore";
 import "../plan/components/testPlanStyle.scss"

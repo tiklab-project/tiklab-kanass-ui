@@ -10,6 +10,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { withRouter } from "react-router-dom";
 import { Layout, Button } from "antd";
+import { DownOutlined, UpOutlined } from '@ant-design/icons';
 
 import { useTranslation } from 'react-i18next';
 import { PrivilegeProjectButton, ProjectNav } from "tiklab-privilege-ui";
@@ -25,6 +26,7 @@ const ProjectScrumSetAside = (props) => {
 
     // 菜单是否折叠
     const [isShowText, SetIsShowText] = useState(true)
+    const [expandedTree, setExpandedTree] = useState([])
 
 
 
@@ -45,6 +47,66 @@ const ProjectScrumSetAside = (props) => {
 
     }
 
+    const isExpandedTree = (key) => {
+        return expandedTree.some(item => item === key)
+    }
+
+    const setOpenOrClose = key => {
+        if (isExpandedTree(key)) {
+            setExpandedTree(expandedTree.filter(item => item !== key))
+        } else {
+            setExpandedTree(expandedTree.concat(key))
+        }
+    }
+
+    const renderMenu = (item, deep = 0) => {
+        return (
+            <PrivilegeProjectButton code={item.purviewCode} disabled={"hidden"} domainId={projectId}  {...props}>
+                <li className={`project-menu-submenu ${item.id === selectKey ? "project-menu-select" : ""}`}
+                    key={item.id}
+                    onClick={() => selectKeyFun(item.id)}
+                    style={{ paddingLeft: `${deep * 20 + 20}px` }}
+                >
+                    <span className={`${isShowText ? "" : "project-notext"}`}>
+                        {item.title}
+                    </span>
+                </li>
+            </PrivilegeProjectButton>
+        )
+    }
+
+    const renderSubMenu = (item, deep = 0) => {
+        return (
+            <li key={item.id} className="project-submenu-li">
+                <div className={`project-menu-submenu ${item.id === selectKey ? "project-menu-select" : ""}`}
+                    onClick={() => setOpenOrClose(item.id)}
+                    style={{ paddingLeft: `${deep * 20 + 20}px` }}
+                >
+                    <span className={`${isShowText ? "" : "project-notext"}`}>
+                        {item.title}
+                    </span>
+                    <span style={{ float: "right" }}>
+                        {
+                            item.children ?
+                                (isExpandedTree(item.id) ?
+                                    <DownOutlined style={{ fontSize: "10px" }} /> :
+                                    <UpOutlined style={{ fontSize: "10px" }} />
+                                ) : null
+                        }
+                    </span>
+                </div>
+                <ul className={`project-menu ${isExpandedTree(item.id) ? "" : "hidden-menu"}`}>
+                    {
+                        item.children && item.children.map(child => (
+                            child.children && child.children.length ?
+                                renderSubMenu(child, deep + 1) : renderMenu(child, deep + 1)
+                        ))
+                    }
+                </ul>
+            </li>
+        )
+    }
+
     return (
         <Fragment>
             <Sider trigger={null} collapsible collapsed={!isShowText} collapsedWidth="50">
@@ -61,22 +123,10 @@ const ProjectScrumSetAside = (props) => {
                     >
                         <ul className="project-menu">
                             {
-                                prorouter && prorouter.map(item => {
-                                    
-                                    return (
-                                        <PrivilegeProjectButton code={item.purviewCode} disabled={"hidden"} domainId={projectId}  {...props}>
-                                        <div className={`project-menu-submenu ${item.id === selectKey ? "project-menu-select" : ""}`}
-                                        key={item.id}
-                                        onClick={() => selectKeyFun(item.id)}
-                                    >
-                                        <span className={`${isShowText ? "" : "project-notext"}`}>
-                                            {item.title}
-                                        </span>
-                                    </div>
-                                    </PrivilegeProjectButton>
-                                    )
-                                    
-                                })
+                                prorouter && prorouter.map(item => (
+                                    item.children && item.children.length > 0 ?
+                                        renderSubMenu(item, 0) : renderMenu(item, 0)
+                                ))
                             }
                         </ul>
                     </ProjectNav>

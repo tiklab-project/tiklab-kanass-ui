@@ -7,7 +7,7 @@
         line-height: 32px;
     }
     .work-title {
-        color: var(--tiklab-blue);
+        //color: var(--tiklab-blue);
         cursor: pointer;
         display: flex;
         align-items: center;
@@ -16,7 +16,8 @@
             text-overflow: ellipsis;
             white-space: nowrap;
             overflow: hidden;
-            width: 300px;
+            flex: 1;
+            //width: 300px;
         }
     }
     .child-create-input {
@@ -64,12 +65,12 @@
     }
 
     .work-status-process {
-        background: #b0d5dfa1;
-        color: #132c33;
+        background: #e2e1e4;
+        color: #5e5314;
     }
 
     .work-status-done {
-        background: #dfecd5e3;
+        background: #e2e1e4;
         color: #5e5314;
     }
 

@@ -70,35 +70,43 @@ const ProjectScrumSet = (props) => {
             // purviewCode: "ProjectMessagenotice"
         },
         {
-            title: "事项类型",
+            title: "项目配置",
             icon: 'survey',
-            id: `/project/${projectId}/set/projectWorkType`,
-            encoded: "WorkType",
-            // purviewCode: "ProjectWorkType",
+            id: `/project/${projectId}/set/projectSetting`,
+            encoded: "projectSetting",
+            children: [
+                {
+                    title: "事项类型",
+                    icon: 'survey',
+                    id: `/project/${projectId}/set/projectWorkType`,
+                    encoded: "WorkType",
+                    // purviewCode: "ProjectWorkType",
+                },
+                {
+                    title: "流程",
+                    icon: 'survey',
+                    id: `/project/${projectId}/set/projectFlow`,
+                    encoded: "WorkFlow",
+                    // purviewCode: "ProjectFlow"
+                },
+                {
+                    title: "表单",
+                    icon: 'survey',
+                    id: `/project/${projectId}/set/projectForm`,
+                    encoded: "WorkForm",
+                    // purviewCode: "ProjectForm"
+                },
+                {
+                    title: `${t('module')}`,
+                    icon: 'survey',
+                    id: `/project/${projectId}/set/module`,
+                    encoded: "Module",
+                    // purviewCode: "ProjectModule"
+                },
+            ]
         },
         {
-            title: "流程",
-            icon: 'survey',
-            id: `/project/${projectId}/set/projectFlow`,
-            encoded: "WorkFlow",
-            // purviewCode: "ProjectFlow"
-        },
-        {
-            title: "表单",
-            icon: 'survey',
-            id: `/project/${projectId}/set/projectForm`,
-            encoded: "WorkForm",
-            // purviewCode: "ProjectForm"
-        },
-        {
-            title: `${t('module')}`,
-            icon: 'survey',
-            id: `/project/${projectId}/set/module`,
-            encoded: "Module",
-            // purviewCode: "ProjectModule"
-        },
-        {
-            title: "集成",
+            title: "服务集成",
             icon: 'survey',
             id: `/project/${projectId}/set/integration`,
             encoded: "integration",

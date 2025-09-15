@@ -4,13 +4,14 @@
  */
 import React, {useState} from 'react';
 import { observer, inject } from "mobx-react";
-import {Modal, Table,  Row, Col, Input} from 'antd';
+import {Modal, Table, Row, Col, Input, Empty} from 'antd';
 import {showCaseTypeTable, showCaseTypeView, showStatus} from "../../../../common/caseCommon/CaseCommonFn";
 import testPlanDetailStore from "../store/testPlanDetailStore";
 import PaginationCommon from "../../../../common/caseCommon/pagination/Page";
 import IconBtn from "../../../../common/caseCommon/iconBtn/IconBtn";
 import {debounce} from "../../../../common/caseCommon/CaseCommonFn";
 import {SearchOutlined} from "@ant-design/icons";
+import Button from "../../../../common/button/Button";
 
 // 添加与编辑
 const TestPlanBindCaseModal = (props) => {
@@ -26,7 +27,7 @@ const TestPlanBindCaseModal = (props) => {
             width:'40%',
             render: (text,record) =>(
                 <div className={"display-flex-gap"}>
-                    <>{showCaseTypeView(record.caseType)}</>
+                    <>{showCaseTypeView(record.caseType, "icon-20")}</>
                     {/*{switchCaseTypeView(record)}*/}
                     <span className={"link-text"}>{record.name}</span>
                 </div>
@@ -38,13 +39,15 @@ const TestPlanBindCaseModal = (props) => {
             key: "caseType",
             width:"12%",
             render: (text) =>(<div className={"case-table-case-type"}>{showCaseTypeTable(text)}</div>)
-        },{
-            title: `状态`,
-            dataIndex: "status",
-            key: "status",
-            width:"12%",
-            render: (text)=><div className={"case-table-status"}>{showStatus(text)}</div>
-        }, {
+        },
+        // {
+        //     title: `状态`,
+        //     dataIndex: "status",
+        //     key: "status",
+        //     width:"12%",
+        //     render: (text)=><div className={"case-table-status"}>{showStatus(text)}</div>
+        // },
+        {
             title: `模块`,
             dataIndex: ["category","name"],
             key: "category",
@@ -150,10 +153,9 @@ const TestPlanBindCaseModal = (props) => {
 
     return (
         <>
-            <IconBtn
-                className="pi-icon-btn-grey"
+            <Button
+                buttonText={"关联用例"}
                 onClick={showModal}
-                name={"关联用例"}
             />
             <Modal
                 title="未关联用例"
@@ -206,7 +208,12 @@ const TestPlanBindCaseModal = (props) => {
                                 //         : false
                                 // }),
                             }}
-
+                            locale={{
+                                emptyText: <Empty
+                                    imageStyle={{height: 100}}
+                                    description={<span>暂无数据</span>}
+                                />
+                            }}
                             pagination={false}
                         />
                         <PaginationCommon

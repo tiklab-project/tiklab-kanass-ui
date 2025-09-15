@@ -333,6 +333,12 @@ const TestRepository = (props) => {
                                         <Empty description={"暂无数据"}/>
                                     )
                                 }}
+                                locale={{
+                                    emptyText: <Empty
+                                        imageStyle={{height: 100}}
+                                        description={<span>暂无数据</span>}
+                                    />
+                                }}
                             />
                             <PaginationCommon
                                 currentPage={testCaseCondition.pageParam.currentPage}

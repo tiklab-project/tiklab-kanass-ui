@@ -391,7 +391,12 @@ const ProductTable = (props) => {
                                 scroll={{
                                     x: "100%"
                                 }}
-
+                                locale={{
+                                    emptyText: <Empty
+                                        imageStyle={{height: 100}}
+                                        description={<span>暂无数据</span>}
+                                    />
+                                }}
                             />
                         </Spin>
                     </div>

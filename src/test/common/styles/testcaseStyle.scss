@@ -57,6 +57,7 @@
 
     .ant-input{
         background: #fafafa;
+        padding: 0;
     }
 
     .ant-input:hover{
@@ -319,21 +320,30 @@
 }
 
 .step-item-box{
-    margin: 10px 0;
+    //margin: 10px 0;
     padding: 5px;
-    border-radius: 5px;
+    //border-radius: 5px;
     position: relative;
     background: #f9fafb;
     border: 1px solid #f5f5f5;
 
-    &-icon{
-        margin-right: 10px;
+    .step-item-box-icon {
         cursor: move;
-        color: #e4e4e4;
+        display: flex;
+        align-items: center;
+        margin-right: 10px;
+    }
 
-        &:hover{
-            color: #666;
-        }
+    .step-item-box-index {
+        margin-left: 5px;
+    }
+
+    .step-item-box-text {
+        padding: 6px;
+        display: flex;
+        height: -webkit-fill-available;
+        align-items: center;
+        //background-color: #fff;
     }
 
     .case-step-header-title{
@@ -374,12 +384,21 @@
 
 .step-item-content {
     display: flex;
-    align-items: center;
-    gap: 10px;
+    align-items: stretch;
+    gap: 0;
     //background: var(--pi-bg-grey-100);
-    padding: 5px;
+    padding: 0;
     //border: 1px solid var(--pi-border-color);
     font-size: 14px;
+
+    .ant-input {
+        background-color: #fff;
+    }
+}
+
+.step-item-box-operate {
+    display: flex;
+    justify-content: center;
 }
 
 .case-drawer-box{
@@ -542,4 +561,58 @@
     right: 30px;
     top: 38px;
     z-index: 10;
+}
+
+.text-display {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    line-height: 1.5;
+    min-height: 20px;
+    padding: 2px 0;
+    width: 100%;
+}
+
+// 简洁分隔线：用于测试步骤每列
+
+.step-row {
+    display: flex;
+    align-items: stretch;
+    //border-bottom: 1px solid #eee;
+}
+
+.step-cell {
+    position: relative;
+    //padding: 6px 10px;
+    display: flex;
+    align-items: stretch;
+}
+
+// 列之间的竖向分隔线
+.step-cell + .step-cell {
+    border-left: none;
+}
+
+// 使用伪元素绘制满高的竖线，避免因内边距或内容高度不同导致分割线不齐
+.step-cell + .step-cell:not(:last-child)::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #eee;
+}
+
+// 操作列右对齐
+.step-cell:last-child {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+// 序号与拖拽图标所在列的轻微弱化背景，保持克制
+.step-row .step-item-box-icon {
+    background-color: #fafafa;
+    padding: 2px 4px;
+    border-radius: 4px;
 }

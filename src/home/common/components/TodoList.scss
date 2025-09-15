@@ -27,6 +27,10 @@
     flex-wrap: wrap;
     gap: 10px;
 
+    .select-content {
+      min-width: 150px;
+    }
+
     .table-top-left{
       display: flex;
       align-items: center;
@@ -198,12 +202,12 @@
     }
 
     .work-status-process {
-      background: #b0d5dfa1;
-      color: #132c33;
+      background: #e2e1e4;
+      color: #5e5314;
     }
 
     .work-status-done {
-      background: #dfecd5e3;
+      background: #e2e1e4;
       color: #5e5314;
     }
 

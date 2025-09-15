@@ -7,7 +7,7 @@
  * @LastEditTime: 2024-12-18 17:23:15
  */
 import React, { useEffect, useState } from "react";
-import {Input, Table, Space, Row, Col, message} from "antd";
+import {Input, Table, Space, Row, Col, message, Empty} from "antd";
 import ModuleAddmodal from "./ModuleAddModal";
 import "../components/module.scss";
 import Breadcumb from "../../../../common/breadcrumb/Breadcrumb";
@@ -191,6 +191,12 @@ const ModuleList = (props) => {
                                 onSearch={onSearch}
                                 pagination={false}
                                 scroll={{x: "100%"}}
+                                locale={{
+                                    emptyText: <Empty
+                                        imageStyle={{height: 100}}
+                                        description={<span>暂无数据</span>}
+                                    />
+                                }}
                             />
                             
                         </div>

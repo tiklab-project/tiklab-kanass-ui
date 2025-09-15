@@ -8,7 +8,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
-import { Space, Table } from 'antd';
+import {Empty, Space, Table} from 'antd';
 import "./WorkFunctionList.scss"
 import Breadcrumb from '../../../common/breadcrumb/Breadcrumb';
 import Button from '../../../common/button/Button';
@@ -103,6 +103,12 @@ const WorkFunctionList = () => {
                         onExpand: onExpand
                     }}
                     scroll={{x: "100%"}}
+                    locale={{
+                        emptyText: <Empty
+                            imageStyle={{height: 100}}
+                            description={<span>暂无数据</span>}
+                        />
+                    }}
                 />
             </DndProvider>
         </div>

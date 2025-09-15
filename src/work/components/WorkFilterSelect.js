@@ -3,7 +3,7 @@ import {inject, observer} from "mobx-react";
 import React, {useEffect, useRef, useState} from "react";
 import {searchWorkList, setWorkDeatilInList} from "./WorkSearch";
 import {getUser} from "tiklab-core-ui";
-import "./WorkFilterSelect.scss"
+import "./WorkFilterTab.scss"
 import {Dropdown, Menu} from "antd";
 import {DownOutlined} from "@ant-design/icons";
 
@@ -23,12 +23,12 @@ const WorkFilterSelect = (props) =>{
     const dropDown = useRef();
     const [title, setTitle] = useState("")
 
-    const [selectTab, setSelectTab] = useState("all");
+    const [selectTab, setSelectTab] = useState(null);
 
     const quickFilterList = [
         {
             value: "all",
-            label: "所有"
+            label: "所有事项"
         },
         {
             value: "pending",
@@ -42,6 +42,14 @@ const WorkFilterSelect = (props) =>{
             value: "assigner",
             label: "我负责的"
         },
+        {
+            value: "creat",
+            label: "我创建的"
+        },
+        {
+            value: "overdue",
+            label: "已逾期"
+        }
     ]
 
     const quickFilterDropDownList = [
@@ -66,8 +74,7 @@ const WorkFilterSelect = (props) =>{
      */
     const selectType = (value) => {
         // setQuickFilterValue(value)
-        setSelectTab(value)
-        console.log("筛选条件++++++" + JSON.stringify(value))
+        // setSelectTab(value)
         if (!value) {
             getAllWorkItem();
             return
@@ -295,93 +302,52 @@ const WorkFilterSelect = (props) =>{
     }
 
     return (
-        <div className={"work-filter-tabs"}>
-            {
-                quickFilterList.map(item => {
-                    return <div
-                        className={`filter-tab ${selectTab === item.value ? "active-tabs" : ""}`}
-                        key={item.value}
-                        onClick={() => {
-                            selectType(item.value)
-                            setTitle("")
-                        }}
-                    >
-                        {item.label}
-                        <span className="select-number">
-                            {setWorkNum(eveFilterNum[item.value])}
-                        </span>
+        <div className="worktype-select" ref={dropdownRef}>
+                <div
+                    className="select-content"
+                    onClick={() => setShowDropdown(!showDropdown)}
+                >
+                    <span className="select-view-text">
+                      {!selectTab ? "所有事项" : selectTab}
+
+                    </span>
+                    <div className="select-view-icon">
+                        {
+                            selectTab ?
+                            <svg className="svg-icon" aria-hidden="true" onClick={(e) => clearSelect(e)}>
+                                <use xlinkHref="#icon-cancel"></use>
+                            </svg>
+                            :
+                            <svg className="svg-icon" aria-hidden="true">
+                                <use xlinkHref="#icon-downdrop"></use>
+                            </svg>
+                        }
                     </div>
-                })
-            }
-            <Dropdown
-                overlay={
-                    <Menu>
-                        {quickFilterDropDownList.map(item => (
-                            <Menu.Item
+
+                </div>
+
+                {showDropdown && (
+                    <div className="worktype-dropdown" ref={dropDown}>
+                        {/* 系统类型选项 */}
+                        {quickFilterList?.map(item => (
+                            <div
                                 key={item.value}
+                                className={`worktype-option ${selectTab === item.label ? "selected" : ""}`}
                                 onClick={() => {
-                                    selectType(item.value)
-                                    setTitle(item.label)
+                                    setSelectTab(item.label)
+                                    selectType(item.value);
+                                    setShowDropdown(false);
                                 }}
                             >
                                 {item.label}
                                 <span className="select-number">
                                     {setWorkNum(eveFilterNum[item.value])}
                                 </span>
-                            </Menu.Item>
+                            </div>
                         ))}
-                    </Menu>
-                }
-                placement="bottomLeft"
-            >
-                <div className={`filter-tab ${title !== "" ? "active-tabs":""}`}>
-                    {title} <DownOutlined />
-                </div>
-            </Dropdown>
+                    </div>
+                )}
         </div>
-        // <div className="worktype-select" ref={dropdownRef}>
-        //         <div
-        //             className="select-content"
-        //             onClick={() => setShowDropdown(!showDropdown)}
-        //         >
-        //             <span className="select-view-text">
-        //               {!selectTab ? "所有事项" : selectTab}
-        //
-        //             </span>
-        //             <div className="select-view-icon">
-        //                 {
-        //                     selectTab ?
-        //                     <svg className="svg-icon" aria-hidden="true" onClick={(e) => clearSelect(e)}>
-        //                         <use xlinkHref="#icon-cancel"></use>
-        //                     </svg>
-        //                     :
-        //                     <svg className="svg-icon" aria-hidden="true">
-        //                         <use xlinkHref="#icon-downdrop"></use>
-        //                     </svg>
-        //                 }
-        //             </div>
-        //
-        //         </div>
-        //
-        //         {showDropdown && (
-        //             <div className="worktype-dropdown" ref={dropDown}>
-        //                 {/* 系统类型选项 */}
-        //                 {quickFilterList?.map(item => (
-        //                     <div
-        //                         key={item.value}
-        //                         className={`worktype-option ${selectTab === item.value ? "selected" : ""}`}
-        //                         onClick={() => {
-        //                             setSelectTab(item.label)
-        //                             selectType(item.value);
-        //                             setShowDropdown(false);
-        //                         }}
-        //                     >
-        //                         {item.label}
-        //                     </div>
-        //                 ))}
-        //             </div>
-        //         )}
-        // </div>
     );
 }
 

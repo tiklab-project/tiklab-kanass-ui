@@ -149,79 +149,79 @@ const WorkRelationAddModal = (props) => {
                     </div>
                     <div className="relation-add-search">
                         <InputSearch style={{ minWidth: "150px", flex: 1 }} onChange={(value) => searchUnselectWorkRelationByTitle(value)} placeholder={"搜索事项"} />
-                        <SelectSimple name="workTypeIds"
-                            onChange={(value) => searchUnselectWorkRelationByStatus("workTypeIds", value)}
-                            title={"事项类型"} ismult={true}
-                        >
-                            {
-                                workTypeList.map(item => {
-                                    return <SelectItem
-                                        value={item.workType.id}
-                                        label={item.workType.name}
-                                        key={item.workType.id}
-                                        imgUrl={`${item.workType.iconUrl}`}
-                                    />
-                                })
-                            }
-                        </SelectSimple>
-                        {
-                            workStatusList && workStatusList.length > 0 && <SelectSimple
-                                name="workStatus"
-                                onChange={(value) => searchUnselectWorkRelationByStatus("workStatusIds", value)}
-                                title={"状态"}
-                                ismult={true}
-                            >
-                                <div className="select-group-title">未开始</div>
-                                {
-                                    workStatusList.map(item => {
-                                        if (item.id === "todo") {
-                                            return <SelectItem
-                                                value={item.id}
-                                                label={item.name}
-                                                key={item.id}
-                                                imgUrl={item.iconUrl}
-                                            />
-                                        } else {
-                                            return <div></div>
-                                        }
+                        {/*<SelectSimple name="workTypeIds"*/}
+                        {/*    onChange={(value) => searchUnselectWorkRelationByStatus("workTypeIds", value)}*/}
+                        {/*    title={"事项类型"} ismult={true}*/}
+                        {/*>*/}
+                        {/*    {*/}
+                        {/*        workTypeList.map(item => {*/}
+                        {/*            return <SelectItem*/}
+                        {/*                value={item.workType.id}*/}
+                        {/*                label={item.workType.name}*/}
+                        {/*                key={item.workType.id}*/}
+                        {/*                imgUrl={`${item.workType.iconUrl}`}*/}
+                        {/*            />*/}
+                        {/*        })*/}
+                        {/*    }*/}
+                        {/*</SelectSimple>*/}
+                        {/*{*/}
+                        {/*    workStatusList && workStatusList.length > 0 && <SelectSimple*/}
+                        {/*        name="workStatus"*/}
+                        {/*        onChange={(value) => searchUnselectWorkRelationByStatus("workStatusIds", value)}*/}
+                        {/*        title={"状态"}*/}
+                        {/*        ismult={true}*/}
+                        {/*    >*/}
+                        {/*        <div className="select-group-title">未开始</div>*/}
+                        {/*        {*/}
+                        {/*            workStatusList.map(item => {*/}
+                        {/*                if (item.id === "todo") {*/}
+                        {/*                    return <SelectItem*/}
+                        {/*                        value={item.id}*/}
+                        {/*                        label={item.name}*/}
+                        {/*                        key={item.id}*/}
+                        {/*                        imgUrl={item.iconUrl}*/}
+                        {/*                    />*/}
+                        {/*                } else {*/}
+                        {/*                    return <div></div>*/}
+                        {/*                }*/}
 
-                                    })
-                                }
-                                <div className="select-group-title">进行中</div>
-                                {
-                                    workStatusList.map(item => {
-                                        if (item.id !== "todo" && item.id !== "done" && item.id !== "start") {
-                                            return <SelectItem
-                                                value={item.id}
-                                                label={item.name}
-                                                key={item.id}
-                                                imgUrl={item.iconUrl}
-                                            />
-                                        } else {
-                                            return <div></div>
-                                        }
+                        {/*            })*/}
+                        {/*        }*/}
+                        {/*        <div className="select-group-title">进行中</div>*/}
+                        {/*        {*/}
+                        {/*            workStatusList.map(item => {*/}
+                        {/*                if (item.id !== "todo" && item.id !== "done" && item.id !== "start") {*/}
+                        {/*                    return <SelectItem*/}
+                        {/*                        value={item.id}*/}
+                        {/*                        label={item.name}*/}
+                        {/*                        key={item.id}*/}
+                        {/*                        imgUrl={item.iconUrl}*/}
+                        {/*                    />*/}
+                        {/*                } else {*/}
+                        {/*                    return <div></div>*/}
+                        {/*                }*/}
 
-                                    })
-                                }
+                        {/*            })*/}
+                        {/*        }*/}
 
 
-                                <div className="select-group-title">已完成</div>
-                                {
-                                    workStatusList.map(item => {
-                                        if (item.id === "done") {
-                                            return <SelectItem
-                                                value={item.id}
-                                                label={item.name}
-                                                key={item.id}
-                                                imgUrl={item.iconUrl}
-                                            />
-                                        } else {
-                                            return <div></div>
-                                        }
-                                    })
-                                }
-                            </SelectSimple>
-                        }
+                        {/*        <div className="select-group-title">已完成</div>*/}
+                        {/*        {*/}
+                        {/*            workStatusList.map(item => {*/}
+                        {/*                if (item.id === "done") {*/}
+                        {/*                    return <SelectItem*/}
+                        {/*                        value={item.id}*/}
+                        {/*                        label={item.name}*/}
+                        {/*                        key={item.id}*/}
+                        {/*                        imgUrl={item.iconUrl}*/}
+                        {/*                    />*/}
+                        {/*                } else {*/}
+                        {/*                    return <div></div>*/}
+                        {/*                }*/}
+                        {/*            })*/}
+                        {/*        }*/}
+                        {/*    </SelectSimple>*/}
+                        {/*}*/}
                     </div>
                     <div className="relation-add-table">
                         {
@@ -237,7 +237,7 @@ const WorkRelationAddModal = (props) => {
                                                             className="img-icon-right"
                                                             src={item.workTypeSys?.iconUrl}
                                                         />
-                                                        <div className="work-item-id">{item.code}</div>
+                                                        {/*<div className="work-item-id">{item.code}</div>*/}
                                                     </div>
                                                     <div className="work-item-title">{item.title} </div>
 

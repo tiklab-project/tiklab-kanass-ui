@@ -113,7 +113,7 @@ const AppraisedAddModal = (props) => {
                     project: res.data.project.id,
                     master: res.data.builder.id,
                     appraisedType: res.data.appraisedType.id,
-                    stage:res.data.stage.id,
+                    stage:res.data.stage?.id,
                     startTime: res.data.startTime ? [moment(res.data.startTime, dateFormat), moment(res.data.endTime, dateFormat)] : null,
                     appraisedState: res.data.appraisedState,
                     description: res.data.description

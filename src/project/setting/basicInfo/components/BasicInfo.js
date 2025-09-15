@@ -269,7 +269,7 @@ const BasicInfo = props => {
                                 {/*</Form.Item>*/}
 
                                 <Form
-                                    {...layout}
+                                    layout="vertical"
                                     name="basic"
                                     initialValues={{
                                         remember: true,

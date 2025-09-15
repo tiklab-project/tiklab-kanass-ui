@@ -2,23 +2,26 @@ import React, {useCallback, useEffect, useRef, useState} from "react";
 import {inject, observer} from "mobx-react";
 import "../functionStyle.scss"
 import FunctionDetail from "../FunctionDetail";
-import EditableTitle from "../../../../common/caseCommon/EditableTitle";
-import {CASE_TYPE} from "../../../../common/dictionary/dictionary";
+import EditableTitle from "../../../../../common/caseCommon/EditableTitle";
+import {CASE_TYPE} from "../../../../../common/dictionary/dictionary";
 import {useParams} from "react-router";
 import {LeftOutlined} from "@ant-design/icons";
-import PageCenter from "../../../../common/caseCommon/PageCenter";
+import PageCenter from "../../../../../common/caseCommon/PageCenter";
 import {Button, Col, Form, Row, Select, Space, TreeSelect} from "antd";
-import HideDelete from "../../../../common/caseCommon/hideDelete/HideDelete";
+import HideDelete from "../../../../../common/caseCommon/hideDelete/HideDelete";
 import TextArea from "antd/es/input/TextArea";
 import FuncUnitStepTable from "../FunctionStepList";
-import WorkItemBindList from "../../../defectBind/defect/components/CaseBindDefectList";
-import {showCaseTypeInList} from "../../../../common/caseCommon/CaseCommonFn";
-import Demand from "../../../defectBind/workItem/components/Demand";
-import IconCommon from "../../../../common/caseCommon/IconCommon";
-import Breadcumb from "../../../../common/breadcrumb/Breadcrumb";
-import CategoryStore from "../../../category/store/CategoryStore";
+import WorkItemBindList from "../../../../defectBind/defect/components/CaseBindDefectList";
+import {showCaseTypeInList} from "../../../../../common/caseCommon/CaseCommonFn";
+import Demand from "../../../../defectBind/workItem/components/Demand";
+import IconCommon from "../../../../../common/caseCommon/IconCommon";
+import Breadcumb from "../../../../../common/breadcrumb/Breadcrumb";
+import CategoryStore from "../../../../category/store/CategoryStore";
 import {Axios} from "tiklab-core-ui";
 import "./FunctionContentListView.scss"
+import UserIcon from "../../../../../common/UserIcon/UserIcon";
+import FunctionDetailBottom from "../FunctionDetailBottom";
+import FunctionInstanceList from "../FunctionInstanceList";
 
 const FunctionContentListView = (props) =>{
     const {funcUnitStore,testcaseStore} = props;
@@ -26,6 +29,7 @@ const FunctionContentListView = (props) =>{
     const {testCaseInfo,funcUnitInfo,updateFuncUnit,findFuncUnit} = funcUnitStore
     const {findCategoryListTreeTable,categoryTableList} = CategoryStore;
     const {caseId} = useParams()
+    const {testPlanId} = useParams()
     const functionId = caseId;
     const projectId = localStorage.getItem("projectId")
     const detailRef = useRef();
@@ -201,10 +205,24 @@ const FunctionContentListView = (props) =>{
                                         <FuncUnitStepTable functionId={functionId} {...props} />
                                     </div>
                                 </div>
-                                <WorkItemBindList
-                                    caseId={functionId}
-                                    smallTableHead={true}
-                                />
+                                <div>
+                                    {
+                                        testPlanId &&
+                                        <FunctionDetailBottom
+                                            testPlanId={testPlanId}
+                                            caseId={functionId}
+                                            {...props}
+                                        />
+                                    }
+                                </div>
+                                {
+                                    !testPlanId && (
+                                        <FunctionInstanceList
+                                            caseId={functionId}
+                                            inDetail={true}
+                                        />
+                                    )
+                                }
                             </div>
                             <div className={"func-detail-right"}>
                                 <div className="case-header-key">
@@ -239,40 +257,25 @@ const FunctionContentListView = (props) =>{
                                                 <Select
                                                     className={"func-select"}
                                                     bordered={false}
-                                                    placeholder={"未设置"}
+                                                    placeholder={
+                                                        <div style={{ display: "flex", alignItems: "center", gap: "3px" }}>
+                                                            <UserIcon name={"未"} size={"small"} />
+                                                            <span>未设置</span>
+                                                        </div>
+                                                    }
                                                     getPopupContainer={() => detailFormRef.current}
                                                 >
                                                     {
                                                         userList && userList.map(item => {
                                                             return <Option key={item?.user?.id}
-                                                                           value={item?.user?.id}>{item?.user?.nickname}</Option>
+                                                                           value={item?.user?.id}>
+                                                                <div style={{display: "flex", alignItems: "center", gap: "3px"}}>
+                                                                    <UserIcon name={item?.user?.nickname}/>
+                                                                    {item?.user?.nickname}
+                                                                </div>
+                                                            </Option>
                                                         })
                                                     }
-                                                </Select>
-                                            </Form.Item>
-
-                                            <Form.Item label={"状态"} name="status">
-                                                <Select
-                                                    className={"func-select"}
-                                                    bordered={false}
-                                                    placeholder={"未设置"}
-                                                    getPopupContainer={() => detailFormRef.current}
-                                                >
-                                                    <Option value={0}>
-                                                        <div className={"display-flex-gap"} style={{height: "100%"}}>
-                                                            <div className="case-status-0">未开始</div>
-                                                        </div>
-                                                    </Option>
-                                                    <Option value={1}>
-                                                        <div className={"display-flex-gap"} style={{height: "100%"}}>
-                                                            <div className="case-status-1">进行中</div>
-                                                        </div>
-                                                    </Option>
-                                                    <Option value={2}>
-                                                        <div className={"display-flex-gap"} style={{height: "100%"}}>
-                                                            <div className="case-status-2">已完成</div>
-                                                        </div>
-                                                    </Option>
                                                 </Select>
                                             </Form.Item>
 

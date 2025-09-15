@@ -8,7 +8,7 @@
  */
 import React, { useEffect, useState } from "react";
 import { observer, inject } from "mobx-react";
-import { Table, Row, Col, Space } from 'antd';
+import {Table, Row, Col, Space, Empty} from 'antd';
 import LogFilter from "./LogFilter";
 import LogAdd from "./LogAdd";
 import LogDetail from "./LogDetail";
@@ -156,6 +156,12 @@ const LogAllList = (props) => {
                         ...selectLogCondition.pageParam
                     }}
                     scroll={{x: "100%"}}
+                    locale={{
+                        emptyText: <Empty
+                            imageStyle={{height: 100}}
+                            description={<span>暂无数据</span>}
+                        />
+                    }}
                 />
 
                 <LogDetail logId={logId} listIndex={listIndex} logDetailVisable={logDetailVisable} setLogDetailVisable={setLogDetailVisable} />

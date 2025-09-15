@@ -7,7 +7,7 @@
  * @LastEditTime: 2024-12-18 17:49:39
  */
 import React, { useState,useEffect } from "react";
-import {Modal, Divider, Tooltip, Table, Space} from 'antd';
+import {Modal, Divider, Tooltip, Table, Space, Empty} from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import "./ProjectSetRelevance.scss";
 import Button from "../../../common/button/Button";
@@ -18,9 +18,12 @@ import InputSearch from "../../../common/input/InputSearch";
 import ColorIcon from "../../../common/colorIcon/ColorIcon";
 import UserIcon from "../../../common/UserIcon/UserIcon";
 import PaginationCommon from "../../../common/caseCommon/pagination/Page";
+import {SelectItem, SelectSimple} from "../../../common/select";
+import ProjectStore from "../../../project/project/store/ProjectStore";
 const ProjectSetRelevance = (props) => {
     const { projectSetId } = props;
     const { findProjectIsOrNotRe, noRelatedProjects, relatedProjects, addRelevance, findProjectList, findNotRelateProjectPage, notRelateTotal } = ProjectSetProjectStore;
+    const { getProjectTypeList, projectTypelist } = ProjectStore;
     const [visible, setVisible] = useState(false)
     const [checkedList, setCheckedList] = useState([]);
     const [projectSetName, setProjectSetName] = useState('');
@@ -30,6 +33,7 @@ const ProjectSetRelevance = (props) => {
     // 在组件挂载时获取项目集名称
     useEffect(() => {
         fetchData();
+        getProjectTypeList();
     }, [projectSetId]);
 
     const fetchData = async () => {
@@ -252,8 +256,15 @@ const ProjectSetRelevance = (props) => {
         }
     };
 
-    const onSearch = (e) => {
-        const params = {projectName: e.target.value}
+    const onSearch = (value) => {
+        const params = {projectName: value}
+        findPage(params);
+    };
+
+    const selectType = (value) => {
+        const params = {
+            projectTypeId: value?.value
+        }
         findPage(params);
     };
 
@@ -281,10 +292,24 @@ const ProjectSetRelevance = (props) => {
         })
     }
 
+    const getModalHeight = () => {
+        const height = window.innerHeight;
+
+        if (height >= 900) {
+            return 620;
+        } else if (height >= 768) {
+            return 530;
+        } else if (height >= 576) {
+            return 450;
+        } else {
+            return 500;
+        }
+    };
+
     return <div >
         <Button type="primary" onClick={() => addProjectSet()}>关联项目</Button>
         <Modal
-            title={`关联项目至：${projectSetName || '项目集'}`}
+            title={`关联项目`}
             visible={visible}
             onOk={sumitFrom}
             onCancel={submitCancel}
@@ -292,9 +317,10 @@ const ProjectSetRelevance = (props) => {
             okText="确定"
             footer={null}
             width={800}
+            bodyStyle={{height:`${getModalHeight()}`}}
             className="projectSet-relevance"
             destroyOnClose={true}
-            closable = {false}
+            closable = {true}
         >
             <div className="projectSet-relate-box">
                 <div className={"projectSet-relate-top"}>
@@ -303,8 +329,25 @@ const ProjectSetRelevance = (props) => {
                             placeholder="搜索项目"
                             allowClear
                             style={{ width: 190 }}
-                            onChange={onSearch}
+                            onChange={(value) => onSearch(value)}
                         />
+                        <SelectSimple name="quickFilter"
+                                      onChange={(value) => selectType(value)}
+                                      title={`项目类型`}
+                                      ismult={false}
+                                      // value={projectQuickFilter}
+                                      suffixIcon={true}
+                        >
+                            {
+                                projectTypelist.map(item => {
+                                    return <SelectItem
+                                        value={item.id}
+                                        label={item.name === 'IPD项目' ? item.name.substring(0,3) : item.name.substring(0,2)}
+                                        key={item.id}
+                                    />
+                                })
+                            }
+                        </SelectSimple>
                     </div>
                 </div>
                 <div className={"projectSet-relate-content"}>
@@ -322,6 +365,12 @@ const ProjectSetRelevance = (props) => {
                         pagination={false}
                         scroll={{
                             x: "100%"
+                        }}
+                        locale={{
+                            emptyText: <Empty
+                                imageStyle={{height: 100}}
+                                description={<span>暂无数据</span>}
+                            />
                         }}
                     />
                     <PaginationCommon

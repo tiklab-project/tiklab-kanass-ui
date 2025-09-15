@@ -199,7 +199,7 @@ const ProjectSetBasicInfo = props => {
                     <Collapse defaultActiveKey={"1"} expandIconPosition={"right"}>
                         <Panel header={projectSetInfoDesc()} key="1" >
                             <Form
-                                {...layout}
+                                layout="vertical"
                                 name="basic"
                                 initialValues={{
                                     remember: true,

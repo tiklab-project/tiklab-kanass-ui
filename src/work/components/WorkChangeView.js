@@ -15,7 +15,7 @@ const WorkChangeView = (props) => {
     const { buttonType, workStore } = props;
     const { getWorkConditionPage, getWorkConditionPageTree, viewType, workShowType, setWorkShowType,
         setViewType, setWorkId, setWorkIndex, setWorkList , setSearchConditionNull, setSearchCondition, setQuickFilterVisible,
-        setWorkTypeVisible} = workStore;
+        setWorkTypeVisible, setShowTab} = workStore;
     const projectId = props.match.params.id;
     // 视图下拉框
     const [showViewDropDown, setShowViewDropDown] = useState(false);
@@ -100,6 +100,7 @@ const WorkChangeView = (props) => {
         setWorkShowType(item.value)
         setWorkId()
 
+        setShowTab(true)
         setQuickFilterVisible(false)
         setWorkTypeVisible(true)
 

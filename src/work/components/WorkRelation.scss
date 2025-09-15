@@ -8,14 +8,14 @@
     }
 
     .work-title {
-        color: var(--tiklab-blue);
+        //color: var(--tiklab-blue);
         display: flex;
         align-items: center; /* 确保整体垂直居中 */
         gap: 12px;
         cursor: pointer;
         //width: 300px;
-        height: 48px; /* 固定高度确保对齐 */
-        padding: 4px 5px;
+        //height: 48px; /* 固定高度确保对齐 */
+        //padding: 4px 5px;
 
         /* 图标容器 */
         .work-icon {
@@ -67,6 +67,13 @@
                 }
             }
         }
+
+        .work-name {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            flex: 1;
+        }
     }
 
     .work-status {
@@ -79,12 +86,12 @@
     }
 
     .work-status-process {
-        background: #b0d5dfa1;
-        color: #132c33;
+        background: #e2e1e4;
+        color: #5e5314;
     }
 
     .work-status-done {
-        background: #dfecd5e3;
+        background: #e2e1e4;
         color: #5e5314;
     }
     .ant-table table {

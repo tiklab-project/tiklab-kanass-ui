@@ -7,7 +7,7 @@
  * @LastEditTime: 2024-12-27 13:35:15
  */
 import React from "react";
-import { Modal,Table,message,Input,Select } from 'antd';
+import {Modal, Table, message, Input, Select, Empty} from 'antd';
 import "./EpicPlanAddModal.scss"
 import {observer, inject} from "mobx-react";
 import Button from "../../../common/button/Button";
@@ -162,6 +162,12 @@ const EpicPlanAddmodal = (props) => {
                     cancelText="取消"
                     pagination ={false}
                     scroll={{x: "100%"}}
+                    locale={{
+                        emptyText: <Empty
+                            imageStyle={{height: 100}}
+                            description={<span>暂无数据</span>}
+                        />
+                    }}
                 />
 
             </Modal>

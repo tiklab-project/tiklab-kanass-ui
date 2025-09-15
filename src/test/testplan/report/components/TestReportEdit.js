@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { observer } from "mobx-react";
-import { Form, Modal, Button, Input, DatePicker } from 'antd';
-import moment from "moment";
-import IconCommon from "../../../../common/caseCommon/IconCommon";
+import { Form, Modal, Input, DatePicker } from 'antd';
 import testReportStore from "../store/testReportStore";
-import IconBtn from "../../../../common/caseCommon/iconBtn/IconBtn";
 import {FormOutlined} from "@ant-design/icons";
+import Button from "../../../../common/button/Button";
 
 const { TextArea } = Input;
 const { RangePicker } = DatePicker;
@@ -28,7 +26,7 @@ const TestReportEdit = (props) => {
             findTestReport(reportId).then((res) => {
                 form.setFieldsValue({
                     name: res.name,
-                    rangeTime: [moment(res.startTime, 'YYYY-MM-DD'), moment(res.endTime, 'YYYY-MM-DD')],
+                    // rangeTime: [moment(res.startTime, 'YYYY-MM-DD'), moment(res.endTime, 'YYYY-MM-DD')],
                     desc: res.desc
                 });
             });
@@ -40,9 +38,9 @@ const TestReportEdit = (props) => {
     const onFinish = async () => {
         let values = await form.validateFields();
 
-        values.startTime = values.rangeTime[0];
-        values.endTime = values.rangeTime[1];
-        delete values.rangeTime;
+        // values.startTime = values.rangeTime[0];
+        // values.endTime = values.rangeTime[1];
+        // delete values.rangeTime;
 
         values.projectId = projectId;
         values.testPlan= {id:testPlanId};
@@ -65,12 +63,10 @@ const TestReportEdit = (props) => {
         <>
             {
                 props.name === "添加报告"
-                    ? <IconBtn
-                        className="pi-icon-btn-grey"
+                    ? <Button
+                        buttonText={props.name}
                         onClick={showModal}
-                        name={props.name}
                     />
-
                     : <FormOutlined style={{fontSize:16}} onClick={showModal} />
             }
 
@@ -98,17 +94,17 @@ const TestReportEdit = (props) => {
                         <Input placeholder="请输入名称" />
                     </Form.Item>
 
-                    <Form.Item
-                        label="日期范围"
-                        name="rangeTime"
-                        rules={[{ required: true, message: '日期范围未添加' }]}
-                        wrapperCol={{
-                            offset: 0,
-                            span: 24,
-                        }}
-                    >
-                        <RangePicker format={'YYYY-MM-DD'} style={{ width: "420px" }} />
-                    </Form.Item>
+                    {/*<Form.Item*/}
+                    {/*    label="日期范围"*/}
+                    {/*    name="rangeTime"*/}
+                    {/*    rules={[{ required: true, message: '日期范围未添加' }]}*/}
+                    {/*    wrapperCol={{*/}
+                    {/*        offset: 0,*/}
+                    {/*        span: 24,*/}
+                    {/*    }}*/}
+                    {/*>*/}
+                    {/*    <RangePicker format={'YYYY-MM-DD'} style={{ width: "420px" }} />*/}
+                    {/*</Form.Item>*/}
                     <Form.Item
                         label="报告描述"
                         name="desc"

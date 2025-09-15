@@ -10,12 +10,12 @@ import {rowStyle, showCreateUser, ShowDeleteView} from "../../../testcase/compon
 import IconCommon from "../../../../common/caseCommon/IconCommon";
 import {debounce} from "../../../../common/caseCommon/CaseCommonFn";
 import testPlanStore from "../store/testPlanStore";
-import functionInstanceStore from "../../../function/store/functionInstanceStore";
+import functionInstanceStore from "../../../function/function/store/functionInstanceStore";
 import {FunctionResultSelect} from "../../function/components/FunctionResultSelect";
 import FunctionSetResultDrawer from "../../function/components/FunctionSetResultDrawer"
 import PlanToFuncUnitPage from "../../common/planToCase/planToFuncUnitPage";
 import {SearchOutlined} from "@ant-design/icons";
-import FunctionContentDrawerView from "../../../function/components/drawerView/FunctionContentDrawerView";
+import FunctionContentDrawerView from "../../../function/function/components/drawerView/FunctionContentDrawerView";
 import TestPlanCaseSetDirectorModal from "./TestPlanCaseSetDirectorModal";
 
 
@@ -41,9 +41,9 @@ const TestPlanBindCaseList = (props) =>{
             ellipsis: true,
             render: (text,record) =>(
                 <div className={"display-flex-gap"}>
-                    <>{showCaseTypeView(record.caseType)}</>
+                    <>{showCaseTypeView(record.caseType, "icon-22")}</>
                     {/*<PlanToFuncUnitPage testPlanId={testPlanId} record={record}/>*/}
-                    <div className="case-key">
+                    <div className="case-key" style={{width:"85%"}}>
                         <div
                             className={"link-text"}
                             // onClick={()=>toDiffCaseFn(record,history)}
@@ -84,6 +84,7 @@ const TestPlanBindCaseList = (props) =>{
             render:(text, record) =>(
                 <FunctionSetResultDrawer
                     record={record}
+                    recordResult={record.result}
                     testPlanId={testPlanId}
                     projectId={projectId}
                     findPage={findPage}
@@ -280,7 +281,7 @@ const TestPlanBindCaseList = (props) =>{
                         emptyText: !tableLoading
                             ? <Empty
                                 imageStyle={{height: 100}}
-                                description={<span>暂无用例</span>}
+                                description={<span>暂无数据</span>}
                             />
                             : <div style={{height: 100}}/>,
                     }}

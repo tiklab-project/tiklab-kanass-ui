@@ -16,6 +16,7 @@ import ProjectEmpty from "../../../../common/component/ProjectEmpty";
 import "./TestPlanCaseSetDirectorModal.scss"
 import InputSearch from "../../../../common/input/InputSearch";
 import testcaseStore from "../../../testcase/store/testcaseStore";
+import Button from "../../../../common/button/Button";
 
 // 添加与编辑
 const TestPlanBindCaseModal = (props) => {
@@ -103,10 +104,9 @@ const TestPlanBindCaseModal = (props) => {
     return (
         <>
             <div style={{position: "relative"}}>
-                <IconBtn
-                    className="pi-icon-btn-grey"
+                <Button
                     onClick={showModal}
-                    name={"批量设置负责人"}
+                    buttonText={"批量设置负责人"}
                 />
                 {
                     isModalOpen && (

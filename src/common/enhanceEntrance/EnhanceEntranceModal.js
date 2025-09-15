@@ -16,6 +16,8 @@ const EnhanceEntranceModal = (props) => {
 
     const disable = disableFunction();
 
+    const bgroup = 'kanass';
+
     return disable && (
         <div className="security-enhance-entrance-modal">
             <div className='enhance-entrance-modal'>

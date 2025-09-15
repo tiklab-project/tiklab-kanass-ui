@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-03-02 13:28:22
  */
 import React, { useEffect, useState } from "react";
-import {Table, Space, Row, Col, DatePicker, Dropdown, Menu, Progress} from "antd";
+import {Table, Space, Row, Col, DatePicker, Dropdown, Menu, Progress, Empty} from "antd";
 import VersionAddmodal from "./VersionAdd";
 import { observer, inject, Provider } from "mobx-react";
 import { PrivilegeProjectButton } from "tiklab-privilege-ui";
@@ -449,6 +449,12 @@ const VersionTable = (props) => {
                                     loading={loading}
                                     onSearch={onSearch}
                                     scroll={{ x: "100%" }}
+                                    locale={{
+                                        emptyText: <Empty
+                                            imageStyle={{height: 100}}
+                                            description={<span>暂无数据</span>}
+                                        />
+                                    }}
                                 />
                             </div>
                         </div>

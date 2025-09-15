@@ -282,6 +282,12 @@ const WikiRepository = (props) => {
                                         <Empty description={"暂无数据"}/>
                                     )
                                 }}
+                                locale={{
+                                    emptyText: <Empty
+                                        imageStyle={{height: 100}}
+                                        description={<span>暂无数据</span>}
+                                    />
+                                }}
                             />
                             <PaginationCommon
                                 currentPage={documentCondition.pageParam.currentPage}

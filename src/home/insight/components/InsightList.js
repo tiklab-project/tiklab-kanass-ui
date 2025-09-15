@@ -8,7 +8,7 @@
  */
 
 import React, { useEffect, useState } from "react";
-import { Input, Table, Space, Modal, message, Col, Row } from 'antd';
+import {Input, Table, Space, Modal, message, Col, Row, Empty} from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import { observer, Provider } from "mobx-react";
 import { withRouter } from "react-router-dom";
@@ -275,6 +275,12 @@ const InsightList = (props) => {
                                     // onChange={handleTableChange}
                                     scroll={{x: "100%"}}
                                     pagination={false}
+                                    locale={{
+                                        emptyText: <Empty
+                                            imageStyle={{height: 100}}
+                                            description={<span>暂无数据</span>}
+                                        />
+                                    }}
                                 />
                             </div>
                         </div>

@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-03-02 13:28:22
  */
 import React, { Fragment, useEffect, useState } from "react";
-import { Modal, Form, Table } from 'antd';
+import {Modal, Form, Table, Empty} from 'antd';
 import { observer, inject } from "mobx-react";
 import ImgComponent from "../../../../common/imgComponent/ImgComponent";
 import "./WikiRepositoryAdd.scss"
@@ -137,6 +137,12 @@ const WikiRepositoryAdd = (props) => {
                             cancelText="取消"
                             pagination={false}
                             scroll={{ x: "100%" }}
+                            locale={{
+                                emptyText: <Empty
+                                    imageStyle={{height: 100}}
+                                    description={<span>暂无数据</span>}
+                                />
+                            }}
                         />
 
                 </Modal>

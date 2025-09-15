@@ -30,15 +30,15 @@ const PlanDetailMenu = (props) => {
             "key":1,
             "router":`/project/${projectId}/testcase/planDetail/case`
         },
-        {
-            "icon":"baogao",
-            "title":"测试历史",
-            "key":2,
-            "router":`/project/${projectId}/testcase/planDetail/functionTestInstance`
-        },
+        // {
+        //     "icon":"baogao",
+        //     "title":"测试历史",
+        //     "key":2,
+        //     "router":`/project/${projectId}/testcase/planDetail/functionTestInstance`
+        // },
         {
             "icon":"quexian",
-            "title":"缺陷列表",
+            "title":"缺陷",
             "key":3,
             "router":`/project/${projectId}/testcase/planDetail/defect`
         },
@@ -90,7 +90,6 @@ const PlanDetailMenu = (props) => {
                         menuItems={functionLeftMenu}
                         selectFn={selectMenuItem}
                         selected={currentMenu}
-                        style={{width: "320px"}}
                     />
 
                     <HideDelete deleteFn={deleteFn}/>

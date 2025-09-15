@@ -1,6 +1,6 @@
 import {observer, Provider} from "mobx-react";
 import {withRouter} from "react-router";
-import {Col, Progress, Row, Space, Table, Tooltip} from "antd";
+import {Col, Empty, Progress, Row, Space, Table, Tooltip} from "antd";
 import InputSearch from "../../../common/input/InputSearch";
 import AppraisedWorkItemStatusDrawer from "../../../project/appraised/components/AppraisedItemStatusDrawer";
 import WorkDetailDrawer from "../../../work/components/WorkDetailDrawer";
@@ -42,7 +42,7 @@ const HomeAppraisedTable = (props) => {
 
     useEffect(() => {
         findProjectList();
-        searchTable({master: userId, workItemTitle: null, workItemAppraisedState: "0"});
+        searchTable({master: userId, workItemTitle: null, workItemAppraisedState: "0", appraisedTypeId: "000000"});
     },[])
 
 
@@ -321,7 +321,7 @@ const HomeAppraisedTable = (props) => {
     return <Provider {...store}>
         <div className={`home-appraised`}>
             <Row >
-                <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "22", offset: "1" }} xxl={{ span: "18", offset: "3" }}>
+                <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "20", offset: "2" }} xxl={{ span: "18", offset: "3" }}>
                     <div className="home-appraised-list">
                         <div className="appraised-filter">
                             {/*<div className="appraised-tabs">*/}
@@ -386,6 +386,12 @@ const HomeAppraisedTable = (props) => {
                                     // loading={loading}
                                     onSearch={onSearch}
                                     scroll={{ x: "100%" }}
+                                    locale={{
+                                        emptyText: <Empty
+                                            imageStyle={{height: 100}}
+                                            description={<span>暂无数据</span>}
+                                        />
+                                    }}
                                 />
                             </div>
                         </div>

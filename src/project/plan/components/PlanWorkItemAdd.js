@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-04-09 15:27:15
  */
 import React,{useEffect,useState} from "react";
-import { Modal, Button,Table,message,Input,Select } from 'antd';
+import {Modal, Button, Table, message, Input, Select, Empty} from 'antd';
 import {observer, inject} from "mobx-react";
 import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import "./Plan.scss";
@@ -156,6 +156,12 @@ const  PlanWorkItemAddmodal = (props) => {
                     onChange={pageTurn}
                     pagination={{ ...searchSelectCondition, position: ["bottomCenter"] }}
                     scroll={{x: "100%"}}
+                    locale={{
+                        emptyText: <Empty
+                            imageStyle={{height: 100}}
+                            description={<span>暂无数据</span>}
+                        />
+                    }}
                 />
 
             </Modal>

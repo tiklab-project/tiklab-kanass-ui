@@ -7,10 +7,12 @@ import { withRouter } from "react-router-dom";
 import "./StatisticsAside.scss"
 import { getVersionInfo } from "tiklab-core-ui";
 import LogStatisticsFree from "../../workLog/components/LogStatisticsFree";
+import StatisticsStore from "../store/StatisticsStore";
 const StatisticsAside = (props) => {
     // 无子级菜单处理
     const path = props.location.pathname;
-    const [selectKey, setSelectKey] = useState("/statistics/overview");
+    // const [selectKey, setSelectKey] = useState("/statistics/overview");
+    const {selectKey, setSelectKey} = StatisticsStore
     const versionInfo = getVersionInfo();
     const [logStatisticsFreeVisable, setLogStatisticsFreeVisable] = useState(false);
     const select = (data) => {
@@ -21,7 +23,8 @@ const StatisticsAside = (props) => {
                 setSelectKey(data.path)
             } else {
                 // props.history.push("/log/advert")
-                setLogStatisticsFreeVisable(true)
+                setSelectKey(data.path)
+                // setLogStatisticsFreeVisable(true)
             }
         } else {
             props.history.push(data.path)

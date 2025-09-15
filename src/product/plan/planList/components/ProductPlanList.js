@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {useDebounce} from "../../../../common/utils/debounce";
 import ColorIcon from "../../../../common/colorIcon/ColorIcon";
 import CircleProgress from "../../../../common/progress/CircleProgress";
-import {Col, Row, Space, Table} from "antd";
+import {Col, Empty, Row, Space, Table} from "antd";
 import {PrivilegeProjectButton} from "tiklab-privilege-ui";
 import DeleteModal from "../../../../common/deleteModal/deleteModal";
 import {observer, Provider} from "mobx-react";
@@ -419,6 +419,12 @@ const ProductPlanList = (props) => {
                                             onChange: changePage,
                                             position: ["bottomCenter"],
                                             showTotal: () => `共${total}条`
+                                        }}
+                                        locale={{
+                                            emptyText: <Empty
+                                                imageStyle={{height: 100}}
+                                                description={<span>暂无数据</span>}
+                                            />
                                         }}
                                     />
                                 </div>

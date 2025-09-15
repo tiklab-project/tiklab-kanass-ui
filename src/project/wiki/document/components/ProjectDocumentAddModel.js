@@ -1,4 +1,4 @@
-import {Modal, Table} from "antd";
+import {Empty, Modal, Table} from "antd";
 import React, {useEffect, useRef, useState} from "react";
 import InputSearch from "../../../../common/input/InputSearch";
 import {SelectItem, SelectSimple} from "../../../../common/select";
@@ -256,6 +256,12 @@ const ProjectDocumentAddModel = (props) => {
                         cancelText="取消"
                         pagination={false}
                         scroll={{x: "100%"}}
+                        locale={{
+                            emptyText: <Empty
+                                imageStyle={{height: 100}}
+                                description={<span>暂无数据</span>}
+                            />
+                        }}
                     />
                     <div className="projectDocument-add-page">
                         <div className="projectDocument-add-page-total">

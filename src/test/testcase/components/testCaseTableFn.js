@@ -11,7 +11,7 @@ import testcaseStore from "../store/testcaseStore";
 import WorkTestStore from "../../../work/store/WorkTestStore";
 
 
-const {findTestCaseList, findTestCaseStatusNum} = testcaseStore;
+const {findTestCaseList, findTestCasePriorityLevelNum} = testcaseStore;
 
 //再根据不同的用例类型跳到不同的页面
 export const switchCaseTypeFn = (record,history)=>{
@@ -35,8 +35,8 @@ export const findTestCaseTableListFn = (params) =>{
     return findTestCaseList(params);
 }
 
-export const findTestCaseStatusCountFn = (params) =>{
-    return findTestCaseStatusNum(params);
+export const findTestCasePriorityLevelCountFn = (params) =>{
+    return findTestCasePriorityLevelNum(params);
 }
 
 

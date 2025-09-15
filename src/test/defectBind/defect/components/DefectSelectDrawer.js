@@ -1,5 +1,5 @@
 import React, { useState} from "react";
-import {Table, Input, Col, Row, Modal, Drawer, message} from "antd";
+import {Table, Input, Col, Row, Modal, Drawer, message, Empty} from "antd";
 import {inject, observer} from "mobx-react";
 import IconBtn from "../../../../common/caseCommon/iconBtn/IconBtn";
 import workItemBindStore from "../store/WorkItemBindStore";
@@ -8,12 +8,13 @@ import IconCommon from "../../../../common/caseCommon/IconCommon";
 import {debounce} from "../../../../common/caseCommon/CaseCommonFn";
 import workItemStore from "../../workItem/store/WorkItemStore";
 import {createWorkTestCaseFn} from "../../../testcase/components/testCaseTableFn";
+import Button from "../../../../common/button/Button";
 
 const {createWorkItemBind,findWorkItemBindPage} = workItemBindStore;
 
 
 const DefectSelectDrawer = (props) =>{
-    const {caseId,funcUnitStore,testPlanId} = props;
+    const {caseId,funcUnitStore,testPlanId,inDetail} = props;
     const {findFuncUnit} = funcUnitStore
     const {findWorkItemList} = workItemStore;
     const columns = [
@@ -140,12 +141,20 @@ const DefectSelectDrawer = (props) =>{
 
     return(
         <>
-            <div onClick={showModal} style={{cursor:"pointer", display:"flex", alignItems:"center"}}>
-                <svg className="icon-16" aria-hidden="true">
-                    <use xlinkHref={`#icon-link`}></use>
-                </svg>
-                <span>关联缺陷</span>
-            </div>
+            {
+                !inDetail ?
+                    <Button
+                        buttonText={"关联缺陷"}
+                        onClick={showModal}
+                    />
+                    :
+                    <div onClick={showModal} style={{cursor:"pointer", display:"flex", alignItems:"center"}}>
+                        <svg className="icon-16" aria-hidden="true">
+                            <use xlinkHref={`#icon-link`}></use>
+                        </svg>
+                        <span>关联缺陷</span>
+                    </div>
+            }
             <Drawer
                 title="关联缺陷"
                 placement="right"
@@ -183,6 +192,12 @@ const DefectSelectDrawer = (props) =>{
                                 onClick: () => {onFinish(record.id)},
                                 style: {cursor: 'pointer'}
                             };
+                        }}
+                        locale={{
+                            emptyText: <Empty
+                                imageStyle={{height: 100}}
+                                description={<span>暂无数据</span>}
+                            />
                         }}
                         pagination={false}
                     />

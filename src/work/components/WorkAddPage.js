@@ -7,7 +7,7 @@
  * @LastEditTime: 2024-12-25 15:53:16
  */
 import React, {useState, useEffect, useImperativeHandle, Fragment, useRef} from "react";
-import {Form, Input, Select, DatePicker, message, Checkbox, Table, Tooltip, Space, Upload} from "antd";
+import {Form, Input, Select, DatePicker, message, Checkbox, Table, Tooltip, Space, Upload, Empty} from "antd";
 import { observer, inject } from "mobx-react";
 import 'moment/locale/zh-cn';
 import moment from 'moment';
@@ -894,6 +894,12 @@ const WorkAddPage = (props) => {
                                                                bordered={false}
                                                                rowKey={(record) => record.attachId}
                                                                scroll={{x: "100%"}}
+                                                               locale={{
+                                                                   emptyText: <Empty
+                                                                       imageStyle={{height: 100}}
+                                                                       description={<span>暂无数据</span>}
+                                                                   />
+                                                               }}
                                                         />
                                                     </Fragment>
                                                 )

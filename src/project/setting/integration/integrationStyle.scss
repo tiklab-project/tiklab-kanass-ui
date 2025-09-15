@@ -10,8 +10,39 @@
         //justify-content: end;
     }
 
-    .ant-tabs-bottom>.ant-tabs-nav:before, .ant-tabs-bottom>div>.ant-tabs-nav:before, .ant-tabs-top>.ant-tabs-nav:before, .ant-tabs-top>div>.ant-tabs-nav:before{
-        border-bottom: 0;
+    .integration-item{
+        background: #f5f5f5;
+        border-radius: 6px;
+        padding: 16px 20px;
+        cursor: pointer;
+        margin-top: 16px;
+        transition: background-color .2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .integration-item:hover{
+        background: #efefef;
+    }
+
+    .integration-item-left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .integration-item-title{
+        font-size: 16px;
+        color: var(--tiklab-text-color, #1f1f1f);
+        line-height: 22px;
+        margin-bottom: 4px;
+    }
+
+    .integration-item-subtitle{
+        font-size: 12px;
+        color: #8c8c8c;
+        line-height: 18px;
     }
 
 }

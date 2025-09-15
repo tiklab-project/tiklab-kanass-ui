@@ -14,21 +14,32 @@ import { withRouter } from 'react-router';
 import { renderRoutes } from "react-router-config";
 import StatisticsAside from "./StatisticsAside";
 import {LogStore} from "../../workLog/logView/store/LogStore";
+import EnhanceEntranceModal from "../../common/enhanceEntrance/EnhanceEntranceModal";
+import StatisticsStore from "../store/StatisticsStore";
+import EnhanceEntranceSubMenuModal from "../../common/enhanceEntrance/EnhanceEntranceSubMenuModal";
 const { Sider,Content } = Layout;
 const StatisticsContent = (props) => {
     const store = {
         logStore: LogStore
     }
+    const {selectKey} = StatisticsStore
     const { route } = props;
 
+    const path = props.match.path;
     return (<Provider {...store}>
             <Layout className="log">
                 <Sider className="site-layout-background">
                     <StatisticsAside />
                 </Sider>
 
-                <Layout className="log-content">
+                <Layout className="log-content" style={{position:"relative"}}>
 
+                        {
+                            (selectKey === "/statistics/log/projectuser" || selectKey === "/statistics/log/projectwork" || selectKey === "/statistics/log/userproject") &&
+                            <EnhanceEntranceSubMenuModal
+                                config={{title:"工时统计", desc:"统计不同项目或事项上花费的工时，用于成本核算和效率分析。"}}
+                            />
+                        }
                         <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "22", offset: "1" }} xxl={{ span: "18", offset: "3" }}>
                             {renderRoutes(route.routes)}
                         </Col>

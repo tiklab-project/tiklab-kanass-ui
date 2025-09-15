@@ -43,6 +43,14 @@ export class FunctionInstanceStore {
         }
     }
 
+    @action
+    findRecentCaseFunctionInstanceList = async (value) => {
+        const res = await Axios.post("/functionInstance/findRecentCaseFunctionInstanceList",value);
+        if(res.code === 0) {
+            return res.data
+        }
+    }
+
 }
 
 let functionInstanceStore = new FunctionInstanceStore();

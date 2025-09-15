@@ -8,7 +8,7 @@
  */
 
 import React, { Fragment, useEffect, useState } from "react";
-import { Input, Table, Space, message, Row, Col } from "antd";
+import {Input, Table, Space, message, Row, Col, Empty} from "antd";
 import WorkTypeAddmodal from "./WorkTypeAddModal";
 import WorkTypeEditmodal from "./WorkTypeEditModal"
 import { observer, inject, Provider } from "mobx-react";
@@ -199,6 +199,12 @@ const WorkType = (props) => {
                             dataSource={workAllTypeList}
                             pagination={false}
                             scroll={{x: "100%"}}
+                            locale={{
+                                emptyText: <Empty
+                                    imageStyle={{height: 100}}
+                                    description={<span>暂无数据</span>}
+                                />
+                            }}
                         />
                     </div>
                 </div>

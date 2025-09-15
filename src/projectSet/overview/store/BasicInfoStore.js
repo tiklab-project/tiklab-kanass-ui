@@ -172,6 +172,28 @@ export class BasicInfoStore {
         const data = await Service("/projectInsightReport/statisticsTodoWorkByStatus", params)
         return data;
     }
+
+    /**
+     * 项目集燃尽图
+     * @param {项目集id} projectSetId
+     * @returns
+     */
+    @action
+    findProjectSetBurnDowmChartPage = async (projectSetId) => {
+        const params = {
+            projectSetId: projectSetId,
+            orderParams: [{
+                name: "recordTime",
+                orderType: "desc"
+            }],
+            pageParam: {
+                pageSize: 7,
+                currentPage: 1
+            }
+        }
+        const data = await Service("/projectSetBurnDowmChart/findProjectSetBurnDowmChartPage", params)
+        return data;
+    }
 }
 
 export default new BasicInfoStore();

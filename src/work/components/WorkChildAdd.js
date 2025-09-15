@@ -246,81 +246,81 @@ const WorkChildAddmodal = (props) => {
                     </div>
                     <div className="child-add-search" ref={searchRef}>
                         <InputSearch style={{ minWidth: "150px", flex: 1 }} onChange={(value) => searchUnselectWorkById(value)} placeholder={"搜索事项"} />
-                        <SelectSimple name="workPriorityIds"
-                            onChange={(value) => searchUnselectWorkByStatus("workPriorityIds", value)}
-                            title={"事项优先级"} ismult={true}
-                        >
-                            {
-                                priorityList.map(item => {
-                                    return <SelectItem
-                                        value={item.id}
-                                        label={item.name}
-                                        key={item.id}
-                                        imgUrl={item.iconUrl}
-                                        isRemote = {false}
-                                    />
-                                })
-                            }
-                        </SelectSimple>
-                        {
-                            workStatusList && workStatusList.length > 0 && <SelectSimple
-                                name="workStatus"
-                                onChange={(value) => searchUnselectWorkByStatus("workStatusIds", value)}
-                                title={"状态"}
-                                ismult={true}
-                            >
-                                <div className="select-group-title">未开始</div>
-                                {
-                                    workStatusList.map(item => {
-                                        if (item.id === "todo") {
-                                            return <SelectItem
-                                                value={item.id}
-                                                label={item.name}
-                                                key={item.id}
-                                                imgUrl={item.iconUrl}
-                                            />
-                                        } else {
-                                            return <div></div>
-                                        }
+                        {/*<SelectSimple name="workPriorityIds"*/}
+                        {/*    onChange={(value) => searchUnselectWorkByStatus("workPriorityIds", value)}*/}
+                        {/*    title={"事项优先级"} ismult={true}*/}
+                        {/*>*/}
+                        {/*    {*/}
+                        {/*        priorityList.map(item => {*/}
+                        {/*            return <SelectItem*/}
+                        {/*                value={item.id}*/}
+                        {/*                label={item.name}*/}
+                        {/*                key={item.id}*/}
+                        {/*                imgUrl={item.iconUrl}*/}
+                        {/*                isRemote = {false}*/}
+                        {/*            />*/}
+                        {/*        })*/}
+                        {/*    }*/}
+                        {/*</SelectSimple>*/}
+                        {/*{*/}
+                        {/*    workStatusList && workStatusList.length > 0 && <SelectSimple*/}
+                        {/*        name="workStatus"*/}
+                        {/*        onChange={(value) => searchUnselectWorkByStatus("workStatusIds", value)}*/}
+                        {/*        title={"状态"}*/}
+                        {/*        ismult={true}*/}
+                        {/*    >*/}
+                        {/*        <div className="select-group-title">未开始</div>*/}
+                        {/*        {*/}
+                        {/*            workStatusList.map(item => {*/}
+                        {/*                if (item.id === "todo") {*/}
+                        {/*                    return <SelectItem*/}
+                        {/*                        value={item.id}*/}
+                        {/*                        label={item.name}*/}
+                        {/*                        key={item.id}*/}
+                        {/*                        imgUrl={item.iconUrl}*/}
+                        {/*                    />*/}
+                        {/*                } else {*/}
+                        {/*                    return <div></div>*/}
+                        {/*                }*/}
 
-                                    })
-                                }
-                                <div className="select-group-title">进行中</div>
-                                {
-                                    workStatusList.map(item => {
-                                        if (item.id !== "todo" && item.id !== "done" && item.id !== "start") {
-                                            return <SelectItem
-                                                value={item.id}
-                                                label={item.name}
-                                                key={item.id}
-                                                imgUrl={item.iconUrl}
-                                            />
-                                        } else {
-                                            return <div></div>
-                                        }
+                        {/*            })*/}
+                        {/*        }*/}
+                        {/*        <div className="select-group-title">进行中</div>*/}
+                        {/*        {*/}
+                        {/*            workStatusList.map(item => {*/}
+                        {/*                if (item.id !== "todo" && item.id !== "done" && item.id !== "start") {*/}
+                        {/*                    return <SelectItem*/}
+                        {/*                        value={item.id}*/}
+                        {/*                        label={item.name}*/}
+                        {/*                        key={item.id}*/}
+                        {/*                        imgUrl={item.iconUrl}*/}
+                        {/*                    />*/}
+                        {/*                } else {*/}
+                        {/*                    return <div></div>*/}
+                        {/*                }*/}
 
-                                    })
-                                }
+                        {/*            })*/}
+                        {/*        }*/}
 
 
-                                <div className="select-group-title">已完成</div>
-                                {
-                                    workStatusList.map(item => {
-                                        if (item.id === "done") {
-                                            return <SelectItem
-                                                value={item.id}
-                                                label={item.name}
-                                                key={item.id}
-                                                imgUrl={item.iconUrl}
-                                            />
-                                        } else {
-                                            return <div></div>
-                                        }
+                        {/*        <div className="select-group-title">已完成</div>*/}
+                        {/*        {*/}
+                        {/*            workStatusList.map(item => {*/}
+                        {/*                if (item.id === "done") {*/}
+                        {/*                    return <SelectItem*/}
+                        {/*                        value={item.id}*/}
+                        {/*                        label={item.name}*/}
+                        {/*                        key={item.id}*/}
+                        {/*                        imgUrl={item.iconUrl}*/}
+                        {/*                    />*/}
+                        {/*                } else {*/}
+                        {/*                    return <div></div>*/}
+                        {/*                }*/}
 
-                                    })
-                                }
-                            </SelectSimple>
-                        }
+                        {/*            })*/}
+                        {/*        }*/}
+                        {/*    </SelectSimple>*/}
+                        {/*}*/}
                     </div>
                     {
                         selectWorkChildList && selectWorkChildList.length > 0 ? <div className="child-add-table">
@@ -334,7 +334,7 @@ const WorkChildAddmodal = (props) => {
                                                     className="svg-icon"
                                                     src={item.workTypeSys?.iconUrl}
                                                 />
-                                                <div className="work-item-id">{item.code}</div>
+                                                {/*<div className="work-item-id">{item.code}</div>*/}
                                             </div>
                                             <div className="work-item-title">{item.title} </div>
 

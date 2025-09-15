@@ -1,16 +1,17 @@
 import React, {useState} from "react";
 import {Button, Drawer, Form, Radio, Space, Input, message} from "antd";
 import {CheckCircleTwoTone, CloseCircleTwoTone, MinusCircleTwoTone, ExclamationCircleTwoTone, StopOutlined, PauseCircleTwoTone} from "@ant-design/icons";
-import functionInstanceStore from "../../../function/store/functionInstanceStore";
+import functionInstanceStore from "../../../function/function/store/functionInstanceStore";
 const { TextArea } = Input;
 
 const resultMap = {
     0: { text: "失败", color: "#ff4d4f", icon: <CloseCircleTwoTone twoToneColor="#ff4d4f" /> },
     1: { text: "成功", color: "#52c41a", icon: <CheckCircleTwoTone twoToneColor="#52c41a" /> },
+    2: { text: "无法执行", color: "#ffa325", icon: <CheckCircleTwoTone twoToneColor="#ffa325" /> },
 };
 
 const FunctionSetResultDrawer = (props) => {
-    const {record,testPlanId,findPage,projectId} = props;
+    const {record,testPlanId,findPage,projectId,recordResult} = props;
     const {createFunctionInstance, findFunctionInstancePage} = functionInstanceStore;
 
     const [form] = Form.useForm();
@@ -57,16 +58,18 @@ const FunctionSetResultDrawer = (props) => {
             let data = {
                 ...values,
                 funcUnitCase:{id:record.id},
-                testPlanInstanceId:testPlanId,
+                testPlan:{id:testPlanId},
+                // testPlanInstanceId:testPlanId,
                 projectId:projectId
             }
 
             await createFunctionInstance(data);
             await findPage()
             message.success('提交成功');
-            setOpen(false);
             // 提交后刷新历史
-            showDrawer();
+            showDrawer().then(res => {
+                setOpen(false);
+            });
         } catch (e) {
             // 校验失败或接口异常
         } finally {
@@ -80,7 +83,7 @@ const FunctionSetResultDrawer = (props) => {
         if (!item) {
             return <Space size={"small"}>
                 <MinusCircleTwoTone twoToneColor={"#d3d3d3"}/>
-                <span className="font-12">未设置</span>
+                <span className="font-12">未执行</span>
             </Space>
         }
         return <Space size={"small"}>
@@ -165,6 +168,7 @@ const FunctionSetResultDrawer = (props) => {
                                 <Space direction="horizontal">
                                     <Radio value={0}>失败</Radio>
                                     <Radio value={1}>成功</Radio>
+                                    <Radio value={2}>无法执行</Radio>
                                 </Space>
                             </Radio.Group>
                         </Form.Item>

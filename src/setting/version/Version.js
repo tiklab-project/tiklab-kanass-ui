@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Version } from 'tiklab-licence-ui';
-import { Table,Icon } from "antd";
+import {Table, Icon, Empty} from "antd";
 import {CheckOutlined, CloseOutlined} from '@ant-design/icons';
 const ProjectAuthConfig = (props) => {
     const columns = [
@@ -117,6 +117,12 @@ const ProjectAuthConfig = (props) => {
                 dataSource={dataSource}
                 pagination={false}
                 scroll={{x: "100%"}}
+                locale={{
+                    emptyText: <Empty
+                        imageStyle={{height: 100}}
+                        description={<span>暂无数据</span>}
+                    />
+                }}
             />
         </Version>
     )

@@ -7,7 +7,7 @@
  * @LastEditTime: 2024-12-27 16:56:22
  */
 import React, { useEffect, useRef, useState } from "react";
-import { Table, Form, Select, Button } from 'antd';
+import {Table, Form, Select, Button, Empty} from 'antd';
 import { observer, inject } from "mobx-react";
 import echarts from "../../../common/echarts/echarts";
 import { withRouter } from "react-router";
@@ -267,6 +267,12 @@ const StatisticsWork = (props) => {
                         className="statistics-work-table"
                         pagination={false}
                         scroll={{x: "100%"}}
+                        locale={{
+                            emptyText: <Empty
+                                imageStyle={{height: 100}}
+                                description={<span>暂无数据</span>}
+                            />
+                        }}
                     />
                 }
                 <div className="statistics-area">

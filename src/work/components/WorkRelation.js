@@ -6,7 +6,7 @@
  * @Description: 事项关联
  */
 import React, { useEffect, useState } from "react";
-import {Table, Empty, Button, Input} from 'antd';
+import {Table, Empty, Button, Input, Popconfirm} from 'antd';
 import { observer, inject, Provider } from "mobx-react";
 import "./WorkRelation.scss"
 import WorkRelationAddmodal from "./WorkRelationAdd";
@@ -114,35 +114,33 @@ const WorkRelation = (props) => {
             dataIndex: ["workItem", "title"],
             key: "title",
             ellipsis: true,
-            width: "60%",
+            width: "50%",
             render: (text, record) =>
                 <div className="work-title" onClick={() => goWorkItem(record.workItem)}>
-                    <div className="work-icon">
-                        <ImgComponent
-                            alt=""
-                            className="svg-icon"
-                            src={record.workItem?.workTypeSys?.iconUrl}
-                        />
-                    </div>
-                    <div className="work-title-content">
-                        <div className="work-title-top">
-                            {text}
-                        </div>
-                        <div className="work-title-bottom">
-                            <span>{record.workItem.builder.nickname}</span>
-                            <span>·</span>
-                            <span>{record.workItem.buildTime.slice(0, 10)}</span>
-                        </div>
-                    </div>
-                    {/*<div className="work-name">{text}</div>*/}
+                    <ImgComponent
+                        alt=""
+                        className="svg-icon"
+                        src={record.workItem?.workTypeSys?.iconUrl}
+                    />
+                    <div className="work-name">{text}</div>
                 </div>
         },
-        // {
-        //     title: "事项类型",
-        //     dataIndex: ["workItem", "workTypeSys", "name"],
-        //     key: "workType",
-        //     width: "10%"
-        // },
+        {
+            title: "优先级",
+            dataIndex: ["workItem", "workPriority", "name"],
+            key: "workPriority",
+            width: "10%",
+            render: (text, record) => <div className="work-info">
+                <div className="work-info-img">
+                    <ImgComponent
+                        src={record.workItem.workPriority?.iconUrl}
+                        alt=""
+                        className="img-icon-right"
+                    />
+                </div>
+                <div className="work-info-text">{text || "暂无设置"}</div>
+            </div>
+        },
         {
             title: "事项状态",
             dataIndex: ["workItem", "workStatusNode", "name"],
@@ -157,14 +155,25 @@ const WorkRelation = (props) => {
             dataIndex: 'action',
             key: 'action',
             width: "10%",
-            align: "right",
+            align: "center",
             cellStyle: {
                 textAlign: 'right',
                 paddingRight: '10px', // 调整间距
             },
             render: (text, record) => (
                 <WorkPrivilegeComponent workId = {workId} code = "WorkRelationDelete">
-                    <span onClick={() => delectRelation(record.id)} className="span-botton">解除关联</span>
+                    {/*<span onClick={() => delectRelation(record.id)} className="span-botton">解除关联</span>*/}
+                    <Popconfirm
+                        title={"确认解除关联吗？"}
+                        onConfirm={() => delectRelation(record.id)}
+                        onCancel={null}
+                        okText="确认"
+                        cancelText="取消"
+                    >
+                        <svg className="icon-18" aria-hidden="true" style={{cursor: 'pointer' }}>
+                            <use xlinkHref={`#icon-unLink`}></use>
+                        </svg>
+                    </Popconfirm>
                 </WorkPrivilegeComponent>
                 
             ),
@@ -241,7 +250,7 @@ const WorkRelation = (props) => {
                         dataSource={selectWorkRelationList}
                         rowKey={record => record.id}
                         pagination={false}
-                        // showHeader={false}
+                        showHeader={false}
                         scroll={{ x: "100%" }}
                     />
                         :

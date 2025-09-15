@@ -2,7 +2,7 @@ import {withRouter} from "react-router";
 import {observer, Provider} from "mobx-react";
 import ColorIcon from "../../../../common/colorIcon/ColorIcon";
 import CircleProgress from "../../../../common/progress/CircleProgress";
-import {Col, Row, Space, Table} from "antd";
+import {Col, Empty, Row, Space, Table} from "antd";
 import {PrivilegeProjectButton} from "tiklab-privilege-ui";
 import DeleteModal from "../../../../common/deleteModal/deleteModal";
 import React, {useEffect, useRef, useState} from "react";
@@ -323,6 +323,12 @@ const StageList = (props) => {
                                         onChange: changePage,
                                         position: ["bottomCenter"],
                                         showTotal: () => `共${total}条`
+                                    }}
+                                    locale={{
+                                        emptyText: <Empty
+                                            imageStyle={{height: 100}}
+                                            description={<span>暂无数据</span>}
+                                        />
                                     }}
                                     // onChange={(pagination, filters, sorter, extra) => sorterTable(pagination, filters, sorter, extra)}
                                     expandable={

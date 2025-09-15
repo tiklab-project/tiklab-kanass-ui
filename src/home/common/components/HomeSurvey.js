@@ -122,7 +122,7 @@ const HomeSurvey = (props) => {
     return (
 
         <Row className="home-survey" >
-            <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "22", offset: "1" }} xxl={{ span: "18", offset: "3" }}>
+            <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "20", offset: "2" }} xxl={{ span: "18", offset: "3" }}>
                 <div className="home-content">
                 {/*<div className="home-tab">*/}
 
@@ -193,8 +193,8 @@ const HomeSurvey = (props) => {
                         </div>
                     </Spin>
                 </div>
-                <ProjectStatusNum />
                 <TodoStatistics isHome={true} />
+                <ProjectStatusNum />
                 <div className="statistics-box">
                     <div className="statistics-box-title">
                         事项统计

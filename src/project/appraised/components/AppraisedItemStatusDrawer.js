@@ -11,7 +11,7 @@ import {setSessionStorage} from "../../../common/utils/setSessionStorage";
 import WorkDetailDrawer from "../../../work/components/WorkDetailDrawer";
 import WorkStore from "../../../work/store/WorkStore";
 import WikiRepositoryStore from "../../wiki/repository/store/WikiRepositoryStore";
-import FunctionContentDrawerView from "../../../test/function/components/appraisedDrawerView/FunctionContentDrawerView";
+import FunctionContentDrawerView from "../../../test/function/function/components/appraisedDrawerView/FunctionContentDrawerView";
 
 const AppraisedItemStatusDrawer = (props) => {
     const { appraisedHistoryList, createAppraisedHistory, searchAppraisedHistoryPage, totalPage } = AppraisedHistoryStore

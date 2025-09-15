@@ -9,11 +9,11 @@ import funcUnitStepStore from "../store/funcUnitStepStore";
 const { TreeNode } = TreeSelect;
 import {Axios} from "tiklab-core-ui";
 import "./funcUnitEdit.scss"
-import IconCommon from "../../../common/caseCommon/IconCommon";
-import {createWorkTestCaseFn} from "../../testcase/components/testCaseTableFn";
-import Demand from "../../defectBind/workItem/components/Demand";
-import WorkItemStore from "../../defectBind/workItem/store/WorkItemStore";
-import {createWorkItemBindFn} from "../../../work/components/WorkTestCaseFn";
+import IconCommon from "../../../../common/caseCommon/IconCommon";
+import {createWorkTestCaseFn} from "../../../testcase/components/testCaseTableFn";
+import Demand from "../../../defectBind/workItem/components/Demand";
+import WorkItemStore from "../../../defectBind/workItem/store/WorkItemStore";
+import {createWorkItemBindFn} from "../../../../work/components/WorkTestCaseFn";
 
 // 添加与编辑
 const FuncUnitEdit = (props) => {
@@ -95,13 +95,14 @@ const FuncUnitEdit = (props) => {
         delete values.desc
 
 
-        createFuncUnit(values).then((res)=> {
+        console.log(stepList);
+        createFuncUnit(values).then( async (res)=> {
             for (const step of stepList) {
                 step.funcUnitStep={
                     ...step.funcUnitStep,
                     funcUnitId:res.data,
                 }
-                createFuncUnitStep(step.funcUnitStep);
+                await createFuncUnitStep(step.funcUnitStep);
             }
             if(res.code===0){
                 findPage&&findPage()

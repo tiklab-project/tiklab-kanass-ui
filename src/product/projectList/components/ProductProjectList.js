@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
-import {Col, Row, Space, Table, Tooltip} from "antd";
+import {Col, Empty, Row, Space, Table, Tooltip} from "antd";
 import UserIcon from "../../../common/UserIcon/UserIcon";
 import CircleProgress from "../../../common/progress/CircleProgress";
 import DeleteModal from "../../../common/deleteModal/deleteModal";
@@ -372,6 +372,12 @@ const ProductProjectList = (props) => {
                                 }}
                                 scroll={{
                                     x: "100%"
+                                }}
+                                locale={{
+                                    emptyText: <Empty
+                                        imageStyle={{height: 100}}
+                                        description={<span>暂无数据</span>}
+                                    />
                                 }}
                             />
                         </div>

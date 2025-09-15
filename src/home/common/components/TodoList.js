@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from "react";
 import {withRouter} from "react-router";
 import {observer, Provider} from "mobx-react";
 import {LeftOutlined} from "@ant-design/icons";
-import {Col, Input, message, Row, Space, Spin, Table, Tooltip} from "antd";
+import {Col, Empty, Input, message, Row, Space, Spin, Table, Tooltip} from "antd";
 import "./TodoList.scss"
 import WorkStore from "../../../work/store/WorkStore";
 import {SelectItem, SelectSimple} from "../../../common/select";
@@ -492,7 +492,7 @@ const TodoList = (props) => {
     return  (
         <Provider {...store}>
             <Row style={{ height: "100%", overflow: "auto", background: "#fff" }}>
-                <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "22", offset: "1" }} xxl={{ span: "18", offset: "3" }}>
+                <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "20", offset: "2" }} xxl={{ span: "18", offset: "3" }}>
                     <div className="todo-list-page">
                         {/*<div className="todo-header">*/}
                         {/*<Breadcrumb*/}
@@ -551,6 +551,30 @@ const TodoList = (props) => {
                             <div className="table-top-left">
                                 <WorkTypeSelect/>
                                 {/*项目下拉框*/}
+
+                            </div>
+
+                            <div className="table-top-right">
+                                {/*<div className="worklist-table-todo-label">*/}
+                                {/*    {todoLabel}*/}
+                                {/*</div>*/}
+                                {/*搜索框*/}
+                                <div className="worklist-table-search">
+                                    <div className="search-input">
+                                        <svg className="svg-icon" aria-hidden="true">
+                                            <use xlinkHref="#icon-search"></use>
+                                        </svg>
+                                        <Input bordered={false} allowClear
+                                               className="workList-search-input"
+                                               key={"search"}
+                                               onChange={(value) => inputChange("keyWord", value.target.value)}
+                                               placeholder="搜索标题、ID"
+                                               value={inputValue}
+                                        />
+                                    </div>
+
+                                </div>
+
                                 {
                                     (props.route.path === "/index/todoList" || props.route.path === "/projectSet/:projectSetId/workTodo") &&
                                     <SelectSimple
@@ -573,28 +597,6 @@ const TodoList = (props) => {
                                     </SelectSimple>
                                 }
                             </div>
-
-                            <div className="table-top-right">
-                                {/*<div className="worklist-table-todo-label">*/}
-                                {/*    {todoLabel}*/}
-                                {/*</div>*/}
-                                {/*搜索框*/}
-                                <div className="worklist-table-search">
-                                    <div className="search-input">
-                                        <svg className="svg-icon" aria-hidden="true">
-                                            <use xlinkHref="#icon-search"></use>
-                                        </svg>
-                                        <Input bordered={false} allowClear
-                                               className="workList-search-input"
-                                               key={"search"}
-                                               onChange={(value) => inputChange("keyWord", value.target.value)}
-                                               placeholder="搜索标题、ID"
-                                               value={inputValue}
-                                        />
-                                    </div>
-                                </div>
-
-                            </div>
                         </div>
 
                         <div className="work-table-content">
@@ -616,6 +618,12 @@ const TodoList = (props) => {
                                         onChange: changePage,
                                         position: ["bottomCenter"],
                                         showTotal: () => `共${tableInfo.totalRecord}条`
+                                    }}
+                                    locale={{
+                                        emptyText: <Empty
+                                            imageStyle={{height: 100}}
+                                            description={<span>暂无数据</span>}
+                                        />
                                     }}
                                 />
                             </Spin>

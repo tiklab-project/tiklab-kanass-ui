@@ -16,9 +16,9 @@ import WorkTestStore from "../store/WorkTestStore";
 import DeleteModal from "../../common/deleteModal/deleteModal";
 import WorkPrivilegeComponent from "./WorkPrivilegeComponent";
 import WorkTestCaseCreateDropDown from "./WorkTestCaseCreateDropDown";
-import FuncUnitEdit from "../../test/function/components/funcUnitEdit";
+import FuncUnitEdit from "../../test/function/function/components/funcUnitEdit";
 import CategoryStore from "../../test/category/store/CategoryStore";
-import FuncUnitStore from "../../test/function/store/funcUnitStore";
+import FuncUnitStore from "../../test/function/function/store/funcUnitStore";
 import {deleteTestCaseDemandByConditionFn, deleteWorkItemBindByConditionFn} from "./WorkTestCaseFn";
 const WorkTestCaseList = (props) => {
     const store = {
@@ -62,28 +62,34 @@ const WorkTestCaseList = (props) => {
     }
 
     const columns = [
-        {
-            title: "ID",
-            dataIndex: "testCaseKey",
-            key: "name",
-            width: 150,
-            render: (text, record) => (
-                <div className="testcase-title">
-                    <svg className="menu-icon" aria-hidden="true">
-                        <use xlinkHref="#icon-gongneng1"></use>
-                    </svg>
-                    <span onClick={() => goCaseDetail(record)} className={`${record.exist ? "span-botton" : ""}`} >{text}</span>
-
-                </div>
-            ),
-        },
+        // {
+        //     title: "ID",
+        //     dataIndex: "testCaseKey",
+        //     key: "name",
+        //     width: 150,
+        //     render: (text, record) => (
+        //         <div className="testcase-title">
+        //             <svg className="menu-icon" aria-hidden="true">
+        //                 <use xlinkHref="#icon-gongneng1"></use>
+        //             </svg>
+        //             <span onClick={() => goCaseDetail(record)} className={`${record.exist ? "span-botton" : ""}`} >{text}</span>
+        //
+        //         </div>
+        //     ),
+        // },
         {
             title: "用例",
             dataIndex: "testCaseName",
             key: "testCaseName",
             width: 150,
             render: (text, record) => (
-                <span onClick={() => goCaseDetail(record)} className={`${record.exist ? "span-botton" : ""}`}>{text}</span>
+                <div className="testcase-title">
+                    <svg className="menu-icon" aria-hidden="true">
+                        <use xlinkHref="#icon-gongneng1"></use>
+                    </svg>
+                    <span onClick={() => goCaseDetail(record)} className={`${record.exist ? "span-botton" : ""}`}>{text}</span>
+
+                </div>
             ),
         },
         {
@@ -92,12 +98,12 @@ const WorkTestCaseList = (props) => {
             key: "repository",
             width: 150
         },
-        {
-            title: "负责人",
-            dataIndex: "createUser",
-            key: "createUser",
-            width: 150
-        },
+        // {
+        //     title: "负责人",
+        //     dataIndex: "createUser",
+        //     key: "createUser",
+        //     width: 150
+        // },
         {
             title: '操作',
             dataIndex: 'action',
@@ -239,6 +245,7 @@ const WorkTestCaseList = (props) => {
                         rowKey={record => record.id}
                         pagination={false}
                         scroll={{ x: "100%" }}
+                        showHeader={false}
                     />
                         :
                         <Empty description="暂无关联用例" />

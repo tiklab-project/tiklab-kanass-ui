@@ -8,7 +8,7 @@
  */
 
 import React, { useState } from "react";
-import { Modal, Form, Table } from 'antd';
+import {Modal, Form, Table, Empty} from 'antd';
 import "./WorkType.scss"
 import Button from "../../../../common/button/Button";
 import { inject, observer } from "mobx-react";
@@ -144,6 +144,12 @@ const WorkTypeAddModal = (props) => {
                         dataSource={workSelectTypeList}
                         pagination={false}
                         scroll={{x: "100%"}}
+                        locale={{
+                            emptyText: <Empty
+                                imageStyle={{height: 100}}
+                                description={<span>暂无数据</span>}
+                            />
+                        }}
                     />
                 </Modal>
             </div>

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Form, Input, Modal, Select, Row, Col, Table, Tooltip, Space} from "antd";
+import {Form, Input, Modal, Select, Row, Col, Table, Tooltip, Space, Empty} from "antd";
 import Button from "../../../common/button/Button";
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
 import UserIcon from "../../../common/UserIcon/UserIcon";
@@ -331,6 +331,12 @@ const AppraisedItemAddModel = (props) => {
                                     }}
                                     onSearch={onSearch}
                                     scroll={{ x: "100%" }}
+                                    locale={{
+                                        emptyText: <Empty
+                                            imageStyle={{height: 100}}
+                                            description={<span>暂无数据</span>}
+                                        />
+                                    }}
                                 >
                                 </Table>
                             </div>

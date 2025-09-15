@@ -111,6 +111,7 @@ const Planning = AsyncComponent(() => import('./project/planning/components/Plan
 const Module = AsyncComponent(() => import('./project/setting/module/components/ModuleList'))
 const BasicInfo = AsyncComponent(() => import('./project/setting/basicInfo/components/BasicInfo'))
 const IntegrationContent = AsyncComponent(()=>import("./project/setting/integration/IntegrationContent"))
+const IntegrationBindSward = AsyncComponent(()=>import("./project/setting/integration/BindSward"))
 
 
 // 项目权限
@@ -257,7 +258,7 @@ const RequestErrorContent = AsyncComponent(() => import('./common/requestError/R
 let TestCaseTableMain = AsyncComponent(() => import( "./test/testcase/components/TestCaseTableMain"));
 let TestCaseTableLayout = AsyncComponent(() => import( "./test/testcase/components/TestCaseLayout"));
 let TestCaseTable = AsyncComponent(() => import("./test/testcase/components/TestCaseTable"));
-let FunctionContentListView = AsyncComponent(() => import("./test/function/components/listView/FunctionContentListView"));
+let FunctionContentListView = AsyncComponent(() => import("./test/function/function/components/listView/FunctionContentListView"));
 
 let PlanDetailContent = AsyncComponent(()=>import("./test/testplan/common/PlanDetailContent"))
 let TestPlan = AsyncComponent(() => import("./test/testplan/plan/components/testPlan"));
@@ -1153,8 +1154,13 @@ const Routers = [
                                 component: Module,
                             },
                             {
-                               path: "/project/:id/set/integration",
-                               component: IntegrationContent
+                                path: "/project/:id/set/integration",
+                                exact: true,
+                                component: IntegrationContent
+                            },
+                            {
+                                path: "/project/:id/set/integration/sward",
+                                component: IntegrationBindSward
                             },
                             {
                                 path: "/project/:id/set/user",

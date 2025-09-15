@@ -6,7 +6,7 @@
  * @Description: 事项列表页面
  */
 import React, {useState, useRef, useEffect, useCallback} from "react";
-import { Table, Space, Row, Col, Spin, Popconfirm, Dropdown, Menu } from 'antd';
+import {Table, Space, Row, Col, Spin, Popconfirm, Dropdown, Menu, Empty} from 'antd';
 import { observer, Provider } from "mobx-react";
 import "./WorkTable.scss";
 import WorkTableHead from "./WorkTableHead";
@@ -417,6 +417,12 @@ const WorkTable = (props) => {
                                                 onChange: changePage,
                                                 position: ["bottomCenter"],
                                                 showTotal: () => `共${total}条`
+                                            }}
+                                            locale={{
+                                                emptyText: <Empty
+                                                    imageStyle={{height: 100}}
+                                                    description={<span>暂无数据</span>}
+                                                />
                                             }}
                                             onChange={(pagination, filters, sorter, extra) => sorterTable(pagination, filters, sorter, extra)}
                                             expandable={

@@ -1,14 +1,14 @@
 import {inject, observer, Provider} from "mobx-react";
 import {Drawer} from "antd";
-import PageCenter from "../../../../common/caseCommon/PageCenter";
+import PageCenter from "../../../../../common/caseCommon/PageCenter";
 import FunctionDetail from "../FunctionDetail";
 import React, {useEffect, useRef} from "react";
-import EditableTitle from "../../../../common/caseCommon/EditableTitle";
+import EditableTitle from "../../../../../common/caseCommon/EditableTitle";
 import FuncUnitStore from "../../store/funcUnitStore";
-import TestcaseStore from "../../../testcase/store/testcaseStore";
-import {CASE_TYPE} from "../../../../common/dictionary/dictionary";
+import TestcaseStore from "../../../../testcase/store/testcaseStore";
+import {CASE_TYPE} from "../../../../../common/dictionary/dictionary";
 import "./FunctionContentDrawerView.scss"
-import CategoryStore from "../../../category/store/CategoryStore";
+import CategoryStore from "../../../../category/store/CategoryStore";
 
 const FunctionContentDrawerView = (props) => {
     const {isModalVisible, setIsModalVisible, caseId, inTestCase, detailWidth} = props;

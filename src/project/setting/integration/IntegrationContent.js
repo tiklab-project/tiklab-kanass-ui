@@ -1,18 +1,19 @@
 import React, {useState} from "react";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
-import { Col, Row, Tabs } from "antd";
+import { Col, Row } from "antd";
 import BindSward from "./BindSward";
 import { withRouter } from 'react-router';
-const { TabPane } = Tabs;
 import "./integrationStyle.scss"
-import BindTestHubo from "./BindTestHubo";
-import Button from "../../../common/button/Button";
 
 const IntegrationContent = (props) => {
 
-    const [activeKey, setActiveKey] = useState("sward");
+    const [showSward, setShowSward] = useState(false)
     const [wikiAddvisible, setWikiAddvisible] = useState(false)
-    const [testAddvisible, setTestAddvisible] = useState(false)
+
+    const goUrl = (path) => {
+        const pathname = props.match.url;
+        props.history.push(`${pathname}/${path}`)
+    }
     return (
         <Row className={"integration-content-row"} style={{height: "100%", overflow: "unset"}}>
             <Col
@@ -23,54 +24,40 @@ const IntegrationContent = (props) => {
                 xxl={{ span: "18", offset: "3" }}
             >
                 <div className={"project-set-integration"}>
-                    <Breadcumb firstText="集成" >
-                        {
-                            activeKey==="sward"
-                                ?<Button
-                                    type="primary"
-                                    onClick={() => setWikiAddvisible(true)}
-                                >
-                                    关联知识库
-                                </Button>
-                                :<Button
-                                    type="primary"
-                                    onClick={() => setTestAddvisible(true)}
-                                >
-                                    关联项目
-                                </Button>
-                        }
 
-                    </Breadcumb>
-                    <Tabs
-                        activeKey={activeKey}
-                        animated={{ inkBar: true, tabPane: true }}
-                        style={{ marginTop: 16 }}
-                        onChange={setActiveKey}
-                    >
-                        <TabPane
-                            tab="sward"
-                            key="sward"
-                        >
-                            <BindSward
-                                activeKey={activeKey}
-                                setWikiAddvisible={setWikiAddvisible}
-                                wikiAddvisible={wikiAddvisible}
-                                {...props}
-                            />
+                        <>
+                            <Breadcumb firstText="服务集成" />
+                            <div
+                                className={"integration-item"}
+                                onClick={() => goUrl("sward")}
+                            >
+                                <div className={"integration-item-left"}>
+                                    <div className={"integration-item-icon"}>
+                                        <svg className="svg-icon" aria-hidden="true">
+                                            <use xlinkHref="#icon-link"></use>
+                                        </svg>
+                                    </div>
+                                    <div className={"integration-item-content"}>
+                                        <div className={"integration-item-title"}>sward</div>
+                                        <div className={"integration-item-subtitle"}>关联知识库</div>
+                                    </div>
+                                </div>
+                                <div className={"integration-item-right"}>
+                                    <svg className="svg-icon" aria-hidden="true">
+                                        <use xlinkHref="#icon-pageRight"></use>
+                                    </svg>
+                                </div>
+                            </div>
+                        </>
 
-                        </TabPane>
-                        {/*<TabPane*/}
-                        {/*    tab="testhubo"*/}
-                        {/*    key="testhubo"*/}
-                        {/*>*/}
-                        {/*    <BindTestHubo*/}
-                        {/*        activeKey={activeKey}*/}
-                        {/*        setTestAddvisible={setTestAddvisible}*/}
-                        {/*        testAddvisible={testAddvisible}*/}
-                        {/*        {...props}*/}
-                        {/*    />*/}
-                        {/*</TabPane>*/}
-                    </Tabs>
+
+                    {showSward && (
+                        <BindSward
+                            activeKey={"sward"}
+                            setShowSward={setShowSward}
+                            {...props}
+                        />
+                    )}
                 </div>
             </Col>
         </Row>

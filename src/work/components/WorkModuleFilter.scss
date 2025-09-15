@@ -153,6 +153,10 @@
           justify-content: center;
         }
 
+        .module-tree-node-active{
+          background-color: #edf0f5;
+        }
+
         .module-tree-node{
           display: flex;
           justify-content: space-between;
@@ -165,9 +169,7 @@
             cursor: pointer;
           }
 
-          &-active{
-            background-color: #edf0f5;
-          }
+
 
           .module-tree-node-action{
             display: flex;

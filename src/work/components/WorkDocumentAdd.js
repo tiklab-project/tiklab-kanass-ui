@@ -7,7 +7,7 @@
  * @LastEditTime: 2024-12-26 15:11:14
  */
 import React, { useEffect, useState, useRef } from "react";
-import { Modal, Table, message } from 'antd';
+import {Modal, Table, message, Empty} from 'antd';
 import { observer, inject } from "mobx-react";
 import "./WorkDocumentAdd.scss";
 import InputSearch from "../../common/input/InputSearch"
@@ -321,6 +321,12 @@ const WorkDocumentAddmodal = (props) => {
                         cancelText="取消"
                         pagination={false}
                         scroll={{x: "100%"}}
+                        locale={{
+                            emptyText: <Empty
+                                imageStyle={{height: 100}}
+                                description={<span>暂无数据</span>}
+                            />
+                        }}
                     />
                     <div className="document-add-page">
                         <div className="document-add-page-total">

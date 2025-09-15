@@ -8,7 +8,7 @@
  */
 
 import React, { useEffect, useState } from "react";
-import { Table, Space } from 'antd';
+import {Table, Space, Empty} from 'antd';
 import VersionPlanAddmodal from "./VersionPlanAdd";
 import { observer, inject, Provider } from "mobx-react";
 import { PrivilegeProjectButton } from "tiklab-privilege-ui";
@@ -184,6 +184,12 @@ const VersionPlan = (props) => {
                 }}
                 onChange = {(pagination) => pageDown(pagination)}
                 scroll={{x: "100%"}}
+                locale={{
+                    emptyText: <Empty
+                        imageStyle={{height: 100}}
+                        description={<span>暂无数据</span>}
+                    />
+                }}
             />
             <WorkDetailDrawer
                 isModalVisible={isModalVisible}

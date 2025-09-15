@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Table, Input, Col,Row} from "antd";
+import {Table, Input, Col, Row, Empty} from "antd";
 import {inject, observer} from "mobx-react";
 import PaginationCommon from "../../../../common/caseCommon/pagination/Page";
 import IconCommon from "../../../../common/caseCommon/IconCommon";
@@ -157,6 +157,12 @@ const DemandSelect = (props) =>{
                                 onClick: () => {onFinish(record.id)},
                                 style: {cursor: 'pointer'}
                             };
+                        }}
+                        locale={{
+                            emptyText: <Empty
+                                imageStyle={{height: 100}}
+                                description={<span>暂无数据</span>}
+                            />
                         }}
                         pagination={false}
                     />

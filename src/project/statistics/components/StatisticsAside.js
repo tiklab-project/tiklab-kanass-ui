@@ -12,7 +12,7 @@ import { withRouter } from "react-router-dom";
 import { getVersionInfo } from "tiklab-core-ui";
 import StatisticsFree from './StatisticsFree';
 const StatisticsAsicde = (props) => {
-    const { workReportList, logReportList} = props;
+    const { workReportList, logReportList, selectKey, setSelectKey} = props;
     const versionInfo = getVersionInfo();
     const [workMenuList, setWorkMenuList] = useState(workReportList)
     // 项目id
@@ -22,7 +22,7 @@ const StatisticsAsicde = (props) => {
     const [logMenuList, setLogMenuList] = useState(logReportList)
     const [statisticsFreeVisable, setStatisticsFreeVisable] = useState(false);
     // 选中的菜单
-    const [selectRouter, setSelectRouter] = useState("overview")
+    // const [selectRouter, setSelectRouter] = useState("overview")
     // 已展开子级的计划id集合
     const [expandedTree, setExpandedTree] = useState([])
 
@@ -53,7 +53,7 @@ const StatisticsAsicde = (props) => {
      * @param {} id 
      * @param {*} type 
      */
-    const selectKey = (type) => {
+    const selectItemKey = (type) => {
         let url = '';
         if (props.match.path === "/project/:id/sprintDetail/:sprint/statistics") {
             url = `/project/${projectId}/sprintDetail/${sprintId}/statistics`;
@@ -66,18 +66,19 @@ const StatisticsAsicde = (props) => {
         }
         if (versionInfo.expired === false || type === "workItem" || type === "overview") {
             url = `${url}/${type}`;
-            setSelectRouter(type)
+            setSelectKey(type)
             props.history.push(url);
         } else {
             // url = `${url}/${type}`;
             // url = `${url}/advert`;
-            setStatisticsFreeVisable(true)
+            // setStatisticsFreeVisable(true)
+            setSelectKey(type)
         }
 
     }
 
     // useEffect(() => {
-    //     selectKey(selectRouter)
+    //     selectItemKey(selectRouter)
     // }, []);
 
     return (
@@ -85,7 +86,7 @@ const StatisticsAsicde = (props) => {
             <div className="statistics-top-title">
                 <span>统计</span>
             </div>
-            <div className={`statistics-type-title ${"overview" === selectRouter ? "statistics-menu-select" : ""}`} onClick={() => selectKey("overview")}>
+            <div className={`statistics-type-title ${"overview" === selectKey ? "statistics-menu-select" : ""}`} onClick={() => selectItemKey("overview")}>
                 <div className="statistics-type-title-left">
                     <svg className="menu-icon" aria-hidden="true" >
                         <use xlinkHref="#icon-survey-default"></use>
@@ -121,8 +122,8 @@ const StatisticsAsicde = (props) => {
                             workMenuList && workMenuList.map((item, index) => {
                                 return <div key={index}>
                                     <div
-                                        className={`statistics-menu-firstmenu ${item.type === selectRouter ? "statistics-menu-select" : ""}`}
-                                        onClick={() => selectKey(item.type)}
+                                        className={`statistics-menu-firstmenu ${item.type === selectKey ? "statistics-menu-select" : ""}`}
+                                        onClick={() => selectItemKey(item.type)}
                                         key={item.key}
                                     >
                                         <span>
@@ -169,8 +170,8 @@ const StatisticsAsicde = (props) => {
                                     logMenuList && logMenuList.map((item, index) => {
                                         return <div key={index}>
                                             <div
-                                                className={`statistics-menu-firstmenu ${item.type === selectRouter ? "statistics-menu-select" : ""}`}
-                                                onClick={() => selectKey(item.type)}
+                                                className={`statistics-menu-firstmenu ${item.type === selectKey ? "statistics-menu-select" : ""}`}
+                                                onClick={() => selectItemKey(item.type)}
                                                 key={item.key}
                                             >
                                                 <span>

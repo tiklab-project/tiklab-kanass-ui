@@ -7,7 +7,7 @@
  */
 import React, { useEffect, useState } from "react";
 import Breadcrumb from "../../../common/breadcrumb/Breadcrumb";
-import { Table, Tabs } from "antd";
+import {Empty, Table, Tabs} from "antd";
 import "./WorkRoleList.scss";
 import WorkPrivilegeStore from "../store/WorkPrivilegeStore";
 import { observer } from "mobx-react";
@@ -140,7 +140,17 @@ const WorkRoleList = (props) => {
                 firstText={workTypeInfo?.name}
                 secondText = "角色"
             />
-            <Table columns={roleColumns} dataSource={roleList} rowKey={record => record.id} scroll={{x: "100%"}}/>
+            <Table columns={roleColumns}
+                   dataSource={roleList}
+                   rowKey={record => record.id}
+                   scroll={{x: "100%"}}
+                   locale={{
+                       emptyText: <Empty
+                           imageStyle={{height: 100}}
+                           description={<span>暂无数据</span>}
+                       />
+                   }}
+            />
         </div>
     )
 }

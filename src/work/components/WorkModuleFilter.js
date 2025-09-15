@@ -39,7 +39,7 @@ const WorkModuleFilter = (props) => {
     const { quickFilterValue, setQuickFilterValue,setSearchCondition, findStateNodeList, tabValue,
         getWorkConditionPageTree, getWorkConditionPage, setTableTitle, setModuleTitle, setTabValue,
         viewType, findUserCreateAndTodoWorkNum, workList, findWorkTypeDmList, setQuickFilterVisible,
-        setWorkTypeVisible } = workStore;
+        setWorkTypeVisible, setShowTab } = workStore;
 
     const project = JSON.parse(localStorage.getItem('project'));
     const path = props.match.path;
@@ -120,6 +120,7 @@ const WorkModuleFilter = (props) => {
         setTableTitle(label)
         // setModuleTitle(null)
         setModuleSelect(null)
+        setShowTab(true)
         setQuickFilterVisible(false)
         setWorkTypeVisible(true)
         setTabValue({
@@ -209,6 +210,7 @@ const WorkModuleFilter = (props) => {
         setTableTitle(value.name)
         setQuickFilterValue("all")
         setModuleSelect(null)
+        setShowTab(true)
         setQuickFilterVisible(true)
         setWorkTypeVisible(false)
     }
@@ -234,6 +236,7 @@ const WorkModuleFilter = (props) => {
             setTableTitle(value.name)
             setQuickFilterValue("all")
             setModuleSelect(null)
+            setShowTab(true)
             setQuickFilterVisible(true)
             setWorkTypeVisible(false)
         } else {
@@ -247,6 +250,7 @@ const WorkModuleFilter = (props) => {
             setTableTitle(value.name)
             setQuickFilterValue(null)
             setModuleSelect(null)
+            setShowTab(true)
             setQuickFilterVisible(true)
             setWorkTypeVisible(false)
             search({
@@ -489,6 +493,16 @@ const WorkModuleFilter = (props) => {
 
     // 点击筛选事件
     const handleNodeClick = (id, moduleName) => {
+        setModuleSelect(id);
+        // 手动控制展开状态
+        if (id) {
+            setExpandedKeys(prev => (
+                prev.includes(id)
+                    ? prev // 若已展开则保持不变
+                    : [...prev, id] // 若未展开则展开该节点
+            ));
+        }
+
         let param;
         if (id){
             param = {
@@ -507,8 +521,9 @@ const WorkModuleFilter = (props) => {
                 moduleIds: []
             }
         }
-        setQuickFilterVisible(true)
-        setWorkTypeVisible(true)
+        setShowTab(false)
+        // setQuickFilterVisible(true)
+        // setWorkTypeVisible(true)
 
         if (viewType === "tree"){
             getWorkConditionPageTree(param).then(res => {
@@ -552,10 +567,11 @@ const WorkModuleFilter = (props) => {
                 return (
                     <TreeNode
                         key={item.id}
+                        className={`${moduleSelect === item.id ? "module-tree-node-active" : ""}`}
                         title={
                             <>
                                 <div
-                                    className={`module-tree-node ${moduleSelect === item.id ? "module-tree-node-active" : ""} `}
+                                    className={`module-tree-node  `}
                                     onMouseEnter={(e) => {
                                         e.stopPropagation();
                                         setHoverNodeKey(item.id)
@@ -565,7 +581,7 @@ const WorkModuleFilter = (props) => {
                                         setHoverNodeKey(null)
                                     }}
                                     onClick={(e) => {
-                                        e.stopPropagation();
+                                        // e.stopPropagation();
                                         handleNodeClick(item.id, currentPath)
                                     }}
                                 >
@@ -747,6 +763,7 @@ const WorkModuleFilter = (props) => {
                                 moduleTreeVisible &&
                                 <div className="content-module-tree">
                                     <Tree
+                                        expandedKeys={expandedKeys}
                                         onExpand={handleExpand}
                                         switcherIcon={<DownOutlined style={{ fontSize: '12px' }} />}
                                         showLine={false}

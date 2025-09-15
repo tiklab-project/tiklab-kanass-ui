@@ -31,6 +31,37 @@ export const showTextStatus = (status,size)=>{
     }
 }
 
+export const showCasePriorityLevel = (level) => {
+    switch (level){
+        case 0:
+            return <div className={"display-flex-gap"}>
+                <IconCommon
+                    className={"icon-s"}
+                    icon={"icon_level1"}
+                    style={{cursor: "pointer"}}
+                />
+                <div>低</div>
+            </div>
+        case 1:
+            return <div className={"display-flex-gap"}>
+                <IconCommon
+                    className={"icon-s"}
+                    icon={"icon_level2"}
+                    style={{cursor: "pointer"}}
+                />
+                <div>中</div>
+            </div>
+        case 2:
+            return <div className={"display-flex-gap"}>
+                <IconCommon
+                    className={"icon-s"}
+                    icon={"icon_level3"}
+                    style={{cursor: "pointer"}}
+                />
+                <div>高</div>
+            </div>
+    }
+}
 
 
 /**

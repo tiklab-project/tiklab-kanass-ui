@@ -20,7 +20,7 @@ import testPlanDetailStore from "../../../testplan/plan/store/testPlanDetailStor
  * 绑定的缺陷列表
  */
 const CaseBindDefectList = (props) =>{
-    const {caseId,notShow,testPlanId,startTime,endTime,smallTableHead} = props;
+    const {caseId,notShow,testPlanId,startTime,endTime,inDetail} = props;
     const {findWorkItemBindPage,workItemBindList,deleteWorkItemBind} = workItemBindStore
     const {deleteWork} = workStore
     const {findBindTestCaseList} = testPlanDetailStore
@@ -255,9 +255,12 @@ const CaseBindDefectList = (props) =>{
 
     return(
         <>
-            <div className={"title-bold"}>
-                关联缺陷
-            </div>
+            {/*{*/}
+            {/*    inDetail &&*/}
+            {/*    <div className={"title-bold"}>*/}
+            {/*        关联缺陷*/}
+            {/*    </div>*/}
+            {/*}*/}
             <div style={{padding: "0 0 20px"}}>
 
                 {
@@ -270,11 +273,13 @@ const CaseBindDefectList = (props) =>{
                                 <WorkAddModel
                                     caseId={caseId}
                                     testPlanId={testPlanId}
+                                    inDetail={inDetail}
                                 />
 
                                 <DefectSelect
                                     caseId={caseId}
                                     testPlanId={testPlanId}
+                                    inDetail={inDetail}
                                 />
                             </Space>
                         </div>
@@ -282,14 +287,18 @@ const CaseBindDefectList = (props) =>{
 
                 <div className={"table-list-box"} style={{margin: "16px 0"}}>
                     <Table
-                        className={`${smallTableHead ? 'case-bind-table-list':'tablelist'}`}
+                        className={`${inDetail ? 'case-bind-table-list':'tablelist'}`}
                         columns={notShow ? columns : [...columns, actionColumn]}
                         dataSource={workItemBindList}
                         rowKey={record => record.id}
                         loading={tableLoading}
                         pagination={false}
                         locale={{
-                            emptyText: <div style={{height: 100}}/>,
+                            emptyText: inDetail ? <div style={{height: 100}}/>
+                                :<Empty
+                                    imageStyle={{height: 100}}
+                                    description={<span>暂无数据</span>}
+                                />
                         }}
                     />
                 </div>

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {message, Space, Table} from "antd";
+import {Empty, message, Space, Table} from "antd";
 import DeleteModal from "../../../common/deleteModal/deleteModal";
 import TestRepositoryAdd from "../../test/components/TestRepositoryAdd";
 import TestRepositoryStore from "../../test/store/TestRepositoryStore";
@@ -104,6 +104,12 @@ const BindTestHubo = (props) => {
                 pagination={false}
                 onChange={false}
                 scroll={{x: "100%"}}
+                locale={{
+                    emptyText: <Empty
+                        imageStyle={{height: 100}}
+                        description={<span>暂无数据</span>}
+                    />
+                }}
             />
             <TestRepositoryAdd
                 projectId={projectId}

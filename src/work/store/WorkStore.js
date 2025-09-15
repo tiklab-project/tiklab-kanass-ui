@@ -167,6 +167,7 @@ export class WorkStore {
     // 筛选框是否可见
     @observable quickFilterVisible = false;
     @observable workTypeVisible = true;
+    @observable showTab = true;
 
     @action
     setQuickFilterVisible = (value) => {
@@ -176,6 +177,11 @@ export class WorkStore {
     @action
     setWorkTypeVisible = (value) => {
         this.workTypeVisible = value
+    }
+
+    @action
+    setShowTab = (value) => {
+        this.showTab = value
     }
 
     @action

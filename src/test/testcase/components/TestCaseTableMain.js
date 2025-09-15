@@ -4,7 +4,7 @@ import {Provider} from "mobx-react";
 
 import TestCaseStore from "../store/testcaseStore";
 import CategoryStore from "../../category/store/CategoryStore";
-import FuncUnitStore from "../../function/store/funcUnitStore";
+import FuncUnitStore from "../../function/function/store/funcUnitStore";
 import "../../common/styles/base.scss"
 import TestCaseMenu from "./TestCaseMenu";
 const TestCaseTableMain = (props) => {

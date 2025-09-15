@@ -6,14 +6,14 @@
  * @LastEditTime: 2025/8/8
  */
 import React, {useEffect, useRef, useState} from "react";
-import "./EnhanceEntranceModal.scss";
+import "./EnhanceEntranceCloseModal.scss";
 import {applySubscription,disableFunction} from "tiklab-core-ui";
 import Button from "../button/Button";
 
-const EnhanceEntranceModal = (props) => {
+const EnhanceEntranceCloseModal = (props) => {
 
     const {config, enhanceModal, setEnhanceModal} = props;
-
+    const bgroup = 'kanass';
     // const disable = disableFunction();
     // const [enhanceModal ,setEnhanceModal] = useState(false)
     const modalRef = useRef();
@@ -75,4 +75,4 @@ const EnhanceEntranceModal = (props) => {
     )
 }
 
-export default EnhanceEntranceModal
+export default EnhanceEntranceCloseModal

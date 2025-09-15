@@ -8,11 +8,12 @@
  */
 import React, { useEffect, useState } from "react";
 import { observer, Provider } from "mobx-react";
-import {Col, Layout, Row,} from 'antd';
+import {Col, Layout, Row, Tooltip,} from 'antd';
 import "./TestCaseMenu.scss"
 import { withRouter } from 'react-router';
 import { renderRoutes } from "react-router-config";
 import Breadcrumb from "../../../common/breadcrumb/Breadcrumb";
+import {QuestionCircleOutlined} from "@ant-design/icons";
 const { Sider,Content } = Layout;
 const TestCaseMenu = (props) => {
     const store = {
@@ -40,6 +41,10 @@ const TestCaseMenu = (props) => {
     const handleTabClick = (key, id) => {
         setSelectTab(key)
         props.history.push(id)
+    }
+
+    const goDocument = () => {
+        window.open('https://doc.tiklab.net/document', '_blank');
     }
 
     return (<Provider {...store}>
@@ -71,7 +76,17 @@ const TestCaseMenu = (props) => {
                                 })
                             }
                         </div>
-                        <div></div>
+                        <div>
+                            <Tooltip title={"帮助"}>
+                                <QuestionCircleOutlined
+                                    style={{
+                                        fontSize: "18px",
+                                        cursor: "pointer"
+                                    }}
+                                    onClick={goDocument}
+                                />
+                            </Tooltip>
+                        </div>
                     </div>
                 </Col>
             </Row>

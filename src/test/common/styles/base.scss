@@ -374,6 +374,9 @@ table .icon{
 .title-bold{
   font-weight: bold;
   margin: 10px 0;
+
+  display: flex;
+  justify-content: space-between;
 }
 
 .repository-icon{

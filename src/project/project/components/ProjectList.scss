@@ -28,9 +28,7 @@
             }
 
             .project-item {
-                max-width: 260px;
-                min-width: 204px;
-                flex: 1;
+                width: calc(25% - 7.5px);
                 padding: 12px;
                 box-sizing: content-box;
                 flex-shrink: 0;
@@ -42,7 +40,7 @@
 
                 .item-title {
                     margin-bottom: 10px;
-                    font-weight: var(--tiklab-font-weight-bold);
+                    //font-weight: var(--tiklab-font-weight-bold);
                     display: inline-flex;
                     align-items: center;
                     font-size: 16px;
@@ -218,7 +216,7 @@
             .ant-col {
                 min-height: 100%;
                 background-color: #fff;
-                padding: var(--tiklab-padding);
+                padding: 20px 0;
             }
         }
         .project-table-box {
@@ -263,10 +261,10 @@
                     background: #e2e1e4;
                 }
                 &-process {
-                    background: #b0d5dfa1;
+                    background: #e2e1e4;
                 }
                 &-done {
-                    background: #dfecd5e3;
+                    background: #e2e1e4;
                 }
             }
             .ant-select-selector {

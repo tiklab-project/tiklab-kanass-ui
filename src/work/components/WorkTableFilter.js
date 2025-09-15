@@ -18,11 +18,8 @@ import { searchWorkList } from "./WorkSearch";
 import WorkTypeTab from "./WorkTypeTab";
 import WorkFilterQuick from "./WorkFilterQuick";
 import WorkTypeSelect from "./WorkTypeSelect";
+import WorkFilterTab from "./WorkFilterTab";
 import WorkFilterSelect from "./WorkFilterSelect";
-import {PrivilegeProjectButton} from "tiklab-privilege-ui";
-import WorkCreatDropdown from "./workCreatDropdown";
-import Button from "../../common/button/Button";
-import WorkChangeView from "./WorkChangeView";
 import WorkAddModel from "./WorkAddModel";
 import ProductStore from "../../product/product/store/ProductStore";
 import ProjectSetStore from "../../projectSet/projectSet/store/ProjectSetStore";
@@ -43,7 +40,7 @@ const WorkTableFilter = (props) => {
     const { searchCondition,
         workStatusList, getWorkConditionPage, getWorkConditionPageTree, setViewType, setWorkShowType,
         workShowType, viewType, getSelectUserList, setArchiveView, archiveView,
-        getWorkTypeList, getWorkStatus, userList, getWorkBoardList, workTypeList, quickFilterVisible, workTypeVisible } = workStore;
+        getWorkTypeList, getWorkStatus, userList, getWorkBoardList, workTypeList, quickFilterVisible, workTypeVisible, showTab } = workStore;
     const [inputValue, setInputValue] = useState(searchCondition?.keyWord);
     const [stateType, setState] = useState();
     const workAddModel = useRef()
@@ -258,8 +255,20 @@ const WorkTableFilter = (props) => {
 
 
             <div className="work-table-filter">
-                {quickFilterVisible && <WorkFilterSelect />}
-                {workTypeVisible && !path.includes("/product")  && <WorkTypeSelect />}
+                {
+                    showTab ?
+                        <>
+                            {quickFilterVisible && <WorkFilterTab />}
+                            {workTypeVisible && !path.includes("/product")  && <WorkTypeTab />}
+                        </>
+                        :
+                        <>
+                            <WorkFilterSelect />
+                            <WorkTypeSelect />
+                        </>
+
+                }
+
 
                 {/*<WorkFilterQuick />*/}
 

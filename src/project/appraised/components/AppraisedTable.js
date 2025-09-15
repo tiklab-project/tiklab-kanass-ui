@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import AppraisedStore from "../store/AppraisedStores";
 import ColorIcon from "../../../common/colorIcon/ColorIcon";
-import {Col, Space, Table, Row, Tooltip} from "antd";
+import {Col, Space, Table, Row, Tooltip, Empty} from "antd";
 import {PrivilegeProjectButton} from "tiklab-privilege-ui";
 import DeleteModal from "../../../common/deleteModal/deleteModal";
 import {withRouter} from "react-router";
@@ -297,6 +297,12 @@ const AppraisedTable = (props) => {
                                         loading={loading}
                                         onSearch={onSearch}
                                         scroll={{ x: "100%" }}
+                                        locale={{
+                                            emptyText: <Empty
+                                                imageStyle={{height: 100}}
+                                                description={<span>暂无数据</span>}
+                                            />
+                                        }}
                                     />
                                 </div>
                             </div>

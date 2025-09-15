@@ -188,7 +188,7 @@ const ProductBasicInfo = (props) => {
                     <Collapse defaultActiveKey={"1"} expandIconPosition={"right"}>
                         <Panel header={productInfoDesc()} key="1" >
                             <Form
-                                {...layout}
+                                layout="vertical"
                                 name="basic"
                                 initialValues={{
                                     remember: true,

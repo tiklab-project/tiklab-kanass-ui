@@ -7,7 +7,7 @@
  * @LastEditTime: 2024-12-27 14:11:55
  */
 import React, {useState} from "react";
-import { Modal,Table,message,Input,Select } from 'antd';
+import {Modal, Table, message, Input, Select, Empty} from 'antd';
 import "./StagePlanAdd.scss"
 import {observer, inject} from "mobx-react";
 import Button from "../../../common/button/Button";
@@ -180,6 +180,12 @@ const StagePlanAddModal = (props) => {
                     cancelText="取消"
                     pagination ={false}
                     scroll={{x: "100%"}}
+                    locale={{
+                        emptyText: <Empty
+                            imageStyle={{height: 100}}
+                            description={<span>暂无数据</span>}
+                        />
+                    }}
                 />
 
             </Modal>

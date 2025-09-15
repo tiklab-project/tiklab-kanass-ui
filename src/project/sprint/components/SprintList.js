@@ -8,7 +8,7 @@
  */
 
 import React, { useEffect, useState } from "react";
-import {Space, Row, Col, Table, Progress} from 'antd';
+import {Space, Row, Col, Table, Progress, Empty} from 'antd';
 import SprintAddmodal from "./SpintAddEditModal";
 import "./sprintList.scss";
 import { getUser } from "tiklab-core-ui";
@@ -445,6 +445,12 @@ const Sprint = (props) => {
                                         onChange: changePage,
                                         position: ["bottomCenter"],
                                         showTotal: () => `共${total}条`
+                                    }}
+                                    locale={{
+                                        emptyText: <Empty
+                                            imageStyle={{height: 100}}
+                                            description={<span>暂无数据</span>}
+                                        />
                                     }}
                                 />
                             </div>

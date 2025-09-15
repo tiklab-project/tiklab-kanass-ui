@@ -1,12 +1,17 @@
 import React, {useEffect, useRef, useState} from "react";
 import {Col, Dropdown, Empty, Input, Menu, message, Row, Space, Table} from "antd";
 import {inject, observer} from "mobx-react";
-import {showCaseTypeTable, showCaseTypeView, showTextStatus} from "../../../common/caseCommon/CaseCommonFn";
+import {
+    showCasePriorityLevel,
+    showCaseTypeTable,
+    showCaseTypeView,
+    showTextStatus
+} from "../../../common/caseCommon/CaseCommonFn";
 import "../../common/styles/caseContantStyle.scss"
 import "../../common/styles/unitcase.scss"
 import PaginationCommon from "../../../common/caseCommon/pagination/Page";
 import {
-    findTestCaseStatusCountFn,
+    findTestCasePriorityLevelCountFn,
     findTestCaseTableListFn,
     rowStyle,
     showCreateUser
@@ -16,11 +21,11 @@ import {useHistory} from "react-router";
 import {debounce} from "../../../common/caseCommon/CaseCommonFn";
 import HideDelete from "../../../common/caseCommon/hideDelete/HideDelete";
 import {toDiffCaseFn} from "../../common/caseCommonFn";
-import FuncUnitEdit from "../../function/components/funcUnitEdit";
+import FuncUnitEdit from "../../function/function/components/funcUnitEdit";
 import {DownOutlined, SearchOutlined} from "@ant-design/icons";
 import CaseCategoryTree from "../../category/components/CaseCategoryTree";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
-import FunctionContentDrawerView from "../../function/components/drawerView/FunctionContentDrawerView";
+import FunctionContentDrawerView from "../../function/function/components/drawerView/FunctionContentDrawerView";
 
 
 const TestCaseTable = (props) => {
@@ -39,7 +44,7 @@ const TestCaseTable = (props) => {
         setCaseTypeList,
         searchCondition,
         detailWidth,
-        testCaseStatusCount
+        testCasePriorityLevelCount
     } = testcaseStore;
     const {categoryIds, setCategoryIds, tableTitle, treeCollapsed} = categoryStore;
 
@@ -66,22 +71,22 @@ const TestCaseTable = (props) => {
         findPage()
     },[projectId, categoryIds, searchCondition])
 
-    const statusFilterList = [
+    const levelFilterList = [
         {
             value: "all",
             label: "所有"
         },
         {
             value: 0,
-            label: "未开始"
+            label: "低"
         },
         {
             value: 1,
-            label: "进行中"
+            label: "中"
         },
         {
             value: 2,
-            label: "已完成"
+            label: "高"
         }
     ]
 
@@ -96,11 +101,11 @@ const TestCaseTable = (props) => {
         let params;
         if (value === "all"){
             params = {
-                status: null,
+                priorityLevel: null,
             }
         }else{
             params = {
-                status: value,
+                priorityLevel: value,
             }
         }
         setSelectTab(value)
@@ -121,7 +126,7 @@ const TestCaseTable = (props) => {
         }
 
         const res = findTestCaseTableListFn(param);
-        const countRes = findTestCaseStatusCountFn(param)
+        const countRes = findTestCasePriorityLevelCountFn(param)
         setTableLoading(false)
         // findTestCaseList(param).then((res)=>{
         //     setTotalPage(res.totalPage);
@@ -233,11 +238,12 @@ const TestCaseTable = (props) => {
             )
         },
         {
-            title: `状态`,
-            dataIndex: "status",
-            key: "status",
+            title: `优先级`,
+            dataIndex: "priorityLevel",
+            key: "priorityLevel",
             width: "15%",
-            render: (text) => <div className={"case-table-status"}>{showTextStatus(text, "12px")}</div>
+            // render: (text) => <div className={"case-table-status"}>{showTextStatus(text, "12px")}</div>
+            render: (text) => <div className={""}>{showCasePriorityLevel(text)}</div>
         },
         {
             title: `负责人`,
@@ -275,13 +281,13 @@ const TestCaseTable = (props) => {
     const setTestCaseNum = (label) => {
         let num ;
         if (label === "all"){
-            num = testCaseStatusCount?.total_count;
+            num = testCasePriorityLevelCount?.total_count;
         }else if (label === 0){
-            num = testCaseStatusCount?.todo_count;
+            num = testCasePriorityLevelCount?.low_count;
         }else if (label === 1){
-            num = testCaseStatusCount?.progress_count;
+            num = testCasePriorityLevelCount?.mid_count;
         }else if (label === 2){
-            num = testCaseStatusCount?.done_count;
+            num = testCasePriorityLevelCount?.high_count;
         }
 
         let showNum;
@@ -312,7 +318,7 @@ const TestCaseTable = (props) => {
                     <div style={{marginTop: "10px"}} className={"display-flex-between"}>
                         <div className={"work-filter-tabs"}>
                             {
-                                statusFilterList.map(item => {
+                                levelFilterList.map(item => {
                                     return <div
                                         className={`filter-tab ${selectTab === item.value ? "active-tabs" : ""}`}
                                         key={item.value}
@@ -350,7 +356,7 @@ const TestCaseTable = (props) => {
                                 emptyText: !tableLoading
                                     ? <Empty
                                         imageStyle={{height: 100}}
-                                        description={<span>暂无用例</span>}
+                                        description={<span>暂无数据</span>}
                                     />
                                     : <div style={{height: 100}}/>,
                             }}

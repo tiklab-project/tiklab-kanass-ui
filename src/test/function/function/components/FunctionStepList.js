@@ -1,16 +1,16 @@
-import React, {useEffect, useState} from 'react';
-import IconCommon from "../../../common/caseCommon/IconCommon";
+import React, {useEffect, useState, useRef} from 'react';
+import IconCommon from "../../../../common/caseCommon/IconCommon";
 import {inject, observer} from "mobx-react";
 import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
 import {MenuOutlined, PlusOutlined, UpOutlined, CheckOutlined, CloseOutlined, FormOutlined} from "@ant-design/icons";
-import {Row, Col, Empty, Popconfirm, Select, Form, Input, Button, Space, message} from "antd";
-import stepCommonStore from "../../common/stepcommon/store/StepCommonStore";
-import {CASE_TYPE} from "../../../common/dictionary/dictionary";
+import {Row, Col, Empty, Popconfirm, Select, Form, Input, Button, Space, message, Tooltip} from "antd";
+import stepCommonStore from "../../../common/stepcommon/store/StepCommonStore";
+import {CASE_TYPE} from "../../../../common/dictionary/dictionary";
 import {useLocation} from "react-router";
 import functionInstanceStore from "../store/functionInstanceStore";
 import funcUnitStepStore from "../store/funcUnitStepStore";
-import "../../common/styles/testcaseStyle.scss"
-import HideDelete from "../../../common/caseCommon/hideDelete/HideDelete";
+import "../../../common/styles/testcaseStyle.scss"
+import HideDelete from "../../../../common/caseCommon/hideDelete/HideDelete";
 
 const {TextArea} = Input;
 
@@ -25,6 +25,7 @@ const FunctionStepList = ({functionId,funcUnitStore}) => {
     const [editingStepId, setEditingStepId] = useState(null);
     const [form] = Form.useForm();
     const [editForm] = Form.useForm();
+    const describedInputRef = useRef(null);
 
     const pathname = useLocation().pathname
     const projectId = localStorage.getItem("projectId")
@@ -89,7 +90,8 @@ const FunctionStepList = ({functionId,funcUnitStore}) => {
         try {
             const values = await form.validateFields();
             values.funcUnitId = functionId;
-            
+
+            console.log("添加步骤values：",values)
             const res = await createFuncUnitStep(values);
             if(res.code === 0) {
                 await findList();
@@ -105,11 +107,35 @@ const FunctionStepList = ({functionId,funcUnitStore}) => {
         }
     };
 
+    const handleKeyPressAdd = (e) => {
+        if (e.key === 'Enter' && e.ctrlKey) {
+            e.preventDefault();
+            handleAddStep();
+        }
+    };
+
+    const showAddFormHandler = () => {
+        setShowAddForm(true);
+        // 使用setTimeout确保DOM更新后再聚焦
+        setTimeout(() => {
+            if (describedInputRef.current) {
+                describedInputRef.current.focus();
+            }
+        }, 100);
+    };
+
+    const handleKeyPressEdit = (e, stepId) => {
+        if (e.key === 'Enter' && e.ctrlKey) {
+            e.preventDefault();
+            handleEditStep(stepId);
+        }
+    };
+
     const handleEditStep = async (stepId) => {
         try {
             const values = await editForm.validateFields();
             values.id = stepId;
-            
+
             const res = await updateFuncUnitStep(values);
             if(res.code === 0) {
                 await findList();
@@ -143,61 +169,62 @@ const FunctionStepList = ({functionId,funcUnitStore}) => {
         const isEditing = editingStepId === item.id;
 
         return(
-            <Row className={"step-item-content"}>
-                <Col span={1}>
+            <Row className={"step-item-content step-row"}>
+                <Col className={"step-cell"}>
                     <div
                         {...provided.dragHandleProps}
                         className={"step-item-box-icon"}
                     >
                         <MenuOutlined />
+                        <div className={"step-item-box-index"}>{item.sort+1}</div>
                     </div>
                 </Col>
-                <Col span={1}>
-                    <div>{item.sort+1}</div>
-                </Col>
-                <Col span={8}>
+                {/*<Col span={1}>*/}
+                {/*    */}
+                {/*</Col>*/}
+                <Col span={9} className={"step-cell step-item-box-text"}>
                     {isEditing ? (
-                        <Form.Item 
+                        <Form.Item
                             name="described"
                             rules={[{ required: true, message: '请输入步骤描述' }]}
-                            style={{marginBottom: 0}}
+                            style={{marginBottom: 0, width: "100%"}}
                         >
                             <TextArea
-                                placeholder="请输入步骤描述"
+                                placeholder="请输入步骤描述(Ctrl+Enter快速保存)"
                                 autoSize={{minRows: 3, maxRows: 4}}
+                                onKeyDown={(e) => handleKeyPressEdit(e, item.id)}
+                                bordered={false}
                             />
                         </Form.Item>
                     ) : (
-                        <div className={"text-ellipsis"}>{step?.described}</div>
+                        <div onClick={(e) => {
+                            e.stopPropagation();
+                            startEdit(item.id);
+                        }} className={"text-display"}>{step?.described}</div>
                     )}
                 </Col>
-                <Col span={7}>
+                <Col span={9} className={"step-cell step-item-box-text"}>
                     {isEditing ? (
-                        <Form.Item 
+                        <Form.Item
                             name="expect"
                             rules={[{ required: true, message: '请输入预期结果' }]}
-                            style={{marginBottom: 0}}
+                            style={{marginBottom: 0, width: "100%"}}
                         >
                             <TextArea
-                                placeholder="请输入预期结果"
+                                placeholder="请输入预期结果(Ctrl+Enter快速保存)"
                                 autoSize={{minRows: 3, maxRows: 4}}
+                                onKeyDown={(e) => handleKeyPressEdit(e, item.id)}
+                                bordered={false}
                             />
                         </Form.Item>
                     ) : (
-                        step?.expect ? <div className={"text-ellipsis"}>{step?.expect}</div> : null
+                        step?.expect ? <div onClick={(e) => {
+                            e.stopPropagation();
+                            startEdit(item.id);
+                        }} className={"text-display"}>{step?.expect}</div> : null
                     )}
                 </Col>
-                {/*{pathname.startsWith('/plan') && (*/}
-                {/*    <Col span={4}>*/}
-                {/*        <div className="text-ellipsis">*/}
-                {/*            <FunctionResultSelect*/}
-                {/*                selectChange={setStepResult}*/}
-                {/*                record={item}*/}
-                {/*            />*/}
-                {/*        </div>*/}
-                {/*    </Col>*/}
-                {/*)}*/}
-                <Col style={{marginLeft: "auto",height:"20px"}}>
+                <Col className={"step-cell"} style={{marginLeft: "auto",height:"20px"}}>
                     {isEditing ? (
                         <Space>
                             <CheckOutlined
@@ -217,15 +244,6 @@ const FunctionStepList = ({functionId,funcUnitStore}) => {
                         </Space>
                     ) : (
                         <Space>
-                            {/*<IconCommon*/}
-                            {/*    className={"icon-s"}*/}
-                            {/*    icon={"bianji11"}*/}
-                            {/*    onClick={(e) => {*/}
-                            {/*        e.stopPropagation();*/}
-                            {/*        startEdit(item.id);*/}
-                            {/*    }}*/}
-                            {/*    style={{cursor: "pointer"}}*/}
-                            {/*/>*/}
                             <FormOutlined
                                 style={{fontSize:16,cursor: "pointer"}}
                                 onClick={(e) => {
@@ -284,8 +302,10 @@ const FunctionStepList = ({functionId,funcUnitStore}) => {
         <>
             <div>
                 <div className={"title-bold"}>
-                    测试步骤
-                    <span className={"list-size-title"}> {stepList.length}</span>
+                    <div>
+                        测试步骤
+                        <span className={"list-size-title"}> {stepList.length}</span>
+                    </div>
                 </div>
             </div>
             <div className={"table-list-box"}>
@@ -318,7 +338,7 @@ const FunctionStepList = ({functionId,funcUnitStore}) => {
                                 {/*        </Col>*/}
                                 {/*        <Col span={1} className={"case-step-header-title"}>序号</Col>*/}
                                 {/*        <Col span={8} className={"case-step-header-title"}>描述</Col>*/}
-                                {/*        <Col span={7} className={"case-step-header-title"}>期望</Col>*/}
+                                {/*        <Col span={8} className={"case-step-header-title"}>期望</Col>*/}
                                 {/*        {pathname.startsWith('/plan') && (*/}
                                 {/*            <Col span={4} className={"case-step-header-title"}>实际结果</Col>*/}
                                 {/*        )}*/}
@@ -339,24 +359,22 @@ const FunctionStepList = ({functionId,funcUnitStore}) => {
                         )}
                     </Droppable>
                 </DragDropContext>
-                <div style={{
-                    marginTop: "5px",
-                    padding: "7px",
-                    border: "1px solid #eee",
-                    borderRadius: "5px",
-                    background: "#fafafa",
-                }}>
+                <div className={"step-item-box"} style={{marginTop: "10px"}}>
                     <div style={{textAlign: "center"}}>
                         {
-                            !showAddForm && <span
-                                className="link-text"
-                                onClick={() => setShowAddForm(!showAddForm)}
-                                style={{cursor: "pointer", fontSize: "14px"}}
-                            >
-                                添加步骤
-                            </span>
-                        }
+                            !showAddForm &&
+                                <span
+                                    className="link-text"
+                                    onClick={showAddFormHandler}
+                                    style={{cursor: "pointer", fontSize: "14px", display: "inline-flex", alignItems: "center"}}
+                                >
+                                    <svg className="icon-20" aria-hidden="true" style={{marginRight: "5px"}}>
+                                        <use xlinkHref="#icon-add2"></use>
+                                    </svg>
+                                    添加步骤
+                                </span>
 
+                        }
                     </div>
                     {showAddForm && (
                         <Form
@@ -364,50 +382,62 @@ const FunctionStepList = ({functionId,funcUnitStore}) => {
                             layout="vertical"
                             onFinish={handleAddStep}
                         >
-                            <Row gutter={16}>
-                                <Col span={12}>
+                            <Row className={"step-item-content"}>
+                                <Col className={"step-cell"}>
+                                    <div className={"step-item-box-icon"}>
+                                        <MenuOutlined />
+                                        <div className={"step-item-box-index"}>{stepList.length + 1}</div>
+                                    </div>
+                                </Col>
+                                <Col span={9} className={"step-cell step-item-box-text"}>
                                     <Form.Item
-                                        label="步骤描述"
                                         name="described"
                                         rules={[{required: true, message: '请输入步骤描述'}]}
+                                        style={{marginBottom: 0, width: "100%"}}
                                     >
                                         <TextArea
-                                            placeholder="请输入步骤描述"
-                                            autoSize={{minRows: 3, maxRows: 6}}
-                                            className={"function-add-textarea"}
+                                            ref={describedInputRef}
+                                            placeholder="请输入步骤描述(Ctrl+Enter快速保存)"
+                                            autoSize={{minRows: 3, maxRows: 4}}
+                                            onKeyDown={handleKeyPressAdd}
+                                            bordered={false}
                                         />
                                     </Form.Item>
                                 </Col>
-                                <Col span={12}>
+                                <Col span={9} className={"step-cell step-item-box-text"}>
                                     <Form.Item
-                                        label="预期结果"
                                         name="expect"
                                         rules={[{required: true, message: '请输入预期结果'}]}
+                                        style={{marginBottom: 0, width: "100%"}}
                                     >
                                         <TextArea
-                                            placeholder="请输入预期结果"
-                                            autoSize={{minRows: 3, maxRows: 6}}
-                                            className={"function-add-textarea"}
+                                            placeholder="请输入预期结果(Ctrl+Enter快速保存)"
+                                            autoSize={{minRows: 3, maxRows: 4}}
+                                            onKeyDown={handleKeyPressAdd}
+                                            bordered={false}
                                         />
                                     </Form.Item>
                                 </Col>
+                                <Col style={{marginLeft: "auto", height: "20px"}}>
+                                    <Space>
+                                        <Tooltip title={"Ctrl + Enter 快速保存"} mouseEnterDelay={0.5}>
+                                            <CheckOutlined
+                                                onClick={handleAddStep}
+                                                style={{cursor: "pointer", fontSize: "16px"}}
+                                            />
+                                        </Tooltip>
+                                        <CloseOutlined
+                                            onClick={() => {
+                                                form.resetFields();
+                                                setShowAddForm(false);
+                                            }}
+                                            style={{cursor: "pointer", fontSize: "16px"}}
+                                        />
+                                    </Space>
+                                </Col>
                             </Row>
-                            <Form.Item style={{textAlign: "right", marginBottom: 0}}>
-                                <Space>
-                                    <Button type="primary" htmlType="submit">
-                                        保存
-                                    </Button>
-                                    <Button onClick={() => {
-                                        form.resetFields();
-                                        setShowAddForm(false);
-                                    }}>
-                                        取消
-                                    </Button>
-                                </Space>
-                            </Form.Item>
                         </Form>
                     )}
-
                 </div>
 
 

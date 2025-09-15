@@ -8,7 +8,7 @@
  */
 
 import React, {useState} from "react";
-import { Modal,Table,message,Input,Select } from 'antd';
+import {Modal, Table, message, Input, Select, Empty} from 'antd';
 import "./versionPlanAdd.scss"
 import {observer, inject} from "mobx-react";
 import { PrivilegeProjectButton } from "tiklab-privilege-ui";
@@ -164,7 +164,12 @@ const VersionPlanAddmodal = (props) => {
                     cancelText="取消"
                     pagination ={false}
                     scroll={{x: "100%"}}
-                    
+                    locale={{
+                        emptyText: <Empty
+                            imageStyle={{height: 100}}
+                            description={<span>暂无数据</span>}
+                        />
+                    }}
                 />
 
             </Modal>

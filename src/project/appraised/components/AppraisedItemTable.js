@@ -1,6 +1,6 @@
 import AppraisedItemStore from "../store/AppraisedItemStore";
 import React, {useEffect, useState} from 'react';
-import {Col, Progress, Row, Space, Table, Tooltip} from "antd";
+import {Col, Empty, Progress, Row, Space, Table, Tooltip} from "antd";
 import InputSearch from "../../../common/input/InputSearch";
 import Button from "../../../common/button/Button";
 import WorkStore from "../../../work/store/WorkStore";
@@ -507,19 +507,14 @@ const AppraisedItemTable = (props) => {
                             <div className="top-info-content">
                                 <div className="left-info">
                                     <div className="info-item">
-                                        <div className="info-title">负责人：</div>
+                                        <div className="info-title">所有评审：</div>
                                         <div className="info-content" style={{display: "flex", alignItems: "center", gap: "5px"}}>
-                                            <UserIcon name={appraised?.master.nickname}/>
-                                            <div>{appraised?.master.nickname}</div>
+                                            <div>{appraised?.allAppraisedWorkItemNumber}</div>
                                         </div>
                                     </div>
                                     <div className="info-item">
-                                        <div className="info-title">状态：</div>
-                                        <div className="info-content">{getAppraisedState(appraised?.appraisedState)}</div>
-                                    </div>
-                                    <div className="info-item">
-                                        <div className="info-title">创建时间：</div>
-                                        <div className="info-content">{appraised?.createTime.slice(0, 19)}</div>
+                                        <div className="info-title">未审批：</div>
+                                        <div>{appraised?.allAppraisedWorkItemNumber - appraised?.passAppraisedWorkItemNumber - appraised?.unPassAppraisedWorkItemNumber}</div>
                                     </div>
                                 </div>
                                 <div className="right-progress">
@@ -530,20 +525,6 @@ const AppraisedItemTable = (props) => {
                                             status={"normal"}
                                             format={() => `${percentInfo}`}
                                         />
-                                    </div>
-                                    <div className="progress-info">
-                                        {/*<div>*/}
-                                        {/*    <div className="info-title">通过：</div>*/}
-                                        {/*    <div>{appraised?.passAppraisedWorkItemNumber}</div>*/}
-                                        {/*</div>*/}
-                                        <div className="progress-info-content">
-                                            <div className="info-title">未审批：</div>
-                                            <div>{appraised?.allAppraisedWorkItemNumber - appraised?.passAppraisedWorkItemNumber - appraised?.unPassAppraisedWorkItemNumber}</div>
-                                        </div>
-                                        <div className="progress-info-content">
-                                            <div className="info-title">所有：</div>
-                                            <div>{appraised?.allAppraisedWorkItemNumber}</div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -589,6 +570,12 @@ const AppraisedItemTable = (props) => {
                                     // loading={loading}
                                     onSearch={onSearch}
                                     scroll={{ x: "100%" }}
+                                    locale={{
+                                        emptyText: <Empty
+                                            imageStyle={{height: 100}}
+                                            description={<span>暂无数据</span>}
+                                        />
+                                    }}
                                 />
                             </div>
                         </div>

@@ -9,7 +9,7 @@
 import React, { useEffect } from "react";
 import { withRouter } from "react-router";
 import { observer, Provider } from "mobx-react";
-import { Table, Row, Col, Space } from 'antd';
+import {Table, Row, Col, Space, Empty} from 'antd';
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import "./LogContent.scss"
 import { getUser } from "tiklab-core-ui";
@@ -319,6 +319,12 @@ const LogContent = (props) => {
                             position: ["bottomCenter"],
                             current: selectLogCondition.pageParam.currentPage,
                             ...selectLogCondition.pageParam
+                        }}
+                        locale={{
+                            emptyText: <Empty
+                                imageStyle={{height: 100}}
+                                description={<span>暂无数据</span>}
+                            />
                         }}
                     />
 

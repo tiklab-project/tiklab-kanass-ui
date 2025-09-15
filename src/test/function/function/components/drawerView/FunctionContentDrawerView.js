@@ -1,20 +1,23 @@
 import {inject, observer, Provider} from "mobx-react";
 import {Button, Col, Drawer, Form, Modal, Row, Select, Space, TreeSelect} from "antd";
 import React, {useCallback, useEffect, useRef, useState} from "react";
-import EditableTitle from "../../../../common/caseCommon/EditableTitle";
+import EditableTitle from "../../../../../common/caseCommon/EditableTitle";
 import FuncUnitStore from "../../store/funcUnitStore";
-import TestcaseStore from "../../../testcase/store/testcaseStore";
-import {CASE_TYPE} from "../../../../common/dictionary/dictionary";
+import TestcaseStore from "../../../../testcase/store/testcaseStore";
+import {CASE_TYPE} from "../../../../../common/dictionary/dictionary";
 import "./FunctionContentDrawerView.scss"
-import CategoryStore from "../../../category/store/CategoryStore";
-import HideDelete from "../../../../common/caseCommon/hideDelete/HideDelete";
+import CategoryStore from "../../../../category/store/CategoryStore";
+import HideDelete from "../../../../../common/caseCommon/hideDelete/HideDelete";
 import FuncUnitStepTable from "../FunctionStepList";
-import WorkItemBindList from "../../../defectBind/defect/components/CaseBindDefectList";
+import WorkItemBindList from "../../../../defectBind/defect/components/CaseBindDefectList";
 import TextArea from "antd/es/input/TextArea";
-import IconCommon from "../../../../common/caseCommon/IconCommon";
-import {showCaseTypeInList} from "../../../../common/caseCommon/CaseCommonFn";
+import IconCommon from "../../../../../common/caseCommon/IconCommon";
+import {showCaseTypeInList} from "../../../../../common/caseCommon/CaseCommonFn";
 import {Axios} from "tiklab-core-ui";
-import Demand from "../../../defectBind/workItem/components/Demand";
+import Demand from "../../../../defectBind/workItem/components/Demand";
+import FunctionDetailBottom from "../FunctionDetailBottom";
+import UserIcon from "../../../../../common/UserIcon/UserIcon";
+import FunctionInstanceList from "../FunctionInstanceList";
 
 const FunctionContentDrawerView = (props) => {
     const {isModalVisible, setIsModalVisible, caseId, inTestCase, detailWidth, testPlanId,} = props;
@@ -43,7 +46,7 @@ const FunctionContentDrawerView = (props) => {
         const width = window.innerWidth;
 
         if (width >= 1600) {
-            return 1000;
+            return 1200;
         } else if (width < 1600 && width >= 1200) {
             return 987;
         } else if (width < 1200 && width >= 992) {
@@ -305,12 +308,21 @@ const FunctionContentDrawerView = (props) => {
                                     <FuncUnitStepTable functionId={functionId} {...props} />
                                 </div>
                             </div>
+                            <div>
+                                {
+                                    testPlanId &&
+                                        <FunctionDetailBottom
+                                            testPlanId={testPlanId}
+                                            caseId={functionId}
+                                            {...props}
+                                        />
+                                }
+                            </div>
                             {
-                                testPlanId && (
-                                    <WorkItemBindList
-                                        testPlanId={testPlanId}
+                                !testPlanId && (
+                                    <FunctionInstanceList
                                         caseId={functionId}
-                                        smallTableHead={true}
+                                        inDetail={true}
                                     />
                                 )
                             }
@@ -348,40 +360,25 @@ const FunctionContentDrawerView = (props) => {
                                             <Select
                                                 className={"func-select"}
                                                 bordered={false}
-                                                placeholder={"未设置"}
+                                                placeholder={
+                                                    <div style={{ display: "flex", alignItems: "center", gap: "3px" }}>
+                                                        <UserIcon name={"未"} size={"small"} />
+                                                        <span>未设置</span>
+                                                    </div>
+                                                }
                                                 getPopupContainer={() => detailFormRef.current}
                                             >
                                                 {
                                                     userList && userList.map(item => {
                                                         return <Option key={item?.user?.id}
-                                                                       value={item?.user?.id}>{item?.user?.nickname}</Option>
+                                                                       value={item?.user?.id}>
+                                                            <div style={{display: "flex", alignItems: "center", gap: "3px"}}>
+                                                                <UserIcon name={item?.user?.nickname}/>
+                                                                {item?.user?.nickname}
+                                                            </div>
+                                                        </Option>
                                                     })
                                                 }
-                                            </Select>
-                                        </Form.Item>
-
-                                        <Form.Item label={"状态"} name="status">
-                                            <Select
-                                                className={"func-select"}
-                                                bordered={false}
-                                                placeholder={"未设置"}
-                                                getPopupContainer={() => detailFormRef.current}
-                                            >
-                                                <Option value={0}>
-                                                    <div className={"display-flex-gap"} style={{height: "100%"}}>
-                                                        <div className="case-status-0">未开始</div>
-                                                    </div>
-                                                </Option>
-                                                <Option value={1}>
-                                                    <div className={"display-flex-gap"} style={{height: "100%"}}>
-                                                        <div className="case-status-1">进行中</div>
-                                                    </div>
-                                                </Option>
-                                                <Option value={2}>
-                                                    <div className={"display-flex-gap"} style={{height: "100%"}}>
-                                                        <div className="case-status-2">已完成</div>
-                                                    </div>
-                                                </Option>
                                             </Select>
                                         </Form.Item>
 

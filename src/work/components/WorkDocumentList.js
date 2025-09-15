@@ -104,12 +104,12 @@ const WorkDocumentList = (props) => {
             key: "workStatus",
             width: 150
         },
-        {
-            title: "作者",
-            dataIndex: "userName",
-            key: "assigner",
-            width: 150
-        },
+        // {
+        //     title: "作者",
+        //     dataIndex: "userName",
+        //     key: "assigner",
+        //     width: 150
+        // },
         {
             title: '操作',
             dataIndex: 'action',
@@ -173,6 +173,7 @@ const WorkDocumentList = (props) => {
                             rowKey={record => record.id}
                             pagination={false}
                             scroll={{ x: "100%" }}
+                            showHeader={false}
                         />
                         :
                         <Empty description="暂无关联文档" />

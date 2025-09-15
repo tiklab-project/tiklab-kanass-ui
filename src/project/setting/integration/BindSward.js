@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from "react";
-import {message, Space, Table} from "antd";
+import {Button, Col, Empty, message, Row, Space, Table} from "antd";
 import DeleteModal from "../../../common/deleteModal/deleteModal";
 import {applyJump} from "tiklab-core-ui";
 import WikiRepositoryAdd from "../../wiki/repository/components/WikiRepositoryAdd";
 import {observer,Provider} from "mobx-react";
 import WikiRepositoryStore from "../../wiki/repository/store/WikiRepositoryStore";
+import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 
 const BindSward = (props) => {
-    const {activeKey,wikiAddvisible,setWikiAddvisible} = props
+    const {activeKey} = props
 
     const store = {
         wikiRepositoryStore: WikiRepositoryStore
@@ -18,6 +19,7 @@ const BindSward = (props) => {
 
     const projectId = props.match.params.id;
     const [projectWikiList, setProjectWikiList] = useState()
+    const [wikiAddvisible,setWikiAddvisible] = useState(false);
 
     // 列表的列
     const columns = [
@@ -62,13 +64,11 @@ const BindSward = (props) => {
     ];
 
     useEffect(() => {
-        if(activeKey==="sward"){
-            findProjectWikiRepositoryList({ projectId: projectId }).then(res => {
-                if (res.code === 0) {
-                    setProjectWikiList(res.data)
-                }
-            })
-        }
+        findProjectWikiRepositoryList({ projectId: projectId }).then(res => {
+            if (res.code === 0) {
+                setProjectWikiList(res.data)
+            }
+        })
     }, [projectId,activeKey]);
 
 
@@ -101,21 +101,49 @@ const BindSward = (props) => {
 
     return (
         <Provider {...store}>
+            <Row className={"integration-content-row"} style={{height: "100%", overflow: "unset"}}>
+                <Col
+                    sm={24}
+                    md={24}
+                    lg={{ span: 24 }}
+                    xl={{ span: "18", offset: "3" }}
+                    xxl={{ span: "18", offset: "3" }}
+                >
+                    <div className={"project-set-integration"}>
+                        <Breadcumb firstText="服务集成" secondText="sward">
+                            {
+                                <Button
+                                    type="primary"
+                                    onClick={() => setWikiAddvisible(true)}
+                                >
+                                    关联知识库
+                                </Button>
+                            }
+                        </Breadcumb>
+                        <Table
+                            columns={columns}
+                            dataSource={projectWikiList}
+                            rowKey={(record) => record.id}
+                            pagination={false}
+                            onChange={false}
+                            scroll={{x: "100%"}}
+                            locale={{
+                                emptyText: <Empty
+                                    imageStyle={{height: 100}}
+                                    description={<span>暂无数据</span>}
+                                />
+                            }}
+                        />
+                        <WikiRepositoryAdd
+                            projectId={projectId}
+                            wikiAddvisible={wikiAddvisible}
+                            setWikiAddvisible={setWikiAddvisible}
+                            setProjectWikiList={setProjectWikiList}
+                        />
+                    </div>
+                </Col>
+            </Row>
 
-            <Table
-                columns={columns}
-                dataSource={projectWikiList}
-                rowKey={(record) => record.id}
-                pagination={false}
-                onChange={false}
-                scroll={{x: "100%"}}
-            />
-            <WikiRepositoryAdd
-                projectId={projectId}
-                wikiAddvisible={wikiAddvisible}
-                setWikiAddvisible={setWikiAddvisible}
-                setProjectWikiList={setProjectWikiList}
-            />
         </Provider>
     )
 }

@@ -1,28 +1,28 @@
-@media (max-width: 768px) {
-    .project-statistics-aside {
-        min-width: 200px !important;
-        max-width: 200px !important;
-    }
-}
-
-@media (min-width: 769px) and (max-width: 1280px) {
-    .project-statistics-aside {
-        min-width: 220px !important;
-        max-width: 220px !important;
-    }
-}
-
-@media (min-width: 1281px) {
-    .project-statistics-aside {
-        min-width: 250px !important;
-        max-width: 250px !important;
-    }
-}
+//@media (max-width: 768px) {
+//    .project-statistics-aside {
+//        min-width: 200px !important;
+//        max-width: 200px !important;
+//    }
+//}
+//
+//@media (min-width: 769px) and (max-width: 1280px) {
+//    .project-statistics-aside {
+//        min-width: 220px !important;
+//        max-width: 220px !important;
+//    }
+//}
+//
+//@media (min-width: 1281px) {
+//    .project-statistics-aside {
+//        min-width: 250px !important;
+//        max-width: 250px !important;
+//    }
+//}
 
 .project-statistics-aside {
     background: var(--tiklab-gray-800);
-    min-width: 250px;
-    max-width: 250px;
+    min-width: 200px;
+    max-width: 200px;
     // border-right: 1px solid var(--tiklab-gray-200);
     height: 100%;
 

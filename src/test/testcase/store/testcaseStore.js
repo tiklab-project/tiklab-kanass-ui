@@ -8,7 +8,7 @@ export class TestCaseStore {
     @observable currentPage=1;
     @observable createUserAndDirectorNum={}
     @observable detailWidth=0;
-    @observable testCaseStatusCount = {};
+    @observable testCasePriorityLevelCount = {};
 
     @observable searchCondition = {
         pageParam: {
@@ -40,11 +40,11 @@ export class TestCaseStore {
     }
 
     @action
-    findTestCaseStatusNum = async (values) => {
+    findTestCasePriorityLevelNum = async (values) => {
         Object.assign(this.searchCondition, {...values})
-        const res = await Axios.post("/testCase/findTestCaseStatusNum", this.searchCondition);
+        const res = await Axios.post("/testCase/findTestCasePriorityLevelNum", this.searchCondition);
         if (res.code === 0) {
-            this.testCaseStatusCount = res.data;
+            this.testCasePriorityLevelCount = res.data;
             return res.data
         }
     }

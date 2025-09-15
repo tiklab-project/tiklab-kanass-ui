@@ -8,7 +8,7 @@
  */
 import React, { useEffect, useState } from "react";
 import { observer, Provider } from "mobx-react";
-import {Col, Layout, Row,} from 'antd';
+import {Col, Layout, Row, Tooltip,} from 'antd';
 import "./Log.scss"
 import LogStore from "../logView/store/LogStore";
 import { withRouter } from 'react-router';
@@ -16,6 +16,7 @@ import { renderRoutes } from "react-router-config";
 import LogAside from "./LogAside";
 import Breadcrumb from "../../common/breadcrumb/Breadcrumb";
 import EnhanceEntranceCloseModal from "../../common/enhanceEntrance/EnhanceEntranceCloseModal";
+import {QuestionCircleOutlined} from "@ant-design/icons";
 const { Sider,Content } = Layout;
 const LogContent = (props) => {
     const store = {
@@ -51,6 +52,10 @@ const LogContent = (props) => {
         props.history.push(id)
     }
 
+    const goDocument = () => {
+        window.open('https://doc.tiklab.net/document', '_blank');
+    }
+
     return (<Provider {...store}>
         <Layout className="log">
             {/*<Sider width={200} className="site-layout-background">*/}
@@ -82,6 +87,17 @@ const LogContent = (props) => {
                                     </div>
                                 })
                             }
+                        </div>
+                        <div>
+                            <Tooltip title={"帮助"}>
+                                <QuestionCircleOutlined
+                                    style={{
+                                        fontSize: "18px",
+                                        cursor: "pointer"
+                                    }}
+                                    onClick={goDocument}
+                                />
+                            </Tooltip>
                         </div>
                     </div>
                 </Col>

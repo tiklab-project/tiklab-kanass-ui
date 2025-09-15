@@ -7,16 +7,16 @@
  * @LastEditTime: 2024-12-25 15:46:44
  */
 import React, { useImperativeHandle, useState, useRef, useEffect } from "react";
-import {Modal, message, Button} from 'antd';
+import {Modal, message} from 'antd';
 import WorkAddPage from "./WorkAddPage";
 import "./WorkAddModel.scss"
 import { observer, inject } from "mobx-react";
 import { ExclamationCircleOutlined } from '@ant-design/icons';
-import IconBtn from "../../../common/caseCommon/iconBtn/IconBtn";
+import Button from "../../../common/button/Button";
 
 const WorkAddModel = (props) => {
 
-    const { testPlanId,caseId,workAddModel,  getWorkDetail, setChildWorkList, workTypeId, stageList } = props
+    const { testPlanId,caseId,workAddModel,  getWorkDetail, setChildWorkList, workTypeId, stageList, inDetail } = props
     const workAddPageRef = useRef()
     const [showAddModel, setShowAddModel] = useState(false)
     const [isEditStart, setIsEditStart] = useState(false);
@@ -82,17 +82,20 @@ const WorkAddModel = (props) => {
 
     return (
         <>
-            {/*<IconBtn*/}
-            {/*    className="pi-icon-btn-grey"*/}
-            {/*    name={"添加缺陷"}*/}
-            {/*    onClick={showModal}*/}
-            {/*/>*/}
-            <div onClick={showModal} style={{cursor:"pointer", display:"flex", alignItems:"center"}}>
-                <svg className="icon-18" aria-hidden="true">
-                    <use xlinkHref={`#icon-add2`}></use>
-                </svg>
-                <span>添加缺陷</span>
-            </div>
+            {
+                !inDetail ?
+                    <Button
+                        buttonText={"添加缺陷"}
+                        onClick={showModal}
+                    />
+                    :
+                    <div onClick={showModal} style={{cursor:"pointer", display:"flex", alignItems:"center"}}>
+                        <svg className="icon-18" aria-hidden="true">
+                            <use xlinkHref={`#icon-add2`}></use>
+                        </svg>
+                        <span>添加缺陷</span>
+                    </div>
+            }
             <Modal
                 title="添加缺陷"
                 visible={showAddModel}

@@ -5,7 +5,7 @@ import ImgComponent from "../../common/imgComponent/ImgComponent";
 import ProjectEmpty from "../../common/component/ProjectEmpty";
 import React, {useEffect, useState} from "react";
 import "./WorkProductPlanLinkModal.scss"
-import {Modal, Space, Table, Tooltip} from "antd";
+import {Empty, Modal, Space, Table, Tooltip} from "antd";
 import ProductStore from "../../product/product/store/ProductStore";
 import UserIcon from "../../common/UserIcon/UserIcon";
 import {observable} from "mobx";
@@ -315,6 +315,12 @@ const WorkProductPlanLinkModal = (props) => {
                                 simple: true
                             }}
                             scroll={{ x: "100%" }}
+                            locale={{
+                                emptyText: <Empty
+                                    imageStyle={{height: 100}}
+                                    description={<span>暂无数据</span>}
+                                />
+                            }}
                         >
                         </Table>
                     }

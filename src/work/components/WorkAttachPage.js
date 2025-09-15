@@ -1,7 +1,7 @@
 import {inject, observer} from "mobx-react";
 import "./WorkAttachPage.scss"
 import React, {Fragment, useRef} from "react";
-import {message, Space, Table, Tooltip, Upload} from "antd";
+import {Empty, message, Space, Table, Tooltip, Upload} from "antd";
 import { getUser } from 'tiklab-core-ui';
 import setImageUrl from "../../common/utils/setImageUrl";
 import DeleteModal from "../../common/deleteModal/deleteModal";
@@ -102,6 +102,12 @@ const WorkAttachPage = (props) => {
                                    bordered={false}
                                    rowKey={(record) => record.id}
                                    scroll={{x: "100%"}}
+                                   locale={{
+                                       emptyText: <Empty
+                                           imageStyle={{height: 100}}
+                                           description={<span>暂无数据</span>}
+                                       />
+                                   }}
                             />
                         </Fragment>
                     )

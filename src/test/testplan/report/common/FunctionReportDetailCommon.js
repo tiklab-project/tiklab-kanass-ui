@@ -75,31 +75,31 @@ const FunctionInstanceCommon = (props) => {
             {/* 报告详情卡片 */}
             <Card className="report-info-card" loading={loading}>
                 <Descriptions column={{ xs: 1, sm: 2 }}>
-                    <Descriptions.Item
-                        label={
-                            <div className="info-label" style={{ color: '#999' }}>
-                                <CalendarOutlined style={{ marginRight: 8 }} />
-                                时间范围
-                            </div>
-                        }
-                    >
-                        {testReportInfo?.startTime && testReportInfo?.endTime ?
-                            `${moment(testReportInfo?.startTime).format('YYYY-MM-DD')} 至 ${moment(testReportInfo?.endTime).format('YYYY-MM-DD')}` :
-                            testReportInfo?.startTime ?
-                                `${moment(testReportInfo?.startTime).format('YYYY-MM-DD')} 至 进行中` :
-                                '未设置'
-                        }
-                    </Descriptions.Item>
-                    <Descriptions.Item
-                        label={
-                            <div className="info-label" style={{ color: '#999' }}>
-                                <ClockCircleOutlined style={{ marginRight: 8 }} />
-                                报告天数
-                            </div>
-                        }
-                    >
-                        {formatDuration(testReportInfo?.startTime, testReportInfo?.endTime)}
-                    </Descriptions.Item>
+                    {/*<Descriptions.Item*/}
+                    {/*    label={*/}
+                    {/*        <div className="info-label" style={{ color: '#999' }}>*/}
+                    {/*            <CalendarOutlined style={{ marginRight: 8 }} />*/}
+                    {/*            时间范围*/}
+                    {/*        </div>*/}
+                    {/*    }*/}
+                    {/*>*/}
+                    {/*    {testReportInfo?.startTime && testReportInfo?.endTime ?*/}
+                    {/*        `${moment(testReportInfo?.startTime).format('YYYY-MM-DD')} 至 ${moment(testReportInfo?.endTime).format('YYYY-MM-DD')}` :*/}
+                    {/*        testReportInfo?.startTime ?*/}
+                    {/*            `${moment(testReportInfo?.startTime).format('YYYY-MM-DD')} 至 进行中` :*/}
+                    {/*            '未设置'*/}
+                    {/*    }*/}
+                    {/*</Descriptions.Item>*/}
+                    {/*<Descriptions.Item*/}
+                    {/*    label={*/}
+                    {/*        <div className="info-label" style={{ color: '#999' }}>*/}
+                    {/*            <ClockCircleOutlined style={{ marginRight: 8 }} />*/}
+                    {/*            报告天数*/}
+                    {/*        </div>*/}
+                    {/*    }*/}
+                    {/*>*/}
+                    {/*    {formatDuration(testReportInfo?.startTime, testReportInfo?.endTime)}*/}
+                    {/*</Descriptions.Item>*/}
                     <Descriptions.Item
                         label={
                             <div className="info-label" style={{ color: '#999' }}>

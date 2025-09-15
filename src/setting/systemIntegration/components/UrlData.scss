@@ -31,10 +31,11 @@
             padding: 8px 24px;
 
             .url-item {
-                display: flex;
+                //display: flex;
                 margin-bottom: 12px;
 
                 .url-label {
+                    margin-bottom: 10px;
                     width: 120px;
                     font-weight: 500;
                     color: rgba(0, 0, 0, 0.65);

@@ -87,47 +87,29 @@ const setDevRouter= [
         code: "message",
     },
     {
-        title: '事项类型',
+        title: '项目配置',
         icon: 'systemmanage',
-        id: "/setting/worktype",
-        purviewCode: "work_type",
-        code: "worktype",
-    },
-    {
-        title: '表单',
-        icon: 'systemform',
-        id: "/setting/form",
-        // purviewCode: "SysForm",
-        code: "SysForm",
+        id: "/setting/projectSetting",
+        code: "projectSetting",
         children: [
-            
-            // {  隐藏字段类型
-            //     title: '字段类型',
-            //     id: '/setting/fieldType',
-            //     purviewCode: "SysFieldType",
-            //     code: "fieldType",
-            // },
             {
-                title: '字段',
-                id: '/setting/preliminary',
-                purviewCode: "field",
-                code: "preliminary",
+                title: '事项类型',
+                id: "/setting/worktype",
+                purviewCode: "work_type",
+                code: "worktype",
             },
             {
                 title: '表单',
                 id: '/setting/form',
                 purviewCode: "form",
                 code: "form",
-            }
-        ]
-    },
-    {
-        title: "流程",
-        icon: 'systemflow',
-        id: '/setting/systemFlow',
-        // purviewCode: "SysFlow",
-        code: "flow",
-        children: [
+            },
+            {
+                title: '字段',
+                id: '/setting/preliminary',
+                purviewCode: "field",
+                code: "preliminary",
+            },
             {
                 title: "流程",
                 id: '/setting/systemFlow',
@@ -444,47 +426,29 @@ const setPrdRouter= [
         code: "message",
     },
     {
-        title: '事项类型',
-        icon: 'systemmanage',
-        id: "/setting/worktype",
-        purviewCode: "work_type",
-        code: "worktype",
-    },
-    {
-        title: '表单',
-        icon: 'systemform',
-        id: "/setting/form",
-        // purviewCode: "SysForm",
-        code: "SysForm",
+        title: "项目配置",
+        icon: "systemmanage",
+        id: '/setting/projectSetting',
+        code: "projectSetting",
         children: [
-
-            //     title: '字段类型',
-            //     id: '/setting/fieldType',
-            //     purviewCode: "SysFieldType",
-            //     code: "fieldType",
-            // },
-            // {
             {
-                title: '字段',
-                id: '/setting/preliminary',
-                purviewCode: "field",
-                code: "preliminary",
+                title: '事项类型',
+                id: "/setting/worktype",
+                purviewCode: "work_type",
+                code: "worktype",
             },
             {
                 title: '表单',
                 id: '/setting/form',
                 purviewCode: "form",
                 code: "form",
-            }
-        ]
-    },
-    {
-        title: "流程",
-        icon: 'systemflow',
-        id: '/setting/systemFlow',
-        // purviewCode: "SysFlow",
-        code: "flow",
-        children: [
+            },
+            {
+                title: '字段',
+                id: '/setting/preliminary',
+                purviewCode: "field",
+                code: "preliminary",
+            },
             {
                 title: "流程",
                 id: '/setting/systemFlow',

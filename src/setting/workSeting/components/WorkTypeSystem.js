@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Input, Table, Space, message, Row, Col } from "antd";
+import {Input, Table, Space, message, Row, Col, Empty} from "antd";
 import WorkTypeAddmodal from "./WorkTypeAddModal";
 import { observer, inject, Provider } from "mobx-react";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
@@ -243,6 +243,12 @@ const WorkTypeSystem = (props) => {
                             dataSource={workSystemTypeList}
                             pagination={false}
                             scroll={{ x: "100%" }}
+                            locale={{
+                                emptyText: <Empty
+                                    imageStyle={{height: 100}}
+                                    description={<span>暂无数据</span>}
+                                />
+                            }}
                         />
                     </div>
                 </div>

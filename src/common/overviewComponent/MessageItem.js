@@ -14,7 +14,8 @@ const MessageListItem = (props) => {
     const { content, status, type, updateMessageDispatchItem, id, item, currenTab, setUnReadMessage, findMessageDispatchItemPage } = props;
     const data = JSON.parse(content)
     const { createUserIcon, createUser, workItemTitle, receiveTime, workItemId,
-        projectId, projectSetId, oldValue, newValue, sprintName, sprintId, projectName, projectSetName, creater, fieldName, comment, appraisedId, appraisedName} = data;
+        projectId, projectSetId, oldValue, newValue, sprintName, sprintId, projectName, projectSetName, creater, fieldName, comment,
+        appraisedId, appraisedName, productId, productName} = data;
 
     const updateMessage = () => {
         if (status === 0) {
@@ -74,24 +75,30 @@ const MessageListItem = (props) => {
         updateMessage()
     }
 
+    const goProjectSetDetail = () => {
+        props.history.push(`/projectSet/${projectSetId}/project`);
+        updateMessage()
+    }
+
     const goAppraisedDetail = () => {
         props.history.push(`/project/${projectId}/appraised/${appraisedId}`);
         updateMessage()
     }
 
-    const goProjectSetDetail = () => {
-        props.history.push(`/projectSet/${projectSetId}/project`);
-        if (status === 0) {
-            const value = {
-                id: id,
-                status: "1"
-            }
-            updateMessageDispatchItem(value).then(res => {
-                if (res.code === 0) {
-                    item.status === 1
-                }
-            })
-        }
+    const goProductDetail = () => {
+        props.history.push(`/product/${productId}/project`);
+        // if (status === 0) {
+        //     const value = {
+        //         id: id,
+        //         status: "1"
+        //     }
+        //     updateMessageDispatchItem(value).then(res => {
+        //         if (res.code === 0) {
+        //             item.status === 1
+        //         }
+        //     })
+        // }
+        updateMessage()
     }
 
     const setDom = () => {
@@ -280,6 +287,40 @@ const MessageListItem = (props) => {
                     </div >
                 )
                 break;
+            case "KANASS_MESSAGETYPE_PROJECT_CREATE":
+                dom = (
+                    <div className="message-list-item" >
+                        <div className="message-list-item-left">
+                            <div className="message-user-icon">{createUserIcon}</div>
+                            <div className="message-content">
+                                <div className="message-work-action">{creater} 创建了项目</div>
+                                <div className="message-work-item">
+                                    <div className="message-work-title" onClick={() => goProjectDetail()}>{projectName}</div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div className="message-time">{receiveTime} </div>
+                    </div >
+                )
+                break;
+            case "KANASS_MESSAGETYPE_PROJECT_UPDATE":
+                dom = (
+                    <div className="message-list-item" >
+                        <div className="message-list-item-left">
+                            <div className="message-user-icon">{createUserIcon}</div>
+                            <div className="message-content">
+                                <div className="message-work-action">{creater} 编辑了项目</div>
+                                <div className="message-work-item">
+                                    <div className="message-work-title" onClick={() => goProjectDetail()}>{projectName}</div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div className="message-time">{receiveTime} </div>
+                    </div >
+                )
+                break;
             case "KANASS_MESSAGETYPE_WORKITEM_CREATE":
                 dom = (
                     <div className="message-list-item" >
@@ -401,6 +442,108 @@ const MessageListItem = (props) => {
                                 <div className="message-work-action">{creater}修改了评审</div>
                                 <div className="message-work-item">
                                     <div className="message-work-title" onClick={() => goAppraisedDetail()}>{appraisedName}</div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div className="message-time">{receiveTime} </div>
+                    </div >
+                )
+                break;
+            case "KANASS_MESSAGETYPE_PROJECTSET_DELETE":
+                dom = (
+                    <div className="message-list-item" >
+                        <div className="message-list-item-left">
+                            <div className="message-user-icon">{createUserIcon}</div>
+                            <div className="message-content">
+                                <div className="message-work-action">{creater}删除了项目集</div>
+                                <div className="message-work-item">
+                                    <div className="message-work-title">{projectSetName}</div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div className="message-time">{receiveTime} </div>
+                    </div >
+                )
+                break;
+            case "KANASS_MESSAGETYPE_PROJECTSET_CREATE":
+                dom = (
+                    <div className="message-list-item" >
+                        <div className="message-list-item-left">
+                            <div className="message-user-icon">{createUserIcon}</div>
+                            <div className="message-content">
+                                <div className="message-work-action">{creater} 创建了项目集</div>
+                                <div className="message-work-item">
+                                    <div className="message-work-title" onClick={() => goProjectSetDetail()}>{projectSetName}</div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div className="message-time">{receiveTime} </div>
+                    </div >
+                )
+                break;
+            case "KANASS_MESSAGETYPE_PROJECTSET_UPDATE":
+                dom = (
+                    <div className="message-list-item" >
+                        <div className="message-list-item-left">
+                            <div className="message-user-icon">{createUserIcon}</div>
+                            <div className="message-content">
+                                <div className="message-work-action">{creater} 编辑了项目集</div>
+                                <div className="message-work-item">
+                                    <div className="message-work-title" onClick={() => goProjectSetDetail()}>{projectSetName}</div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div className="message-time">{receiveTime} </div>
+                    </div >
+                )
+                break;
+            case "KANASS_MESSAGETYPE_PRODUCT_DELETE":
+                dom = (
+                    <div className="message-list-item" >
+                        <div className="message-list-item-left">
+                            <div className="message-user-icon">{createUserIcon}</div>
+                            <div className="message-content">
+                                <div className="message-work-action">{creater}删除了产品</div>
+                                <div className="message-work-item">
+                                    <div className="message-work-title">{productName}</div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div className="message-time">{receiveTime} </div>
+                    </div >
+                )
+                break;
+            case "KANASS_MESSAGETYPE_PRODUCT_CREATE":
+                dom = (
+                    <div className="message-list-item" >
+                        <div className="message-list-item-left">
+                            <div className="message-user-icon">{createUserIcon}</div>
+                            <div className="message-content">
+                                <div className="message-work-action">{creater} 创建了产品</div>
+                                <div className="message-work-item">
+                                    <div className="message-work-title" onClick={() => goProductDetail()}>{productName}</div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div className="message-time">{receiveTime} </div>
+                    </div >
+                )
+                break;
+            case "KANASS_MESSAGETYPE_PRODUCT_UPDATE":
+                dom = (
+                    <div className="message-list-item" >
+                        <div className="message-list-item-left">
+                            <div className="message-user-icon">{createUserIcon}</div>
+                            <div className="message-content">
+                                <div className="message-work-action">{creater} 编辑了产品</div>
+                                <div className="message-work-item">
+                                    <div className="message-work-title" onClick={() => goProductDetail()}>{productName}</div>
                                 </div>
 
                             </div>

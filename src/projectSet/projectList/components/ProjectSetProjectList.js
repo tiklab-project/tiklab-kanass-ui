@@ -7,7 +7,7 @@
  * @LastEditTime: 2024-12-18 17:49:14
  */
 import React, { useEffect, useState } from 'react';
-import {Table, Space, Select, Row, Col, Tooltip, Progress} from 'antd';
+import {Table, Space, Select, Row, Col, Tooltip, Progress, Empty} from 'antd';
 import "../components/ProjectSetProjectList.scss";
 import ProjectSetRelevance from "./ProjectSetRelevance";
 import { Provider, observer } from 'mobx-react';
@@ -353,7 +353,7 @@ const ProjectSetProjectList = (props) => {
                             {/*</PrivilegeProjectButton>*/}
                             <Button
                                 style={{ width: "fit-content" }}
-                                type="primary" onClick={() => {setProjectAddVisible(true)}} buttonText={"创建项目"} >
+                                onClick={() => {setProjectAddVisible(true)}} buttonText={"创建项目"} >
                             </Button>
                         </div>
 
@@ -407,6 +407,12 @@ const ProjectSetProjectList = (props) => {
                                 }}
                                 scroll={{
                                     x: "100%"
+                                }}
+                                locale={{
+                                    emptyText: <Empty
+                                        imageStyle={{height: 100}}
+                                        description={<span>暂无数据</span>}
+                                    />
                                 }}
                             />
                         </div>

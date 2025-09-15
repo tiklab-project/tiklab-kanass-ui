@@ -7,7 +7,7 @@
  * @LastEditTime: 2024-12-26 14:31:42
  */
 import React, {Fragment, useEffect, useRef, useState} from "react";
-import {Input, Table, Row, Col, message, Empty, Button, Dropdown, Menu} from 'antd';
+import {Input, Table, Row, Col, message, Empty, Button, Dropdown, Menu, Modal, Popconfirm} from 'antd';
 import { observer, inject, Provider } from "mobx-react";
 import "./WorkChild.scss"
 import WorkChildAddmodal from "./WorkChildAdd";
@@ -278,7 +278,7 @@ const WorkChild = (props) => {
             dataIndex: "title",
             key: "title",
             ellipsis: true,
-            width: "55%",
+            width: "50%",
             render: (text, record) => <div className="work-title" onClick={() => goWorkItem(record)}>
                 <ImgComponent
                     alt=""
@@ -290,12 +290,20 @@ const WorkChild = (props) => {
             </div>
         },
         {
-            title: "事项类型",
-            dataIndex: ["workTypeSys", "name"],
-            key: "workType",
-            ellipsis: true,
-            width: "8%"
-
+            title: "优先级",
+            dataIndex: ["workPriority", "name"],
+            key: "workPriority",
+            width: "10%",
+            render: (text, record) => <div className="work-info">
+                <div className="work-info-img">
+                    <ImgComponent
+                        src={record.workPriority?.iconUrl}
+                        alt=""
+                        className="img-icon-right"
+                    />
+                </div>
+                <div className="work-info-text">{text || "暂无设置"}</div>
+            </div>
         },
         {
             title: "事项状态",
@@ -311,14 +319,24 @@ const WorkChild = (props) => {
             dataIndex: 'action',
             key: 'action',
             width: "13%",
-            align: "right",
+            align: "center",
             cellStyle: {
                 textAlign: 'right',
                 paddingRight: '10px', // 调整间距
             },
             render: (text, record) => (
                 <WorkPrivilegeComponent workId={workId} code="WorkChildrenDelete">
-                    <span onClick={() => delectChild(record.id)} className="span-botton">解除父子关系</span>
+                    <Popconfirm
+                        title={"确认解除关联吗？"}
+                        onConfirm={() => delectChild(record.id)}
+                        onCancel={null}
+                        okText="确认"
+                        cancelText="取消"
+                    >
+                        <svg className="icon-18" aria-hidden="true" style={{cursor: 'pointer' }}>
+                            <use xlinkHref={`#icon-unLink`}></use>
+                        </svg>
+                    </Popconfirm>
                 </WorkPrivilegeComponent>
             ),
         }

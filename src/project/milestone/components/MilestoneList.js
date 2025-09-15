@@ -7,7 +7,7 @@
  * @LastEditTime: 2022-03-02 13:28:22
  */
 import React, { useEffect, useState } from "react";
-import { Input, Table, Space, Row, Col } from "antd";
+import {Input, Table, Space, Row, Col, Empty} from "antd";
 import MilestoneAddEditModal from "./MilestoneAddEditModal";
 import { observer, Provider } from "mobx-react";
 import { PrivilegeProjectButton } from "tiklab-privilege-ui";
@@ -148,6 +148,12 @@ const MilestoneList = (props) => {
                                     onSearch={onSearch}
                                     onChange={pageTurning}
                                     scroll={{ x: "100%" }}
+                                    locale={{
+                                        emptyText: <Empty
+                                            imageStyle={{height: 100}}
+                                            description={<span>暂无数据</span>}
+                                        />
+                                    }}
                                 />
                             </div>
                         </div>

@@ -22,6 +22,14 @@ export class StatisticsStore {
     @observable
     insightList = []
 
+    @observable
+    selectKey = "/statistics/overview";
+
+    @action
+    setSelectKey = (key) => {
+        this.selectKey = key;
+    }
+
     @action
     setInsightView = (value) => {
         this.insightView = value;

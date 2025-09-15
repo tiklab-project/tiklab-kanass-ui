@@ -6,7 +6,7 @@
  * @Description: 事项添加测试用例
  */
 import React, { useEffect, useState, useRef } from "react";
-import { message, Modal, Table } from 'antd';
+import {Empty, message, Modal, Table} from 'antd';
 import { observer, inject } from "mobx-react";
 import "./WorkTestCaseAdd.scss";
 import InputSearch from "../../common/input/InputSearch"
@@ -423,6 +423,12 @@ const WorkTestCaseAddmodal = (props) => {
                         }}
                         pagination={false}
                         scroll={{x: "100%"}}
+                        locale={{
+                            emptyText: <Empty
+                                imageStyle={{height: 100}}
+                                description={<span>暂无数据</span>}
+                            />
+                        }}
                     />
                     {
                         unRelationTotal > currentPage * 5 ?

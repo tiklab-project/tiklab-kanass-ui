@@ -7,7 +7,7 @@
  * @LastEditTime: 2024-12-18 17:35:15
  */
 import React, { Fragment, useEffect, useState } from "react";
-import { Modal, Form, Table } from 'antd';
+import {Modal, Form, Table, Empty} from 'antd';
 import { observer, inject } from "mobx-react";
 import "./TestRepositoryAdd.scss";
 const TestRepositoryAdd = (props) => {
@@ -123,6 +123,12 @@ const TestRepositoryAdd = (props) => {
                         cancelText="取消"
                         pagination={false}
                         scroll={{x: "100%"}}
+                        locale={{
+                            emptyText: <Empty
+                                imageStyle={{height: 100}}
+                                description={<span>暂无数据</span>}
+                            />
+                        }}
                     />
                 </Modal>
             </Fragment>

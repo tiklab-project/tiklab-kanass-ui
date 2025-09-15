@@ -16,6 +16,15 @@
         }
     }
 
+    // 在xl和xxl屏幕上，概览文字与图表左对齐（添加offset）
+    @media (min-width: 1200px) {
+        .statistics-top {
+            .statistics-work-title {
+                margin-left: 2.5%; // 相当于Ant Design的1个栅格offset
+            }
+        }
+    }
+
     .statistics-row{
         height: 80%;
         //overflow: auto;

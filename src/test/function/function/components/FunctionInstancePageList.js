@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react";
-import {Table, Pagination, Space} from "antd";
+import {Table, Pagination, Space, Empty} from "antd";
 import functionInstanceStore from "../store/functionInstanceStore";
 import {CheckCircleTwoTone, CloseCircleTwoTone, MinusCircleTwoTone} from "@ant-design/icons";
-import PaginationCommon from "../../../common/caseCommon/pagination/Page";
+import PaginationCommon from "../../../../common/caseCommon/pagination/Page";
 
 const PAGE_SIZE = 10;
 
-const FunctionInstanceList = ({ functionId,testPlanId }) => {
+const FunctionInstancePageList = ({ functionId,testPlanId }) => {
     const [data, setData] = useState([]);
     const [total, setTotal] = useState(0);
     const [loading, setLoading] = useState(false);
@@ -118,6 +118,12 @@ const FunctionInstanceList = ({ functionId,testPlanId }) => {
                 pagination={false}
                 // bordered
                 style={{marginBottom: 16}}
+                locale={{
+                    emptyText: <Empty
+                        imageStyle={{height: 100}}
+                        description={<span>暂无数据</span>}
+                    />
+                }}
             />
             <PaginationCommon
                 currentPage={currentPage}
@@ -130,4 +136,4 @@ const FunctionInstanceList = ({ functionId,testPlanId }) => {
     );
 };
 
-export default observer(FunctionInstanceList);
+export default observer(FunctionInstancePageList);

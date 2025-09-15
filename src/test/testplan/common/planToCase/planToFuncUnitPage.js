@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {inject, observer} from "mobx-react";
-import FunctionDetail from "../../../function/components/FunctionDetail";
+import FunctionDetail from "../../../function/function/components/FunctionDetail";
 import {Drawer} from "antd";
 
 const PlanToFuncUnitPage = (props) =>{

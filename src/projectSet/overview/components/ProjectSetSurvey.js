@@ -20,9 +20,11 @@ import ProjectEmpty from "../../../common/component/ProjectEmpty";
 import {ClockCircleOutlined, CloseCircleOutlined, PlayCircleOutlined} from "@ant-design/icons";
 import UserIcon from "../../../common/UserIcon/UserIcon";
 import projectList from "../../../project/project/components/ProjectList";
+import moment from "moment";
+import echarts from "../../../common/echarts/echarts";
 const ProjectSetSurvey = props => {
 
-    const { logList, findProjectList, createRecent, findProjectSet, updateProjectSet, statisticsProjectSetWorkCount } = BasicInfoStore;
+    const { logList, findProjectList, createRecent, findProjectSet, updateProjectSet, statisticsProjectSetWorkCount, findProjectSetBurnDowmChartPage } = BasicInfoStore;
     const projectSetId = props.match.params.projectSetId;
     // const [processProjectList, setProcessProjectList] = useState();
     // const projectSet = JSON.parse(localStorage.getItem("projectSet"));
@@ -36,6 +38,33 @@ const ProjectSetSurvey = props => {
 
     useEffect(() => {
         fetchData();
+        // 获取项目燃尽图列表
+        findProjectSetBurnDowmChartPage(projectSetId).then(res => {
+            if (res.code === 0) {
+                let timerXaixs = [];
+                let workCountYaixs = [];
+                let Yaxis = [];
+                if (res.data.dataList.length > 0) {
+                    res.data.dataList.map((item, index) => {
+                        timerXaixs.push(item.recordTime.slice(0, 10));
+                        workCountYaixs.push(item.remainWorkitemCount);
+                        Yaxis.push(item.totalWorkitemCount * (7 - index) / 7);
+                        return;
+                    })
+                } else {
+                    timerXaixs.push(moment().format("YYYY-MM-DD"));
+                    Yaxis.push(projectSet.worklItemNumber);
+                    workCountYaixs.push(projectSet.worklItemNumber);
+                    let i = 1;
+                    for (i = 1; i <= 6; i++) {
+                        timerXaixs.push(moment().subtract(i, "days").format("YYYY-MM-DD"));
+                        workCountYaixs.push(projectSet.worklItemNumber);
+                        Yaxis.push(projectSet.worklItemNumber * (7 - i) / 7);
+                    }
+                }
+                burnDownChart(timerXaixs, workCountYaixs, Yaxis)
+            }
+        })
     }, [projectSetId, findProjectList]);
 
     const fetchData = async () => {
@@ -80,6 +109,42 @@ const ProjectSetSurvey = props => {
             console.error("获取项目集数据时出错:", error);
         }
     };
+
+    /**
+     * 燃尽图
+     */
+    const burnDownChart = (timerXaixs, workCountYaixs, Yaxis) => {
+        const burnDown = echarts.init(document.getElementById('burn-down'));
+        let option;
+        option = {
+            color: ['#5470c6', '#91cc75'],
+            xAxis: {
+                type: 'category',
+                data: timerXaixs
+            },
+            yAxis: {
+                type: 'value'
+            },
+            legend: {
+                data: ['real', 'ideal']
+            },
+            series: [
+                {
+                    data: workCountYaixs,
+                    name: 'real',
+                    // stack: 'Total',
+                    type: 'line'
+                },
+                {
+                    name: 'ideal',
+                    type: 'line',
+                    // stack: 'Total',
+                    data: Yaxis
+                },
+            ]
+        };
+        burnDown.setOption(option)
+    }
 
     const goProdetail = (project) => {
         localStorage.setItem("project", JSON.stringify(project));
@@ -310,63 +375,69 @@ const ProjectSetSurvey = props => {
                                 {/*</div>*/}
                             </div>
                         </div>
-                        <div className="projectSet-process-project">
-                            <div className="box-title">
-                                <span className="name">进行中项目</span>
+                        <div className="burn-down-box">
+                            <div className="box-title">项目集燃尽图</div>
+                            <div className="burn-down" id="burn-down">
 
-                                {
-                                    processProjectList && processProjectList.length > 4 ?
-                                        <Tooltip
-                                            title={"更多"}
-                                            placement={"top"}
-                                        >
-                                            <svg aria-hidden="true" className="svg-icon" onClick={() => goProcessProject()} style={{ cursor: "pointer" }}>
-                                                <use xlinkHref="#icon-right"></use>
-                                            </svg>
-                                        </Tooltip>
-
-                                        :
-                                        <></>
-                                }
-                            </div>
-                            <div className="projectSet-process-project-list">
-                                {
-                                    processProjectList && processProjectList.length > 0 ? processProjectList.map((item, index) => {
-                                            // 展示前4个，后续点击更多跳转到列表页
-                                            if (index < 4){
-                                                return <div className="projectSet-process-project-item"
-                                                            key={item.id}
-                                                            onClick={() => goProdetail(item)}
-                                                >
-                                                    <div className="projectSet-process-project-left">
-                                                        <div>
-                                                            <ImgComponent
-                                                                src={item.iconUrl}
-                                                                className="icon-32"
-                                                                title={item.projectName}
-                                                                alt=""
-                                                            />
-                                                        </div>
-
-                                                        <div className="projectSet-process-project-name">
-
-                                                            <div className="projectSet-process-project-date">{item.projectKey}</div>
-                                                            <div className="name">{item.projectName}</div>
-                                                        </div>
-                                                    </div>
-
-
-                                                    <div className="projectSet-process-project-process">
-                                                        {item.master.name}
-                                                    </div>
-                                                </div>
-                                            }
-                                        })
-                                        :
-                                        <ProjectEmpty description="暂时没有动态~" />
-                                }
                             </div>
                         </div>
+                        {/*<div className="projectSet-process-project">*/}
+                        {/*    <div className="box-title">*/}
+                        {/*        <span className="name">进行中项目</span>*/}
+
+                        {/*        {*/}
+                        {/*            processProjectList && processProjectList.length > 4 ?*/}
+                        {/*                <Tooltip*/}
+                        {/*                    title={"更多"}*/}
+                        {/*                    placement={"top"}*/}
+                        {/*                >*/}
+                        {/*                    <svg aria-hidden="true" className="svg-icon" onClick={() => goProcessProject()} style={{ cursor: "pointer" }}>*/}
+                        {/*                        <use xlinkHref="#icon-right"></use>*/}
+                        {/*                    </svg>*/}
+                        {/*                </Tooltip>*/}
+
+                        {/*                :*/}
+                        {/*                <></>*/}
+                        {/*        }*/}
+                        {/*    </div>*/}
+                        {/*    <div className="projectSet-process-project-list">*/}
+                        {/*        {*/}
+                        {/*            processProjectList && processProjectList.length > 0 ? processProjectList.map((item, index) => {*/}
+                        {/*                    // 展示前4个，后续点击更多跳转到列表页*/}
+                        {/*                    if (index < 4){*/}
+                        {/*                        return <div className="projectSet-process-project-item"*/}
+                        {/*                                    key={item.id}*/}
+                        {/*                                    onClick={() => goProdetail(item)}*/}
+                        {/*                        >*/}
+                        {/*                            <div className="projectSet-process-project-left">*/}
+                        {/*                                <div>*/}
+                        {/*                                    <ImgComponent*/}
+                        {/*                                        src={item.iconUrl}*/}
+                        {/*                                        className="icon-32"*/}
+                        {/*                                        title={item.projectName}*/}
+                        {/*                                        alt=""*/}
+                        {/*                                    />*/}
+                        {/*                                </div>*/}
+
+                        {/*                                <div className="projectSet-process-project-name">*/}
+
+                        {/*                                    <div className="projectSet-process-project-date">{item.projectKey}</div>*/}
+                        {/*                                    <div className="name">{item.projectName}</div>*/}
+                        {/*                                </div>*/}
+                        {/*                            </div>*/}
+
+
+                        {/*                            <div className="projectSet-process-project-process">*/}
+                        {/*                                {item.master.name}*/}
+                        {/*                            </div>*/}
+                        {/*                        </div>*/}
+                        {/*                    }*/}
+                        {/*                })*/}
+                        {/*                :*/}
+                        {/*                <ProjectEmpty description="暂时没有动态~" />*/}
+                        {/*        }*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
                     </div>
                     {/* <TodoListBox todoTaskList={todoTaskList} goToListPage={goToListPage} model={"projectSet"} /> */}
                     <TodoStatistics />
