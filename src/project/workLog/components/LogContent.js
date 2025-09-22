@@ -117,14 +117,14 @@ const LogContent = (props) => {
             align: "left",
             width: "30%",
             ellipsis: true,
-            render: (text, record, index) => <Space onClick={() => goLogDetail(record.id, index)} className="work-name">
+            render: (text, record, index) => <div onClick={() => goLogDetail(record.id, index)} className="work-name">
                 <ImgComponent
                     src={record.workItem.workTypeSys?.iconUrl}
                     alt=""
                     className="icon-15"
                 />
                 <div className="work-name-text">{text}</div>
-            </Space>,
+            </div>,
         },
         {
             title: "负责人",
@@ -174,14 +174,14 @@ const LogContent = (props) => {
             align: "left",
             width: "30%",
             ellipsis: true,
-            render: (text, record, index) => <Space onClick={() => goLogDetail(record.id, index)} className="work-name">
+            render: (text, record, index) => <div onClick={() => goLogDetail(record.id, index)} className="work-name">
                 <ImgComponent
                     src={record.workItem.workTypeSys?.iconUrl}
                     alt=""
                     className="icon-15"
                 />
                 <div className="work-name-text">{text}</div>
-            </Space>,
+            </div>,
         },
         {
             title: "项目",
@@ -283,16 +283,16 @@ const LogContent = (props) => {
 
                     {/*</Breadcumb>*/}
                     <div className="log-tab-filter">
-                        <div className="log-tabs">
+                        <div className="log-table-tabs">
                             <div
-                                className={`log-tab ${activeTab === "allLog" ? "active-tabs" : ""}`}
+                                className={`log-table-tab ${activeTab === "allLog" ? "active-tabs" : ""}`}
                                 key={"allLog"}
                                 onClick={() => changeTabs("allLog")}
                             >
                                 所有
                             </div>
                             <div
-                                className={`log-tab ${activeTab === "myLog" ? "active-tabs" : ""}`}
+                                className={`log-table-tab ${activeTab === "myLog" ? "active-tabs" : ""}`}
                                 key={"myLog"}
                                 onClick={() => changeTabs("myLog")}
                             >

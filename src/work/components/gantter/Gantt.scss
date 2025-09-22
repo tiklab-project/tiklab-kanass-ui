@@ -8,29 +8,32 @@
     margin: 0 20px;
     .time-table {
         text-align: center;
+        .table-body {
+            background-color: #fff; // 左侧表格区背景色为白色
+        }
         .table-border {
             //border-bottom: 1px solid #fafafa;
-            height: 50px;
-            line-height: 50px;
+            height: 40px;
+            line-height: 40px;
         }
         .table-hearder {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 50px;
+            height: 40px;
             background-color: var(--tiklab-gray-200);
             overflow: hidden;
             font-weight: var(--tiklab-font-weight-bold);
             position: relative;
             top: 0;
             .table-hearder-text {
-                height: 50px;
+                height: 40px;
                 width: 300px;
             }
 
             .table-hearder-gatter  {
                 flex: 1;
-                height: 50px;
+                height: 40px;
                 font-weight: var(--tiklab-font-weight-bold);
                 overflow: auto;
             }
@@ -44,7 +47,7 @@
             }
             
             .table-hearder-text {
-                height: 50px;
+                height: 40px;
                 text-align: left;
                 
             }
@@ -73,8 +76,8 @@
 
             .table-timer {
                 .table-month {
-                    height: 25px;
-                    line-height: 25px;
+                    height: 20px;
+                    line-height: 20px;
                     display: inline-flex;
                     .table-month-td {
                         border-right: solid #fff 1px;
@@ -84,11 +87,11 @@
                 }
             }
             .table-date {
-                height: 25px;
+                height: 20px;
                 display: inline-flex;
                 text-align: center;
                 border-bottom: 1px solid  var(--tiklab-gray);
-                line-height: 25px;
+                line-height: 20px;
             }
             .table-day {
                 border-right: #E6EDFA solid 1px;
@@ -102,9 +105,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 50px;
+            height: 40px;
             .table-td {
-                height: 50px;
+                height: 40px;
                 position: relative;
                 padding-left: 15px;
                 text-align: left;
@@ -113,7 +116,7 @@
                     display: inline-block;
                     position: absolute;
                     left: 10px;
-                    top: 18px;
+                    top: 13px;
                 }
             }
             .table-td-name {
@@ -235,8 +238,9 @@
 
     .table-pic {
         //background-color: #2f5eb1;
+        background-color: #f0f4f5; // 右侧甘特图区域背景色
         position: absolute;
-        top: 50px;
+        top: 40px;
         right: 0;
         width: calc(100% - 450px);
         max-height: calc(100% - 65px);
@@ -254,29 +258,41 @@
 
             // line-height: 25px;
             .table-weekday {
-                border-right: 1px solid #f0f0f0;
+                border-right: 1px solid #e9edf0;
                 box-sizing: border-box;
+                background-color: #e9edf0; // 周日列加深
+            }
+            .table-week {
+                background-color: #e9edf0; // 周六列加深
             }
 
             .table-month {
-                border-right: 1px solid #f0f0f0;
+                border-right: 1px solid #e9edf0;
             }
         }
         .table-overflow {
             overflow: auto;
         }
         .table-date {
-            height: 25px;
+            height: 20px;
             display: inline-flex;
             text-align: center;
+
+            .table-weekday {
+                background-color: #e9edf0; // 周日列加深
+            }
+
+            .table-week {
+                background-color: #e9edf0; // 周六列加深
+            }
         }
         .table-day {
             border-right: var(--tiklab-gray-200) solid 1px;
         }
         .table-timer {
             .table-month {
-                height: 25px;
-                line-height: 25px;
+                height: 20px;
+                line-height: 20px;
                 background-color:  var(--tiklab-gray-200);
                 display: inline-flex;
                 .table-month-td {
@@ -287,7 +303,7 @@
         .table-overflow {
             height: 100%;
             .gantt-box {
-                height: calc(100% - 50px) !important;
+                height: calc(100% - 40px) !important;
             }
         }
     }
@@ -343,4 +359,57 @@
             left: 0;
         }
     }
+}
+
+.gantt-tooltip {
+    position: fixed;
+    left: 0;
+    top: 0;
+    transform: translateX(-50%);
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.85);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+    max-width: 300px;
+    pointer-events: none;
+}
+.gantt-tooltip::after {
+    content: '';
+    position: absolute; /* absolute 会相对于 fixed 定位的父元素 */
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid rgba(0, 0, 0, 0.85);
+}
+
+
+.time-node-circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: var(--tiklab-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s;
+}
+
+.time-node-circle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.time-node-circle .icon-16 {
+    fill: white;
 }

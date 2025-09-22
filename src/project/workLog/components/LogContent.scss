@@ -5,11 +5,7 @@
     .worklog-content {
         text-overflow: ellipsis;
         overflow: hidden;
-        white-space: normal;
-        word-break: break-word;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
+        white-space: nowrap;
         padding-right: 20px;
         cursor: pointer;
     }
@@ -20,15 +16,12 @@
        
         display: flex;
         align-items: center;
-        
+        gap: 8px;
+
         .work-name-text {
             text-overflow: ellipsis;
             overflow: hidden;
-            white-space: normal;
-            word-break: break-word;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
+            white-space: nowrap;
             cursor: pointer;
         }
     }
@@ -41,7 +34,7 @@
     justify-content: space-between;
     margin-bottom: 15px;
 
-    .log-tabs {
+    .log-table-tabs {
         width: fit-content;
         display: flex;
         align-items: center;
@@ -49,7 +42,7 @@
         height: 50px;
         line-height: 50px;
 
-        .log-tab {
+        .log-table-tab {
             font-size: var(--tiklab-font-13);
             cursor: pointer;
             height: 50px;
@@ -57,7 +50,7 @@
             margin-right: 20px;
         }
 
-        .log-tab:last-child {
+        .log-table-tab:last-child {
             margin-right: 0;
         }
 

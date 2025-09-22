@@ -102,7 +102,15 @@ const WorkDocumentList = (props) => {
             title: "知识库",
             dataIndex: "kanassRepositoryName",
             key: "workStatus",
-            width: 150
+            width: 150,
+            render: (text, record) => (
+                <div className="document-title">
+                    <svg className="menu-icon" aria-hidden="true">
+                        <use xlinkHref="#icon-repository-bluecolor"></use>
+                    </svg>
+                    <span className="span-botton">{text}</span>
+                </div>
+            ),
         },
         // {
         //     title: "作者",

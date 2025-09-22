@@ -6,6 +6,7 @@ import IconCommon from "../../../../common/caseCommon/IconCommon";
 import {debounce} from "../../../../common/caseCommon/CaseCommonFn";
 import WorkItemStore from "../store/WorkItemStore";
 import {createWorkTestCaseFn} from "../../../testcase/components/testCaseTableFn";
+import ImgComponent from "../../../../common/imgComponent/ImgComponent";
 // import projectBindStore from "../../../../repository/setting/projectIntegration/ProjectBindStore";
 // const {findProjectBind} = projectBindStore
 
@@ -31,6 +32,14 @@ const DemandSelect = (props) =>{
             key: "name",
             width:"40%",
             ellipsis: true,
+            render: (text, record) => <div style={{display:"flex", alignItems:"center", gap:"5px"}}>
+                <ImgComponent
+                    src={record.workTypeSys?.iconUrl}
+                    alt=""
+                    className="icon-15"
+                />
+                <div style={{overflow:"hidden", textOverflow: "ellipsis", whiteSpace:"nowrap"}}>{text}</div>
+            </div>
         },
         {
             title:`负责人`,

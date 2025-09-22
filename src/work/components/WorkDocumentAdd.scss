@@ -1,12 +1,13 @@
 .document-add {
     position: absolute;
-    height: 120%;
-    max-height: fit-content;
+    height: 100%;
+    max-height: 400px;
     width: 100%;
     z-index: 3;
     background: #fff;
-    box-shadow: 0 3px 6px -4px rgb(0 0 0 / 12%), 0 6px 16px rgb(0 0 0 / 8%), 0 9px 28px 8px rgb(0 0 0 / 5%);
-    border-radius: 4px;
+    left: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
 
     .document-add-model {
         //position: absolute;
@@ -51,8 +52,10 @@
         border-top-right-radius: 4px;
         border-top-left-radius: 4px;
         align-items: center;
-        justify-content: flex-start;
+        justify-content: space-between;
         padding: 10px 10px 10px;
+        width: 100%;
+        flex-wrap: wrap;
 
         .select-view {
             height: 32px;
@@ -107,7 +110,9 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 10px 10px;
+        padding: 10px 0;
+        gap: 10px;
+
 
         .document-icon {
             display: inline-flex;
@@ -136,6 +141,28 @@
                 border-radius: 4px;
             }
         }
+
+        .testcase-row-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 0;
+        }
+        .work-item-title {
+            width: 250px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            flex: 1;
+        }
+        .work-item-right {
+            display: flex;
+            align-items: center;
+            //justify-content: flex-end;
+            gap: 8px;
+            width: 70px;
+        }
+
     }
     .document-add-page {
         width: 100%;
@@ -182,4 +209,7 @@
             background: #f7f7f7;
         }
     }
+
+
+
 }

@@ -49,7 +49,7 @@ const TestPlanBindCaseModal = (props) => {
         // },
         {
             title: `模块`,
-            dataIndex: ["category","name"],
+            dataIndex: ["module","moduleName"],
             key: "category",
             width:"15%",
             ellipsis: true,

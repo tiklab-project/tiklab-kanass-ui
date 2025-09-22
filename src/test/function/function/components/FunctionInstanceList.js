@@ -1,6 +1,6 @@
 import {observer} from "mobx-react";
 import React, { useEffect, useState } from "react";
-import {Space, Table} from "antd";
+import {Empty, Space, Table} from "antd";
 import FunctionSetResultDrawer from "../../../testplan/function/components/FunctionSetResultDrawer";
 import functionInstanceStore from "../store/functionInstanceStore";
 import {CheckCircleTwoTone, CloseCircleTwoTone, MinusCircleTwoTone} from "@ant-design/icons";
@@ -116,7 +116,8 @@ const FunctionInstanceList = (props) => {
                     loading={loading}
                     pagination={false}
                     locale={{
-                        emptyText: <></>,
+                        // emptyText: <div style={{color: "#999"}}>暂无结果</div>,
+                        emptyText: <Empty description="暂无结果"/>,
                     }}
                 />
             </div>

@@ -1,18 +1,18 @@
 @media (max-width: 768px) {
     .work-bodar-box {
-        width: 245px;
+        width: 250px;
     }
 }
 
 @media (min-width: 769px) and (max-width: 1280px) {
     .work-bodar-box {
-        width: 280px;
+        width: 250px;
     }
 }
 
 @media (min-width: 1281px) {
     .work-bodar-box {
-        width: 325px;
+        width: 250px;
     }
 }
 .work-bordar {
@@ -58,26 +58,28 @@
         .work-bodar-box {
             min-height: 210px;
             border-radius: 4px;
-            background-color: #edeff2;
+            background-color: #f6f7f9;
             flex-shrink: 0;
+            padding: 10px 0px;
             // overflow: auto;
             .work-bodar-title {
                 line-height: 40px;
                 position: sticky;
                 text-align: center;
-                background: #edeff2;
+                background: #f6f7f9;
                 top: 0;
                 z-index: 2;
-                margin-bottom: 15px;
+                margin-bottom: 10px;
                 // paddin;
                 .work-bodar-title-content {
-                    background: #edeff2;
-                    font-size: 13px;
+                    background: #f6f7f9;
+                    font-size: 15px;
+                    font-weight: 500;
                 }
                 .work-bodar-num {
-                    font-size: 10px;
+                    //font-size: 10px;
                     margin-left: 5px;
-                    color: #999;
+                    //color: #999;
                 }
             }
             .work-border-box-list {
@@ -94,7 +96,8 @@
             }
 
             .work-border-box-list::-webkit-scrollbar {
-                width: 5px !important;
+                width: 0px !important;
+                height: 0px !important;
             }
             .work-border-box-list::-webkit-scrollbar-thumb {
                 border-radius: 5px;
@@ -106,73 +109,74 @@
             }
             .work-bodar-item{
                 margin: 0 5px 10px;
-                /* 新增下划线样式 */
-                outline: 1px solid var(--tiklab-gray-400);
-                padding: 5px 10px;
+                border-radius: 4px;
+                padding: 10px 12px;
                 font-size: 13px;
                 background-color: #fff;
-                display: flex;
+                cursor: pointer;
+                display: block;
                 align-items: center;
-                gap: 5px;
+                //gap: 8px;
                 transition: background-color .2s ease;
 
-                .work-item-bordar {
-                    width: 100%;
-                    cursor: pointer;
-                    display: grid;
+                .work-item-icon {
+                    display: flex;
                     align-items: center;
+                    gap: 8px; /* 图标和代码间距 */
+                    flex: 1 1 auto; /* 让标题区域可压缩以触发省略 */
+                    overflow: hidden; /* 限制子元素宽度，便于省略号生效 */
+                    margin-bottom: 10px;
+                    width: 80%;
+                }
+                .work-item-code {
+                    font-size: 12px;
+                    color: #999; /* 灰色文字 */
+                    font-family: monospace; /* 代码字体 */
+                }
+
+                .work-item-title {
+                    font-size: 13px;
+                    font-weight: 500;
+                    color: #333;
+                    flex: 1 1 auto;
+                    min-width: 0; /* Flex 子项省略号关键 */
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis; /* 标题过长显示省略号 */
+                }
+
+                .work-item-middle {
+                    display: flex;
+                    align-items: center;
+                    width: 100%;
+                    margin-bottom: 10px;
+                }
+                .work-item-parent {
+                    font-size: 10px;
+                    flex: 1 1 auto;
+                    min-width: 0; /* Flex 子项省略号关键 */
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis; /* 标题过长显示省略号 */
+                    width: 60%;
+                }
+
+
+                .work-item-bottom {
+                    display: flex;
+                    align-items: flex-start;
+                    justify-content: space-between;
                     gap: 8px;
+                    font-size: 13px;
 
-                    .work-item-icon {
+                    .work-item-bottom-left {
                         display: flex;
                         align-items: center;
-                        gap: 8px; /* 图标和代码间距 */
-                    }
-                    .work-item-code {
-                        font-size: 12px;
-                        color: #999; /* 灰色文字 */
-                        font-family: monospace; /* 代码字体 */
-                    }
-
-                    .work-item-title {
-                        font-size: 14px;
-                        color: #333;
-                        width: calc(100% - 30px);
-                        white-space: nowrap;
-                        overflow: hidden;
-                        text-overflow: ellipsis; /* 标题过长显示省略号 */
-                    }
-
-
-                    .work-item-bottom {
-                        display: flex;
-                        align-items: center;
-                        gap: 8px;
-                        font-size: 12px;
-
-                        .work-item-status {
-                            padding: 2px 3px;
-                            background: #e2e1e4;
-                            border-radius: 4px;
-                            font-size: 10px;
-                            width: fit-content;
-                            color: #2b333e;
-                        }
-                        .work-item-status-todo {
-                            background: #e2e1e4;
-                            color: #2b333e;
-                        }
-
-                        .work-item-status-process {
-                            background: #e2e1e4;
-                            color: #5e5314;
-                        }
-
-                        .work-item-status-done {
-                            background: #e2e1e4;
-                            color: #5e5314;
-                        }
-
+                        flex: 0 1 auto;
+                        justify-content: flex-start;
+                        flex-wrap: wrap; /* 允许换行 */
+                        gap: 6px;
+                        width: 60%;
                         .work-item-date {
                             padding: 2px 3px;
                             background: #f5f5f5;
@@ -181,8 +185,60 @@
                             width: fit-content;
                             color: #2b333e;
                         }
+
+                        .attr-badge {
+                            //display: inline-flex;
+                            //align-items: center;
+                            gap: 4px;
+                            //padding: 5px 4px;
+                            //border-radius: 4px;
+                            font-size: 10px;
+                            line-height: 1;
+                            //color: #2b333e;
+                            //background: #f5f5f5;
+                        }
+                        //.attr-badge svg {
+                        //    width: 12px;
+                        //    height: 12px;
+                        //}
+                        //.attr-badge--orange {
+                        //    background-color: #ff8c00; /* 橙色背景，匹配图片中的橙色 */
+                        //    color: #fff;
+                        //}
+                        //.attr-badge--red {
+                        //    background-color: #ff4757; /* 红色背景 */
+                        //    color: #fff;
+                        //}
+                        .priority-badge {
+                            padding: 3px 8px;
+                            border-radius: 4px;
+                            font-size: 12px;
+                            line-height: 1;
+                            color: #fff;
+                            background: #ffffff;
+                            white-space: nowrap;
+                        }
+                        .priority--low { /* 低 -> 灰色 */
+                            background: var(--tiklab-gray-300);
+                            color: #999;
+                        }
+                        .priority--medium { /* 中 -> 蓝色 */
+                            background: #e5f2ff;
+                            color: #2e96ff;
+                        }
+                        .priority--high { /* 高 -> 橙色 */
+                            background: #fff4e5;
+                            color: #ff8c00;
+                        }
+                    }
+
+                    .work-item-bottom-right {
+                        display: flex;
+                        align-items: center;
+                        gap: 5px;
                     }
                 }
+
             }
 
             .work-bodar-item-move {
@@ -219,3 +275,4 @@
     align-items: center;
     justify-content: space-around;
 }
+

@@ -18,6 +18,7 @@ import Demand from "../../../../defectBind/workItem/components/Demand";
 import FunctionDetailBottom from "../FunctionDetailBottom";
 import UserIcon from "../../../../../common/UserIcon/UserIcon";
 import FunctionInstanceList from "../FunctionInstanceList";
+import {showCreateUser} from "../../../../testcase/components/testCaseTableFn";
 
 const FunctionContentDrawerView = (props) => {
     const {isModalVisible, setIsModalVisible, caseId, inTestCase, detailWidth, testPlanId,} = props;
@@ -360,10 +361,10 @@ const FunctionContentDrawerView = (props) => {
                                             <Select
                                                 className={"func-select"}
                                                 bordered={false}
+                                                dropdownMatchSelectWidth={false}
                                                 placeholder={
                                                     <div style={{ display: "flex", alignItems: "center", gap: "3px" }}>
-                                                        <UserIcon name={"未"} size={"small"} />
-                                                        <span>未设置</span>
+                                                        {showCreateUser(null)}
                                                     </div>
                                                 }
                                                 getPopupContainer={() => detailFormRef.current}
@@ -373,8 +374,9 @@ const FunctionContentDrawerView = (props) => {
                                                         return <Option key={item?.user?.id}
                                                                        value={item?.user?.id}>
                                                             <div style={{display: "flex", alignItems: "center", gap: "3px"}}>
-                                                                <UserIcon name={item?.user?.nickname}/>
-                                                                {item?.user?.nickname}
+                                                                {/*<UserIcon name={item?.user?.nickname}/>*/}
+                                                                {/*{item?.user?.nickname}*/}
+                                                                {showCreateUser(item?.user)}
                                                             </div>
                                                         </Option>
                                                     })

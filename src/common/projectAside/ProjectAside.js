@@ -13,10 +13,11 @@ import { Layout } from "antd";
 import SetMenu from "./SetMenu";
 import MoreMenuModel from "./MoreMenuModal";
 import "./ProjectAside.scss"
+import {disableFunction} from "tiklab-core-ui";
 const { Sider } = Layout;
 
 const ProjectAside = (props) => {
-    const { isShowText, SetIsShowText, ChangeModal, initRouters, path, setUrl, unNeedBottomSet, backUrl, backName, iconName } = props;
+    const { isShowText, SetIsShowText, ChangeModal, initRouters, path, setUrl, unNeedBottomSet, backUrl, backName, iconName, setSelectKey } = props;
 
     const [projectRouter, setProjectRouter] = useState([]);
 
@@ -25,6 +26,7 @@ const ProjectAside = (props) => {
     const [morePath, setMorePath] = useState()
     const [theme, setTheme] = useState(localStorage.getItem("theme") ? localStorage.getItem("theme") : "default");
     const [themeClass, setThemeClass] = useState("project-sider-gray")
+    const disable = disableFunction();
     
     const resizeUpdate = (e) => {
         // 通过事件对象获取浏览器窗口的高度
@@ -60,11 +62,16 @@ const ProjectAside = (props) => {
 
     /**
      * 点击左侧菜单
-     * @param {*} key 
      */
-    const selectMenu = (key) => {
-        // setSelectKey(key)
-        props.history.push(key)
+    const selectMenu = (url, key) => {
+        console.log("点击的菜单：", key)
+        if (setSelectKey){
+            setSelectKey(key)
+        }
+        props.history.push(url)
+        // if (!(key === "appraised" && disable)){
+        //     props.history.push(url)
+        // }
 
     }
 
@@ -158,7 +165,7 @@ const ProjectAside = (props) => {
                                 return isShowText ?
                                     <div className={`project-menu-submenu ${(path && path.indexOf(item.key) !== -1) ? "project-menu-select" : ""}`}
                                         key={item.encoded}
-                                        onClick={() => selectMenu(item.id)}
+                                        onClick={() => selectMenu(item.id, item.key)}
                                     >
                                         <svg className="icon-18" aria-hidden="true">
                                             <use xlinkHref={`#icon-${item.icon}`}></use>
@@ -170,7 +177,7 @@ const ProjectAside = (props) => {
                                     :
                                     <div className={`project-menu-submenu-icon ${(path && path.indexOf(item.key) !== -1) ? "project-menu-select" : ""}`}
                                         key={item.encoded}
-                                        onClick={() => selectMenu(item.id)}
+                                        onClick={() => selectMenu(item.id, item.key)}
                                     >
                                         <svg className="svg-icon" aria-hidden="true">
                                             <use xlinkHref={`#icon-${item.icon}`}></use>
@@ -183,7 +190,7 @@ const ProjectAside = (props) => {
                             })
                         }
                         {moreMenu && moreMenu.length > 0 && <MoreMenuModel
-                            isShowText={isShowText} moreMenu={moreMenu} morePath={morePath} theme={theme}
+                            isShowText={isShowText} moreMenu={moreMenu} morePath={morePath} theme={theme} setSelectKey={setSelectKey}
                         />}
                     </div>
 

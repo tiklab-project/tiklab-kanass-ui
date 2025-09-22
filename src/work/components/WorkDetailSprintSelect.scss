@@ -79,6 +79,9 @@
             .select-group-option {
                 padding: 0 5px;
                 cursor: pointer;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
             }
             .select-group-option:hover {
                 background-color: #f3f4f5;

@@ -14,6 +14,9 @@ import { getUser } from "tiklab-core-ui";
 import { inject, observer } from "mobx-react";
 import { EditOutlined } from '@ant-design/icons';
 import Button from "../../../common/button/Button";
+import ImgComponent from "../../../common/imgComponent/ImgComponent";
+import ColorIcon from "../../../common/colorIcon/ColorIcon";
+import UserIcon from "../../../common/UserIcon/UserIcon";
 const { TextArea } = Input;
 const LogDetail = (props) => {
     const { logDetailVisable, setLogDetailVisable, logId, listIndex, logStore, getList } = props;
@@ -259,11 +262,22 @@ const LogDetail = (props) => {
                                     </div>
                                 }
                             </div>
-                            <div className="log-detail-content">{logDetail?.workItem?.title}</div>
+                            <div className="log-detail-content" style={{gap: "8px"}}>
+                                <ImgComponent
+                                    src={logDetail?.workItem?.workTypeSys?.iconUrl}
+                                    alt=""
+                                    className="img-icon-right"
+                                />
+                                <div className={"log-detail-content-text"}>{logDetail?.workItem?.title}</div>
+
+                            </div>
                         </div>
                         <div className="log-detail-item">
                             <div className="log-detail-label">所属项目</div>
-                            <div className="log-detail-content">{logDetail?.project?.projectName}</div>
+                            <div className="log-detail-content" style={{gap: "8px"}}>
+                                <ColorIcon color={logDetail?.project?.color} name={logDetail?.project?.projectName} className="icon-22" />
+                                <div className={"log-detail-content-text"}>{logDetail?.project?.projectName}</div>
+                            </div>
                         </div>
 
                         <div className="log-detail-item">
@@ -284,6 +298,7 @@ const LogDetail = (props) => {
                                             value={takeupTime}
                                             onChange={(value) => changeTakeupTime(value)}
                                         />
+                                        <span> / </span>
                                         <Input
                                             suffix="小时"
                                             type="number"
@@ -295,6 +310,7 @@ const LogDetail = (props) => {
                                     :
                                     <div className="log-detail-content" onMouseEnter={() => handleMouseEnter("time")}>
                                         <div>{logDetail?.takeupTime}  小时</div>
+                                        <span> / </span>
                                         <div>{workItem?.surplusTime}  小时</div>
                                     </div>
                             }
@@ -352,7 +368,10 @@ const LogDetail = (props) => {
 
                         <div className="log-detail-item">
                             <div className="log-detail-label">登记人</div>
-                            <div className="log-detail-content">{logDetail?.user?.nickname}</div>
+                            <div className="log-detail-content" style={{gap: "8px"}}>
+                                <UserIcon name={logDetail?.user?.nickname} />
+                                {logDetail?.user?.nickname}
+                            </div>
                         </div>
                         <div className="log-detail-item">
                             <div className="log-detail-label">登记时间</div>

@@ -14,6 +14,9 @@ import {Row, Col, Layout} from 'antd';
 import { withRouter } from 'react-router';
 import { renderRoutes } from "react-router-config";
 import { CalendarOutlined, BarChartOutlined } from '@ant-design/icons';
+import EnhanceEntranceModal from "../../../common/enhanceEntrance/EnhanceEntranceModal";
+import EnhanceEntranceCloseModal from "../../../common/enhanceEntrance/EnhanceEntranceCloseModal";
+import {disableFunction} from "tiklab-core-ui";
 
 
 /**
@@ -28,7 +31,8 @@ const Home = (props) => {
     const [insightUrl, setInsightUrl] = useState('/index/insightlist')
     // 当前url
     const path = props.location.pathname;
-
+    const [enhanceModal, setEnhanceModal] = useState(false);
+    const disable = disableFunction();
     useEffect(() => {
         getInsightUrl()
 
@@ -73,8 +77,12 @@ const Home = (props) => {
      * @param {tab key} activeKey
      */
     const selectRouter = (url, activeKey) => {
+        if (activeKey === "appraised" && disable){
+            setEnhanceModal(true)
+        }
         setActiveKey(activeKey)
         props.history.push(url)
+
     }
 
     return (
@@ -112,6 +120,14 @@ const Home = (props) => {
                 </Col>
             </Row>
             <Row>
+                <Row>
+                    {
+                        <EnhanceEntranceCloseModal
+                            config={{title:"评审", desc:"通过多维度专业审查确保项目关键节点质量可控、风险可溯、方向一致"}}
+                            enhanceModal={enhanceModal} setEnhanceModal={setEnhanceModal}
+                        />
+                    }
+                </Row>
                 <Layout className={"index-home-content"}>
                     {renderRoutes(route.routes)}
                 </Layout>

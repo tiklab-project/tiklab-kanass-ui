@@ -416,7 +416,8 @@ const Routers = [
                       path: "/log/statistics",
                       exact: false,
                       component: LogStatistics,
-                      key: "LogStatistics"
+                      key: "LogStatistics",
+                      routes: [],
                   }
               ]
             },
@@ -437,18 +438,18 @@ const Routers = [
                         component: ProjectSetMember,
                         key: "ProjectSetMember"
                     },
-                    {
-                        path: "/statistics/projectSet/workItem",
-                        exact: false,
-                        component: ProjectSetWorkItem,
-                        key: "ProjectSetWorkItem"
-                    },
-                    {
-                        path: "/statistics/projectSet/projectProgress",
-                        exact: false,
-                        component: ProjectOperateTable,
-                        key: "projectSetProjectProgress"
-                    },
+                    // {
+                    //     path: "/statistics/projectSet/workItem",
+                    //     exact: false,
+                    //     component: ProjectSetWorkItem,
+                    //     key: "ProjectSetWorkItem"
+                    // },
+                    // {
+                    //     path: "/statistics/projectSet/projectProgress",
+                    //     exact: false,
+                    //     component: ProjectOperateTable,
+                    //     key: "projectSetProjectProgress"
+                    // },
                     {
                         path: "/statistics/project/memberItem",
                         exact: false,
@@ -461,24 +462,24 @@ const Routers = [
                         component: NewWorkItemTrend,
                         key: "newTrend"
                     },
-                    {
-                        path: "/statistics/workItem/completeTrend",
-                        exact: false,
-                        component: CompleteWorkItemTrend,
-                        key: "completeTrend"
-                    },
-                    {
-                        path: "/statistics/workItem/workItemTrend",
-                        exact: false,
-                        component: WorkItemTrend,
-                        key: "workItemTrend"
-                    },
-                    {
-                        path: "/statistics/workItem/overview",
-                        exact: false,
-                        component: WorkItemStatusSituation,
-                        key: "workItemOverview"
-                    }
+                    // {
+                    //     path: "/statistics/workItem/completeTrend",
+                    //     exact: false,
+                    //     component: CompleteWorkItemTrend,
+                    //     key: "completeTrend"
+                    // },
+                    // {
+                    //     path: "/statistics/workItem/workItemTrend",
+                    //     exact: false,
+                    //     component: WorkItemTrend,
+                    //     key: "workItemTrend"
+                    // },
+                    // {
+                    //     path: "/statistics/workItem/overview",
+                    //     exact: false,
+                    //     component: WorkItemStatusSituation,
+                    //     key: "workItemOverview"
+                    // }
 
                 ]
             },
@@ -1220,14 +1221,14 @@ const Routers = [
                         exact: true,
                         component: ProjectNoAccessPage
                     },
-                    {
-                        path: "/project/:id/appraised/:appraised",
-                        component: AppraisedItem,
-                    },
-                    {
-                        path: "/project/:id/appraised/:appraised/:workId",
-                        component: WorkDetailPage,
-                    },
+                    // {
+                    //     path: "/project/:id/appraised/:appraised",
+                    //     component: AppraisedItem,
+                    // },
+                    // {
+                    //     path: "/project/:id/appraised/:appraised/:workId",
+                    //     component: WorkDetailPage,
+                    // },
                     {
                         path: "/project/:id/appraised",
                         component: Appraised,

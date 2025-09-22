@@ -71,13 +71,13 @@ const StatisticsAside = (props) => {
                     title: "项目事项",
                     path: "/statistics/projectSet/workItem",
                     key: "projectSetWorkItem",
-                    type: "statistics"
+                    type: "proStatistics"
                 },
                 {
                     title: "项目进展",
                     path: "/statistics/projectSet/projectProgress",
                     key: "projectSetProjectProgress",
-                    type: "statistics"
+                    type: "proStatistics"
                 }
             ]
         },
@@ -97,19 +97,19 @@ const StatisticsAside = (props) => {
                     title: "完成事项趋势",
                     path: "/statistics/workItem/completeTrend",
                     key: "completeTrend",
-                    type: "statistics"
+                    type: "proStatistics"
                 },
                 {
                     title: "事项趋势",
                     path: "/statistics/workItem/workItemTrend",
                     key: "workItemTrend",
-                    type: "statistics"
+                    type: "proStatistics"
                 },
                 {
                     title: "事项概览",
                     path: "/statistics/workItem/overview",
                     key: "workItemOverview",
-                    type: "statistics"
+                    type: "proStatistics"
                 }
             ]
         },

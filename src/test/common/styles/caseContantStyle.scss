@@ -499,3 +499,23 @@
         color: #8a8a8a;
     }
 }
+
+/* TestCaseTable scroll behavior: hide by default, show while scrolling, reserve gutter */
+.testcase-scroll::-webkit-scrollbar {
+    width: 8px !important;
+    height: 0 !important;
+}
+.testcase-scroll{
+    scrollbar-gutter: stable;
+    -ms-overflow-style: none;
+    overflow: auto;
+    padding-right: 15px;
+}
+.testcase-scroll.scrolling::-webkit-scrollbar {
+    width: 8px !important;
+    height: 8px !important;
+}
+.testcase-scroll.scrolling::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 4px;
+}

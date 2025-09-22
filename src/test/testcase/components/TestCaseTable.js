@@ -59,6 +59,7 @@ const TestCaseTable = (props) => {
     const [caseId, setCaseId] = useState();
     let projectId = localStorage.getItem("projectId")
     const [statusCount, setStatusCount] = useState()
+    const scrollRef = useRef(null);
 
     const goTestCaseDetail = (record) => {
         // const pathname = props.match.url;
@@ -111,6 +112,29 @@ const TestCaseTable = (props) => {
         setSelectTab(value)
         findPage(params)
     }
+
+    // Show scrollbar only while scrolling
+    useEffect(() => {
+        const container = scrollRef.current;
+        if (!container) return;
+        let hideTimer = null;
+
+        const onScroll = () => {
+            container.classList.add("scrolling");
+            if (hideTimer) {
+                clearTimeout(hideTimer);
+            }
+            hideTimer = setTimeout(() => {
+                container.classList.remove("scrolling");
+            }, 800);
+        };
+
+        container.addEventListener("scroll", onScroll, { passive: true });
+        return () => {
+            container.removeEventListener("scroll", onScroll);
+            if (hideTimer) clearTimeout(hideTimer);
+        };
+    }, []);
 
     const findPage = (params) =>{
         setTableLoading(true)
@@ -300,7 +324,7 @@ const TestCaseTable = (props) => {
         return showNum;
     }
     return (
-        <Row style={{height:"100%", position: "relative", overflow: "auto"}}>
+        <Row className="testcase-scroll" style={{height:"100%", position: "relative", overflow: "auto"}} ref={scrollRef}>
             <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "22", offset: "1" }} xxl={{ span: "18", offset: "3"}}>
                 <div className={"content-box-center"}>
                     <div className={"display-flex-between"}>

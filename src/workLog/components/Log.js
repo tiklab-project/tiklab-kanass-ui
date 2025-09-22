@@ -17,6 +17,8 @@ import LogAside from "./LogAside";
 import Breadcrumb from "../../common/breadcrumb/Breadcrumb";
 import EnhanceEntranceCloseModal from "../../common/enhanceEntrance/EnhanceEntranceCloseModal";
 import {QuestionCircleOutlined} from "@ant-design/icons";
+import EnhanceEntranceSubMenuModal from "../../common/enhanceEntrance/EnhanceEntranceSubMenuModal";
+import {disableFunction} from "tiklab-core-ui"
 const { Sider,Content } = Layout;
 const LogContent = (props) => {
     const store = {
@@ -25,6 +27,9 @@ const LogContent = (props) => {
     const { route } = props;
     const [selectTab, setSelectTab] = useState("list");
     const [enhanceModal, setEnhanceModal] = useState( false);
+    const [selectKey, setSelectKey] = useState("/log/list");
+    const disable = disableFunction();
+    const path = props.location.pathname;
 
     const logTabs = [
         {
@@ -48,8 +53,17 @@ const LogContent = (props) => {
         //     setSelectTab(key)
         //     props.history.push(id)
         // }
-        setSelectTab(key)
-        props.history.push(id)
+
+        if (key === "statistics" && disable){
+            setSelectTab(key)
+            setSelectKey(id)
+            props.history.push(id)
+        }else {
+            setSelectTab(key)
+            setSelectKey(id)
+            props.history.push(id)
+        }
+
     }
 
     const goDocument = () => {
@@ -103,7 +117,17 @@ const LogContent = (props) => {
                 </Col>
             </Row>
 
-            <Row>
+            <Row style={{position:"relative"}}>
+                {
+                    (selectKey === "/log/statistics/projectuser" || selectKey === "/log/statistics/projectwork" || selectKey === "/log/statistics/userproject" ||
+                        selectKey === "/log/statistics" ||
+                        path === "/log/statistics/projectuser" || path === "/log/statistics/projectwork" || path === "/log/statistics/userproject" ||
+                        path === "/log/statistics"
+                    ) &&
+                    <EnhanceEntranceSubMenuModal
+                        config={{title:"更多的统计类型", desc:"全面统计各项任务与项目工时，精准量化工作投入、核算成本并优化资源分配。"}}
+                    />
+                }
                 <Layout className="log-content">
                     {renderRoutes(route.routes)}
                 </Layout>

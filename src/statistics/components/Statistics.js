@@ -35,9 +35,11 @@ const StatisticsContent = (props) => {
                 <Layout className="log-content" style={{position:"relative"}}>
 
                         {
-                            (selectKey === "/statistics/log/projectuser" || selectKey === "/statistics/log/projectwork" || selectKey === "/statistics/log/userproject") &&
+                            (selectKey === "/statistics/log/projectuser" || selectKey === "/statistics/log/projectwork" || selectKey === "/statistics/log/userproject" ||
+                             selectKey === "/statistics/projectSet/workItem" || selectKey === "/statistics/projectSet/projectProgress" || selectKey === "/statistics/workItem/completeTrend" ||
+                             selectKey === "/statistics/workItem/workItemTrend" || selectKey === "/statistics/workItem/overview") &&
                             <EnhanceEntranceSubMenuModal
-                                config={{title:"工时统计", desc:"统计不同项目或事项上花费的工时，用于成本核算和效率分析。"}}
+                                config={{title:"更多的统计类型", desc:"全面统计各项任务与项目工时，精准量化工作投入、核算成本并优化资源分配。"}}
                             />
                         }
                         <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "22", offset: "1" }} xxl={{ span: "18", offset: "3" }}>

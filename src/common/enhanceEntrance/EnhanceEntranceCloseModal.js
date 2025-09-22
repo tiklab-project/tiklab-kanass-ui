@@ -14,34 +14,18 @@ const EnhanceEntranceCloseModal = (props) => {
 
     const {config, enhanceModal, setEnhanceModal} = props;
     const bgroup = 'kanass';
-    // const disable = disableFunction();
+    const disable = disableFunction();
     // const [enhanceModal ,setEnhanceModal] = useState(false)
     const modalRef = useRef();
-    /**
-     * 监听点击
-     */
-    useEffect(() => {
-        window.addEventListener("mousedown", closeModal, true);
-        return () => {
-            window.removeEventListener("mousedown", closeModal, true);
-        }
-    }, [enhanceModal])
 
-    /**
-     * 关闭视图
-     */
-    const closeModal = (e) => {
-        if (!modalRef.current) {
-            return;
+    const handleClickOutside = (e) => {
+        if (!modalRef.current?.contains(e.target)) {
+            setEnhanceModal(false);
         }
-        if (!modalRef.current.contains(e.target) && modalRef.current !== e.target) {
-            setEnhanceModal(false)
-        }
-    }
+    };
 
-
-    return enhanceModal && (
-        <div className="security-enhance-entrance-modal">
+    return disable && enhanceModal && (
+        <div className="security-enhance-entrance-close-modal" onClick={handleClickOutside}>
             <div className='enhance-entrance-modal' ref={modalRef}>
                 <div className='enhance-entrance-modal-content'>
                     <div className='enhance-popup-container'>

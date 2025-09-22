@@ -22,6 +22,7 @@ import "./FunctionContentListView.scss"
 import UserIcon from "../../../../../common/UserIcon/UserIcon";
 import FunctionDetailBottom from "../FunctionDetailBottom";
 import FunctionInstanceList from "../FunctionInstanceList";
+import {showCreateUser} from "../../../../testcase/components/testCaseTableFn";
 
 const FunctionContentListView = (props) =>{
     const {funcUnitStore,testcaseStore} = props;
@@ -259,8 +260,7 @@ const FunctionContentListView = (props) =>{
                                                     bordered={false}
                                                     placeholder={
                                                         <div style={{ display: "flex", alignItems: "center", gap: "3px" }}>
-                                                            <UserIcon name={"未"} size={"small"} />
-                                                            <span>未设置</span>
+                                                            {showCreateUser(null)}
                                                         </div>
                                                     }
                                                     getPopupContainer={() => detailFormRef.current}
@@ -270,8 +270,9 @@ const FunctionContentListView = (props) =>{
                                                             return <Option key={item?.user?.id}
                                                                            value={item?.user?.id}>
                                                                 <div style={{display: "flex", alignItems: "center", gap: "3px"}}>
-                                                                    <UserIcon name={item?.user?.nickname}/>
-                                                                    {item?.user?.nickname}
+                                                                    {/*<UserIcon name={item?.user?.nickname}/>*/}
+                                                                    {/*{item?.user?.nickname}*/}
+                                                                    {showCreateUser(item?.user)}
                                                                 </div>
                                                             </Option>
                                                         })

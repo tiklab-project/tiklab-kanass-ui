@@ -113,15 +113,15 @@ const WorkFilterModal = (props) => {
     return (
         <div className="worklist-filter-modal">
             <div className={`worklist-filter-item  ${filterModal ? 'worklist-filter-active' : ''}`} onClick={() => showModal()}>
-                <svg className="botton-icon" aria-hidden="true" >
+                <svg className="icon-24" aria-hidden="true" >
                     <use xlinkHref="#icon-filter"></use>
                 </svg>
-                {
-                    workShowType !== "list" ?
-                    <span>筛选</span>
-                    :
-                    null
-                }
+                {/*{*/}
+                {/*    workShowType !== "list" ?*/}
+                {/*    <span>筛选</span>*/}
+                {/*    :*/}
+                {/*    null*/}
+                {/*}*/}
             </div>
 
 

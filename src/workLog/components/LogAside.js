@@ -15,18 +15,20 @@ import LogStatisticsFree from './LogStatisticsFree';
 const SetAside = (props) => {
     // 无子级菜单处理
     const path = props.location.pathname;
-    const [selectKey, setSelectKey] = useState(path);
+    const {selectKey, setSelectKey} = props
+    // const [selectKey, setSelectKey] = useState(path);
     const versionInfo = getVersionInfo();
-    const [logStatisticsFreeVisable, setLogStatisticsFreeVisable] = useState(false);
+    // const [logStatisticsFreeVisable, setLogStatisticsFreeVisable] = useState(false);
     const select = (data) => {
-        if (data.type === "statistics") {
+        if (data.type === "proStatistics") {
             // 判断是否是付费用户，付费用户能使用统计，普通用户点击弹出引导消费页面
             if (versionInfo.expired === false) {
                 props.history.push(data.path)
                 setSelectKey(data.path)
             } else {
                 // props.history.push("/log/advert")
-                setLogStatisticsFreeVisable(true)
+                // setLogStatisticsFreeVisable(true)
+                setSelectKey(data.path)
             }
         } else {
             props.history.push(data.path)
@@ -47,26 +49,26 @@ const SetAside = (props) => {
             title: '工时统计',
             path: "/log/projectStatistic",
             key: "statistics",
-            type: "statistics",
+            type: "proStatistics",
             icon: "log-statistics",
             children: [
                 {
                     title: "项目成员统计",
-                    path: "/log/statistic/projectuser",
+                    path: "/log/statistics/projectuser",
                     key: "projectStatistic",
-                    type: "statistics"
+                    type: "proStatistics"
                 },
                 {
                     title: "日志事项统计",
-                    path: "/log/statistic/projectwork",
+                    path: "/log/statistics/projectwork",
                     key: "workStatistic",
-                    type: "statistics"
+                    type: "proStatistics"
                 },
                 {
                     title: "日志项目统计",
-                    path: "/log/statistic/userproject",
+                    path: "/log/statistics/userproject",
                     key: "userProject",
-                    type: "statistics"
+                    type: "proStatistics"
                 }
             ]
         },
@@ -171,10 +173,10 @@ const SetAside = (props) => {
                     }
                 </ul>
             </div>
-            <LogStatisticsFree
-                logStatisticsFreeVisable={logStatisticsFreeVisable}
-                setLogStatisticsFreeVisable={setLogStatisticsFreeVisable}
-            />
+            {/*<LogStatisticsFree*/}
+            {/*    logStatisticsFreeVisable={logStatisticsFreeVisable}*/}
+            {/*    setLogStatisticsFreeVisable={setLogStatisticsFreeVisable}*/}
+            {/*/>*/}
         </Fragment>
     )
 }

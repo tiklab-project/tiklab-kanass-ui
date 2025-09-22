@@ -375,6 +375,7 @@ const WorkTable = (props) => {
     const workTable = useRef()
     const detailWidthRef = useRef();
     const [detailWidth, setDetailWidth] = useState(0);
+    const scrollRef = useRef(null);
 
     // 处理 isOpen 变化的回调
     const handleIsOpenChange = useCallback(() => {
@@ -386,14 +387,38 @@ const WorkTable = (props) => {
     useEffect(() => {
         console.log("宽度：   ", detailWidth)
     }, [detailWidth]);
+
+    // Show scrollbar on scroll, hide after idle
+    useEffect(() => {
+        const container = scrollRef.current;
+        if (!container) return;
+        let hideTimer = null;
+
+        const onScroll = () => {
+            container.classList.add("scrolling");
+            if (hideTimer) {
+                clearTimeout(hideTimer);
+            }
+            hideTimer = setTimeout(() => {
+                container.classList.remove("scrolling");
+            }, 800);
+        };
+
+        container.addEventListener("scroll", onScroll, { passive: true });
+        return () => {
+            container.removeEventListener("scroll", onScroll);
+            if (hideTimer) clearTimeout(hideTimer);
+        };
+    }, []);
     return (
             <div style={{display: "flex", height:"100%", flex:"1 1 0%"}}>
                 <WorkModuleFilter
                     workStore={WorkStore}
                     onIsOpenChange={handleIsOpenChange}
+                    defaultOpen={true}
                 />
                 <div style={{display: "flex", height:"100%", flex:"1 1 0%"}} ref={detailWidthRef}>
-                    <Row style={{ height: "100%", width: "100%", overflow: "auto", background: "#fff" }}>
+                    <Row className="work-table-scroll" style={{ height: "100%", width: "100%", overflow: "auto", background: "#fff" }} ref={scrollRef}>
                         <Col className="work-col" sm={24} md={24} lg={{ span: 24 }} xl={{ span: "22", offset: "1" }} xxl={{ span: "18", offset: "3"}}>
                             <div className={`work-table ${["sm", "md", "lg", "xl"].indexOf(getScreenType()) > -1 ? "work-table-small" : ""}`} >
                                 <WorkTableHead />

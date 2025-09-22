@@ -15,6 +15,8 @@ import ProjectAddInfo from "./ProjectAddInfo";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import ProjectStore from "../store/ProjectStore";
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
+import EnhanceEntranceCloseModal from "../../../common/enhanceEntrance/EnhanceEntranceCloseModal";
+import {disableFunction} from "tiklab-core-ui";
 
 const ProjectAdd = (props) => {
     const [visible, setVisible] = React.useState(false);
@@ -23,6 +25,8 @@ const ProjectAdd = (props) => {
     const [workType, setWorkType] = useState()
     const [loading, setLoading] = useState(false)
     const {projectAddVisible, setProjectAddVisible, productId, projectSetId} = props
+    const [enhanceModal, setEnhanceModal] = useState(false);
+    const disable = disableFunction();
 
     const getIconList = () => {
         findIconList({ iconType: "project" })
@@ -134,8 +138,13 @@ const ProjectAdd = (props) => {
     ]
 
     const selectProjectType = (workType) => {
-        setWorkType(workType)
-        setCurrentStep(1)
+        // 如果是ipd项目，弹出EE提示框
+        if (workType.type === "ipd" && disable){
+            setEnhanceModal(true)
+        }else {
+            setWorkType(workType)
+            setCurrentStep(1)
+        }
     }
 
     return (
@@ -167,6 +176,10 @@ const ProjectAdd = (props) => {
                 </Spin>
 
             </div>
+            <EnhanceEntranceCloseModal
+                config={{title:"IPD项目", desc:"通过需求管理、并行工程和决策评审点确保产品高效开发与市场成功"}}
+                enhanceModal={enhanceModal} setEnhanceModal={setEnhanceModal}
+            />
         </Modal>
     );
 };

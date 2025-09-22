@@ -11,8 +11,9 @@ import React, { useEffect, useRef, useState } from "react";
 import "./SelectItem.scss"
 import ImgComponent from "../imgComponent/ImgComponent";
 import ColorIcon from "../colorIcon/ColorIcon";
+import IconCommon from "../caseCommon/IconCommon";
 const SelectItem = (props) => {
-    const { value, label, key, imgUrl, color, onChange, selectData, ismult, setShowDropDown,option, children, isRemote, handleChildChange, status } = props;
+    const { value, label, key, imgUrl, color, icon, onChange, selectData, ismult, setShowDropDown,option, children, isRemote, handleChildChange, status } = props;
     const [checked, setChecked] = useState()
     const selectCheck = useRef()
     const getValue = (e) => {
@@ -82,6 +83,7 @@ const SelectItem = (props) => {
             {
                 imgUrl ? <ImgComponent isRemote = {isRemote} className="img-icon-right" src={`${imgUrl}`} width="15" height="15" />
                     : color ? <ColorIcon color={color} name={label} className="img-icon-right"/>
+                    : icon ? <><IconCommon icon={icon} className="img-icon-right"/></>
                     : <></>
             }
                     <div className="select-item-text">{label}</div>

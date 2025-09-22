@@ -17,7 +17,7 @@ import ProjectAside from '../../../common/projectAside/ProjectAside';
 const { Sider } = Layout;
 
 const ProjectDetailAside = (props) => {
-    const { project, isShowText, SetIsShowText,  } = props;
+    const { project, isShowText, SetIsShowText, setSelectKey  } = props;
     const theme = localStorage.getItem("theme") ? localStorage.getItem("theme") : "default"
     //语言包
     const { t, i18n } = useTranslation();
@@ -622,6 +622,7 @@ const ProjectDetailAside = (props) => {
                 setUrl = {`/project/${project.id}/set/basicInfo`}
                 backUrl = {`/project`}
                 iconName = "backhome"
+                setSelectKey={setSelectKey}
             />
 
         </Fragment>

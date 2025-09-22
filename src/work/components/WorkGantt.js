@@ -83,7 +83,7 @@ const WorkGantt = (props) => {
     return (<Provider {...store}>
         <div style={{display: "flex", height:"100%", width: "100%"}}>
             <div style={{flex: "0 0 1", overflow: "auto"}}>
-                <WorkModuleFilter workStore={WorkStore}/>
+                <WorkModuleFilter workStore={WorkStore} defaultOpen={false}/>
             </div>
             <div style={{display: "flex", height:"100%", flex:1, minWidth: "0", flexDirection: "column"}}>
                 <div style={{height: "100%"}}>

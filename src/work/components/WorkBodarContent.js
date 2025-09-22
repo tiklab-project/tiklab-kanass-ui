@@ -1,10 +1,11 @@
-import {Empty, Spin} from "antd";
+import {Empty, Spin, Tooltip} from "antd";
 import ImgComponent from "../../common/imgComponent/ImgComponent";
 import UserIcon from "../../common/UserIcon/UserIcon";
 import { withRouter } from "react-router";
 import React, {useRef} from "react";
 import WorkDetailDrawer from "./WorkDetailDrawer";
 import WorkDetailModalView from "./workDetailModalView/WorkDetailModalView";
+import {observer} from "mobx-react";
 
 const WorkBodarContent = (props) => {
     const {loading, dragover, isSameFlowBox, changeStatus, cancelDrag, moveWorkId, delectCurrentWorkItem,
@@ -39,6 +40,31 @@ const WorkBodarContent = (props) => {
         return `${month}月${day}日`;
     }
 
+    const getChildrenCount = (children) => {
+        if (!children) return 0;
+        if (Array.isArray(children)) return children.length;
+        if (typeof children === 'object') return Object.keys(children).length;
+        return 0;
+    }
+
+    const getDueStatus = (planEndTime) => {
+        if (!planEndTime) return null;
+        const end = new Date(planEndTime).getTime();
+        if (Number.isNaN(end)) return null;
+        const now = Date.now();
+        const msInDay = 24 * 60 * 60 * 1000;
+        const diffDays = (end - now) / msInDay;
+        if (diffDays < 0) {
+            const overdueDays = Math.floor(Math.abs(diffDays));
+            return { type: 'overdue', days: overdueDays };
+        }
+        if (diffDays <= 3) {
+            const leftDays = Math.ceil(diffDays);
+            return { type: 'soon', days: leftDays };
+        }
+        return null;
+    }
+
     return (
         <div className={`work-bodar-content ${loading ? "work-bodar-content-spin" : ""}`}>
             <Spin spinning={loading} tip="加载中">
@@ -55,7 +81,7 @@ const WorkBodarContent = (props) => {
                                                 key={item.state.id}
                                     >
                                         <div className="work-bodar-title">
-                                            <div className="work-bodar-title-content">{item.state.name}<span className="work-bodar-num">（{item.workItemList.totalRecord}）</span></div>
+                                            <div className="work-bodar-title-content">{item.state.name}<span className="work-bodar-num">{item.workItemList.totalRecord}</span></div>
                                         </div>
                                         {
                                             isSameFlowBox && isSameFlowBox.indexOf(item.state.id) > -1 ?
@@ -77,29 +103,104 @@ const WorkBodarContent = (props) => {
                                                                         draggable={"true"}
                                                                         onDragStart={() => moveStart(workItem.id, item.state.id, index, workIndex, workItem.workType.flow.id)}
                                                                     >
-                                                                        <div className="work-item-bordar">
-                                                                            <div className="work-item-icon">
-                                                                                <ImgComponent
-                                                                                    src={workItem.workTypeSys?.iconUrl}
-                                                                                    alt=""
-                                                                                    className="icon-15"
-                                                                                />
-                                                                                <div className="work-item-code">
-                                                                                    {workItem.code}
+
+                                                                        <div className="work-item-icon">
+                                                                            <ImgComponent
+                                                                                src={workItem.workTypeSys?.iconUrl}
+                                                                                alt=""
+                                                                                className="icon-15"
+                                                                            />
+                                                                            <Tooltip title={workItem.title}>
+                                                                                <div className="work-item-title">
+                                                                                    {workItem.title}
                                                                                 </div>
-                                                                            </div>
-                                                                            <div className="work-item-title">
-                                                                                {workItem.title}
-                                                                            </div>
-                                                                            <div className="work-item-bottom">
-                                                                                <div className={`work-item-status ${setStatusStyle(workItem.workStatusNode.id)}`}>
-                                                                                    {workItem.workStatusNode.name}
-                                                                                </div>
-                                                                                <div className="work-item-date">
-                                                                                    {parseDate(workItem.buildTime)}
-                                                                                </div>
-                                                                            </div>
+                                                                            </Tooltip>
                                                                         </div>
+
+                                                                        {(() => {
+                                                                            if (workItem.parentId) {
+                                                                                return (
+                                                                                    <Tooltip title={`父事项： ${workItem.parentWorkItem.title}`}>
+                                                                                        <div className="work-item-middle">
+                                                                                            <svg className="img-icon-right" aria-hidden="true">
+                                                                                                <use xlinkHref="#icon-parent"></use>
+                                                                                            </svg>
+                                                                                            <span className="work-item-parent">{workItem.parentWorkItem.title}</span>
+                                                                                        </div>
+                                                                                    </Tooltip>
+                                                                                )
+                                                                            }
+                                                                            return null;
+                                                                        })()}
+                                                                        <div className="work-item-bottom">
+                                                                                <div className="work-item-bottom-left">
+                                                                                    {/*<div className="work-item-date">*/}
+                                                                                    {/*    {parseDate(workItem.buildTime)}*/}
+                                                                                    {/*</div>*/}
+                                                                                    {/*子事项*/}
+                                                                                    {(() => {
+                                                                                        const childCount = getChildrenCount(workItem.children);
+                                                                                        if (childCount > 0) {
+                                                                                            return (
+                                                                                                <Tooltip title={`子事项 ${childCount} 个`}>
+                                                                                                    <span className="attr-badge">
+                                                                                                        <svg className="img-icon-right" aria-hidden="true">
+                                                                                                            <use xlinkHref="#icon-child"></use>
+                                                                                                        </svg>
+                                                                                                        {childCount}
+                                                                                                    </span>
+                                                                                                </Tooltip>
+                                                                                            )
+                                                                                        }
+                                                                                        return null;
+                                                                                    })()}
+                                                                                    {/*逾期*/}
+                                                                                    {(() => {
+                                                                                        const due = getDueStatus(workItem.planEndTime);
+                                                                                        if (!due || item.state.id === "done") return null;
+                                                                                        if (due.type === 'soon') {
+                                                                                            return (
+                                                                                                <Tooltip title={`还有 ${due.days} 天到期`}>
+                                                                                                    <span className="attr-badge attr-badge--orange">
+                                                                                                        <svg className="icon-14" aria-hidden="true">
+                                                                                                            <use xlinkHref="#icon-clock-orange"></use>
+                                                                                                        </svg>
+                                                                                                    </span>
+                                                                                                </Tooltip>
+                                                                                            )
+                                                                                        }
+                                                                                        if (due.type === 'overdue') {
+                                                                                            return (
+                                                                                                <Tooltip title={`已逾期 ${due.days} 天`}>
+                                                                                                    <span className="attr-badge attr-badge--red">
+                                                                                                        <svg className="icon-14" aria-hidden="true">
+                                                                                                            <use xlinkHref="#icon-clock-red"></use>
+                                                                                                        </svg>
+                                                                                                    </span>
+                                                                                                </Tooltip>
+                                                                                            )
+                                                                                        }
+                                                                                        return null;
+                                                                                    })()}
+                                                                                    {/*优先级*/}
+                                                                                    {(() => {
+                                                                                        const val = workItem?.workPriority?.value;
+                                                                                        const name = workItem?.workPriority?.name;
+                                                                                        const map = { low: 'priority--low', medium: 'priority--medium', high: 'priority--high' };
+                                                                                        const cls = map[(val || '').toLowerCase()] || '';
+                                                                                        return (
+                                                                                            <Tooltip title={`优先级：${name}`}>
+                                                                                                <span className={`priority-badge ${cls}`}>{name}</span>
+                                                                                            </Tooltip>
+                                                                                        )
+                                                                                    })()}
+                                                                                </div>
+                                                                                <div className="work-item-bottom-right">
+                                                                                    <UserIcon name={workItem.assigner?.nickname} />
+                                                                                    <span>{workItem.assigner?.nickname}</span>
+                                                                                </div>
+                                                                            </div>
+
                                                                     </div>
                                                                 })
                                                                 :
@@ -208,4 +309,4 @@ const WorkBodarContent = (props) => {
     )
 }
 
-export default withRouter(WorkBodarContent);
+export default withRouter(observer(WorkBodarContent));

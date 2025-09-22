@@ -4,7 +4,7 @@
   transition: width 0.3s;
   display: flex;
   flex-direction: column;
-  background-color: var(--tiklab-gray-800);
+  background-color: #f3f7f9;
 
   .work-module-filter-sider {
     display: flex;
@@ -125,7 +125,7 @@
         overflow-x: hidden;
 
         .ant-tree-list{
-          background-color: var(--tiklab-gray-800);
+          background-color: #f3f7f9;
         }
         .ant-tree-treenode {
           width: 100%;
@@ -191,7 +191,7 @@
         height: 30px;
         margin: 0 10px 5px;
         cursor: pointer;
-        background: var(--tiklab-gray-800);
+        background: #f3f7f9;
         padding: 6px;
       }
     }
@@ -214,7 +214,7 @@
   }
   .work-module-filter-sider::-webkit-scrollbar-track {
     border-radius: 0;
-    background: var(--tiklab-gray-800);
+    background: #f3f7f9;
   }
 
   @media (max-width: 768px) {

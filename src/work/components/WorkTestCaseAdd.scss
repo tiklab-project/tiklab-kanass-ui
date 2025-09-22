@@ -1,12 +1,13 @@
 .testCase-add {
     position: absolute;
-    height: 120%;
-    max-height: fit-content;
+    height: 100%;
+    max-height: 400px;
     width: 100%;
     z-index: 3;
     background: #fff;
-    box-shadow: 0 3px 6px -4px rgb(0 0 0 / 12%), 0 6px 16px rgb(0 0 0 / 8%), 0 9px 28px 8px rgb(0 0 0 / 5%);
-    border-radius: 4px;
+    left: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
 
     .testCase-add-model {
         //position: absolute;
@@ -63,15 +64,17 @@
         border-top-right-radius: 4px;
         border-top-left-radius: 4px;
         align-items: center;
-        justify-content: flex-start;
+        justify-content: space-between;
         padding: 10px 10px 10px;
+        width: 100%;
+        flex-wrap: wrap;
 
         .select-view {
             height: 32px;
             line-height: 32px;
             min-width: 150px;
             max-width: 250px;
-            background: #f5f5f5;
+            //background: #f5f5f5;
             padding: 0 10px;
             //position: relative;
             //z-index: 6;
@@ -120,6 +123,49 @@
             cursor: pointer;
         }
     }
+
+    .testCase-add-work-item:hover {
+        background-color: var(--tiklab-gray-400);
+    }
+
+    .testCase-add-work-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 0;
+        gap: 10px;
+    }
+    /* Row layout to mimic WorkChildAdd */
+    .testcase-row-left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 0;
+    }
+    .work-item-title {
+        max-width: 400px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        flex: 1;
+    }
+    .work-item-right {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 8px;
+        width: 70px;
+    }
+
+    /* Ant table tweaks similar to other add modals */
+    //.ant-table {
+    //    border-top: 1px solid #f0f0f0;
+    //}
+    //.ant-table-tbody > tr > td {
+    //    text-overflow: ellipsis;
+    //    white-space: nowrap;
+    //    overflow: hidden;
+    //}
 
     .testCase-add-item:hover {
         background-color: var(--tiklab-gray-400);

@@ -26,7 +26,7 @@ const SetStatisticsAside = (props) => {
                 setSelectKey(data.path)
             } else {
                 // props.history.push("/log/advert")
-                setLogStatisticsFreeVisable(true)
+                // setLogStatisticsFreeVisable(true)
             }
         } else {
             props.history.push(data.path)
@@ -49,21 +49,21 @@ const SetStatisticsAside = (props) => {
     const logMenuList = [
         {
             title: "项目成员统计",
-            path: "/log/statistic/projectuser",
+            path: "/log/statistics/projectuser",
             key: "projectStatistic",
             icon: "cuservice",
             type: "statistics"
         },
         {
             title: "日志事项统计",
-            path: "/log/statistic/projectwork",
+            path: "/log/statistics/projectwork",
             key: "workStatistic",
             icon: "statistics-work",
             type: "statistics"
         },
         {
             title: "日志项目统计",
-            path: "/log/statistic/userproject",
+            path: "/log/statistics/userproject",
             key: "userProject",
             icon: "statistics-project",
             type: "statistics"

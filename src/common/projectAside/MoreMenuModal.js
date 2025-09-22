@@ -11,9 +11,10 @@ import React, { useEffect, useRef, useState } from "react";
 import "./MoreMenuModal.scss";
 import { useTranslation } from 'react-i18next';
 import { withRouter } from "react-router";
+import {disableFunction} from "tiklab-core-ui";
 
 const MoreMenuModel = (props) => {
-    const { isShowText, moreMenu, morePath, theme } = props;
+    const { isShowText, moreMenu, morePath, theme, setSelectKey } = props;
 
     // 获取当前被激活的菜单
     const path = props.location.pathname.split("/")[3];
@@ -24,6 +25,7 @@ const MoreMenuModel = (props) => {
     const modelRef = useRef()
     // 更多点击按钮的的ref
     const setButton = useRef()
+    const disable = disableFunction();
 
     /**
      * 显示菜单弹窗
@@ -61,11 +63,17 @@ const MoreMenuModel = (props) => {
 
     /**
      * 点击菜单
-     * @param {菜单key} key 
      */
-    const selectMenu = (key) => {
-        props.history.push(key)
+    const selectMenu = (url, key) => {
+        if (setSelectKey){
+            setSelectKey(key)
+        }
+        props.history.push(url)
         setShowMenu(false)
+        // if (!(key === "appraised" && disable)){
+        //     props.history.push(url)
+        //     setShowMenu(false)
+        // }
     }
 
     return (
@@ -92,13 +100,13 @@ const MoreMenuModel = (props) => {
             <div
                 className={`more-menu-box ${showMenu ? "menu-show" : "menu-hidden"}`}
                 ref={modelRef}
-                style={{}}
+                style={{left: "75px"}}
             >
                 {
                     moreMenu && moreMenu.map((item,index) => {
                         return <div className={`project-menu-submenu ${path === item.key ? "project-menu-select" : ""}`}
                             key={index}
-                            onClick={() => selectMenu(item.id)}
+                            onClick={() => selectMenu(item.id, item.key)}
                         >
                             <svg className="icon-18" aria-hidden="true">
                                 <use xlinkHref={`#icon-${item.defaultIcon}`}></use>

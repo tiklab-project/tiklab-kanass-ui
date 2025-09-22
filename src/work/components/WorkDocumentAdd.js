@@ -7,14 +7,15 @@
  * @LastEditTime: 2024-12-26 15:11:14
  */
 import React, { useEffect, useState, useRef } from "react";
-import {Modal, Table, message, Empty} from 'antd';
+import {Modal, Table, message, Empty, Avatar} from 'antd';
 import { observer, inject } from "mobx-react";
 import "./WorkDocumentAdd.scss";
 import InputSearch from "../../common/input/InputSearch"
 import { SelectSimple, SelectItem } from "../../common/select";
-import {LeftOutlined, RightOutlined} from "@ant-design/icons";
+import {LeftOutlined, RightOutlined, UserOutlined} from "@ant-design/icons";
 import {PrivilegeProjectButton} from "tiklab-privilege-ui";
 import WorkDeleteSelectModal from "./WorkDeleteSelectModal";
+import UserIcon from "../../common/UserIcon/UserIcon";
 const WorkDocumentAddmodal = (props) => {
     const { workWikiStore, workStore, setWorkDocumentList, projectId, showSelectDocument, selectDocument } = props;
     const { workId } = workStore;
@@ -281,7 +282,7 @@ const WorkDocumentAddmodal = (props) => {
                 </div>
 
                 <div className="document-add-search">
-                    <InputSearch style={{ minWidth: "100px", maxWidth: "300px", flex: 1 }} onChange={(value) => searchSelectWorkRepository(value)} placeholder={"搜索文档"} />
+                    <InputSearch style={{ minWidth: "100px", flex: 1 }} onChange={(value) => searchSelectWorkRepository(value)} placeholder={"搜索文档"} />
                     <SelectSimple 
                         name="repository"
                         onChange={(value) => searchUnselectWorkRepository(value)}
@@ -295,7 +296,7 @@ const WorkDocumentAddmodal = (props) => {
                                     value={item.id}
                                     label={item.kanassRepositoryName}
                                     key={item.id}
-                                    imgUrl={"repository1.png"}
+                                    icon={"repository-bluecolor"}
                                 />
                             })
                         }
@@ -303,31 +304,59 @@ const WorkDocumentAddmodal = (props) => {
 
                 </div>
                 <div className="document-add-model">
-                    <Table
-                        columns={columns}
-                        dataSource={documentList}
-                        rowKey={record => record.id}
-                        // rowSelection={{
-                        //     selectedRow,
-                        //     onChange: selectWorkRepository,
-                        //     getCheckboxProps: (record) => ({
-                        //         disabled: record.rele === true
-                        //     })
-                        // }}
-                        onRow={(record) =>({
-                            onClick: () => addWorkItemDocument(record)
-                        })}
-                        okText="确定"
-                        cancelText="取消"
-                        pagination={false}
-                        scroll={{x: "100%"}}
-                        locale={{
-                            emptyText: <Empty
-                                imageStyle={{height: 100}}
-                                description={<span>暂无数据</span>}
-                            />
-                        }}
-                    />
+                    {
+                        documentList.length > 0 && documentList.map((item, index) => {
+                            return <div className="document-add-item" onClick={() => addWorkItemDocument(item)} key={item.id}>
+                                <div className="document-icon">
+                                    <div style={{display: "flex", alignItems: "center", gap: "10px"}}>
+                                        <svg className="img-icon-right" aria-hidden="true">
+                                            <use xlinkHref="#icon-file"></use>
+                                        </svg>
+                                        <div className="work-item-title">{item.documentName} </div>
+                                    </div>
+                                </div>
+                                <div className="work-item-right">
+                                    <div style={{display: "flex", alignItems: "center", gap: "10px"}}>
+                                        <svg className="img-icon-right" aria-hidden="true">
+                                            <use xlinkHref="#icon-repository-bluecolor"></use>
+                                        </svg>
+                                        <div className="work-item-title">{item.kanassRepositoryName} </div>
+                                    </div>
+                                </div>
+                                <div className="work-item-right">
+                                    <UserIcon name={item.userName}/>
+                                    <div className="work-item-icon">
+                                        {item.userName}
+                                    </div>
+                                </div>
+                            </div>
+                        })
+                    }
+                    {/*<Table*/}
+                    {/*    columns={columns}*/}
+                    {/*    dataSource={documentList}*/}
+                    {/*    rowKey={record => record.id}*/}
+                    {/*    // rowSelection={{*/}
+                    {/*    //     selectedRow,*/}
+                    {/*    //     onChange: selectWorkRepository,*/}
+                    {/*    //     getCheckboxProps: (record) => ({*/}
+                    {/*    //         disabled: record.rele === true*/}
+                    {/*    //     })*/}
+                    {/*    // }}*/}
+                    {/*    onRow={(record) =>({*/}
+                    {/*        onClick: () => addWorkItemDocument(record)*/}
+                    {/*    })}*/}
+                    {/*    okText="确定"*/}
+                    {/*    cancelText="取消"*/}
+                    {/*    pagination={false}*/}
+                    {/*    scroll={{x: "100%"}}*/}
+                    {/*    locale={{*/}
+                    {/*        emptyText: <Empty*/}
+                    {/*            imageStyle={{height: 100}}*/}
+                    {/*            description={<span>暂无数据</span>}*/}
+                    {/*        />*/}
+                    {/*    }}*/}
+                    {/*/>*/}
                     <div className="document-add-page">
                         <div className="document-add-page-total">
                             共{unRelationTotal}条

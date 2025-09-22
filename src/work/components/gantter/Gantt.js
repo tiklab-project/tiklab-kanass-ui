@@ -23,6 +23,7 @@ import WorkDetailDrawer from "../WorkDetailDrawer";
 import {removeNodeInTree} from "../../../common/utils/treeDataAction";
 import {setWorkDeatilInList} from "../WorkSearch";
 import {setSessionStorage} from "../../../common/utils/setSessionStorage";
+import {Tooltip} from "antd";
 
 const Gantt = (props) => {
     // 获取当前年月日
@@ -34,10 +35,10 @@ const Gantt = (props) => {
     const currentYear = todayDate.getFullYear()
     const currentMonth = todayDate.getMonth() + 1;
     const currentDay = todayDate.getDate()
-    console.log(currentYear, currentMonth, currentDay)
+    // console.log(currentYear, currentMonth, currentDay)
     const startDate = dayjs().subtract(1, "year").format("YYYY-MM-DD");
     const endDate = dayjs().add(1, "year").format("YYYY-MM-DD");
-    console.log(startDate, dayjs().format("MM-DD"))
+    // console.log(startDate, dayjs().format("MM-DD"))
     const firstDateMillisecond = Date.parse(startDate);
     const [dateArray, setdateArray] = useState()
     // 路线图的宽
@@ -48,6 +49,11 @@ const Gantt = (props) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const modelRef = useRef()
 
+    // 添加状态来管理Tooltip
+    const [tooltipVisible, setTooltipVisible] = useState(false);
+    const [tooltipContent, setTooltipContent] = useState('');
+    const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
+    const tooltipRef = useRef(null);
 
     const archiveBase = archiveView === "month" ? 3600 * 1000 * 2.4 : 3600 * 1000;
     const unitLength = archiveView === "month" ? 10 : 24;
@@ -118,7 +124,17 @@ const Gantt = (props) => {
                 ],
             },
             resizing: {
-                enabled: true
+                enabled: true,
+                handles: {
+                    left: true,
+                    right: true,
+                    top: false,
+                    bottom: false,
+                    topLeft: false,
+                    topRight: false,
+                    bottomLeft: false,
+                    bottomRight: false
+                }
             },
             translating: {
                 restrict(cellView) {
@@ -134,6 +150,38 @@ const Gantt = (props) => {
             }
         })
 
+        // 添加节点鼠标悬浮事件监听
+        graph.on('node:mouseenter', ({ node, e }) => {
+            const workItem = workList.find(item => item.id === node.id);
+
+            if (workItem) {
+                const startDate = dayjs(workItem.planBeginTime).format('YYYY-MM-DD');
+                const endDate = dayjs(workItem.planEndTime).format('YYYY-MM-DD');
+                const duration = dayjs(endDate).diff(startDate, 'day') + 1;
+
+                setTooltipContent(`开始时间: ${startDate}  结束时间: ${endDate}`);
+
+                // 获取节点在页面中的位置
+                const bbox = node.getBBox();
+                const containerRect = document.getElementById('tableGantt').getBoundingClientRect();
+
+                setTooltipPosition({
+                    x: containerRect.left + bbox.x + bbox.width / 2,
+                    y: containerRect.top + bbox.y - 40
+                });
+
+                setTooltipVisible(true);
+            }
+        });
+
+        graph.on('node:mouseleave', () => {
+            setTooltipVisible(false);
+        });
+
+        graph.on('blank:mouseenter', () => {
+            setTooltipVisible(false);
+        });
+
         graph.on("node:change:position", ({ node }) => updateByChangeNodePosition({ node }))
 
         graph.on("node:change:size", ({ node, options }) => updateByChangeNodeSize({ node, options }))
@@ -143,6 +191,7 @@ const Gantt = (props) => {
     }
 
     const updateByChangeNodePosition = useDebounce(({ node, options }) => {
+        const workItem = workList.find(item => item.id === node.id);
 
         const nodeBox = node.getBBox();
         const workItemId = node.id;
@@ -169,9 +218,20 @@ const Gantt = (props) => {
         editWork(params2)
         workList[index].planBeginTime = startTime;
         workList[index].planEndTime = endTime;
+
+        const newColor = setTimeAxisStyle(workItem.workStatusNode.id, workItem).backgroundColor;
+        node.attr({
+            body: {
+                fill: newColor,    // 修改背景色
+                stroke: newColor,  // 修改边框色
+            },
+        });
+
     }, [500])
 
     const updateByChangeNodeSize = useDebounce(({ node, options }) => {
+        const workItem = workList.find(item => item.id === node.id);
+
         const nodeBox = node.getBBox();
         const index = node.store.data.index;
         const workItemId = node.id;
@@ -210,12 +270,33 @@ const Gantt = (props) => {
             })
         }
 
+        const newColor = setTimeAxisStyle(workItem.workStatusNode.id, workItem).backgroundColor;
+        node.attr({
+            body: {
+                fill: newColor,    // 修改背景色
+                stroke: newColor,  // 修改边框色
+            },
+        });
     }, [500])
 
     //渲染画布
     const setGarph = () => {
         graphRef.current.fromJSON(ganttdata)
     }
+
+    // 处理页面滚动时更新Tooltip位置
+    useEffect(() => {
+        const handleScroll = () => {
+            if (tooltipVisible) {
+                setTooltipVisible(false);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, [tooltipVisible]);
 
     /**
      * 解决异步问题
@@ -225,13 +306,13 @@ const Gantt = (props) => {
     const [isShowCol, setIsShowCol] = useState(false)
     useEffect(() => {
         if (ganttdata !== undefined) {
-            document.getElementById("tableGantt").style.height = (ganttdata.nodes.length * 50) + 20;
-            document.getElementById("table-date-background").style.height = (ganttdata.nodes.length * 50);
+            document.getElementById("tableGantt").style.height = (ganttdata.nodes.length * 40) + 20;
+            document.getElementById("table-date-background").style.height = (ganttdata.nodes.length * 40);
             const picBoxHeight = document.getElementById('table-pic').offsetHeight;
-            if (picBoxHeight < ganttdata.nodes.length * 50) {
+            if (picBoxHeight < ganttdata.nodes.length * 40) {
                 setIsShowCol(true)
-                document.getElementById("tableGantt").style.height = (ganttdata.nodes.length * 50) + 20;
-                document.getElementById("table-date-background").style.height = (ganttdata.nodes.length * 50);
+                document.getElementById("tableGantt").style.height = (ganttdata.nodes.length * 40) + 20;
+                document.getElementById("table-date-background").style.height = (ganttdata.nodes.length * 40);
             } else {
                 setIsShowCol(false)
             }
@@ -282,7 +363,7 @@ const Gantt = (props) => {
             xAxis = Math.floor(xAxis / archiveBase);
 
             // 每个事项的y轴
-            let yAxis = ylength++ * 50 + 13;
+            let yAxis = ylength++ * 40 + 8;
 
             // 每个事项持续时间
             let length = Math.abs(endPra - startPra);
@@ -296,13 +377,25 @@ const Gantt = (props) => {
                     y: yAxis,
                     width: length,
                     height: 24,
-
+                    resizing: {
+                        enabled: true,
+                        handles: {
+                            left: true,
+                            right: true,
+                            top: false,
+                            bottom: false,
+                            topLeft: false,
+                            topRight: false,
+                            bottomLeft: false,
+                            bottomRight: false
+                        }
+                    },
                     attrs: {
                         body: {
-                            rx: 5,
-                            ry: 5,
-                            fill: setTimeAxisStyle(item.workStatusNode.id).backgroundColor, // 背景颜色
-                            stroke: setTimeAxisStyle(item.workStatusNode.id).backgroundColor,  // 边框颜色
+                            rx: 3,
+                            ry: 3,
+                            fill: setTimeAxisStyle(item.workStatusNode.id, item).backgroundColor, // 背景颜色
+                            stroke: setTimeAxisStyle(item.workStatusNode.id, item).backgroundColor,  // 边框颜色
                         },
                     }
                 }
@@ -476,7 +569,7 @@ const Gantt = (props) => {
         return (data && data.length > 0 && data.map((item, index) => {
             return (
                 <Fragment key={item.id}>
-                    <ul className={`${index % 2 !== 0 && deep === 0 ? "table-grey" : ""}`}>
+                    <ul className={`${index % 2 !== 0 && deep === 0 ? "" : ""}`}>
                         <li style={{ listStyleType: "none" }}>
                             <div key={item.id} className={`table-tr`}>
                                 <div className="table-td table-border table-td-name" style={{ paddingLeft: deep * 16 + 10 }}>
@@ -577,28 +670,32 @@ const Gantt = (props) => {
     }
 
     // 时间轴的样式
-    const setTimeAxisStyle = (id) => {
+    const setTimeAxisStyle = (id, workItem) => {
         let color = {
             backgroundColor: "var(--tiklab-blue)",
             borderColor: "#fff"
         };
+
+        // 检查 planEndTime 是否在今天之前（已过期）
+        const isOverdue = workItem.planEndTime && new Date(workItem.planEndTime) < new Date();
+
         switch (id) {
             case "todo":
                 color = {
-                    backgroundColor: "#e2e1e4",
-                    borderColor: "#e2e1e4"
+                    backgroundColor: isOverdue ? "#f7968d" : "#b1b8bf",
+                    borderColor: isOverdue ? "#f7968d" : "#b1b8bf"
                 }
                 break;
             case "done":
                 color = {
-                    backgroundColor: "#dfecd5e3",
-                    borderColor: "#dfecd5e3"
+                    backgroundColor: "#5fcf9e",  // 已完成保持绿色
+                    borderColor: "#5fcf9e"
                 }
                 break;
             default:
                 color = {
-                    backgroundColor: "#b0d5dfa1",
-                    borderColor: "#b0d5dfa1"
+                    backgroundColor: isOverdue ? "#f7968d" : "#4094fa",
+                    borderColor: isOverdue ? "#f7968d" : "#4094fa"
                 }
                 break;
         }
@@ -665,6 +762,18 @@ const Gantt = (props) => {
     return (
         <>
             <div>
+                {tooltipVisible && (
+                    <div
+                        ref={tooltipRef}
+                        style={{
+                            left: tooltipPosition.x,
+                            top: tooltipPosition.y,
+                        }}
+                        className={"gantt-tooltip"}
+                    >
+                        {tooltipContent}
+                    </div>
+                )}
                 <div className="work-gantt-time">
                     <div className="time-table">
                         <div className="table-hearder">
@@ -682,7 +791,7 @@ const Gantt = (props) => {
                                     <div className="table-month" id="table-month" ref={timerCore}>
                                         {
                                             dateArray && dateArray.map((item, index) => {
-                                                return <div style={{ width: `${unitLength * item.day.length}px`, height: archiveView === "week" ? "25px" : "50px", lineHeight: archiveView === "week" ? "25px" : "50px" }} key={index} className="table-month-td">
+                                                return <div style={{ width: `${unitLength * item.day.length}px`, height: archiveView === "week" ? "20px" : "40px", lineHeight: archiveView === "week" ? "20px" : "40px" }} key={index} className="table-month-td">
                                                     {item.month}
                                                 </div>
                                             })
@@ -693,7 +802,7 @@ const Gantt = (props) => {
                                             {
                                                 dateArray && dateArray.map((item, index) => {
                                                     return item.day.map((dayitem, dayindex) => {
-                                                        return <div style={{ width: unitLength, maxWidth: unitLength, height: "25px", flexShrink: 0 }}
+                                                        return <div style={{ width: unitLength, maxWidth: unitLength, height: "20px", flexShrink: 0 }}
                                                             className={`table-day ${(item.week[dayindex] === "日" || item.week[dayindex] === "六") ? "table-week" : ""} ${(item.week[dayindex] === "日") ? "table-weekday" : ""}`}
                                                             key={`${index}${dayindex}`}
                                                         >
@@ -747,7 +856,7 @@ const Gantt = (props) => {
                                             archiveView === "week" && dateArray && dateArray.map((item, index) => {
                                                 return item.day.map((dayitem, dayindex) => {
                                                     return <div style={{ width: unitLength, maxWidth: unitLength }}
-                                                        className={`${(item.week[dayindex] === "日") ? "table-weekday" : ""}`}
+                                                        className={`${(item.week[dayindex] === "日" || item.week[dayindex] === "六") ? "table-week" : ""} ${(item.week[dayindex] === "日") ? "table-weekday" : ""} ${(item.week[dayindex])}) ? "table-weekday" : ""}`}
                                                         key={`${index}${dayindex}`}
                                                     >
                                                     </div>

@@ -35,7 +35,7 @@ const getStore = (productId) =>{
     }
 }
 const WorkModuleFilter = (props) => {
-    const { workStore, onIsOpenChange } = props;
+    const { workStore, onIsOpenChange, defaultOpen } = props;
     const { quickFilterValue, setQuickFilterValue,setSearchCondition, findStateNodeList, tabValue,
         getWorkConditionPageTree, getWorkConditionPage, setTableTitle, setModuleTitle, setTabValue,
         viewType, findUserCreateAndTodoWorkNum, workList, findWorkTypeDmList, setQuickFilterVisible,
@@ -50,7 +50,7 @@ const WorkModuleFilter = (props) => {
     const projectSetId = props.match.params.projectSetId ? props.match.params.projectSetId : null;
     const {findProjectList} = getStore(productId)
 
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState(defaultOpen);
     const projectId = props.match.params.id ? props.match.params.id : null;
     const sprintId = props.match.params.sprint ? props.match.params.sprint : null;
     const versionId = props.match.params.version ? props.match.params.version : null;

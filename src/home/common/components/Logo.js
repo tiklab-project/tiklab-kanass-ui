@@ -22,12 +22,13 @@ const Logo = (props) => {
 
     // 如果有自定义图片则使用自定义的，否则使用默认的
     const getLogoImage = () => {
-        if (customLogo) return customLogo?.image;
+        console.log("customLogo", customLogo)
+        if (customLogo?.image) return customLogo?.image;
         return theme === "default" ? productImg.kanass : productWhiteImg.kanass;
     };
 
     const getLogoName = () => {
-        if (customLogo) return customLogo?.name;
+        if (customLogo?.name) return customLogo?.name;
         return "Kanass";
     };
     return <>

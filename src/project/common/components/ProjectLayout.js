@@ -16,6 +16,8 @@ import { getUser } from "tiklab-core-ui";
 import ProjectStore from "../../project/store/ProjectStore";
 import WorkStore from "../../../work/store/WorkStore";
 import ProjectEmpty from "../../../common/component/ProjectEmpty";
+import EnhanceEntranceCloseModal from "../../../common/enhanceEntrance/EnhanceEntranceCloseModal";
+import EnhanceEntranceModal from "../../../common/enhanceEntrance/EnhanceEntranceModal";
 // import { UserVerify } from "tiklab-user-extension-ui";
 
 const ProjectLayout = (props) => {
@@ -26,6 +28,7 @@ const ProjectLayout = (props) => {
     const [loading, setLoading] = useState(true)
     const { searchpro, findProjectList, project, setProject } = ProjectStore;
     const { setSearchConditionNull, setTabValue } = WorkStore;
+    const [selectKey, setSelectKey] = useState("");
     // 项目id
     const projectId = props.match.params.id;
     const [isShowText, SetIsShowText] = useState(false)
@@ -71,11 +74,20 @@ const ProjectLayout = (props) => {
                         searchpro={searchpro}
                         isShowText = {isShowText} 
                         SetIsShowText = {SetIsShowText}
+                        setSelectKey={setSelectKey}
                         {...props}
                     />
                     <Layout className="prodetail-content">
                         <Row justify="start" className="prodetail-row">
                             <Col xs={{ span: 24 }} lg={{ span: 24 }}>
+                                <Row>
+                                    {
+                                        selectKey === "appraised" &&
+                                        <EnhanceEntranceModal
+                                            config={{title:"评审", desc:"通过多维度专业审查确保项目关键节点质量可控、风险可溯、方向一致"}}
+                                        />
+                                    }
+                                </Row>
                                 {renderRoutes(route.routes)}
                             </Col>
                         </Row>

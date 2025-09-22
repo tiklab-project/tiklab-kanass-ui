@@ -43,7 +43,7 @@ const Demand = (props)=>{
                             alt=""
                             className="icon-15"
                         />
-                        <span style={{padding:"0 10px"}}>{demandInfo?.title}</span>
+                        <span style={{padding:"0 10px", maxWidth:"150px", overflow:"hidden", textOverflow: "ellipsis", whiteSpace:"nowrap"}}>{demandInfo?.title}</span>
                         <div style={{cursor:"pointer",marginLeft:"auto", padding:"0 5px"}} onClick={unBind}>
                             <svg className="icon-18" aria-hidden="true" onClick={unBind}>
                                 <use xlinkHref={`#icon-unLink`}></use>

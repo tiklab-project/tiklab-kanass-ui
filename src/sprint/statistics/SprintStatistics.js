@@ -32,7 +32,7 @@ const SprintStatistics = (props) => {
                     {
                         (selectKey !== "overview" && selectKey !== "workItem") &&
                         <EnhanceEntranceSubMenuModal
-                            config={{title:"更多的事项、日志统计", desc:"全面统计各项任务与项目工时，精准量化工作投入、核算成本并优化资源分配。"}}
+                            config={{title:"更多的统计类型", desc:"全面统计各项任务与项目工时，精准量化工作投入、核算成本并优化资源分配。"}}
                         />
                     }
                     <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "22", offset: "1" }} xxl={{ span: "18", offset: "3" }}>

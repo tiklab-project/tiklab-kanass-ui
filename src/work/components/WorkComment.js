@@ -179,39 +179,31 @@ const WorkComment = (props) => {
                             <div className="work-comment-list">
                                 {
                                     commentList && commentList.length > 0 && commentList.map(item => {
-                                        // if (displayedComments.includes(item)){
-                                            return <div className="comment-item" key={item.id}
-                                                        onMouseEnter={() => setHoverItem(item.id)}
-                                                        onMouseLeave={() => setHoverItem()}
-                                            >
-                                                <UserIcon size="big" name={item.user?.nickname ? item.user?.nickname : item.user?.name} />
-                                                <div style={{width: "100%"}}>
-                                                    <div className="comment-top">
-                                                        <div className="comment-user">
-                                                            <span className="user-name">{item.user?.nickname ? item.user?.nickname : item.user?.name}</span>
-                                                            <span className="user-date">{item.createTime}</span>
-                                                        </div>
-
-                                                        <div ref={logAction}>
-                                                            {
-                                                                hoverItem === item.id &&
-                                                                <div className="comment-operate" >
-                                                                    <DeleteModal deleteFunction={deleteComment} id={item.id} getPopupContainer={logAction.current} />
-                                                                    {/*<div onClick={() => {deleteComment(item.id)}}*/}
-                                                                    {/*     className={"operate-text"}*/}
-                                                                    {/*>*/}
-                                                                    {/*    删除*/}
-                                                                    {/*</div>*/}
-                                                                </div>
-                                                            }
-                                                        </div>
-                                                    </div>
-                                                    <div className="comment-content">
-                                                        {item.details}
+                                        return <div className="comment-item" key={item.id}
+                                                    onMouseEnter={() => setHoverItem(item.id)}
+                                                    onMouseLeave={() => setHoverItem()}
+                                        >
+                                            <UserIcon size="big" name={item.user?.nickname ? item.user?.nickname : item.user?.name} />
+                                            <div className="comment-main" style={{width: "100%"}}>
+                                                <div className="comment-header">
+                                                    <div className="comment-user">
+                                                        <span className="user-name">{item.user?.nickname ? item.user?.nickname : item.user?.name}</span>
+                                                        <span className="user-date">{item.createTime}</span>
                                                     </div>
                                                 </div>
+                                                <div className="comment-content">
+                                                    {item.details}
+                                                </div>
                                             </div>
-                                        // }
+                                            <div className="comment-action" ref={logAction}>
+                                                {
+                                                    hoverItem === item.id &&
+                                                    <div className="comment-operate">
+                                                        <DeleteModal deleteFunction={deleteComment} id={item.id} getPopupContainer={logAction.current} />
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
                                     })
                                 }
                             </div>

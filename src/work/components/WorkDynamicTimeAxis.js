@@ -110,11 +110,11 @@ const WorkDynamicTimeAxis = (props) => {
                                             className={`work-dyncmic-timeaxis-item`}
                                             key = {dyncmicItem.id}
                                         >
-                                            <div className="work-dyncmic-timeaxis-item-name">
+                                            <div className="work-dyncmic-timeaxis-item-name" style={{paddingTop: "5px"}}>
                                                 <div className="dynamic-user-icon">{dyncmicItem.user.nickname?.charAt(0)}</div>
 
                                             </div>
-                                            <WorkDynmicItem time={dyncmicItem?.createTime.slice(0, 16)} content={dyncmicItem.data} type={dyncmicItem.actionType.id} key={dyncmicItem.id} />
+                                            <WorkDynmicItem time={dyncmicItem?.createTime?.slice(5, 16)} content={dyncmicItem.data} type={dyncmicItem.actionType.id} key={dyncmicItem.id} />
                                         </div>
                                     )
                                 // }

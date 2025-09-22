@@ -14,6 +14,8 @@
         background: #fff;
         max-height: 400px;
         border-radius: 5px;
+        display: flex;
+        flex-direction: column;
         .relation-add-model-top{
             display: flex;
             align-items: center;
@@ -47,14 +49,15 @@
         border-top-right-radius: 4px;
         border-top-left-radius: 4px;
         align-items: center;
-        justify-content: space-between;
+        // justify-content: space-between;
         padding: 10px 10px 10px;
+        flex-wrap: wrap;
         .select-view {
             height: 32px;
             line-height: 32px;
             min-width: 150px;
             max-width: 250px;
-            background-color: var(--tiklab-gray);
+            //background-color: var(--tiklab-gray);
             padding: 0 10px;
             position: relative;
             z-index: 6;
@@ -80,7 +83,7 @@
         border-bottom-right-radius: 4px;
         border-bottom-left-radius: 4px;
         //max-height: calc(100% - 100px);
-        max-height: 360px;
+        //max-height: 360px;
         overflow: auto;
         background: #fff;
         
@@ -104,7 +107,8 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 10px 10px;
+        padding: 10px 0;
+        gap: 10px;
         .work-item-icon {
             display: inline-flex;
             gap: 10px;

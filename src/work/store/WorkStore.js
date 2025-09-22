@@ -501,6 +501,7 @@ export class WorkStore {
             this.workBoardListLength = length;
             this.findWorkItemNumByWorkList()
         }
+        console.log("workBoardCurrentPage:      ", this.workBoardCurrentPage)
         return data;
     }
 

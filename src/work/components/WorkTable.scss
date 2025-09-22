@@ -170,3 +170,25 @@
         }
     }
 }
+
+/* Hide scrollbars by default on the main work table scroll container */
+.work-table-scroll::-webkit-scrollbar {
+    width: 8px !important;
+    height: 0 !important;
+}
+.work-table-scroll{
+    /* Reserve space to avoid layout shift when scrollbar appears */
+    scrollbar-gutter: stable;
+    -ms-overflow-style: none;
+    overflow: -moz-scrollbars-none;
+}
+
+/* Show thin scrollbar while scrolling */
+.work-table-scroll.scrolling::-webkit-scrollbar {
+    width: 8px !important;
+    height: 8px !important;
+}
+.work-table-scroll.scrolling::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 4px;
+}

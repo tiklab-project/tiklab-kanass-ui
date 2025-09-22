@@ -6,13 +6,15 @@
  * @Description: 事项添加测试用例
  */
 import React, { useEffect, useState, useRef } from "react";
-import {Empty, message, Modal, Table} from 'antd';
+import {Avatar, Empty, message, Modal, Space, Table} from 'antd';
 import { observer, inject } from "mobx-react";
 import "./WorkTestCaseAdd.scss";
 import InputSearch from "../../common/input/InputSearch"
 import { SelectSimple, SelectItem } from "../../common/select";
-import {LeftOutlined, RightOutlined} from "@ant-design/icons";
+import {LeftOutlined, RightOutlined, UserOutlined} from "@ant-design/icons";
 import {createWorkItemBindFn} from "./WorkTestCaseFn";
+import UserIcon from "../../common/UserIcon/UserIcon";
+import ImgComponent from "../../common/imgComponent/ImgComponent";
 const WorkTestCaseAddmodal = (props) => {
     const { workTestStore, workStore, setWorkTestCaseList, projectId, showSelectTestCase, selectTestCase, workInfo } = props;
     const { workId } = workStore;
@@ -371,7 +373,7 @@ const WorkTestCaseAddmodal = (props) => {
                     </div>
                 </div>
                 <div className="testCase-add-search">
-                    <InputSearch style={{ minWidth: "100px", maxWidth: "300px", flex: 1 }} onChange={(value) => searchSelectWorkRepository(value)} placeholder={"搜索用例"} />
+                    <InputSearch style={{ minWidth: "150px", flex: 1 }} onChange={(value) => searchSelectWorkRepository(value)} placeholder={"搜索用例"} />
                     {/*<SelectSimple*/}
                     {/*    name="repository"*/}
                     {/*    onChange={(value) => searchUnselectWorkRepository(value)}*/}
@@ -409,27 +411,57 @@ const WorkTestCaseAddmodal = (props) => {
                     }
                 </div>
                 <div className="testCase-add-model">
-                    <Table
-                        columns={columns}
-                        dataSource={testCaseList}
-                        rowKey={record => record.id}
-                        onRow={(record, index) => {
-                            return {
-                                onClick: (event) => {
-                                    // 处理行点击事件
-                                    addWorkItemTestCase(record)
-                                },
-                            };
-                        }}
-                        pagination={false}
-                        scroll={{x: "100%"}}
-                        locale={{
-                            emptyText: <Empty
-                                imageStyle={{height: 100}}
-                                description={<span>暂无数据</span>}
-                            />
-                        }}
-                    />
+                    {
+                        testCaseList.length > 0 && testCaseList.map((item, index) => {
+                            return <div className="testCase-add-work-item" onClick={() => addWorkItemTestCase(item)} key={item.id}>
+                                <div className="work-item-icon">
+                                    <div style={{display: "flex", alignItems: "center", gap: "10px"}}>
+                                        <svg className="img-icon-right" aria-hidden="true">
+                                            <use xlinkHref="#icon-gongneng1"></use>
+                                        </svg>
+                                        <div className="work-item-title">{item.testCaseName} </div>
+                                    </div>
+                                </div>
+                                <div className="work-item-right">
+                                    {
+                                        item.createUser ? (
+                                            <>
+                                                <Avatar style={{width:"20px",height:"20px",lineHeight:"20px",verticalAlign: 'middle',}}>{item.createUser[0]}</Avatar>
+                                                <span className={"text-ellipsis"}>{item.createUser} </span>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Avatar  style={{flex:"none"}} size="small" icon={<UserOutlined />} />
+                                                <div className="work-item-icon"> 未设置 </div>
+                                            </>
+                                        )
+                                    }
+                                </div>
+                            </div>
+                        })
+                    }
+                    {/*<Table*/}
+                    {/*    columns={columns}*/}
+                    {/*    dataSource={testCaseList}*/}
+                    {/*    rowKey={record => record.id}*/}
+                    {/*    onRow={(record, index) => {*/}
+                    {/*        return {*/}
+                    {/*            onClick: (event) => {*/}
+                    {/*                // 处理行点击事件*/}
+                    {/*                addWorkItemTestCase(record)*/}
+                    {/*            },*/}
+                    {/*        };*/}
+                    {/*    }}*/}
+                    {/*    pagination={false}*/}
+                    {/*    showHeader={false}*/}
+                    {/*    scroll={{x: "100%"}}*/}
+                    {/*    locale={{*/}
+                    {/*        emptyText: <Empty*/}
+                    {/*            imageStyle={{height: 100}}*/}
+                    {/*            description={<span>暂无数据</span>}*/}
+                    {/*        />*/}
+                    {/*    }}*/}
+                    {/*/>*/}
                     {
                         unRelationTotal > currentPage * 5 ?
                             <div className="testCase-item-more" onClick={loadNextPage}>加载更多</div>

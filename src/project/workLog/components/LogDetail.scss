@@ -94,6 +94,13 @@
             overflow-wrap: anywhere;
             gap: 15px;
             align-items: center;
+
+            .log-detail-content-text {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                width: 90%;
+            }
         }
     }
     .log-submit-botton {
