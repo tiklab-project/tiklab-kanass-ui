@@ -21,6 +21,7 @@ import DeleteModal from "../../../common/deleteModal/deleteModal";
 import { SelectSimple, SelectItem } from "../../../common/select";
 import ColorIcon from "../../../common/colorIcon/ColorIcon"
 import CircleProgress from "../../../common/progress/CircleProgress";
+import UserIcon from "../../../common/UserIcon/UserIcon";
 const VersionTable = (props) => {
     const store = {
         versionStore: VersionStore
@@ -216,9 +217,12 @@ const VersionTable = (props) => {
             dataIndex: "master",
             key: "master",
             align: "left",
-            render: (text, record) => <>
-                {record?.master.nickname}
-            </>
+            render: (text, record) => (
+                <Space>
+                    <UserIcon name={record?.master.nickname} />
+                    {record?.master.nickname}
+                </Space>
+            )
         },
         {
             title: "创建时间",
@@ -246,20 +250,23 @@ const VersionTable = (props) => {
                                 <use xlinkHref="#icon-noview"></use>
                             </svg>
                     }
-                    <VersionAddmodal
-                        name="编辑版本"
-                        type="edit"
-                        id={record.id}
-                        // findVersion={findVersion}
-                        getUseList={getUseList}
-                        userList={userList}
-                        setActiveTabs={setActiveTabs}
-                        selectTabs={selectTabs}
-                        {...props}
-                    />
-                    {/*<PrivilegeProjectButton code={'ProjectVersionDelete'} domainId={projectId}  {...props}>*/}
+                    <PrivilegeProjectButton code={'version_update'} domainId={projectId}  {...props}>
+                        <VersionAddmodal
+                            name="编辑版本"
+                            type="edit"
+                            id={record.id}
+                            // findVersion={findVersion}
+                            getUseList={getUseList}
+                            userList={userList}
+                            setActiveTabs={setActiveTabs}
+                            selectTabs={selectTabs}
+                            {...props}
+                        />
+                    </PrivilegeProjectButton>
+
+                    <PrivilegeProjectButton code={'version_delete'} domainId={projectId}  {...props}>
                         <DeleteModal deleteFunction={deletVersionList} id={record.id} />
-                    {/*</PrivilegeProjectButton>*/}
+                    </PrivilegeProjectButton>
 
 
                 </Space>
@@ -374,7 +381,7 @@ const VersionTable = (props) => {
                         <Breadcumb
                             firstText="版本"
                         >
-                            {/*<PrivilegeProjectButton code={'ProjectVersionAdd'} domainId={projectId}  {...props}>*/}
+                            <PrivilegeProjectButton code={'version_add'} domainId={projectId}  {...props}>
                                 <VersionAddmodal
                                     name="添加版本"
                                     type="add"
@@ -386,7 +393,7 @@ const VersionTable = (props) => {
                                     selectTabs={selectTabs}
                                     {...props}
                                 />
-                            {/*</PrivilegeProjectButton>*/}
+                            </PrivilegeProjectButton>
 
                         </Breadcumb>
                         <div className="version-filter">

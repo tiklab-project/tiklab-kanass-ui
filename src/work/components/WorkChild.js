@@ -25,6 +25,7 @@ import workRelation from "./WorkRelation";
 import {DownOutlined, EnterOutlined} from "@ant-design/icons";
 import WorkAddModel from "./WorkAddModel";
 import workTypeList from "../../setting/workSeting/components/WorkTypeList";
+import {PrivilegeProjectButton} from "tiklab-privilege-ui";
 const WorkChild = (props) => {
     const store = {
         workChild: WorkChildStore,
@@ -294,14 +295,12 @@ const WorkChild = (props) => {
             dataIndex: ["workPriority", "name"],
             key: "workPriority",
             width: "10%",
-            render: (text, record) => <div className="work-info">
-                <div className="work-info-img">
-                    <ImgComponent
-                        src={record.workPriority?.iconUrl}
-                        alt=""
-                        className="img-icon-right"
-                    />
-                </div>
+            render: (text, record) => <div className="work-info" style={{alignItems: "center"}}>
+                <ImgComponent
+                    src={record.workPriority?.iconUrl}
+                    alt=""
+                    className="img-icon-right icon-10"
+                />
                 <div className="work-info-text">{text || "暂无设置"}</div>
             </div>
         },
@@ -367,36 +366,41 @@ const WorkChild = (props) => {
                     !selectChild && workInfo.workStatusCode !== "DONE" &&
                     <div className="child-top-botton">
                         <WorkPrivilegeComponent workId={workId} code="WorkChildrenAdd">
-                            <Button
-                                style={{
-                                    display: "flex",
-                                    textAlign: "center",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                }}
-                                type="text"
-                                onClick={() => { showAddChild(true); showSelectChild(false) }}>
-                                <svg className="img-icon-right" aria-hidden="true" style={{ cursor: "pointer", marginRight: "10px" }}>
-                                    <use xlinkHref="#icon-add2"></use>
-                                </svg>
-                                添加{type}
-                            </Button>
+                            <PrivilegeProjectButton domainId={projectId} code={'work_link_work'}>
+                                <Button
+                                    style={{
+                                        display: "flex",
+                                        textAlign: "center",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                    }}
+                                    type="text"
+                                    onClick={() => { showAddChild(true); showSelectChild(false) }}>
+                                    <svg className="img-icon-right" aria-hidden="true" style={{ cursor: "pointer", marginRight: "10px" }}>
+                                        <use xlinkHref="#icon-add2"></use>
+                                    </svg>
+                                    添加{type}
+                                </Button>
+                            </PrivilegeProjectButton>
+
                         </WorkPrivilegeComponent>
                         <WorkPrivilegeComponent workId={workId} code="WorkChildrenAdd">
-                            <Button
-                                style={{
-                                    display: "flex",
-                                    textAlign: "center",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                }}
-                                type="text"
-                                onClick={() => { showAddChild(false); showSelectChild(true) }}>
-                                <svg className="img-icon-right" aria-hidden="true" style={{ cursor: "pointer", marginRight: "10px" }}>
-                                    <use xlinkHref="#icon-add2"></use>
-                                </svg>
-                                关联{type}
-                            </Button>
+                            <PrivilegeProjectButton domainId={projectId} code={'work_link_work'}>
+                                <Button
+                                    style={{
+                                        display: "flex",
+                                        textAlign: "center",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                    }}
+                                    type="text"
+                                    onClick={() => { showAddChild(false); showSelectChild(true) }}>
+                                    <svg className="img-icon-right" aria-hidden="true" style={{ cursor: "pointer", marginRight: "10px" }}>
+                                        <use xlinkHref="#icon-add2"></use>
+                                    </svg>
+                                    关联{type}
+                                </Button>
+                            </PrivilegeProjectButton>
                         </WorkPrivilegeComponent>
 
                     </div>

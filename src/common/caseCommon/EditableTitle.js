@@ -19,7 +19,7 @@ const EditableTitle = ({
     onSave,
     level = 5,
     placeholder = '标题',
-    disabled = false,
+    disabled,
     style = {},
     className = '',
     ...restProps

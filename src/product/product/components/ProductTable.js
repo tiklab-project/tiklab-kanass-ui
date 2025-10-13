@@ -21,6 +21,7 @@ import { PrivilegeButton } from 'tiklab-privilege-ui';
 import CircleProgress from "../../../common/progress/CircleProgress";
 import ProductAdd from "./ProductAdd";
 import ProductOperateSelectModal from "./ProductOperateSelectModal";
+import UserIcon from "../../../common/UserIcon/UserIcon";
 
 const ProductTable = (props) => {
     const { productStore, } = props;
@@ -187,13 +188,13 @@ const ProductTable = (props) => {
             </span>
         },
         {
-            title: "项目状态",
+            title: "产品状态",
             dataIndex: "status",
             key: "status",
             align: "left",
-            width: "10%",
+            width: "15%",
             render: (text, record) => (
-                <div className={`project-status project-status${text === "1" ? "-todo" : text === "2" ? "-process" : "-done"}`}>{status[text]}</div>
+                <div className={`project-status project-status${text === "0" ? "-todo" : text === "1" ? "-process" : "-done"}`}>{status[text]}</div>
             )
         },
         {
@@ -215,7 +216,13 @@ const ProductTable = (props) => {
             dataIndex: ["master", "nickname"],
             key: "master",
             align: "left",
-            width: "15%"
+            width: "15%",
+            render: (text, record) => (
+                <Space>
+                    <UserIcon name={text} />
+                    {text}
+                </Space>
+            )
 
         },
         {

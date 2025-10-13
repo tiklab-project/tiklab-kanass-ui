@@ -65,10 +65,6 @@ const WorkModuleFilter = (props) => {
     const [parentId, setParentId] = useState(null);
     const [moduleSelect, setModuleSelect] = useState(null);
     const [inputValue, setInputValue] = useState("");
-    const [workNum, setWorkNum] = useState({
-        pending:0,
-        create:0
-    });
     const [workSystem, setWorkSystem] = useState([]);
     const [workCustom, setWorkCustom] = useState([]);
     const [showCustomWorkType, setShowCustomWorkType] = useState(false);
@@ -161,33 +157,42 @@ const WorkModuleFilter = (props) => {
     }
 
     useEffect(() => {
-        const param = {
-            projectId: projectId,
-            sprintId: sprintId,
-            versionId: versionId,
-            builderId: userId, // 创建人，负责人后端会处理
+        // 如果是项目集下，查询项目列表
+        if (projectSetId) {
+            findProjectList({projectSetId:  projectSetId}).then(res => {
+                const ids = res.data.map(item => item.id);
+                //获取系统内置事项类型
+                findWorkTypeDmList({ projectIds: ids, grouper: "system" }).then(res => {
+                    if (res.code === 0) {
+                        setWorkSystem(res.data)
+                    }
+                })
+
+                //获取自定义事项类型
+                findWorkTypeDmList({ projectIds: ids, grouper: "custom" }).then(res => {
+                    if (res.code === 0) {
+                        setWorkCustom(res.data)
+                    }
+                })
+            });
+        }else {
+            //获取系统内置事项类型
+            findWorkTypeDmList({ projectId: projectId, grouper: "system" }).then(res => {
+                if (res.code === 0) {
+                    setWorkSystem(res.data)
+                }
+            })
+
+            //获取自定义事项类型
+            findWorkTypeDmList({ projectId: projectId, grouper: "custom" }).then(res => {
+                if (res.code === 0) {
+                    setWorkCustom(res.data)
+                }
+            })
         }
-        findUserCreateAndTodoWorkNum(param).then(res =>{
-            setWorkNum(res.data)
-        })
-    }, [workList]);
 
-    useEffect(() => {
-        //获取系统内置事项类型
-        findWorkTypeDmList({ projectId: projectId, grouper: "system" }).then(res => {
-            if (res.code === 0) {
-                setWorkSystem(res.data)
-            }
-        })
-
-        //获取自定义事项类型
-        findWorkTypeDmList({ projectId: projectId, grouper: "custom" }).then(res => {
-            if (res.code === 0) {
-                setWorkCustom(res.data)
-            }
-        })
         return;
-    }, [projectId])
+    }, [projectId, projectSetId])
 
     /**
      * 选择自定义事项类型

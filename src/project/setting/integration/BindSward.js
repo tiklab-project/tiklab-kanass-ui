@@ -2,10 +2,12 @@ import React, {useEffect, useState} from "react";
 import {Button, Col, Empty, message, Row, Space, Table} from "antd";
 import DeleteModal from "../../../common/deleteModal/deleteModal";
 import {applyJump} from "tiklab-core-ui";
-import WikiRepositoryAdd from "../../wiki/repository/components/WikiRepositoryAdd";
+import WikiRepositoryRelationAdd from "../../wiki/repository/components/WikiRepositoryRelationAdd";
 import {observer,Provider} from "mobx-react";
 import WikiRepositoryStore from "../../wiki/repository/store/WikiRepositoryStore";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
+import WikiRepositoryAdd from "../../wiki/repository/components/WikiRepositoryAdd";
+import {PrivilegeProjectButton} from "tiklab-privilege-ui";
 
 const BindSward = (props) => {
     const {activeKey} = props
@@ -19,7 +21,8 @@ const BindSward = (props) => {
 
     const projectId = props.match.params.id;
     const [projectWikiList, setProjectWikiList] = useState()
-    const [wikiAddvisible,setWikiAddvisible] = useState(false);
+    const [wikiRelationVisible,setWikiRelationVisible] = useState(false);
+    const [wikiAddVisible,setWikiAddVisible] = useState(false);
 
     // 列表的列
     const columns = [
@@ -112,12 +115,23 @@ const BindSward = (props) => {
                     <div className={"project-set-integration"}>
                         <Breadcumb firstText="服务集成" secondText="sward">
                             {
-                                <Button
-                                    type="primary"
-                                    onClick={() => setWikiAddvisible(true)}
-                                >
-                                    关联知识库
-                                </Button>
+                                <Space>
+                                    <PrivilegeProjectButton code={'wiki_add'} domainId={projectId}  {...props}>
+                                        <Button
+                                            onClick={() => setWikiAddVisible(true)}
+                                        >
+                                            新增知识库
+                                        </Button>
+                                    </PrivilegeProjectButton>
+                                    <PrivilegeProjectButton code={'wiki_add'} domainId={projectId}  {...props}>
+                                        <Button
+                                            type="primary"
+                                            onClick={() => setWikiRelationVisible(true)}
+                                        >
+                                            关联知识库
+                                        </Button>
+                                    </PrivilegeProjectButton>
+                                </Space>
                             }
                         </Breadcumb>
                         <Table
@@ -134,10 +148,16 @@ const BindSward = (props) => {
                                 />
                             }}
                         />
+                        <WikiRepositoryRelationAdd
+                            projectId={projectId}
+                            wikiAddvisible={wikiRelationVisible}
+                            setWikiAddvisible={setWikiRelationVisible}
+                            setProjectWikiList={setProjectWikiList}
+                        />
                         <WikiRepositoryAdd
                             projectId={projectId}
-                            wikiAddvisible={wikiAddvisible}
-                            setWikiAddvisible={setWikiAddvisible}
+                            wikiAddvisible={wikiAddVisible}
+                            setWikiAddvisible={setWikiAddVisible}
                             setProjectWikiList={setProjectWikiList}
                         />
                     </div>

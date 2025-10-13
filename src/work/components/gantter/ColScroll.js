@@ -94,7 +94,7 @@ const CowScroll =(props)=> {
 
         const maxGanttScroll = ganttCoreDomHeight - ganttOuterDomHeight;
         const timerSilder = (timerCoreDomHeight - timerOuterDomHeight) * value / scrollHeight;
-        let ganttSilder = (ganttCoreDomHeight - ganttOuterDomHeight) * value / scrollHeight;// 因为列表底部增加了20px的加载更多div，所以gantt部分也增加20px
+        let ganttSilder = (ganttCoreDomHeight - ganttOuterDomHeight) * value / scrollHeight;
 
         // if (ganttSilder > maxGanttScroll){
         //     ganttSilder = maxGanttScroll;

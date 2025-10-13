@@ -92,7 +92,7 @@ const PlanDetailMenu = (props) => {
                         selected={currentMenu}
                     />
 
-                    <HideDelete deleteFn={deleteFn}/>
+                    <HideDelete privilegeCode={"test_plan_delete"} projectId={projectId} deleteFn={deleteFn}/>
                 </div>
 
                 <div >

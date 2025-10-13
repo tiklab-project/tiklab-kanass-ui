@@ -34,6 +34,7 @@ const ProductOperateSelectModal = (props) => {
         form.setFieldsValue({
             name: productInfo.name,
             remark: productInfo.remark,
+            status: productInfo.status,
             master: productInfo.master.id,
             productLimits: productInfo.productLimits,
             startTime: [moment(productInfo.startTime, dateFormat), moment(productInfo.endTime, dateFormat)]
@@ -44,6 +45,7 @@ const ProductOperateSelectModal = (props) => {
         form.setFieldsValue({
             name: productInfo.name,
             remark: productInfo.remark,
+            status: productInfo.status,
             master: productInfo.master.id,
             productLimits: productInfo.productLimits,
             startTime: [moment(productInfo.startTime, dateFormat), moment(productInfo.endTime, dateFormat)]

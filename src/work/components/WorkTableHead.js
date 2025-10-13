@@ -115,20 +115,36 @@ const WorkTableHead = (props) => {
 
 
                         {
-                            !path.includes("/planDetail") &&
-                            <WorkCreatDropdown workTypeList={workTypeList}  {...props} />
+                            (path.includes("/projectSet") || path.includes("/product")) ?
+                                <WorkCreatDropdown workTypeList={workTypeList}  {...props} />
+                                :
+                                !path.includes("/planDetail") &&
+                                <PrivilegeProjectButton code={'work_add'} domainId={projectId}  {...props}>
+                                    <WorkCreatDropdown workTypeList={workTypeList}  {...props} />
+                                </PrivilegeProjectButton>
+
+                        }
+                        {/*{*/}
+                        {/*    !path.includes("/planDetail") &&*/}
+                        {/*    <PrivilegeProjectButton code={'work_add'} domainId={projectId}  {...props}>*/}
+                        {/*        <WorkCreatDropdown workTypeList={workTypeList}  {...props} />*/}
+                        {/*    </PrivilegeProjectButton>*/}
+                        {/*}*/}
+                        {
+                            path.includes("/planDetail") &&
+                            // <PrivilegeProjectButton code={'work_add'} domainId={projectId}  {...props}>
+                                <Button type={"primary"} onClick={() => handleProductPlanAddWork(workTypeList, productPlanId)}>
+                                    创建{workTypeCode === "demand" ? "需求" : "缺陷"}
+                                </Button>
+                            // </PrivilegeProjectButton>
                         }
                         {
                             path.includes("/planDetail") &&
-                            <Button type={"primary"} onClick={() => handleProductPlanAddWork(workTypeList, productPlanId)}>
-                                创建{workTypeCode === "demand" ? "需求" : "缺陷"}
-                            </Button>
-                        }
-                        {
-                            path.includes("/planDetail") &&
-                            <Button type={"primary"} onClick={() => handleProductPlanLinkWork(workTypeList, productPlanId)}>
-                                关联{workTypeCode === "demand" ? "需求" : "缺陷"}
-                            </Button>
+                            // <PrivilegeProjectButton code={'work_add'} domainId={projectId}  {...props}>
+                                <Button type={"primary"} onClick={() => handleProductPlanLinkWork(workTypeList, productPlanId)}>
+                                    关联{workTypeCode === "demand" ? "需求" : "缺陷"}
+                                </Button>
+                            // </PrivilegeProjectButton>
                         }
                         <Dropdown trigger="click" overlay={menuPlugin} className="right-item">
                             <Button>

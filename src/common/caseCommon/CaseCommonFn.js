@@ -2,6 +2,7 @@ import React from "react";
 import {Tag} from "antd";
 import {ApiOutlined, AppstoreOutlined, LaptopOutlined, TabletOutlined} from "@ant-design/icons";
 import IconCommon from "./IconCommon";
+import ImgComponent from "../imgComponent/ImgComponent";
 
 /**
  * 用例状态
@@ -35,28 +36,28 @@ export const showCasePriorityLevel = (level) => {
     switch (level){
         case 0:
             return <div className={"display-flex-gap"}>
-                <IconCommon
-                    className={"icon-s"}
-                    icon={"icon_level1"}
-                    style={{cursor: "pointer"}}
+                <ImgComponent
+                    src={"proivilege1.png"}
+                    alt=""
+                    className="icon-10"
                 />
                 <div>低</div>
             </div>
         case 1:
             return <div className={"display-flex-gap"}>
-                <IconCommon
-                    className={"icon-s"}
-                    icon={"icon_level2"}
-                    style={{cursor: "pointer"}}
+                <ImgComponent
+                    src={"proivilege3.png"}
+                    alt=""
+                    className="icon-10"
                 />
                 <div>中</div>
             </div>
         case 2:
             return <div className={"display-flex-gap"}>
-                <IconCommon
-                    className={"icon-s"}
-                    icon={"icon_level3"}
-                    style={{cursor: "pointer"}}
+                <ImgComponent
+                    src={"proivilege5.png"}
+                    alt=""
+                    className="icon-10"
                 />
                 <div>高</div>
             </div>

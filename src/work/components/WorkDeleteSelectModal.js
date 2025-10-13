@@ -10,14 +10,18 @@ import { inject, observer } from "mobx-react";
 import { Dropdown, Menu, Modal } from "antd";
 import React from "react";
 import "./WorkDeleteSelectModal.scss"
+import {PrivilegeButton, PrivilegeProjectButton} from "tiklab-privilege-ui";
+import {withRouter} from "react-router";
 const WorkDeleteSelectModal = (props) => {
     const { getPopupContainer, delectCurrentWorkItem, haveChildren, workId, setWorkId, workStore } = props;
     const {workList} = workStore;
+    const projectId = props.match.params.id ? props.match.params.id : null;
 
     /**
      * 选择删除事项
      */
     const selectAction = (value) => {
+        console.log("点击删除事项了")
         setWorkId(workId)
         haveChildren({ id: workId }).then(res => {
             console.log("查询下级事项",workList)
@@ -28,7 +32,7 @@ const WorkDeleteSelectModal = (props) => {
                 } else {
                     buttonText = "删除"
                 }
-                if(value.key === "delete"){
+                if(value === "delete"){
                     Modal.confirm({
                         title: '删除事项?',
                         content: "确定删除事项",
@@ -46,11 +50,16 @@ const WorkDeleteSelectModal = (props) => {
        
     }
     const moreMenu = () => {
-        return <Menu onClick={(value) => selectAction(value)}>
-            <Menu.Item key="delete">
-                <div>删除</div>
-            </Menu.Item>
-        </Menu>
+        return <div className="work-dropdown-more">
+            <PrivilegeProjectButton code={'work_delete'} domainId={projectId}  {...props}>
+                <div onClick={() => selectAction("delete")} className="dropdown-more-item">
+                    <svg style={{marginRight:"5px"}} className="icon-16" aria-hidden="true">
+                        <use xlinkHref="#icon-delete"></use>
+                    </svg>
+                    <span>删除</span>
+                </div>
+            </PrivilegeProjectButton>
+        </div>
     };
     return (<>
         <Dropdown
@@ -70,4 +79,4 @@ const WorkDeleteSelectModal = (props) => {
     )
 }
 
-export default inject("workStore")(observer(WorkDeleteSelectModal));
+export default withRouter(inject("workStore")(observer(WorkDeleteSelectModal)));

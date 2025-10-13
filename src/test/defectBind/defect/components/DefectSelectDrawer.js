@@ -9,6 +9,7 @@ import {debounce} from "../../../../common/caseCommon/CaseCommonFn";
 import workItemStore from "../../workItem/store/WorkItemStore";
 import {createWorkTestCaseFn} from "../../../testcase/components/testCaseTableFn";
 import Button from "../../../../common/button/Button";
+import {PrivilegeProjectButton} from "tiklab-privilege-ui";
 
 const {createWorkItemBind,findWorkItemBindPage} = workItemBindStore;
 
@@ -143,17 +144,21 @@ const DefectSelectDrawer = (props) =>{
         <>
             {
                 !inDetail ?
-                    <Button
-                        buttonText={"关联缺陷"}
-                        onClick={showModal}
-                    />
+                    <PrivilegeProjectButton code={'test_plan_update'} domainId={projectId}  {...props}>
+                        <Button
+                            buttonText={"关联缺陷"}
+                            onClick={showModal}
+                        />
+                    </PrivilegeProjectButton>
                     :
-                    <div onClick={showModal} style={{cursor:"pointer", display:"flex", alignItems:"center"}}>
-                        <svg className="icon-16" aria-hidden="true">
-                            <use xlinkHref={`#icon-link`}></use>
-                        </svg>
-                        <span>关联缺陷</span>
-                    </div>
+                    <PrivilegeProjectButton code={'test_case_link_defect'} domainId={projectId}  {...props}>
+                        <div onClick={showModal} style={{cursor:"pointer", display:"flex", alignItems:"center"}}>
+                            <svg className="icon-16" aria-hidden="true">
+                                <use xlinkHref={`#icon-link`}></use>
+                            </svg>
+                            <span>关联缺陷</span>
+                        </div>
+                    </PrivilegeProjectButton>
             }
             <Drawer
                 title="关联缺陷"

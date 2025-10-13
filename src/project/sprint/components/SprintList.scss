@@ -88,24 +88,28 @@
                 color: var(--tiklab-blue);
             }
             .sprint-status {
-                padding: 2px 3px;
+                padding: 0;
                 background: #e2e1e4;
                 border-radius: 4px;
                 font-size: 10px;
-                width: fit-content;
                 color: #2b333e;
+                display: flex;
+                justify-content: center;
+                width: 50px;
+                height: 20px;
+                line-height: 20px;
             }
             .sprint-status-todo {
                 background: #e2e1e4;
                 color: #2b333e;
             }
             .sprint-status-process{
-                background: #e2e1e4;
-                color: #5e5314;
+                background: #2a9feb;
+                color: #fff;
             }
             .sprint-status-done {
-                background: #e2e1e4;
-                color: #5e5314;
+                background: #5fcf9e;
+                color: #fff;
             }
             .ant-pagination-simple .ant-pagination-simple-pager input {
                 user-select: none;

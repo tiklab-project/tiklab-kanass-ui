@@ -262,7 +262,7 @@ const FunctionStepAddList = (props) => {
                                     startEdit(item.id);
                                 }}
                             />
-                            <HideDelete deleteFn={()=>deleteFn(item)}/>
+                            <HideDelete privilegeCode={'test_case_update'} projectId={projectId} deleteFn={()=>deleteFn(item)}/>
                         </Space>
                     )}
                 </Col>

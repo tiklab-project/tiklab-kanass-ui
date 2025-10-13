@@ -95,7 +95,7 @@ const ProductPlanLayout = (props) => {
     }
 
     const goBack = () => {
-        props.history.push(`/product/${productId}/productPlan`)
+        props.history.push(`/product/${productId}/plan`)
     }
 
     return (<Provider {...store}>

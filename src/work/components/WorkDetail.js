@@ -234,7 +234,7 @@ const WorkDetail = (props) => {
             const id = props.match.params.workId;
             setWorkId(id)
             if (id) {
-                // findPriority()
+                findPriority()
                 getWorkDetail(id)
     
             }

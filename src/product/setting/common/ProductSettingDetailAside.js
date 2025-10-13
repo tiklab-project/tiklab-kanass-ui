@@ -33,7 +33,7 @@ const ProductSettingDetailAside = (props) => {
     useEffect(() => {
         // 初次进入激活导航菜单
         setSelectKey(props.location.pathname)
-        console.log("进入项目集设置")
+        console.log("进入产品设置")
         console.log(prorouter)
         return
     }, [productId])
@@ -63,7 +63,7 @@ const ProductSettingDetailAside = (props) => {
                         {/* <svg className="svg-icon" aria-hidden="true">
                             <use xlinkHref="#icon-program"></use>
                         </svg> */}
-                        项目集设置
+                        产品设置
                     </div>
                     {/*<PrivilegeProjectButton code={item.purviewCode} disabled={"hidden"} domainId={productId}  {...props}>*/}
                     <ul className="product-menu">

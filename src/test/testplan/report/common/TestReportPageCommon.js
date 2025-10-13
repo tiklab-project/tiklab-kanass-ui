@@ -8,6 +8,7 @@ import ListIcon from "../../../../common/caseCommon/ListIcon/ListIcon";
 import testReportStore from "../store/testReportStore";
 import {SearchOutlined} from "@ant-design/icons";
 import HideDelete from "../../../../common/caseCommon/hideDelete/HideDelete";
+import {PrivilegeProjectButton} from "tiklab-privilege-ui";
 
 
 const TestReportPage = (props) => {
@@ -37,7 +38,7 @@ const TestReportPage = (props) => {
                         text={text}
                         isMar={false}
                         colors={index + 1 % 7}
-                        className={`icon-l`}
+                        className={`icon-xl`}
                     />
                     <span className={"link-text text-ellipsis"} onClick={() => toDetailFn(record)}>{text}</span>
                 </div>
@@ -59,7 +60,7 @@ const TestReportPage = (props) => {
             key: "createUser",
             width: "15%",
             ellipsis: true,
-            render: (text) => text?.name || '-'
+            render: (text) => text?.nickname || '-'
         },
         {
             title: '创建时间',
@@ -68,13 +69,13 @@ const TestReportPage = (props) => {
             width: "15%",
             ellipsis: true
         },
-        {
-            title: '描述',
-            dataIndex: "desc",
-            key: "desc",
-            width: "17%",
-            ellipsis: true
-        },
+        // {
+        //     title: '描述',
+        //     dataIndex: "desc",
+        //     key: "desc",
+        //     width: "17%",
+        //     ellipsis: true
+        // },
         {
             title: '操作',
             dataIndex: "action",
@@ -83,15 +84,20 @@ const TestReportPage = (props) => {
             render: (text, record) => (
                 <div className={"display-flex-gap"}>
                     {
-                        TestReportEdit&&<TestReportEdit
-                            name={`编辑`}
-                            reportId={record.id}
-                            type={"edit"}
-                            findPage={findPage}
-                        />
+                        TestReportEdit&&
+                        <PrivilegeProjectButton code={'test_report_update'} domainId={projectId}  {...props}>
+                            <TestReportEdit
+                                name={`编辑`}
+                                reportId={record.id}
+                                type={"edit"}
+                                findPage={findPage}
+                            />
+                        </PrivilegeProjectButton>
                     }
 
                     <HideDelete
+                        projectId={projectId}
+                        privilegeCode={"test_report_delete"}
                         deleteFn={() =>showDeleteConfirm(record)}
                     />
                 </div>
@@ -166,17 +172,8 @@ const TestReportPage = (props) => {
 
     // 删除确认
     const showDeleteConfirm = (record) => {
-        Modal.confirm({
-            title: '确认删除',
-            content: '确定要删除该报告吗？',
-            okText: '确认',
-            okType: 'danger',
-            cancelText: '取消',
-            onOk() {
-                deleteTestReport(record.id).then(() => {
-                    findPage();
-                });
-            },
+        deleteTestReport(record.id).then(() => {
+            findPage();
         });
     };
 
@@ -207,12 +204,14 @@ const TestReportPage = (props) => {
                 />
 
                 {
-                    TestReportEdit  &&<TestReportEdit
-                        name={`添加报告`}
-                        findPage={findPage}
-                        type={"add"}
-
-                    />
+                    TestReportEdit  &&
+                    <PrivilegeProjectButton code={'test_report_update'} domainId={projectId}  {...props}>
+                        <TestReportEdit
+                            name={`添加报告`}
+                            findPage={findPage}
+                            type={"add"}
+                        />
+                    </PrivilegeProjectButton>
                 }
             </div>
 
@@ -220,6 +219,7 @@ const TestReportPage = (props) => {
                 <Table
                     className="tablelist"
                     columns={columns}
+                    size="default"
                     dataSource={testReportList}
                     rowKey={record => record.id}
                     pagination={false}

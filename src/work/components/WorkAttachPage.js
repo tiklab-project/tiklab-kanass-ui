@@ -85,10 +85,16 @@ const WorkAttachPage = (props) => {
             key: 'action',
             width: "10%",
             render: (text, record) => <Space size="middle">
-                <DeleteModal deleteFunction={deleteWorkAttach} id={record.id} getPopupContainer={formRef.current} />
+                <DeleteModal deleteFunction={deleteAttach} id={record.id} getPopupContainer={formRef.current} />
             </Space>
         }
     ]
+
+    const deleteAttach = (id) => {
+        deleteWorkAttach(id).then(() => {
+            findWorkAttachList(workId)
+        })
+    }
 
     return(
         <Fragment>

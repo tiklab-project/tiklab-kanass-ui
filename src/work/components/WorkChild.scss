@@ -65,13 +65,13 @@
     }
 
     .work-status-process {
-        background: #e2e1e4;
-        color: #5e5314;
+        background: #2a9feb;
+        color: #fff;
     }
 
     .work-status-done {
-        background: #e2e1e4;
-        color: #5e5314;
+        background: #5fcf9e;
+        color: #fff;
     }
 
     .child-top-title {
@@ -93,7 +93,7 @@
         background: #fff;
         border-radius: 4px;
         position: relative;
-        height: calc(100% - 30px);
+        //height: calc(100% - 30px);
         .ant-table {
             overflow: auto;
             // max-height: calc(100% - 100px);

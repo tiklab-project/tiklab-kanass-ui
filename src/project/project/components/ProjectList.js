@@ -300,7 +300,7 @@ const ProjectList = (props) => {
             dataIndex: "createTime",
             key: "createTime",
             align: "left",
-            width: "15%",
+            width: "10%",
             render: (text, record) => (
                 <>
                     {text}

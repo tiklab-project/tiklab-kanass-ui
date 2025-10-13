@@ -21,6 +21,7 @@ import { PrivilegeButton } from 'tiklab-privilege-ui';
 import CircleProgress from "../../../common/progress/CircleProgress";
 import ProjectSetAdd from "./ProjectSetAdd";
 import ProjectSetOperateSelectModal from "./ProjectSetOperateSelectModal";
+import UserIcon from "../../../common/UserIcon/UserIcon";
 
 const ProjectSetTable = (props) => {
     const { projectSetStore, } = props;
@@ -189,13 +190,13 @@ const ProjectSetTable = (props) => {
             </span>
         },
         {
-            title: "项目状态",
+            title: "项目集状态",
             dataIndex: "status",
             key: "status",
             align: "left",
-            width: "10%",
+            width: "15%",
             render: (text, record) => (
-                <div className={`project-status project-status${text === "1" ? "-todo" : text === "2" ? "-process" : "-done"}`}>{status[text]}</div>
+                <div className={`project-status project-status${text === "0" ? "-todo" : text === "1" ? "-process" : "-done"}`}>{status[text]}</div>
             )
         },
         {
@@ -217,7 +218,13 @@ const ProjectSetTable = (props) => {
             dataIndex: ["master", "nickname"],
             key: "master",
             align: "left",
-            width: "15%"
+            width: "15%",
+            render: (text, record) => (
+                <Space>
+                    <UserIcon name={text} />
+                    {text}
+                </Space>
+            )
 
         },
         {
@@ -225,7 +232,7 @@ const ProjectSetTable = (props) => {
             dataIndex: "creatTime",
             key: "creatTime",
             align: "left",
-            width: "25%",
+            width: "20%",
             render: (text, record) => <>
                 {record?.creatTime?.substring(0, 10)}
             </>

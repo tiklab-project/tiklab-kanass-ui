@@ -19,11 +19,14 @@ import FunctionDetailBottom from "../FunctionDetailBottom";
 import UserIcon from "../../../../../common/UserIcon/UserIcon";
 import FunctionInstanceList from "../FunctionInstanceList";
 import {showCreateUser} from "../../../../testcase/components/testCaseTableFn";
+import ImgComponent from "../../../../../common/imgComponent/ImgComponent";
+import {PrivilegeProjectButton} from "tiklab-privilege-ui";
+import { getUser } from "tiklab-core-ui";
 
 const FunctionContentDrawerView = (props) => {
     const {isModalVisible, setIsModalVisible, caseId, inTestCase, detailWidth, testPlanId,} = props;
     const {deleteTestCase, updateTestCase} = TestcaseStore
-    const {testCaseInfo,funcUnitInfo,updateFuncUnit,findFuncUnit} = FuncUnitStore
+    const {testCaseInfo,funcUnitInfo,updateFuncUnit,findFuncUnit, findFunctionDmCodeList, permissionCodeList} = FuncUnitStore
     const {findCategoryListTreeTable,categoryTableList} = CategoryStore;
     const functionId = caseId;
     const projectId = localStorage.getItem("projectId")
@@ -197,6 +200,11 @@ const FunctionContentDrawerView = (props) => {
 
     // 初始化数据
     useEffect(() => {
+        const data = {
+            domainId:projectId,
+            userId:getUser().userId
+        }
+        findFunctionDmCodeList(data)
         loadFuncUnitData();
     }, [functionId]);
 
@@ -256,6 +264,15 @@ const FunctionContentDrawerView = (props) => {
         loadFuncUnitData();
     }
 
+    /**
+     * 查找当前用户是否有当前的功能权限
+     * @param {功能编码} code
+     * @returns  true=有权限  false=没权限
+     */
+    const isPermissionCode = (code) => {
+        return permissionCodeList.includes(code);
+    }
+
     return (
         <Provider {...store}>
             <Drawer
@@ -281,13 +298,16 @@ const FunctionContentDrawerView = (props) => {
                                         onSave={handleTitleSave}
                                         level={5}
                                         placeholder="请输入用例名称"
+                                        disabled={!isPermissionCode("test_case_update")}
                                     />
                                     <div className={"case-create-info"}>
                                         <span>{testCaseInfo?.createUser.nickname} 创建于 {testCaseInfo?.createTime}</span>
                                     </div>
                                 </div>
                                 <Space>
-                                    {deleteFn && <HideDelete deleteFn={deleteFn} />}
+                                    {deleteFn &&
+                                        <HideDelete projectId={projectId} privilegeCode={'test_case_delete'} deleteFn={deleteFn} />
+                                    }
                                 </Space>
                             </div>
                             <div className="case-detail-center">
@@ -297,6 +317,7 @@ const FunctionContentDrawerView = (props) => {
                                         className="case-detail-textarea"
                                         value={preconditionValue}
                                         onChange={handlePreconditionChange}
+                                        disabled={!isPermissionCode("test_case_update")}
                                     />
                                     {preconditionEditing && (
                                         <div style={{ marginTop: 8 }}>
@@ -306,7 +327,7 @@ const FunctionContentDrawerView = (props) => {
                                     )}
                                 </div>
                                 <div style={{ marginBottom: "16px" }}>
-                                    <FuncUnitStepTable functionId={functionId} {...props} />
+                                    <FuncUnitStepTable permissionCodeList={permissionCodeList} functionId={functionId} {...props} />
                                 </div>
                             </div>
                             <div>
@@ -354,6 +375,7 @@ const FunctionContentDrawerView = (props) => {
                                                 caseInfo={funcUnitInfo}
                                                 updateFn={updateCaseDemand}
                                                 demandInfo={testCaseInfo?.demand}
+                                                permissionCodeList={permissionCodeList}
                                             />
                                         </Form.Item>
 
@@ -367,6 +389,7 @@ const FunctionContentDrawerView = (props) => {
                                                         {showCreateUser(null)}
                                                     </div>
                                                 }
+                                                disabled={!isPermissionCode("test_case_update")}
                                                 getPopupContainer={() => detailFormRef.current}
                                             >
                                                 {
@@ -389,6 +412,7 @@ const FunctionContentDrawerView = (props) => {
                                                 className={"func-select"}
                                                 bordered={false}
                                                 style={{width: '100%'}}
+                                                disabled={!isPermissionCode("test_case_update")}
                                                 getPopupContainer={() => detailFormRef.current}
                                                 dropdownStyle={{
                                                     maxHeight: 400,
@@ -420,34 +444,35 @@ const FunctionContentDrawerView = (props) => {
                                                 bordered={false}
                                                 placeholder={"未设置"}
                                                 style={{flex: 1}}
+                                                disabled={!isPermissionCode("test_case_update")}
                                                 getPopupContainer={() => detailFormRef.current}
                                             >
                                                 <Option value={0}>
                                                     <div className={"display-flex-gap"}>
-                                                        <IconCommon
-                                                            className={"icon-s"}
-                                                            icon={"icon_level1"}
-                                                            style={{cursor: "pointer"}}
+                                                        <ImgComponent
+                                                            src={"proivilege1.png"}
+                                                            alt=""
+                                                            className="icon-10"
                                                         />
                                                         <div>低</div>
                                                     </div>
                                                 </Option>
                                                 <Option value={1}>
                                                     <div className={"display-flex-gap"}>
-                                                        <IconCommon
-                                                            className={"icon-s"}
-                                                            icon={"icon_level2"}
-                                                            style={{cursor: "pointer"}}
+                                                        <ImgComponent
+                                                            src={"proivilege3.png"}
+                                                            alt=""
+                                                            className="icon-10"
                                                         />
                                                         <div>中</div>
                                                     </div>
                                                 </Option>
                                                 <Option value={2}>
                                                     <div className={"display-flex-gap"}>
-                                                        <IconCommon
-                                                            className={"icon-s"}
-                                                            icon={"icon_level3"}
-                                                            style={{cursor: "pointer"}}
+                                                        <ImgComponent
+                                                            src={"proivilege5.png"}
+                                                            alt=""
+                                                            className="icon-10"
                                                         />
                                                         <div>高</div>
                                                     </div>

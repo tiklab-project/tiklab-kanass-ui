@@ -91,7 +91,7 @@ export const SwitchCaseTypeView = ({record,testCaseRecent,projectId}) =>{
 
 
 
-export  const ShowDeleteView = ({record,deleteFn}) =>{
+export  const ShowDeleteView = ({record,deleteFn, projectId, privilegeCode}) =>{
     switch (record.caseType||record.type) {
         case CASE_TYPE.FUNCTION:
         case CASE_TYPE.API_UNIT:
@@ -100,7 +100,7 @@ export  const ShowDeleteView = ({record,deleteFn}) =>{
         case CASE_TYPE.TEST_PLAN:
         case CASE_TYPE.WEB_SCENE:
         case CASE_TYPE.APP_SCENE:
-            return  <HideDelete deleteFn={() =>deleteFn(record)}/>
+            return  <HideDelete privilegeCode={privilegeCode} projectId={projectId} deleteFn={() =>deleteFn(record)}/>
         default:
             return null
     }

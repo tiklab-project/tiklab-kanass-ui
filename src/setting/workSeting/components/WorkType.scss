@@ -9,14 +9,16 @@
             width: 30px;
             height: 30px;
         }
+        .icon-select {
+            border: 2px solid #b4fab7 !important;
+        }
         .work-type-icon {
             box-sizing: content-box;
+            border: 2px solid transparent;
         }
     }
    
-    .icon-select {
-        border: 2px solid #b4fab7;
-    }
+
     .form-add {
         height: 30px;
         line-height: 30px;

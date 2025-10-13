@@ -69,15 +69,17 @@ const MilestoneList = (props) => {
             width: "100px",
             render: (text, record) => (
                 <Space size="middle">
-                    <MilestoneAddEditModal
-                        name="编辑"
-                        type="edit"
-                        id={record.id}
-                        {...props}
-                    />
-                    {/*<PrivilegeProjectButton code={'MilestoneDele'} disabled={"hidden"} domainId={projectId}  {...props}>*/}
+                    <PrivilegeProjectButton code={'milestone_update'} domainId={projectId}  {...props}>
+                        <MilestoneAddEditModal
+                            name="编辑"
+                            type="edit"
+                            id={record.id}
+                            {...props}
+                        />
+                    </PrivilegeProjectButton>
+                    <PrivilegeProjectButton code={'milestone_delete'} domainId={projectId}  {...props}>
                         <DeleteModal deleteFunction={deleMilestone} id={record.id} />
-                    {/*</PrivilegeProjectButton>*/}
+                    </PrivilegeProjectButton>
 
                 </Space>
             ),
@@ -128,12 +130,15 @@ const MilestoneList = (props) => {
                             firstText="项目概况"
                             secondText="里程碑"
                         >
-                            <MilestoneAddEditModal
-                                name="添加里程碑"
-                                type="add"
-                                id="0"
-                                {...props}
-                            />
+                            <PrivilegeProjectButton code={'milestone_add'} domainId={projectId}  {...props}>
+                                <MilestoneAddEditModal
+                                    name="添加里程碑"
+                                    type="add"
+                                    id="0"
+                                    {...props}
+                                />
+                            </PrivilegeProjectButton>
+
                         </Breadcumb>
                         <MilestoneTimeline milestonelist={milestonelist} />
                         <div className="project-milestone-contant">

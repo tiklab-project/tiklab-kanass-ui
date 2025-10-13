@@ -2,22 +2,29 @@
  * @description：测试计划中关联用例
  * @date: 2021-08-20 17:00
  */
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import { observer, inject } from "mobx-react";
-import {Modal, Table, Row, Col, Input, Empty} from 'antd';
-import {showCaseTypeTable, showCaseTypeView, showStatus} from "../../../../common/caseCommon/CaseCommonFn";
+import {Modal, Table, Row, Col, Input, Empty, Select, TreeSelect} from 'antd';
+import {
+    showCasePriorityLevel,
+    showCaseTypeTable,
+    showCaseTypeView,
+    showStatus
+} from "../../../../common/caseCommon/CaseCommonFn";
 import testPlanDetailStore from "../store/testPlanDetailStore";
 import PaginationCommon from "../../../../common/caseCommon/pagination/Page";
-import IconBtn from "../../../../common/caseCommon/iconBtn/IconBtn";
-import {debounce} from "../../../../common/caseCommon/CaseCommonFn";
-import {SearchOutlined} from "@ant-design/icons";
 import Button from "../../../../common/button/Button";
+import CategoryStore from "../../../category/store/CategoryStore";
+import InputSearch from "../../../../common/input/InputSearch";
+import ImgComponent from "../../../../common/imgComponent/ImgComponent";
+import "./testPlanBindCaseModal.scss"
 
 // 添加与编辑
 const TestPlanBindCaseModal = (props) => {
     const {testPlanId,findBindCasePage} = props;
     const {planBindCase} = testPlanDetailStore;
     const {findTestCasePage,testCaseList} = testPlanDetailStore;
+    const {findCategoryListTreeTable,categoryTableList} = CategoryStore;
 
     const columns = [
         {
@@ -40,13 +47,13 @@ const TestPlanBindCaseModal = (props) => {
             width:"12%",
             render: (text) =>(<div className={"case-table-case-type"}>{showCaseTypeTable(text)}</div>)
         },
-        // {
-        //     title: `状态`,
-        //     dataIndex: "status",
-        //     key: "status",
-        //     width:"12%",
-        //     render: (text)=><div className={"case-table-status"}>{showStatus(text)}</div>
-        // },
+        {
+            title: `优先级`,
+            dataIndex: "priorityLevel",
+            key: "priorityLevel",
+            width:"12%",
+            render: (text)=><div>{showCasePriorityLevel(text)}</div>
+        },
         {
             title: `模块`,
             dataIndex: ["module","moduleName"],
@@ -69,9 +76,11 @@ const TestPlanBindCaseModal = (props) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+    const bindTopRef = useRef(null);
 
     const showModal = () => {
         findPage()
+        findCategoryListTreeTable({projectId: projectId})
         setIsModalOpen(true);
     };
 
@@ -118,6 +127,16 @@ const TestPlanBindCaseModal = (props) => {
 
     const onSearch = (e) =>{
         let param = {name:e.target.value}
+        findPage(param)
+    }
+
+    const onModuleSearch = (id) =>{
+        let param = {moduleId:id}
+        findPage(param)
+    }
+
+    const onPrioritySearch = (id) =>{
+        let param = {priorityLevel:id}
         findPage(param)
     }
 
@@ -170,28 +189,110 @@ const TestPlanBindCaseModal = (props) => {
                     overflow: 'auto',
                     padding: '16px'
                 }}
-                style={{
-                    top: '50px'
-                }}
             >
-                <div style={{padding:"0 0 15px"}}>
-                    <Row gutter={16} align={"middle"}>
-                        <Col className="gutter-row" span={6}>
-                            <Input
-                                placeholder={`搜索名称`}
-                                onPressEnter={onSearch}
-                                className='demand_project_search'
-                                prefix={<SearchOutlined />}
-                                onChange={debounce(onSearch,500) }
+                <div style={{padding:"0 15px 15px"}}>
+                    <Row gutter={16} align={"middle"} ref={bindTopRef} style={{display:"flex", justifyContent:"space-between"}}>
+                        <div className="gutter-row" >
+                            {/*<Input*/}
+                            {/*    placeholder={`搜索名称`}*/}
+                            {/*    onPressEnter={onSearch}*/}
+                            {/*    className='search-input-common'*/}
+                            {/*    prefix={<SearchOutlined />}*/}
+                            {/*    onChange={debounce(onSearch,500) }*/}
+                            {/*    allowClear*/}
+                            {/*/>*/}
+                            <InputSearch
+                                placeholder="搜索名称"
                                 allowClear
+                                style={{ width: 200 }}
+                                onChange={onSearch}
                             />
-                        </Col>
+                        </div>
+                        <div style={{display:"flex", alignItems:"center", gap:"10px"}}>
+                            <TreeSelect
+                                className={"plan-bind-case-select"}
+                                allowClear
+                                bordered={ false}
+                                style={{minWidth:"130px"}}
+                                getPopupContainer={() => bindTopRef.current}
+                                dropdownStyle={{
+                                    maxHeight: 400,
+                                    overflow: 'auto',
+                                }}
+                                placeholder="模块"
+                                treeDefaultExpandAll
+                                dropdownMatchSelectWidth={false}
+                                onChange={(value) => {
+                                    console.log("TreeSelect  change:   ", value)
+                                    onModuleSearch(value)
+                                }}
+                                treeData={categoryTableList.map(item => ({
+                                    title: item.moduleName,
+                                    key: item.id,
+                                    value: item.id,
+                                    children: item.children?.map(child => ({
+                                        title: child.moduleName,
+                                        key: child.id,
+                                        value: child.id,
+                                        children: child.children?.map(grandChild => ({
+                                            title: grandChild.moduleName,
+                                            key: grandChild.id,
+                                            value: grandChild.id
+                                        }))
+                                    }))
+                                }))}
+                            />
+
+                            <Select
+                                className={"plan-bind-case-select"}
+                                placeholder={"优先级"}
+                                style={{flex: 1}}
+                                bordered={ false}
+                                allowClear
+                                onChange={(value) => {
+                                    console.log("Select  change: ", value)
+                                    onPrioritySearch(value)
+                                }}
+                                getPopupContainer={() => bindTopRef.current}
+                            >
+                                <Option value={0}>
+                                    <div className={"display-flex-gap"}>
+                                        <ImgComponent
+                                            src={"proivilege1.png"}
+                                            alt=""
+                                            className="icon-s"
+                                        />
+                                        <div>低</div>
+                                    </div>
+                                </Option>
+                                <Option value={1}>
+                                    <div className={"display-flex-gap"}>
+                                        <ImgComponent
+                                            src={"proivilege3.png"}
+                                            alt=""
+                                            className="icon-s"
+                                        />
+                                        <div>中</div>
+                                    </div>
+                                </Option>
+                                <Option value={2}>
+                                    <div className={"display-flex-gap"}>
+                                        <ImgComponent
+                                            src={"proivilege5.png"}
+                                            alt=""
+                                            className="icon-s"
+                                        />
+                                        <div>高</div>
+                                    </div>
+                                </Option>
+                            </Select>
+                        </div>
 
 
                     </Row>
                 </div>
                 <div>
-                    <div className={"table-list-box"} >
+                    <div className={"plan-bind-case-table"} >
                         <Table
                             columns={columns}
                             dataSource={testCaseList}

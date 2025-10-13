@@ -19,6 +19,7 @@ import PaginationCommon from "../../../../common/page/Page";
 import Breadcumb from "../../../../common/breadcrumb/Breadcrumb";
 import {SettingOutlined} from "@ant-design/icons";
 import ProjectDocumentAddModel from "../../document/components/ProjectDocumentAddModel";
+import {PrivilegeProjectButton} from "tiklab-privilege-ui";
 
 const WikiRepository = (props) => {
     const store = {
@@ -148,7 +149,9 @@ const WikiRepository = (props) => {
             width: "15%",
             render: (text, record) => (
                 // <span onClick={() => delectRepository(record.id)} className="span-botton" >删除</span>
-                <DeleteModal deleteFunction={delectRepository} id={record.id} getPopupContainer={workDocument.current} />
+                <PrivilegeProjectButton code={'wiki_delete'} domainId={projectId}  {...props}>
+                    <DeleteModal deleteFunction={delectRepository} id={record.id} getPopupContainer={workDocument.current} />
+                </PrivilegeProjectButton>
             ),
         }
     ];
@@ -256,19 +259,22 @@ const WikiRepository = (props) => {
                                            value={inputValue}
                                     />
                                 </div>
-                                <div className="top-operate">
-                                    <Button type={"primary"} onClick={handleAddDocument}>
-                                        关联文档
-                                    </Button>
-                                    <span
-                                        className="link-text"
-                                        onClick={() => props.history.push(`/project/${projectId}/set/integration`)}
-                                        style={{cursor: 'pointer'}}
-                                    >
+                                <PrivilegeProjectButton code={'wiki_add'} domainId={projectId} {...props}>
+                                    <div className="top-operate">
+                                        <Button type={"primary"} onClick={handleAddDocument}>
+                                            关联文档
+                                        </Button>
+                                        <span
+                                            className="link-text"
+                                            onClick={() => props.history.push(`/project/${projectId}/set/integration`)}
+                                            style={{cursor: 'pointer'}}
+                                        >
                                         <SettingOutlined style={{marginRight: '5px'}}/>
-                                        {/*关联知识库*/}
+                                            {/*关联知识库*/}
                                     </span>
-                                </div>
+                                    </div>
+                                </PrivilegeProjectButton>
+
                             </div>
                             <Table
                                 columns={documentColumns}

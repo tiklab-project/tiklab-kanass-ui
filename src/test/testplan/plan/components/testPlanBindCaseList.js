@@ -1,26 +1,26 @@
 import React, {useEffect, useState} from "react";
 import { observer } from "mobx-react";
-import {Col, Empty, Input, Row,  Space, Table} from "antd";
+import {Col, Empty, Input, Row, Select, Space, Table} from "antd";
 import {showCaseTypeTable, showCaseTypeView} from "../../../../common/caseCommon/CaseCommonFn";
 import testPlanDetailStore from "../store/testPlanDetailStore";
 import TestPlanBindCase from "./testPlanBindCaseModal";
 import PaginationCommon from "../../../../common/caseCommon/pagination/Page";
 import {useParams} from "react-router";
 import {rowStyle, showCreateUser, ShowDeleteView} from "../../../testcase/components/testCaseTableFn";
-import IconCommon from "../../../../common/caseCommon/IconCommon";
 import {debounce} from "../../../../common/caseCommon/CaseCommonFn";
 import testPlanStore from "../store/testPlanStore";
 import functionInstanceStore from "../../../function/function/store/functionInstanceStore";
 import {FunctionResultSelect} from "../../function/components/FunctionResultSelect";
 import FunctionSetResultDrawer from "../../function/components/FunctionSetResultDrawer"
-import PlanToFuncUnitPage from "../../common/planToCase/planToFuncUnitPage";
 import {SearchOutlined} from "@ant-design/icons";
 import FunctionContentDrawerView from "../../../function/function/components/drawerView/FunctionContentDrawerView";
 import TestPlanCaseSetDirectorModal from "./TestPlanCaseSetDirectorModal";
+import "./testPlanBindCaseList.scss"
+import {PrivilegeProjectButton} from "tiklab-privilege-ui";
 
 
 const TestPlanBindCaseList = (props) =>{
-    const {findBindTestCasePage,deleteTestPlanDetail,findTestCasePage,getTestTypeNum} = testPlanDetailStore;
+    const {findBindTestCasePage,deleteTestPlanDetail,findTestCasePage,getTestTypeNum, getUseList} = testPlanDetailStore;
     const {setFunctionResult} = functionInstanceStore
     const {TestPlanTestType,findTestPlan} = testPlanStore
     const pathname = useParams().pathname
@@ -31,6 +31,7 @@ const TestPlanBindCaseList = (props) =>{
         setTestCaseDetailVisible(true);
     }
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+    const [userList, setUserList] = useState([]);
 
     const commonColumns = [
         {
@@ -74,6 +75,7 @@ const TestPlanBindCaseList = (props) =>{
             key: "user",
             width:"12%",
             ellipsis: true,
+            sorter: true,
             render: (text, record) => (showCreateUser(record.director))
         },
         {
@@ -96,7 +98,7 @@ const TestPlanBindCaseList = (props) =>{
             key: "action",
             width: 70,
             render: (text, record) => (
-                <ShowDeleteView record={record} deleteFn={deleteFn} />
+                <ShowDeleteView projectId={projectId} privilegeCode={"test_plan_update"} record={record} deleteFn={deleteFn} />
             ),
         }
     ]
@@ -135,6 +137,9 @@ const TestPlanBindCaseList = (props) =>{
     useEffect(()=>{
         if(testPlanId){
             findPage()
+            getUseList(projectId).then(res => {
+                setUserList(res)
+            })
         }
     },[pageParam,testPlanId,pathname])
 
@@ -145,6 +150,7 @@ const TestPlanBindCaseList = (props) =>{
             projectId:projectId,
             testPlanId:testPlanId,
             categoryId:selectCategory,
+            orderParams: [{name:'create_time', orderType:'desc'}],
             ...pageParam,
             ...params
         }
@@ -170,6 +176,62 @@ const TestPlanBindCaseList = (props) =>{
         setPageParam(newParams)
     }
 
+    const sortSearch = (sorter, extra) => {
+        const setSortParams = (sorter) => {
+            const order = sorter.order;
+            let isAsc = "desc";
+            let sortType = "director";
+            if (order === "ascend") {
+                isAsc = "asc"
+            }
+            if (order === "descend") {
+                isAsc = "desc"
+            }
+            if (!order) {
+                return
+            }
+
+            const params = {
+                name: sortType,
+                orderType: isAsc
+            }
+
+            return params;
+        }
+
+        if (extra.action === "sort") {
+            let orderParams = [];
+            let sortArray = []
+            if (!(sorter instanceof Array)) {
+                if (sorter.order) {
+                    orderParams.push(setSortParams(sorter));
+                    sortArray.push(sorter.columnKey);
+                } else {
+                    orderParams.push({
+                        name: "create_time",
+                        orderType: "desc"
+                    });
+                    sortArray.push("create_time");
+                }
+
+            } else {
+                sorter.map(item => {
+                    orderParams.push(setSortParams(item));
+                    sortArray.push(item.columnKey);
+                })
+            }
+            const param = {
+                orderParams: orderParams,
+                ...pageParam,
+                pageParam: {
+                    pageSize: pageSize,
+                    currentPage: 1
+                },
+            }
+            findPage(param)
+        }
+    }
+
     //删除
     const deleteFn=(record) => {
         deleteTestPlanDetail(record.planCaseId).then(async () => {
@@ -192,6 +254,11 @@ const TestPlanBindCaseList = (props) =>{
         let param = {name: e.target.value}
 
         findPage(param)
+    }
+
+    const onDirectorSearch = (id) => {
+        setCurrentPage(1)
+        findPage({director:id})
     }
 
 
@@ -228,10 +295,12 @@ const TestPlanBindCaseList = (props) =>{
                 <div style={{display: "flex", alignItems: "center", gap: "10px"}}>
                     {
                         selectedRowKeys.length > 0 && (
-                            <TestPlanCaseSetDirectorModal
-                                selectChange={selectResultFun}
-                                selectedRowKeys={selectedRowKeys}
-                            />
+                            <PrivilegeProjectButton code={'test_case_update'} domainId={projectId}  {...props}>
+                                <TestPlanCaseSetDirectorModal
+                                    selectChange={selectResultFun}
+                                    selectedRowKeys={selectedRowKeys}
+                                />
+                            </PrivilegeProjectButton>
                         )
                     }
                     <Input
@@ -243,6 +312,24 @@ const TestPlanBindCaseList = (props) =>{
                         onChange={debounce(onSearch, 500)}
                         allowClear
                     />
+                    <Select
+                        placeholder="负责人"
+                        className="director-select"
+                        maxTagCount={1}
+                        // getPopupContainer={() => heightFilter.current}
+                        showArrow = {true}
+                        allowClear={true}
+                        bordered={false}
+                        dropdownMatchSelectWidth={false}
+                        onChange={debounce(onDirectorSearch, 500)}
+                        style={{marginLeft: "10px"}}
+                    >
+                        {
+                            userList && userList.map((item) => {
+                                return <Select.Option value={item.user?.id} key={item.user?.id}>{item.user?.nickname ? item.user?.nickname : item.user?.name}</Select.Option>
+                            })
+                        }
+                    </Select>
                 </div>
                 <Space>
                     {testPlanType === "function"&&(
@@ -253,11 +340,12 @@ const TestPlanBindCaseList = (props) =>{
                         />
                     )}
 
-
-                    <TestPlanBindCase
-                        testPlanId={testPlanId}
-                        findBindCasePage={findPage}
-                    />
+                    <PrivilegeProjectButton code={'test_case_update'} domainId={projectId}  {...props}>
+                        <TestPlanBindCase
+                            testPlanId={testPlanId}
+                            findBindCasePage={findPage}
+                        />
+                    </PrivilegeProjectButton>
 
                 </Space>
             </div>
@@ -275,6 +363,10 @@ const TestPlanBindCaseList = (props) =>{
                         },
                     }}
                     pagination={false}
+                    showSorterTooltip={false}
+                    onChange={(pagination, filters, sorter, extra) => {
+                        sortSearch(sorter, extra)
+                    }}
                     loading={tableLoading}
                     onRow={(record) => ({style: rowStyle(record.caseType)})}
                     locale={{

@@ -1,155 +1,185 @@
-/*
- * @Descripttion: 知识库添加弹窗
- * @version: 1.0.0
- * @Author: 袁婕轩
- * @Date: 2020-12-18 16:05:16
- * @LastEditors: 袁婕轩
- * @LastEditTime: 2022-03-02 13:28:22
- */
-import React, { Fragment, useEffect, useState } from "react";
-import {Modal, Form, Table, Empty} from 'antd';
-import { observer, inject } from "mobx-react";
-import ImgComponent from "../../../../common/imgComponent/ImgComponent";
+import {withRouter} from "react-router";
+import React, {Fragment, useState} from "react";
+import {Form, Input, message, Modal, Spin} from "antd";
 import "./WikiRepositoryAdd.scss"
+import Button from "../../../../common/button/Button"
+import {inject, observer} from "mobx-react";
+const { TextArea } = Input;
+const layout = {
+    labelCol: {
+        span: 6,
+    }
+};
 const WikiRepositoryAdd = (props) => {
-    const [form] = Form.useForm();
+
+    const { addProjectSetSet, findProjectSet } = props;
     const { wikiAddvisible, setWikiAddvisible, wikiRepositoryStore, projectId, setProjectWikiList } = props;
-    const { createProjectWikiRepository, findProjectWikiRepositoryList, findUnProjectWikiRepository } = wikiRepositoryStore;
+    const { createWikiRepository, findProjectWikiRepositoryList} = wikiRepositoryStore;
+    const [form] = Form.useForm();
+    const [loading, setLoading] = useState(false);
 
-    const [repositoryList, setRepositoryList] = useState([]);
-    const [selectedRow, setSelectedRow] = useState([]);
-    
-    useEffect(() => {
-        findUnProjectWikiRepository({ projectId: projectId }).then(res => {
-            if (res.code === 0) {
-                setRepositoryList(res.data)
+    const onFinish = () => {
+        form.validateFields().then((values) => {
+            setLoading(true)
+            const data = {
+                wikiRepository: {
+                    name: values.wikiRepositoryName,
+                    desc: values.desc,
+                    limits: values.wikiRepositoryLimits,
+                    iconUrl: randomIconUrl(),
+                },
+                project: {id: projectId}
             }
-        })
-        return;
-    }, [])
+            createWikiRepository(data).then(res => {
+                setLoading(false)
+                const wikiRepositoryId = res.data;
 
-    useEffect(() => {
-        findUnProjectWikiRepository({ projectId: projectId }).then(res => {
-            if (res.code === 0) {
-                setRepositoryList(res.data)
-            }
-        })
-    }, [wikiAddvisible]);
-
-    //提交用户列表
-    const submitRepositoryList = () => {
-        if (selectedRow.length !== 0) {
-            for (let i = 0; i < selectedRow.length; i++) {
-                const value = { wikiRepository: { id: selectedRow[i].id }, project: { id: projectId } }
-                createProjectWikiRepository(value).then((data) => {
-                    if (data.code === 0) {
-                        findProjectWikiRepositoryList({ projectId: projectId }).then((res) => {
-                            if (res.code === 0) {
-                                setProjectWikiList(res.data)
-                            }
-                        })
-                        setWikiAddvisible(false)
+                if (res.code === 0) {
+                    message.success('添加成功');
+                }else {
+                    if (res.code === 10000) {
+                        message.error("创建知识库的用户不存在，请联系管理员");
+                    }
+                }
+                findProjectWikiRepositoryList({ projectId: projectId }).then((res) => {
+                    if (res.code === 0) {
+                        setProjectWikiList(res.data)
                     }
                 })
-            }
 
-        } else {
-            info()
-        }
+                form.resetFields();
+                setWikiAddvisible(false);
+            })
+        })
     }
 
-    // 列表的列
-    const columns = [
-        {
-            title: "知识库名称",
-            dataIndex: "kanassRepositoryName",
-            key: "name",
-            align: "left",
-            render: (text, record) => <div className="repository-title">
-                {
-                    record.iconUrl ?
-                        <ImgComponent
-                            src={record.iconUrl}
-                            alt=""
-                            className="img-icon-right"
-                        />
-                        :
-                        <ImgComponent
-                            src={('repository1.png')}
-                            alt=""
-                            className="img-icon-right"
-                        />
-                }
-                <span className="repository-name">{text}</span>
-            </div>,
-        },
-        {
-            title: "负责人",
-            dataIndex: "userName",
-            key: "master",
-            align: "left",
-            width: "20%",
-        },
-        {
-            title: "创建时间",
-            dataIndex: "createTime",
-            key: "createTime",
-            align: "left",
-            width: "20%"
-        }
-    ];
+    const randomIconUrl = () => {
+        const randomNum = Math.floor(Math.random() * 4) + 1;
+        return `repository${randomNum}.png`;
+    }
 
-    const onCancel = () => {
-        form.resetFields();
-        setWikiAddvisible(false);
+    const checkLimit = (_, value) => {
+        if (value) {
+            return Promise.resolve();
+        }
+        return Promise.reject(new Error('Price must be greater than zero!'));
     };
+    const [limtValue, setLimitValue] = useState("0");
+    const LimitComponents = ({ value = {}, onChange }) => {
 
-    // 选择文档
-    const selectWorkRepository = (selected, selectedRows) => {
-        setSelectedRow(selectedRows)
+        const changeLimit = (id) => {
+            setLimitValue(id)
+            onChange(id)
+        }
+
+        return (
+            <div className="wikiRepository-limit" onChange={onChange} value={value}>
+                <div key="0" className={`wikiRepository-limits ${limtValue === "0" ? "limit-select" : ""}`} onClick={() => changeLimit("0")}>
+                    <div className="limits-title">
+                        公共
+                        <svg className="svg-icon" aria-hidden="true">
+                            <use xlinkHref="#icon-publish"></use>
+                        </svg>
+                    </div>
+                    <div className="limits-desc">
+                        公共知识库，全部成员可见
+                    </div>
+                </div>
+                <div key="1" className={`wikiRepository-limits ${limtValue === "1" ? "limit-select" : ""}`} onClick={() => changeLimit("1")}>
+                    <div className="limits-title">
+                        私密
+                        <svg className="svg-icon" aria-hidden="true">
+                            <use xlinkHref="#icon-private"></use>
+                        </svg>
+                    </div>
+                    <div className="limits-desc">
+                        私密知识库，只有知识库成员可见
+                    </div>
+                </div>
+            </div>
+        )
     }
 
-    return (
-        <>
-            <Fragment>
-                <Modal
-                    title={"添加知识库"}
-                    visible={wikiAddvisible}
-                    onCancel={onCancel}
-                    onOk={submitRepositoryList}
-                    closable={false}
-                    width={800}
-                    destroyOnClose={true}
-                    className="repository-add-modal"
-                >
-                    <Table
-                            columns={columns}
-                            dataSource={repositoryList}
-                            rowKey={record => record.id}
-                            rowSelection={{
-                                selectedRow,
-                                onChange: selectWorkRepository,
-                                getCheckboxProps: (record) => ({
-                                    disabled: record.rele === true
-                                })
-                            }}
-                            okText="确定"
-                            cancelText="取消"
-                            pagination={false}
-                            scroll={{ x: "100%" }}
-                            locale={{
-                                emptyText: <Empty
-                                    imageStyle={{height: 100}}
-                                    description={<span>暂无数据</span>}
-                                />
-                            }}
-                        />
+    const handleOnCancel = () => {
+        form.resetFields();
+        setWikiAddvisible(false)
+    }
+    
+    return(
+        <Fragment>
+            <Modal
+                title={"添加知识库"}
+                visible={wikiAddvisible}
+                footer={null}
+                closable={false}
+                width={800}
+                destroyOnClose={true}
+                className="wikiRepository-addinfo"
+                bodyStyle={{paddingBottom: "15px"}}
+            >
+                {/* <div className="wikiRepository-type-head">填写信息</div> */}
+                <Spin spinning={loading} tip="添加中...">
+                    <Form
+                        {...layout}
+                        name="basic"
+                        initialValues={{
+                            remember: true,
+                            wikiRepositoryLimits: "0"
+                        }}
+                        form={form}
+                        onFinish={onFinish}
+                        layout="vertical"
+                    >
+                        <Form.Item
+                            label="知识库名称"
+                            name="wikiRepositoryName"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: '使用中英文、数字、空格组合',
+                                },
+                            ]}
+                        >
+                            <Input placeholder="使用中英文、数字、空格组合" />
+                        </Form.Item>
 
-                </Modal>
-            </Fragment>
+                        <Form.Item
+                            label="可见范围"
+                            name="wikiRepositoryLimits"
+                            rules={[
+                                {
+                                    validator: checkLimit,
+                                }
+                            ]}
+                        >
+                            <LimitComponents />
+                        </Form.Item>
+                        <Form.Item
+                            label="知识库描述"
+                            name="desc"
+                            rules={[
+                                {
+                                    required: false,
+                                    message: '请输入知识库描述',
+                                },
+                            ]}
+                        >
+                            <TextArea rows={3} />
+                        </Form.Item>
+                        <div className="wikiRepository-add-submit">
+                            <Button style={{marginLeft: "auto"}} htmlType="button" onClick={handleOnCancel}>
+                                取消
+                            </Button>
 
-        </>
-    );
-};
+                            <Button type="primary" htmlType="submit" onClick={onFinish}>
+                                提交
+                            </Button>
+                        </div>
+                    </Form>
+                </Spin>
+            </Modal>
+        </Fragment>
+    )
+}
 
-export default inject("wikiRepositoryStore")(observer(WikiRepositoryAdd));
+export default inject("wikiRepositoryStore")(observer(withRouter(WikiRepositoryAdd)));

@@ -20,6 +20,7 @@ import FuncUnitEdit from "../../test/function/function/components/funcUnitEdit";
 import CategoryStore from "../../test/category/store/CategoryStore";
 import FuncUnitStore from "../../test/function/function/store/funcUnitStore";
 import {deleteTestCaseDemandByConditionFn, deleteWorkItemBindByConditionFn} from "./WorkTestCaseFn";
+import {PrivilegeProjectButton} from "tiklab-privilege-ui";
 const WorkTestCaseList = (props) => {
     const store = {
         workTestStore: WorkTestStore,
@@ -183,40 +184,49 @@ const WorkTestCaseList = (props) => {
                         <div style={{ display: "flex", alignItems: "center", justifyContent:"flex-end", gap:"10px" }}>
                             {
                                 workInfo.workTypeCode === "demand" ?
-                                    <FuncUnitEdit
+                                    <PrivilegeProjectButton domainId={projectId} code={'work_create_test_case'}>
+                                        <FuncUnitEdit
                                         categoryStore={CategoryStore}
                                         name={"添加用例"}
                                         type={"add"}
                                         demand={workId}
                                         workInfo={workInfo}
                                         searchWorkTestPage={searchTestCasePage}
-                                    />
+                                        />
+                                    </PrivilegeProjectButton>
+
                                     :
-                                    <FuncUnitEdit
-                                        categoryStore={CategoryStore}
-                                        name={"添加用例"}
-                                        type={"add"}
-                                        workInfo={workInfo}
-                                        searchWorkTestPage={searchTestCasePage}
-                                    />
+                                    <PrivilegeProjectButton domainId={projectId} code={'work_create_test_case'}>
+                                        <FuncUnitEdit
+                                            categoryStore={CategoryStore}
+                                            name={"添加用例"}
+                                            type={"add"}
+                                            workInfo={workInfo}
+                                            searchWorkTestPage={searchTestCasePage}
+                                        />
+                                    </PrivilegeProjectButton>
+
 
 
                             }
 
-                            <Button
-                                style={{
-                                    display: "flex",
-                                    textAlign: "center",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                }}
-                                type="text"
-                                onClick={() => { showSelectTestCase(true) }}>
-                                <svg className="img-icon-right" aria-hidden="true" style={{ cursor: "pointer", marginRight: "10px" }}>
-                                    <use xlinkHref="#icon-link"></use>
-                                </svg>
-                                关联用例
-                            </Button>
+                            <PrivilegeProjectButton domainId={projectId} code={'work_link_test_case'}>
+                                <Button
+                                    style={{
+                                        display: "flex",
+                                        textAlign: "center",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                    }}
+                                    type="text"
+                                    onClick={() => { showSelectTestCase(true) }}>
+                                    <svg className="img-icon-right" aria-hidden="true" style={{ cursor: "pointer", marginRight: "10px" }}>
+                                        <use xlinkHref="#icon-link"></use>
+                                    </svg>
+                                    关联用例
+                                </Button>
+                            </PrivilegeProjectButton>
+
                         </div>
                     </WorkPrivilegeComponent>
 

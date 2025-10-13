@@ -45,6 +45,15 @@ const LogAdd = (props) => {
         transition: "right 0.3s ease",
     };
 
+    // 新增状态
+    const [pagination, setPagination] = useState({
+        current: 1,
+        pageSize: 20,
+        total: 0,
+        hasMore: true
+    });
+    const [loading, setLoading] = useState(false);
+
     useEffect(() => {
         console.log(showLogAdd)
         if (showLogAdd) {
@@ -182,15 +191,39 @@ const LogAdd = (props) => {
      * 按照名称关键字搜索事项列表
      * @param {名称} value
      */
-    const searchWorkItem = (value) => {
-        if (value) {
-            findWorkItemPage({ title: value, projectId: projectId }).then(res => {
-                if (res.code === 0) {
-                    setWorkItemList(res.data.dataList)
-                }
-            })
+    const searchWorkItem = async (value, isLoadMore = false, projectId) => {
+        if (loading) return;
+
+        setLoading(true);
+
+        const params = {
+            title: value,
+            projectId: projectId,
+            pageParam: {
+                currentPage: isLoadMore ? pagination.current + 1 : 1,
+                pageSize: pagination.pageSize
+            },
+
+        };
+
+        try {
+            const res = await findWorkItemPage(params);
+            if (res.code === 0) {
+                setPagination(prev => ({
+                    ...prev,
+                    current: isLoadMore ? prev.current + 1 : 1,
+                    total: res.data.totalRecord,
+                    hasMore: res.data.totalPage >= prev.current
+                }));
+
+                setWorkItemList(prev =>
+                    isLoadMore ? [...prev, ...res.data.dataList] : res.data.dataList
+                );
+            }
+        } finally {
+            setLoading(false);
         }
-    }
+    };
 
 
     /**
@@ -200,35 +233,12 @@ const LogAdd = (props) => {
      */
     const changeSearchTitle = (newValue, option) => {
         setValue(newValue);
-
-        findWorkItemAndUsedTime({ id: newValue }).then(res => {
-            if (res.code === 0) {
-                const info = res.data;
-                const workSurplusTime = info.surplusTime
-                const surplus = workSurplusTime - takeupTime;
-                setSurplusTime(workSurplusTime)
-                setIsCustomSurplusTime(false)
-                addLog.setFieldsValue({
-                    estimateTime: info.estimateTime,
-                    usedTime: info.usedTime,
-                    surplusTime: surplus < 0 ? 0 : surplus
-                })
-            }
-        })
+        searchWorkItem(newValue, false, projectId)
     };
     const changeProject = (value) => {
         setProjectId(value)
-        findWorkItemPage({ projectId: value }).then(res => {
-            if (res.code === 0) {
-                setWorkItemList(res.data.dataList)
-                if (res.data.dataList.length > 0) {
-                    setValue(res.data.dataList[0].id);
-                } else {
-                    setValue()
-                }
 
-            }
-        })
+        searchWorkItem(null, false, value)
     }
 
     const changeTakeupTime = (value) => {
@@ -248,6 +258,16 @@ const LogAdd = (props) => {
         }
 
     }
+
+    // 滚动到底部加载更多
+    const handlePopupScroll = (e) => {
+        const { scrollTop, scrollHeight, clientHeight } = e.target;
+        const isBottom = scrollHeight - scrollTop <= clientHeight + 1;
+
+        if (isBottom && pagination.hasMore && !loading) {
+            searchWorkItem(value, true, projectId);
+        }
+    };
 
     return (
         // <>
@@ -322,7 +342,9 @@ const LogAdd = (props) => {
                             value={value}
                             onSearch={searchWorkItem}
                             onChange={changeSearchTitle}
-                            optionFilterProp='children'
+                            onPopupScroll={handlePopupScroll}
+                            loading={loading}
+                            notFoundContent={loading ? '加载中...' : '无数据'}
                         >
                             {
                                 workItemList.length > 0 && workItemList.map((item) => {
@@ -335,6 +357,11 @@ const LogAdd = (props) => {
                                     >{item.title}</Select.Option>
                                 })
                             }
+                            {loading && pagination.hasMore && (
+                                <Select.Option key="loading" disabled>
+                                    加载中...
+                                </Select.Option>
+                            )}
                         </Select>
                     </Form.Item>
 

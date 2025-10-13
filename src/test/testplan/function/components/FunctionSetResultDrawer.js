@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {Button, Drawer, Form, Radio, Space, Input, message} from "antd";
 import {CheckCircleTwoTone, CloseCircleTwoTone, MinusCircleTwoTone, ExclamationCircleTwoTone, StopOutlined, PauseCircleTwoTone} from "@ant-design/icons";
 import functionInstanceStore from "../../../function/function/store/functionInstanceStore";
+import {PrivilegeProjectButton} from "tiklab-privilege-ui";
 const { TextArea } = Input;
 
 const resultMap = {
@@ -188,15 +189,17 @@ const FunctionSetResultDrawer = (props) => {
 
                         <div style={{ marginTop: 24, textAlign: 'right' }}>
                             <Space>
+                                <PrivilegeProjectButton code={'test_case_update'} domainId={projectId}  {...props}>
+                                    <Button
+                                        onClick={handleSubmitReview}
+                                        type="primary"
+                                        loading={loading}
+                                    >
+                                        提交
+                                    </Button>
+                                </PrivilegeProjectButton>
                                 <Button onClick={onClose} disabled={loading}>
                                     取消
-                                </Button>
-                                <Button
-                                    onClick={handleSubmitReview}
-                                    type="primary"
-                                    loading={loading}
-                                >
-                                    提交
                                 </Button>
                             </Space>
                         </div>

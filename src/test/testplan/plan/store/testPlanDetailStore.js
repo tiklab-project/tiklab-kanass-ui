@@ -1,5 +1,6 @@
 import {observable,action} from "mobx";
 import {Axios} from "tiklab-core-ui";
+import {Service} from "../../../../common/utils/requset";
 
 
 export class TestPlanDetailStore {
@@ -13,7 +14,6 @@ export class TestPlanDetailStore {
     findBindTestCasePage = async (param) => {
         const params = {
             ...param,
-            orderParams: [{name:'id', orderType:'desc'}],
         };
         const res = await Axios.post("/testPlanCase/findPlanCasePage",params)
         if(res.code === 0) {
@@ -82,6 +82,18 @@ export class TestPlanDetailStore {
         if(res.code === 0) {
             return res.data
         }
+    }
+
+    @action
+    getUseList = async(projectId) => {
+        const params = {
+            domainId: projectId
+        }
+        const data = await Service("/dmUser/findDmUserList", params)
+        if(data.code === 0){
+            return data.data;
+        }
+        return data;
     }
 
 

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {Fragment, useEffect, useRef, useState} from "react";
 import {Card, Col, Descriptions, Row, Spin, Tabs} from "antd";
 import {
     CalendarOutlined,
@@ -13,44 +13,104 @@ import "./TestReportDetail.scss";
 import FunctionReportTestStatisticPie from "./FunctionReportTestStatisticPie";
 import DefectPriorityBar from "./DefectPriorityBar"
 import CaseBindDefectList from "../../../defectBind/defect/components/CaseBindDefectList";
-
+import Button from "../../../../common/button/Button";
+import { DocumentEditor, PreviewEditor, EditorBig } from "tiklab-slate-ui";
+import { SwitchPreliminaryType } from "tiklab-form-ui";
+import "tiklab-slate-ui/es/tiklab-slate.css";
+import { getUser } from 'tiklab-core-ui';
+import {useDebounce} from "../../../../common/utils/debounce";
 
 const FunctionInstanceCommon = (props) => {
-    let {findTestReport, testReportInfo, getTestReportSummary } = testReportStore;
+    let {findTestReport, testReportInfo, getTestReportSummary, updateTestReport } = testReportStore;
     let testReportId = sessionStorage.getItem("testReportId");
     const [loading, setLoading] = useState(false);
     const [reportSummaryInfo,getReportSummaryInfo] = useState({})
+    // 转换描述编辑模式setEditorType
+    const [editorType, setEditorType] = useState(false);
+    // 描述内容
+    const [slateValue, setSlateValue] = useState()
+    const [moreDesc, setMoreDesc] = useState(false);
+    const [descPreviewHeight, setDescPreviewHeight] = useState(0);
+    const descPreviewRef = (node) => {
+        if (node) {
+            setDescPreviewHeight(node.getBoundingClientRect().height);
+        }
+    };
+
+    // 转换描述编辑模式
+    const editorDesc = () => {
+        // setLoading(true)
+        setEditorType(false);
+        setSlateValue(testReportInfo?.desc)
+
+    }
+
+    // 取消编辑描述
+    const cancel = () => {
+        console.log("取消编辑")
+        setEditorType(false);
+        setSlateValue(testReportInfo?.desc)
+
+        if (descPreviewRef.current){
+            setDescPreviewHeight(descPreviewRef.current.getBoundingClientRect().height)
+        }
+
+    }
+
+    /**
+     * 点击描述，转为可编辑模式
+     */
+    const switchEditorDesc = () => {
+        setEditorType(true)
+    }
+
+    /**
+     * 更新描述
+     */
+    const updataDesc = useDebounce((value) => {
+        // setSlateValue();
+        // setSlateValue(value)
+        const param = {
+            id: testReportId,
+            desc: value
+        }
+        updateTestReport(param).then(res => {
+            if (res.code === 0) {
+                setSlateValue(value);
+                testReportInfo.desc = value
+            }
+        });
+    }, [500])
+
+    /**
+     * 展开更多描述
+     */
+    const showMoreDesc = () => {
+        setMoreDesc(!moreDesc);
+    }
+
+    const ticket = getUser().ticket;
+    const tenant = getUser().tenant;
 
     useEffect(async() => {
         setLoading(true);
 
-        await findTestReport(testReportId);
+        const res = await findTestReport(testReportId);
+
+        setSlateValue(res?.desc)
 
         setLoading(false);
     }, [testReportId,testReportInfo?.testPlan?.id]);
 
+    useEffect(() => {
+        if (descPreviewRef.current) {
+            console.log('descPreviewHeight:', descPreviewRef.current.getBoundingClientRect().height);
+        }
+    }, [testReportId, slateValue, moreDesc]);
+
     useEffect(async() => {
         // setLoading(true);
         let data = await getTestReportSummary(testReportId);
-
-        //返回的数据
-        // {
-        //     "instanceStatusSummary": {
-        //         "total": 4,
-        //         "failCount": 0,
-        //         "successCount": 4
-        //     },
-        //     "defectSummary": {
-        //         "total": 3,
-        //         "progressStatusCount": 1,
-        //         "doneStatusCount": 1,
-        //         "todoStatusCount": 1,
-        //         "lowCount": 0,
-        //         "mediumCount": 3,
-        //         "highCount": 0
-        //     }
-        // }
-
 
         if(data!==null){
             getReportSummaryInfo(data)
@@ -70,71 +130,75 @@ const FunctionInstanceCommon = (props) => {
         return null
     };
 
+    const operateIcon = (
+        <>
+            <svg className="icon-22" aria-hidden="true" onClick={() => switchEditorDesc()}>
+                <use xlinkHref={`#icon-edit`}></use>
+            </svg>
+        </>
+    )
     return (
         <>
             {/* 报告详情卡片 */}
-            <Card className="report-info-card" loading={loading}>
-                <Descriptions column={{ xs: 1, sm: 2 }}>
-                    {/*<Descriptions.Item*/}
-                    {/*    label={*/}
-                    {/*        <div className="info-label" style={{ color: '#999' }}>*/}
-                    {/*            <CalendarOutlined style={{ marginRight: 8 }} />*/}
-                    {/*            时间范围*/}
-                    {/*        </div>*/}
-                    {/*    }*/}
-                    {/*>*/}
-                    {/*    {testReportInfo?.startTime && testReportInfo?.endTime ?*/}
-                    {/*        `${moment(testReportInfo?.startTime).format('YYYY-MM-DD')} 至 ${moment(testReportInfo?.endTime).format('YYYY-MM-DD')}` :*/}
-                    {/*        testReportInfo?.startTime ?*/}
-                    {/*            `${moment(testReportInfo?.startTime).format('YYYY-MM-DD')} 至 进行中` :*/}
-                    {/*            '未设置'*/}
-                    {/*    }*/}
-                    {/*</Descriptions.Item>*/}
-                    {/*<Descriptions.Item*/}
-                    {/*    label={*/}
-                    {/*        <div className="info-label" style={{ color: '#999' }}>*/}
-                    {/*            <ClockCircleOutlined style={{ marginRight: 8 }} />*/}
-                    {/*            报告天数*/}
-                    {/*        </div>*/}
-                    {/*    }*/}
-                    {/*>*/}
-                    {/*    {formatDuration(testReportInfo?.startTime, testReportInfo?.endTime)}*/}
-                    {/*</Descriptions.Item>*/}
-                    <Descriptions.Item
-                        label={
-                            <div className="info-label" style={{ color: '#999' }}>
-                                <UserOutlined style={{ marginRight: 8 }} />
-                                创建人
-                            </div>
+            <Card className="report-info-card" loading={loading} title={"报告总结"} extra={operateIcon}>
+                <div className={`desc-box ${(moreDesc || editorType) ? "more-desc":""}`}>
+
+                    <Fragment>
+                        {
+                            editorType ? <Fragment>
+                                    <div style={{ border: " #f0f0f0 solid 1px", minHeight: "250px" }}>
+                                        <DocumentEditor
+                                            value={slateValue}
+                                            ticket={ticket}
+                                            tenant={tenant}
+                                            base_url={base_url}
+                                            viewImageUrl = "/image"
+                                            img_url = {base_url==='/' ? '':base_url}
+                                            minHeight={300}
+                                            onChange={(value) => updataDesc(value)}
+                                            {...props}
+                                        />
+                                    </div>
+
+                                    <div className="desc-botton">
+                                        <Button onClick={() => cancel()}>取消</Button>
+                                        <Button type="primary" onClick={() => editorDesc()}>确定</Button>
+                                    </div>
+                                </Fragment>
+                                :
+                                <div className="desc-preview" ref={descPreviewRef}>
+                                    {
+                                        slateValue && <PreviewEditor
+                                            value={slateValue}
+                                            base_url={base_url}
+                                            viewImageUrl = "/image"
+                                            img_url = {base_url==='/' ? '':base_url}
+                                            ticket={ticket}
+                                            tenant={tenant}
+                                            {...props}
+                                        />
+                                    }
+
+                                </div>
                         }
-                    >
-                        {testReportInfo?.createUser?.nickname || '未知'}
-                    </Descriptions.Item>
-                    <Descriptions.Item
-                        label={
-                            <div className="info-label" style={{ color: '#999' }}>
-                                <UserOutlined style={{ marginRight: 8 }} />
-                                创建时间
-                            </div>
-                        }
-                    >
-                        {testReportInfo?.createTime ?
-                            moment(testReportInfo?.createTime).format('YYYY-MM-DD HH:mm:ss') :
-                            '未知'
-                        }
-                    </Descriptions.Item>
-                    <Descriptions.Item
-                        label={
-                            <div className="info-label" style={{ color: '#999' }}>
-                                <FileTextOutlined style={{ marginRight: 8 }} />
-                                描述
-                            </div>
-                        }
-                        span={2}
-                    >
-                        {testReportInfo?.desc || '暂无描述'}
-                    </Descriptions.Item>
-                </Descriptions>
+                    </Fragment>
+                </div>
+
+                <div className="more-desc-box">
+                    {
+                        !editorType && descPreviewHeight > 342 &&
+                        <div className="form-custom-open" onClick={() => showMoreDesc()}>
+                            <svg className={`img-icon ${moreDesc ? "open" : "close"}`} aria-hidden="true">
+                                <use xlinkHref="#icon-left"></use>
+                            </svg>
+                        </div>
+                    }
+                    {/*<div className="form-custom-open" onClick={() => showMoreDesc()}>*/}
+                    {/*    <svg className={`img-icon ${moreDesc ? "open" : "close"}`} aria-hidden="true">*/}
+                    {/*        <use xlinkHref="#icon-left"></use>*/}
+                    {/*    </svg>*/}
+                    {/*</div>*/}
+                </div>
             </Card>
 
             {/* 统计图表 */}

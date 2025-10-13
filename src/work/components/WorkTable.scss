@@ -99,20 +99,24 @@
         .work-status {
             padding: 2px 3px;
             background: #e2e1e4;
-            border-radius: 4px;
-            font-size: 10px;
-            width: fit-content;
             color: #2b333e;
+            border-radius: 4px;
+            font-size: 11px;
+            min-width: 50px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .work-status-process {
-            background: #e2e1e4;
-            color: #5e5314;
+            background: #2a9feb;
+            color: #fff;
         }
 
         .work-status-done {
-            background: #e2e1e4;
-            color: #5e5314;
+            background: #5fcf9e;
+            color: #fff;
         }
 
         .work-id {

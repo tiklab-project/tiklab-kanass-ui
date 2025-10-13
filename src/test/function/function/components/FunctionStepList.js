@@ -11,6 +11,7 @@ import functionInstanceStore from "../store/functionInstanceStore";
 import funcUnitStepStore from "../store/funcUnitStepStore";
 import "../../../common/styles/testcaseStyle.scss"
 import HideDelete from "../../../../common/caseCommon/hideDelete/HideDelete";
+import {PrivilegeProjectButton} from "tiklab-privilege-ui";
 
 const {TextArea} = Input;
 
@@ -18,7 +19,7 @@ const {findStepCommonList,updateStepCommon,deleteStepCommon} = stepCommonStore
 const {setFunctionStepResult} = functionInstanceStore;
 const {createFuncUnitStep, updateFuncUnitStep, findFuncUnitStep} = funcUnitStepStore;
 
-const FunctionStepList = ({functionId,funcUnitStore}) => {
+const FunctionStepList = ({functionId,funcUnitStore, permissionCodeList}) => {
     const {findFuncUnit} = funcUnitStore
     const [stepList, setStepList] = useState([]);
     const [showAddForm, setShowAddForm] = useState(false);
@@ -34,6 +35,13 @@ const FunctionStepList = ({functionId,funcUnitStore}) => {
     useEffect(async ()=> {
         await findList()
     },[functionId])
+
+    const isPermissionCode = (code) => {
+        if (permissionCodeList === undefined || permissionCodeList.length === 0){
+            return false
+        }
+        return permissionCodeList.includes(code)
+    }
 
     const findList = async () =>{
         let value ={
@@ -55,6 +63,9 @@ const FunctionStepList = ({functionId,funcUnitStore}) => {
     }
 
     const onDragEnd = (result) => {
+        if (!isPermissionCode("test_case_update")){
+            return;
+        }
         if (!result.destination) {
             return;
         }
@@ -115,6 +126,9 @@ const FunctionStepList = ({functionId,funcUnitStore}) => {
     };
 
     const showAddFormHandler = () => {
+        if (!isPermissionCode("test_case_update")){
+            return
+        }
         setShowAddForm(true);
         // 使用setTimeout确保DOM更新后再聚焦
         setTimeout(() => {
@@ -152,6 +166,9 @@ const FunctionStepList = ({functionId,funcUnitStore}) => {
 
     const startEdit = async (stepId) => {
         try {
+            if (!isPermissionCode("test_case_update")){
+                return
+            }
             const info = await findFuncUnitStep(stepId);
             editForm.setFieldsValue(info);
             setEditingStepId(stepId);
@@ -244,14 +261,17 @@ const FunctionStepList = ({functionId,funcUnitStore}) => {
                         </Space>
                     ) : (
                         <Space>
-                            <FormOutlined
-                                style={{fontSize:16,cursor: "pointer"}}
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    startEdit(item.id);
-                                }}
-                            />
-                            <HideDelete deleteFn={()=>deleteFn(item)}/>
+                            <PrivilegeProjectButton domainId={projectId} code={'test_case_update'}>
+                                <FormOutlined
+                                    style={{fontSize:16,cursor: "pointer"}}
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        startEdit(item.id);
+                                    }}
+                                />
+                            </PrivilegeProjectButton>
+
+                            <HideDelete privilegeCode={"test_case_update"} projectId={projectId} deleteFn={()=>deleteFn(item)}/>
 
 
                         </Space>

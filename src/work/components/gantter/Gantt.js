@@ -24,13 +24,15 @@ import {removeNodeInTree} from "../../../common/utils/treeDataAction";
 import {setWorkDeatilInList} from "../WorkSearch";
 import {setSessionStorage} from "../../../common/utils/setSessionStorage";
 import {Tooltip} from "antd";
+import {LeftOutlined, RightOutlined} from "@ant-design/icons";
+import {finWorkList} from "../WorkGetList";
 
 const Gantt = (props) => {
     // 获取当前年月日
     const { workList, workStore, WorkDetailDrawer, setImageUrl, projectId, useDebounce, archiveView } = props;
     const { setWorkId, setWorkIndex, createRecent, editWork, totalPage, currentPage, total,
-        getWorkConditionPageTree, viewType, deleteWorkItem, setWorkList } = workStore;
-
+        getWorkConditionPageTree,getWorkConditionPage, viewType, deleteWorkItem, setWorkList } = workStore;
+    const path = props.match.path;
     const todayDate = new Date()
     const currentYear = todayDate.getFullYear()
     const currentMonth = todayDate.getMonth() + 1;
@@ -306,12 +308,12 @@ const Gantt = (props) => {
     const [isShowCol, setIsShowCol] = useState(false)
     useEffect(() => {
         if (ganttdata !== undefined) {
-            document.getElementById("tableGantt").style.height = (ganttdata.nodes.length * 40) + 20;
+            document.getElementById("tableGantt").style.height = (ganttdata.nodes.length * 40);
             document.getElementById("table-date-background").style.height = (ganttdata.nodes.length * 40);
             const picBoxHeight = document.getElementById('table-pic').offsetHeight;
             if (picBoxHeight < ganttdata.nodes.length * 40) {
                 setIsShowCol(true)
-                document.getElementById("tableGantt").style.height = (ganttdata.nodes.length * 40) + 20;
+                document.getElementById("tableGantt").style.height = (ganttdata.nodes.length * 40);
                 document.getElementById("table-date-background").style.height = (ganttdata.nodes.length * 40);
             } else {
                 setIsShowCol(false)
@@ -609,12 +611,15 @@ const Gantt = (props) => {
                                     </div>
                                 </div>
                                 <div className={`table-td table-border table-td-status`}>
-                                    <CircleProgress
-                                        percent={
-                                            item?.estimateTime === 0 || null ? 0 : (item?.estimateTime - item?.surplusTime) * 100 / item?.estimateTime
-                                        }
-                                        size={"mini"}
-                                    />
+                                    {/*<CircleProgress*/}
+                                    {/*    percent={*/}
+                                    {/*        item?.estimateTime === 0 || null ? 0 : (item?.estimateTime - item?.surplusTime) * 100 / item?.estimateTime*/}
+                                    {/*    }*/}
+                                    {/*    size={"mini"}*/}
+                                    {/*/>*/}
+                                    <div className={`work-status ${setStatuStyle(item.workStatusNode?.id)}`}>
+                                        {item.workStatusNode?.name}
+                                    </div>
                                 </div>
                                 <div className={`table-td table-border table-td-assigner`}>
                                     <UserIcon name={item.assigner?.nickname} size="small" />
@@ -706,10 +711,19 @@ const Gantt = (props) => {
         const values = {
             pageParam: {
                 pageSize: 20,
-                currentPage: currentPage + 1,
+                currentPage: currentPage,
             }
         }
-        getWorkConditionPageTree(values)
+        // getWorkConditionPageTree(values)
+        if (viewType === "tree") {
+            getWorkConditionPageTree(values).then(res => {
+            })
+        }
+        if (viewType === "tile") {
+            getWorkConditionPage(values).then(res => {
+            })
+        }
+        // finWorkList(path, workStore, values);
     }
 
     /**
@@ -781,7 +795,7 @@ const Gantt = (props) => {
                                 标题
                             </div>
                             <div className="table-hearder-text table-border table-hearder-status">
-                                进度
+                                状态
                             </div>
                             <div className="table-hearder-text table-border table-hearder-assigner">
                                 负责人
@@ -823,21 +837,6 @@ const Gantt = (props) => {
                                         tableTd(workList, 0, 0)
 
                                     }
-                                    {
-                                        totalPage > 0 && <>
-                                            {
-                                                <div className="gantt-change-page" >
-                                                    <div>{workList.length}个, 共{total}个</div>
-                                                    {
-                                                        currentPage < totalPage ? <div className="change-page-button" onClick={() => changePage(currentPage)}>点击加载</div>
-                                                            :
-                                                            <div style={{ paddingLeft: "10px" }}>已加载全部</div>
-
-                                                    }
-                                                </div>
-                                            }
-                                        </>
-                                    }
 
                                 </li>
                                 <div className="table-pic" id="table-pic" ref={ganttOuter}>
@@ -866,7 +865,7 @@ const Gantt = (props) => {
                                         }
                                     </div>
                                     {/*空div，防止滚动后gantt错位*/}
-                                    <div style={{ width: "100px", height: "20px"}}></div>
+                                    {/*<div style={{ width: "100px", height: "20px"}}></div>*/}
                                 </div>
                                 {
                                     workList.length <= 0 && <div className="epci-empty">
@@ -878,6 +877,30 @@ const Gantt = (props) => {
                             </div>
 
                         </div>
+                        {
+                            totalPage > 0 && <>
+                                {
+                                    <div className="gantt-change-page" >
+                                        <div className="page-button" onClick={() => changePage(currentPage - 1)}>
+                                            <LeftOutlined className={`${currentPage === 1 ? "page-disable" : ""}`} />
+                                        </div>
+
+                                        <span>
+                                            {currentPage}
+                                        </span>
+                                                    <span>
+                                            &nbsp; / &nbsp;
+                                        </span>
+                                                    <span>
+                                            {totalPage}
+                                        </span>
+                                        <div className="page-button" onClick={() => changePage(currentPage + 1)}>
+                                            <RightOutlined className={`${currentPage === totalPage ? "page-disable" : ""}`} />
+                                        </div>
+                                    </div>
+                                }
+                            </>
+                        }
                     </div>
 
                     {

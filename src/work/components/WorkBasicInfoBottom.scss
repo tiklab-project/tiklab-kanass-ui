@@ -1,4 +1,10 @@
 .work-basic-info-bottom-tab {
+
+  position: sticky;
+  top: 68px;
+  background: #fff;
+  z-index: 10;
+
   display: flex;
   gap: 20px;
   height: 32px;
@@ -30,5 +36,5 @@
 }
 
 .work-basic-info-bottom-content{
-  min-height: 400px;
+  //min-height: 600px;
 }

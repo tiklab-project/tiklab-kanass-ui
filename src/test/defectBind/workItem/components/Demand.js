@@ -5,16 +5,29 @@ import {Modal} from "antd";
 import {observer} from "mobx-react";
 import ImgComponent from "../../../../common/imgComponent/ImgComponent";
 import {deleteWorkTestCaseFn} from "../../../testcase/components/testCaseTableFn";
+import {PrivilegeProjectButton} from "tiklab-privilege-ui";
+import {withRouter} from "react-router";
 
 /**
  * 关联需求
  */
 const Demand = (props)=>{
-    const {demandInfo,caseInfo,updateFn,setDemandInfo} = props
+    const {demandInfo,caseInfo,updateFn,setDemandInfo, permissionCodeList} = props
 
     const [visible, setVisible] = useState(false);
+    const projectId = props.match.params.id;
+
+    const isPermissionCode = (code) => {
+        if (permissionCodeList === undefined || permissionCodeList.length === 0){
+            return false
+        }
+        return permissionCodeList.includes(code)
+    }
 
     const showModal = () => {
+        if (!isPermissionCode('test_case_update')){
+            return;
+        }
         console.log(demandInfo)
         setVisible(true);
     }
@@ -44,11 +57,13 @@ const Demand = (props)=>{
                             className="icon-15"
                         />
                         <span style={{padding:"0 10px", maxWidth:"150px", overflow:"hidden", textOverflow: "ellipsis", whiteSpace:"nowrap"}}>{demandInfo?.title}</span>
-                        <div style={{cursor:"pointer",marginLeft:"auto", padding:"0 5px"}} onClick={unBind}>
-                            <svg className="icon-18" aria-hidden="true" onClick={unBind}>
-                                <use xlinkHref={`#icon-unLink`}></use>
-                            </svg>
-                        </div>
+                        <PrivilegeProjectButton code={'test_case_update'} domainId={projectId}  {...props}>
+                            <div style={{cursor:"pointer",marginLeft:"auto", padding:"0 5px"}} onClick={unBind}>
+                                <svg className="icon-18" aria-hidden="true" onClick={unBind}>
+                                    <use xlinkHref={`#icon-unLink`}></use>
+                                </svg>
+                            </div>
+                        </PrivilegeProjectButton>
                     </div>
 
                     :<span onClick={showModal} style={{padding:"0",cursor:"pointer"}}>未设置</span>
@@ -76,4 +91,4 @@ const Demand = (props)=>{
     )
 }
 
-export default observer(Demand);
+export default observer(withRouter(Demand));

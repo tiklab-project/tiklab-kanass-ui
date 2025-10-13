@@ -11,7 +11,6 @@ import {Axios} from "tiklab-core-ui";
 import "./funcUnitEdit.scss"
 import IconCommon from "../../../../common/caseCommon/IconCommon";
 import {createWorkTestCaseFn} from "../../../testcase/components/testCaseTableFn";
-import Demand from "../../../defectBind/workItem/components/Demand";
 import WorkItemStore from "../../../defectBind/workItem/store/WorkItemStore";
 import {createWorkItemBindFn} from "../../../../work/components/WorkTestCaseFn";
 

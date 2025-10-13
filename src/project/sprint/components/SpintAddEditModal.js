@@ -118,7 +118,7 @@ const SprintAddModal = (props) => {
         <>
             <div className="addmodel">
                 <Modal
-                    title={"添加迭代"}
+                    title={props.type === "add" ? "添加迭代" : "编辑迭代"}
                     visible={visible}
                     onOk={onFinish}
                     onCancel={onCancel}

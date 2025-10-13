@@ -13,6 +13,7 @@ import "./WorkAddModel.scss"
 import { observer, inject } from "mobx-react";
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import Button from "../../../common/button/Button";
+import {PrivilegeProjectButton} from "tiklab-privilege-ui";
 
 const WorkAddModel = (props) => {
 
@@ -84,17 +85,21 @@ const WorkAddModel = (props) => {
         <>
             {
                 !inDetail ?
-                    <Button
-                        buttonText={"添加缺陷"}
-                        onClick={showModal}
-                    />
+                    <PrivilegeProjectButton code={'test_plan_update'} domainId={projectId}  {...props}>
+                        <Button
+                            buttonText={"添加缺陷"}
+                            onClick={showModal}
+                        />
+                    </PrivilegeProjectButton>
                     :
-                    <div onClick={showModal} style={{cursor:"pointer", display:"flex", alignItems:"center"}}>
-                        <svg className="icon-18" aria-hidden="true">
-                            <use xlinkHref={`#icon-add2`}></use>
-                        </svg>
-                        <span>添加缺陷</span>
-                    </div>
+                    <PrivilegeProjectButton code={'test_case_create_defect'} domainId={projectId}  {...props}>
+                        <div onClick={showModal} style={{cursor:"pointer", display:"flex", alignItems:"center"}}>
+                            <svg className="icon-18" aria-hidden="true">
+                                <use xlinkHref={`#icon-add2`}></use>
+                            </svg>
+                            <span>添加缺陷</span>
+                        </div>
+                    </PrivilegeProjectButton>
             }
             <Modal
                 title="添加缺陷"

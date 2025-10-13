@@ -271,7 +271,7 @@ const FunctionDetail = (props) => {
                     }
                 />
                 <Space>
-                    {deleteFn && <HideDelete deleteFn={deleteFn} />}
+                    {deleteFn && <HideDelete privilegeCode={"test_case_delete"} projectId={projectId} deleteFn={deleteFn} />}
                 </Space>
             </div>
             <CaseContentCommon tabItem={getTabItems()} />

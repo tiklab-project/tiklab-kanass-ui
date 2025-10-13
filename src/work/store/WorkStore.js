@@ -749,7 +749,7 @@ export class WorkStore {
     @action
     getWorkConditionPage = async (value) => {
         this.setSearchCondition(value);
-        
+        console.log("平铺 查询参数: ", this.searchCondition)
         this.tableLoading = true;
         this.getWorkItemNum();
 

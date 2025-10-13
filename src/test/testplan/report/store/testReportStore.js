@@ -38,7 +38,7 @@ export class TestReportStore {
     @action
     updateTestReport = async (value) => {
         const res = await Axios.post("/testReport/updateTestReport", value);
-        return res.data;
+        return res;
     }
 
     @action

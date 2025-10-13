@@ -1,6 +1,5 @@
-.project-linemap{
+.product-linemap{
   .work-item-time-page{
-
     .top-action {
       margin-top: 15px;
       margin-bottom: 15px;
@@ -18,122 +17,90 @@
       background: #fff;
       border-radius: 8px;
       box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
-      //overflow: hidden;
-      //height: calc(100vh - 200px); // 固定高度
       display: flex;
       flex-direction: column;
     }
 
+    .work-item-row {
+      padding: 12px 16px;
+      border-bottom: 0;
 
+      &:hover {
+        background-color: #fafafa;
+      }
 
-    .work-status {
-      padding: 2px 3px;
-      background: #e2e1e4;
-      font-size: 12px;
-      height: 100%;
-      width: 50px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: #2b333e;
-    }
-
-    .work-status-process {
-      background: #e2e1e4;
-      color: #5e5314;
-    }
-
-    .work-status-done {
-      background: #e2e1e4;
-      color: #5e5314;
-    }
-
-    .ant-list-items{
-      .item-content-wrapper {
+      .work-item-columns {
         display: flex;
-        align-items: center;
         width: 100%;
+        align-items: center;
 
-        .item-avatar {
-          display: flex;
-          align-items: center;
-          margin-right: 6px;
-          margin-left: 10px;
-
-          .menu-icon {
-            width: 24px;
-            height: 24px;
-          }
-
-          .item-code {
-            margin-left: 8px;
-            color: #888;
-            font-size: 12px;
-          }
-        }
-
-        .item-content {
+        > div {
+          padding: 0 8px;
           flex: 1;
           min-width: 0;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
 
-          .item-title {
-            font-size: 14px;
-            font-weight: 400;
-            color: rgba(0, 0, 0, 0.85);
-            margin-bottom: 4px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+        .column-icon-title {
+          flex: 2;
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+
+          .item-avatar {
+            margin-right: 8px;
           }
 
-          .item-description {
-            display: flex;
-            align-items: center;
-            font-size: 12px;
-            color: rgba(0, 0, 0, 0.45);
-            gap: 8px;
-
-            .item-time {
-              color: rgba(0, 0, 0, 0.35);
-            }
+          .item-title {
           }
         }
 
-      }
+        .column-status {
 
-      .ant-list-item{
-        border: 0;
-      }
-      .item-content:hover {
-        cursor: pointer;
-      }
-      .ant-list-item:hover {
-        background-color: #f5f5f5;
-      }
-    }
+        }
+        .column-status {
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+        }
+        .column-priority {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .column-creator {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+        }
 
-    .grouped-table-row {
-      border-bottom: 1px solid #f0f0f0;
-    }
+        // Status styles
+        .work-status {
+          padding: 0;
+          border-radius: 4px;
+          text-align: center;
+          font-size: 12px;
+          min-width: 50px;
+          height: 20px;
+          line-height: 20px;
+        }
+        .work-status-todo {
+          background: #e2e1e4;
+          color: #2b333e;
+        }
 
-    .grouped-table-row:hover {
-      background-color: #fafafa;
-    }
+        .work-status-process {
+          background: #2a9feb;
+          color: #fff;
+        }
 
-    /* 移除表格默认的边框 */
-    .grouped-table-row:last-child {
-      border-bottom: none;
-    }
-
-    /* 表头表格样式 */
-    .header-table {
-      .ant-table-tbody > tr > td {
-        border-bottom: none !important;
-        padding: 8px 16px !important;
-      }
-
-      .ant-table-placeholder {
-        display: none;
+        .work-status-done {
+          background: #5fcf9e;
+          color: #fff;
+        }
       }
     }
 
@@ -146,10 +113,9 @@
       .group-title{
         display: flex;
         align-items: center;
-        padding: 6px 6px;
+        padding: 12px 16px;
         background-color: #fafafa;
         border-bottom: 1px solid #f0f0f0;
-        //font-weight: 500;
         font-size: 15px;
         cursor: pointer;
         user-select: none;
@@ -158,49 +124,11 @@
       .group-title:hover{
         background-color: #f5f5f5;
       }
-      .group-title-item-count{
-        margin-left: 12px;
-        font-size: 12px;
-        color: #8c8c8c;
-        background-color: #f0f0f0;
-        padding: 2px 8px;
-        border-radius: 10px;
-      }
 
       .workItem-operate{
-        border-radius: 2px;
-        border: 1px solid #e6e6e6;
-        background-color: #fafafa;
         display: flex;
-        gap: 5px;
-        //padding: 5px;
-        height: 30px;
         align-items: center;
-        margin-right: 10px;
-        .delete-operate{
-          margin-right: 5px;
-        }
       }
     }
-
-    /* 表格行样式 */
-    .grouped-table-row {
-      border-bottom: 1px solid #f0f0f0;
-      transition: all 0.2s;
-    }
-
-    .grouped-table-row:hover {
-      background-color: #fafafa !important;
-    }
-
-    .grouped-table-row:last-child {
-      border-bottom: none;
-    }
-
-    /* 分组标题悬停效果 */
-    .group-title:hover {
-      background-color: #f5f5f5;
-    }
-
   }
 }

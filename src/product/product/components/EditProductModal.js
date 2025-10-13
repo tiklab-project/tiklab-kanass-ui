@@ -93,6 +93,23 @@ const EditProductModal = (props) => {
                     </Select>
                 </Form.Item>
                 <Form.Item
+                    label={"产品状态"}
+                    name="status"
+                    rules={[
+                        {
+                            required: true
+                        }
+                    ]}
+                >
+                    <Select
+                        placeholder="产品状态"
+                    >
+                        <Select.Option value="0" key="0">未开始</Select.Option>
+                        <Select.Option value="1" key="1">进行中</Select.Option>
+                        <Select.Option value="2" key="2">已结束</Select.Option>
+                    </Select>
+                </Form.Item>
+                <Form.Item
                     label="可见范围"
                     name="productLimits"
                     rules={[

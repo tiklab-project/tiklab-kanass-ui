@@ -1,5 +1,5 @@
 /*
- * @Descripttion: 计划添加弹窗
+ * @Descripttion: 阶段添加弹窗
  * @version: 1.0.0
  * @Author: 袁婕轩
  * @Date: 2022-01-18 14:45:06
@@ -62,7 +62,7 @@ const StageEditModal = (props) => {
     }, [showStageEditModal])
 
     /**
-     * 提交添加计划
+     * 提交添加阶段
      */
     const submitVersion = () => {
         form.validateFields().then((fieldsValue) => {
@@ -124,7 +124,7 @@ const StageEditModal = (props) => {
     return (
         <div className="addmodel">
             <Modal
-                title={"编辑计划"}
+                title={"编辑阶段"}
                 visible={showStageEditModal}
                 width={520}
                 onOk={submitVersion}
@@ -144,16 +144,16 @@ const StageEditModal = (props) => {
                     onFieldsChange = {(changedFields, allFields) => console.log(changedFields, allFields)}
                 >
                     {/*<Form.Item*/}
-                    {/*    label="上级计划"*/}
+                    {/*    label="上级阶段"*/}
                     {/*    name="parentStageId"*/}
                     {/*    rules={[*/}
                     {/*        {*/}
-                    {/*            message: '请选择上级计划',*/}
+                    {/*            message: '请选择上级阶段',*/}
                     {/*        },*/}
                     {/*    ]}*/}
                     {/*>*/}
                     {/*    <Select*/}
-                    {/*        placeholder="上级计划"*/}
+                    {/*        placeholder="上级阶段"*/}
                     {/*        allowClear*/}
                     {/*    >*/}
                     {/*        {*/}
@@ -165,16 +165,16 @@ const StageEditModal = (props) => {
                     {/*</Form.Item>*/}
 
                     <Form.Item
-                        label="计划名称"
+                        label="阶段名称"
                         name="stageName"
                         rules={[
                             {
                                 required: true,
-                                message: '请输入计划名称',
+                                message: '请输入阶段名称',
                             },
                         ]}
                     >
-                        <Input placeholder="请输入计划名称" />
+                        <Input placeholder="请输入阶段名称" />
                     </Form.Item>
                     <Form.Item
                         label="负责人"
@@ -198,17 +198,17 @@ const StageEditModal = (props) => {
                         </Select>
                     </Form.Item>
                     <Form.Item
-                        label="计划状态"
+                        label="阶段状态"
                         name="status"
                         rules={[
                             {
                                 required: true,
-                                message: '请选择计划状态',
+                                message: '请选择阶段状态',
                             },
                         ]}
                     >
                         <Select
-                            placeholder="计划状态"
+                            placeholder="阶段状态"
                             allowClear
                         >
                             {
@@ -231,12 +231,12 @@ const StageEditModal = (props) => {
                         <RangePicker />
                     </Form.Item>
                     <Form.Item
-                        label="计划描述"
+                        label="阶段描述"
                         name="desc"
                         rules={[
                             {
                                 required: false,
-                                message: '请输入计划描述',
+                                message: '请输入阶段描述',
                             },
                         ]}
                     >

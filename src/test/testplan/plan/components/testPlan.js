@@ -16,6 +16,7 @@ import ListIcon from "../../../../common/caseCommon/ListIcon/ListIcon";
 import {showTextStatus} from "../../../../common/caseCommon/CaseCommonFn";
 import testPlanStore from "../store/testPlanStore";
 import {LeftOutlined, SearchOutlined} from "@ant-design/icons";
+import {PrivilegeProjectButton} from "tiklab-privilege-ui";
 
 const TestPlan = (props) => {
     const {
@@ -41,7 +42,7 @@ const TestPlan = (props) => {
                         text={text}
                         isMar={false}
                         colors={index+1 % 7}
-                        className={`icon-l`}
+                        className={`icon-xl`}
                     />
                     <span className={"link-text text-ellipsis"} onClick={()=>toPlanDetail(record)}>{text}</span>
                 </div>
@@ -78,17 +79,23 @@ const TestPlan = (props) => {
             width:70,
             render: (text, record) => (
                 <Space size="middle">
-                    <TestPlanEdit
-                        // name={`${t('tcedit')}`}
-                        name={`${t('编辑计划')}`}
-                        testPlanId={record.id}
-                        type={"edit"}
-                        findPage={findPage}
-                    />
+                    <PrivilegeProjectButton code={'test_plan_update'} domainId={projectId}  {...props}>
+                        <TestPlanEdit
+                            // name={`${t('tcedit')}`}
+                            name={`${t('编辑计划')}`}
+                            testPlanId={record.id}
+                            type={"edit"}
+                            findPage={findPage}
+                        />
+                    </PrivilegeProjectButton>
 
-                    <HideDelete
-                        deleteFn={() =>deleteTestPlan(record.id).then(()=>findPage())}
-                    />
+                    {/*<PrivilegeProjectButton code={'test_plan_delete'} domainId={projectId}  {...props}>*/}
+                        <HideDelete
+                            privilegeCode={'test_plan_delete'}
+                            projectId={projectId}
+                            deleteFn={() =>deleteTestPlan(record.id).then(()=>findPage())}
+                        />
+                    {/*</PrivilegeProjectButton>*/}
                 </Space>
             ),
         },
@@ -190,11 +197,13 @@ const TestPlan = (props) => {
                         onChange={debounce(onSearch,500) }
                         allowClear
                     />
-                    <TestPlanEdit
-                        name={`添加计划`}
-                        findPage={findPage}
-                        type={"add"}
-                    />
+                    <PrivilegeProjectButton code={'test_plan_add'} domainId={projectId}  {...props}>
+                        <TestPlanEdit
+                            name={`添加计划`}
+                            findPage={findPage}
+                            type={"add"}
+                        />
+                    </PrivilegeProjectButton>
                 </div>
 
 

@@ -68,6 +68,7 @@ const WorkBasicInfo = (props) => {
     const moreFormRef = useRef();
     const exFormRef = useRef();
     const detailTabRef = useRef();
+    const workDetailLeft = useRef();
     // 自定义字段的栅格设置
     const layoutExForm = {
         labelCol: { xs: { span: 4 }, sm: { span: 4 }, md: { span: 4 }, lg: { span: 4 }, xl: { span: 4 }, xxl: { span: 2 } },
@@ -725,8 +726,8 @@ const WorkBasicInfo = (props) => {
     return (
         <Provider {...store}>
             <div className="work-info">
-                <div className="work-info-left">
-                    <WorkDetailTitle getTransitionList={getTransitionList} viewFlow={viewFlow} workInfo={workInfo} workStore={workStore} detailForm={detailForm} {...props} />
+                <div className="work-info-left" ref={workDetailLeft}>
+                    <WorkDetailTitle getTransitionList={getTransitionList} viewFlow={viewFlow} workInfo={workInfo} workStore={workStore} detailForm={detailForm} workDetailLeft={workDetailLeft} {...props} />
 
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <div className="other-title">描述</div>
@@ -888,12 +889,12 @@ const WorkBasicInfo = (props) => {
                                                         <div style={{
                                                             display: "flex",
                                                             alignItems: "center",
-                                                            gap: "3px"
+                                                            gap: "5px"
                                                         }}>
                                                             <ImgComponent
                                                                 src={item.iconUrl}
                                                                 alt=""
-                                                                className="img-icon"
+                                                                className="icon-10"
                                                             />
                                                             {item.name}
                                                         </div>
@@ -1106,6 +1107,7 @@ const WorkBasicInfo = (props) => {
                                                 onChange={(value) => updataEstimateTime(value)}
                                                 value={estimateTimeValue}
                                                 disabled={isPermissionField("estimateTime")}
+                                                min={0}
                                             />
 
                                             <Input
@@ -1121,6 +1123,7 @@ const WorkBasicInfo = (props) => {
                                                 onChange={(value) => updataSurplusTime(value)}
                                                 value={surplusTimeValue}
                                                 disabled={isPermissionField("surplusTime")}
+                                                min={0}
                                             />
                                         </Space>
                                     </Form.Item>

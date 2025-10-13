@@ -14,6 +14,8 @@ import WorkRelationStore from "../store/WorkRelationStore";
 import { getSessionStorage, setSessionStorage } from "../../common/utils/setSessionStorage";
 import ImgComponent from "../../common/imgComponent/ImgComponent";
 import WorkPrivilegeComponent from "./WorkPrivilegeComponent";
+import {PrivilegeProjectButton} from "tiklab-privilege-ui";
+import {withRouter} from "react-router";
 const WorkRelation = (props) => {
     const store = {
         workRelation: WorkRelationStore
@@ -26,6 +28,7 @@ const WorkRelation = (props) => {
     const [addRelation, showAddRelation] = useState(false);
     const [inputValue, setInputValue] = useState("");
     const project = JSON.parse(localStorage.getItem("project"));
+    const projectId = props.match.params.id;
     
     /**
      * 获取关联事项列表
@@ -130,14 +133,12 @@ const WorkRelation = (props) => {
             dataIndex: ["workItem", "workPriority", "name"],
             key: "workPriority",
             width: "10%",
-            render: (text, record) => <div className="work-info">
-                <div className="work-info-img">
-                    <ImgComponent
-                        src={record.workItem.workPriority?.iconUrl}
-                        alt=""
-                        className="img-icon-right"
-                    />
-                </div>
+            render: (text, record) => <div className="work-info" style={{alignItems: "center"}}>
+                <ImgComponent
+                    src={record.workItem.workPriority?.iconUrl}
+                    alt=""
+                    className="img-icon-right icon-10"
+                />
                 <div className="work-info-text">{text || "暂无设置"}</div>
             </div>
         },
@@ -214,20 +215,22 @@ const WorkRelation = (props) => {
                 {
                     !addRelation &&
                     <WorkPrivilegeComponent workId = {workId} code = "WorkRelationAdd">
-                        <Button
-                            style={{
-                                display: "flex",
-                                textAlign: "center",
-                                alignItems: "center",
-                                justifyContent: "center",
-                            }}
-                            type="text"
-                            onClick={() => showAddRelation(true)}>
-                            <svg className="img-icon-right" aria-hidden="true" style={{ cursor: "pointer", marginRight: "10px" }}>
-                                <use xlinkHref="#icon-add2"></use>
-                            </svg>
-                            添加事项
-                        </Button>
+                        <PrivilegeProjectButton domainId={projectId} code={'work_link_work'}>
+                            <Button
+                                style={{
+                                    display: "flex",
+                                    textAlign: "center",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                }}
+                                type="text"
+                                onClick={() => showAddRelation(true)}>
+                                <svg className="img-icon-right" aria-hidden="true" style={{ cursor: "pointer", marginRight: "10px" }}>
+                                    <use xlinkHref="#icon-add2"></use>
+                                </svg>
+                                添加事项
+                            </Button>
+                        </PrivilegeProjectButton>
                     </WorkPrivilegeComponent>
                     
                 }
@@ -263,4 +266,4 @@ const WorkRelation = (props) => {
 
     )
 }
-export default inject("workStore", "workRelation")(observer(WorkRelation));
+export default inject("workStore", "workRelation")(observer(withRouter(WorkRelation)));

@@ -26,6 +26,7 @@ import {DownOutlined, SearchOutlined} from "@ant-design/icons";
 import CaseCategoryTree from "../../category/components/CaseCategoryTree";
 import Breadcumb from "../../../common/breadcrumb/Breadcrumb";
 import FunctionContentDrawerView from "../../function/function/components/drawerView/FunctionContentDrawerView";
+import {PrivilegeProjectButton} from "tiklab-privilege-ui";
 
 
 const TestCaseTable = (props) => {
@@ -295,7 +296,9 @@ const TestCaseTable = (props) => {
             width: 50,
             render: (text, record) => (
                 <Space size="small">
-                    <HideDelete deleteFn={() =>deleteFn(record)}/>
+                    {/*<PrivilegeProjectButton code={'test_case_delete'} domainId={projectId}  {...props}>*/}
+                        <HideDelete privilegeCode={'test_case_delete'} projectId={projectId} deleteFn={() =>deleteFn(record)}/>
+                    {/*</PrivilegeProjectButton>*/}
                 </Space>
             )
         },
@@ -330,13 +333,15 @@ const TestCaseTable = (props) => {
                     <div className={"display-flex-between"}>
                         <Breadcumb firstText={tableTitle}/>
                         <Space>
-                            <FuncUnitEdit
-                                findPage={findPage}
-                                categoryStore={categoryStore}
-                                name={"添加用例"}
-                                type={"add"}
-                                {...props}
-                            />
+                            <PrivilegeProjectButton code={'test_case_add'} domainId={projectId}  {...props}>
+                                <FuncUnitEdit
+                                    findPage={findPage}
+                                    categoryStore={categoryStore}
+                                    name={"添加用例"}
+                                    type={"add"}
+                                    {...props}
+                                />
+                            </PrivilegeProjectButton>
                         </Space>
                     </div>
                     <div style={{marginTop: "10px"}} className={"display-flex-between"}>

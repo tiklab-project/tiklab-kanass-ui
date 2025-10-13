@@ -9,6 +9,7 @@ import DeleteModal from "../../../common/deleteModal/deleteModal";
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
 import WorkTypeFree from "./WorkTypeFree";
 import {PrivilegeButton} from "tiklab-privilege-ui";
+import EnhanceEntranceCloseModal from "../../../common/enhanceEntrance/EnhanceEntranceCloseModal";
 
 const WorkTypeList = (props) => {
     const store = {
@@ -123,7 +124,7 @@ const WorkTypeList = (props) => {
                         <ImgComponent
                             src={record.iconUrl}
                             alt=""
-                            className="icon-32"
+                            className="icon-24"
                         />
                     </div>
                     <div className="work-type-text">{text}</div>
@@ -268,9 +269,9 @@ const WorkTypeList = (props) => {
                 />
             </div>
         </div>
-        <WorkTypeFree
-            visible={visibleFree}
-            setVisible={setVisibleFree}
+        <EnhanceEntranceCloseModal
+            config={{title:"自定义事项类型", desc:"自定义你的事项，以及响应的流程和表单"}}
+            enhanceModal={visibleFree} setEnhanceModal={setVisibleFree}
         />
     </Provider>
 

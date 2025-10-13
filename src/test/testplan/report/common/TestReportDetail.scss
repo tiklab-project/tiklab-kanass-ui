@@ -66,6 +66,81 @@
       padding: 32px;
     }
 
+    .desc-box{
+      max-height: 342px;
+      overflow-y: hidden;
+      overflow-x: hidden;
+      .edit-small{
+        height: auto;
+        background-color: #fff;
+        .edit-small-content{
+          width: 100%;
+          height: auto;
+
+          .edit-box{
+            overflow: unset;
+          }
+
+          //.edit-toolbar{
+          //    padding: 0;
+          //    gap: 0;
+          //
+          //    .editor-drop-down{
+          //        min-width: 20px;
+          //    }
+          //    .editor-drop-down-box {
+          //        z-index: 50;
+          //    }
+          //    .block-menu {
+          //        padding-left: 5px;
+          //        gap: 8px;
+          //    }
+          //}
+          //
+          //.edit-toolbar > .block-menu:last-child > .editor-drop-down-box {
+          //    left: -200px !important;
+          //}
+        }
+      }
+    }
+
+    .more-desc {
+      max-height: fit-content;
+    }
+
+    .desc-botton {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin-top: 10px;
+      gap: 10px;
+    }
+
+    .desc-preview {
+      padding: 10px;
+      min-height: 250px;
+    }
+
+    .more-desc-box {
+      display: flex;
+      justify-content: center;
+    }
+
+    .form-custom-open {
+      width: 30px;
+      height: 30px;
+      padding: 6px 0;
+      margin-right: 10px;
+    }
+    .close {
+      transform: rotate(-90deg);
+      transition: all 0.2s;
+    }
+    .open {
+      transform: rotate(90deg);
+      transition: all 0.2s;
+    }
+
     .info-item {
       display: flex;
       align-items: flex-start;

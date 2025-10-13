@@ -14,6 +14,8 @@ import {toWorkItem} from "../../common/util/workItemCommonFn";
 import {deleteWorkTestCaseFn} from "../../../testcase/components/testCaseTableFn";
 import ImgComponent from "../../../../common/imgComponent/ImgComponent";
 import testPlanDetailStore from "../../../testplan/plan/store/testPlanDetailStore";
+import {PrivilegeProjectButton} from "tiklab-privilege-ui";
+import {withRouter} from "react-router";
 
 
 /**
@@ -24,6 +26,7 @@ const CaseBindDefectList = (props) =>{
     const {findWorkItemBindPage,workItemBindList,deleteWorkItemBind} = workItemBindStore
     const {deleteWork} = workStore
     const {findBindTestCaseList} = testPlanDetailStore
+    const projectId = props.match.params.id;
 
     const setStatuStyle = (id) => {
         let name;
@@ -119,64 +122,135 @@ const CaseBindDefectList = (props) =>{
         key: "action",
         width:"10%",
         render: (text, record) => {
-            const menu = (
-                <Menu>
-                    <Menu.Item key="unbind" icon={<DisconnectOutlined />}>
-                        <Popconfirm
-                            title="确定解绑该缺陷？"
-                            onConfirm={() => {
-                                deleteWorkItemBind(record.id).then(() => {
-                                    findPage()
-                                }
-                                // findWorkItemBindPage({
-                                //     // caseId: caseId,
-                                //     // testPlanId: testPlanId
-                                //     // 暂时不考虑一个用例对应多个计划的关系
-                                // })
-                                )
-                                deleteWorkTestCaseFn(caseId, record.workItem?.id)
-                            }}
-                            okText='确定'
-                            cancelText='取消'
-                        >
-                            <span>解绑</span>
-                        </Popconfirm>
-                    </Menu.Item>
-                    <Menu.Item key="delete" icon={<DeleteOutlined />}>
-                        <Popconfirm
-                            title="确定删除？"
-                            onConfirm={async () => {
-                                await deleteWorkItemBind(record.id)
-                                await deleteWork(record.workItem?.id)
-                                // await deleteWorkTestCaseFn(caseId, record.workItem?.id)
-                                findPage()
-                                // await findWorkItemBindPage({
-                                //     caseId: caseId,
-                                //     // testPlanId: testPlanId
-                                //     // 暂时不考虑一个用例对应多个计划的关系
-                                // })
-                            }}
-                            okText='确定'
-                            cancelText='取消'
-                        >
-                            <span>删除</span>
-                        </Popconfirm>
-                    </Menu.Item>
-                </Menu>
-            );
+            const moreMenu = () => {
+                return(
+                    !inDetail ?
+                    <div className="defect-dropdown-more">
+                        <PrivilegeProjectButton code={'test_plan_update'} domainId={projectId}  {...props}>
+                            <div className="dropdown-more-item">
+                                <Popconfirm
+                                    title="确定解绑该缺陷？"
+                                    onConfirm={() => {
+                                        deleteWorkItemBind(record.id).then(() => {
+                                                findPage()
+                                            }
+                                            // findWorkItemBindPage({
+                                            //     // caseId: caseId,
+                                            //     // testPlanId: testPlanId
+                                            //     // 暂时不考虑一个用例对应多个计划的关系
+                                            // })
+                                        )
+                                        deleteWorkTestCaseFn(caseId, record.workItem?.id)
+                                    }}
+                                    okText='确定'
+                                    cancelText='取消'
+                                >
+                                    <Space>
+                                        <DisconnectOutlined/>
+                                        <span>解绑</span>
+                                    </Space>
+                                </Popconfirm>
+                            </div>
+                        </PrivilegeProjectButton>
+
+                        <PrivilegeProjectButton code={'test_plan_update'} domainId={projectId}  {...props}>
+                            <div className="dropdown-more-item">
+                                <Popconfirm
+                                    title="确定删除？"
+                                    onConfirm={async () => {
+                                        await deleteWorkItemBind(record.id)
+                                        await deleteWork(record.workItem?.id)
+                                        // await deleteWorkTestCaseFn(caseId, record.workItem?.id)
+                                        findPage()
+                                        // await findWorkItemBindPage({
+                                        //     caseId: caseId,
+                                        //     // testPlanId: testPlanId
+                                        //     // 暂时不考虑一个用例对应多个计划的关系
+                                        // })
+                                    }}
+                                    okText='确定'
+                                    cancelText='取消'
+                                >
+                                    <Space>
+                                        <DeleteOutlined/>
+                                        <span>删除</span>
+                                    </Space>
+                                </Popconfirm>
+                            </div>
+                        </PrivilegeProjectButton>
+
+                    </div>
+                    :
+                    <div className="defect-dropdown-more">
+                            <PrivilegeProjectButton code={'test_case_update'} domainId={projectId}  {...props}>
+                                <div className="dropdown-more-item">
+                                    <Popconfirm
+                                        title="确定解绑该缺陷？"
+                                        onConfirm={() => {
+                                            deleteWorkItemBind(record.id).then(() => {
+                                                    findPage()
+                                                }
+                                                // findWorkItemBindPage({
+                                                //     // caseId: caseId,
+                                                //     // testPlanId: testPlanId
+                                                //     // 暂时不考虑一个用例对应多个计划的关系
+                                                // })
+                                            )
+                                            deleteWorkTestCaseFn(caseId, record.workItem?.id)
+                                        }}
+                                        okText='确定'
+                                        cancelText='取消'
+                                    >
+                                        <Space>
+                                            <DisconnectOutlined/>
+                                            <span>解绑</span>
+                                        </Space>
+                                    </Popconfirm>
+                                </div>
+                            </PrivilegeProjectButton>
+
+                            <PrivilegeProjectButton code={'test_case_update'} domainId={projectId}  {...props}>
+                                <div className="dropdown-more-item">
+                                    <Popconfirm
+                                        title="确定删除？"
+                                        onConfirm={async () => {
+                                            await deleteWorkItemBind(record.id)
+                                            await deleteWork(record.workItem?.id)
+                                            // await deleteWorkTestCaseFn(caseId, record.workItem?.id)
+                                            findPage()
+                                            // await findWorkItemBindPage({
+                                            //     caseId: caseId,
+                                            //     // testPlanId: testPlanId
+                                            //     // 暂时不考虑一个用例对应多个计划的关系
+                                            // })
+                                        }}
+                                        okText='确定'
+                                        cancelText='取消'
+                                    >
+                                        <Space>
+                                            <DeleteOutlined/>
+                                            <span>删除</span>
+                                        </Space>
+                                    </Popconfirm>
+                                </div>
+                            </PrivilegeProjectButton>
+
+                        </div>
+                );
+            }
 
             return (
                 <Space>
                     <Popconfirm
-                        title="确定跳转到Kanass查看？"
+                        title="确定跳转到详情页？"
                         onConfirm={() => toWorkItem(record)}
                         okText='确定'
                         cancelText='取消'
                         placement={"topLeft"}
                     >
-                        <IconCommon icon="dakaixinyemian" className="icon-s edit-icon" />
+                        <IconCommon icon="jump" className="icon-s" style={{cursor: "pointer"}}/>
                     </Popconfirm>
-                    <Dropdown overlay={menu} trigger={['click']}>
+                    <Dropdown overlay={() => moreMenu()} trigger={['click']}>
                         <EllipsisOutlined style={{ cursor: 'pointer', fontSize: '20px' }} />
                     </Dropdown>
                 </Space>
@@ -314,4 +388,4 @@ const CaseBindDefectList = (props) =>{
     )
 }
 
-export default observer(CaseBindDefectList);
+export default observer(withRouter(CaseBindDefectList));

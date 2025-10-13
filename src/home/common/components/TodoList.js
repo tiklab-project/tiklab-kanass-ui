@@ -617,7 +617,8 @@ const TodoList = (props) => {
                                         current: todoListPageCondition.pageParam.currentPage,
                                         onChange: changePage,
                                         position: ["bottomCenter"],
-                                        showTotal: () => `共${tableInfo.totalRecord}条`
+                                        showTotal: () => `共${tableInfo.totalRecord}条`,
+                                        showSizeChanger: false,
                                     }}
                                     locale={{
                                         emptyText: <Empty

@@ -37,6 +37,7 @@ export class VersionPlanStore {
     @observable planCurrent = 0;
     @observable noPlanTotal = 0;
     @observable planTotal = 0;
+    @observable permissionCodeList = [];
 
     @action
     setNoPlanSearchCondition = (value) => {
@@ -149,6 +150,17 @@ export class VersionPlanStore {
         const params = new FormData();
         params.append("id", value.id)
         const data = await Service("/workItem/findWorkItemAndChildrenIds", params)
+        return data;
+    }
+
+    // 获取事项的表单字段和功能的权限列表
+    @action
+    findFunctionDmCodeList = async(value) => {
+
+        const data = await Axios.post("/permission/findDomainPermissions", value)
+        if(data.code === 0){
+            this.permissionCodeList = data.data;
+        }
         return data;
     }
 }

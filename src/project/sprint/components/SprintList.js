@@ -24,6 +24,7 @@ import { SelectSimple, SelectItem } from "../../../common/select";
 import ColorIcon from "../../../common/colorIcon/ColorIcon"
 import { PrivilegeProjectButton } from "tiklab-privilege-ui";
 import CircleProgress from "../../../common/progress/CircleProgress";
+import UserIcon from "../../../common/UserIcon/UserIcon";
 const Sprint = (props) => {
     const store = {
         sprintStore: SprintStore
@@ -327,9 +328,12 @@ const Sprint = (props) => {
             dataIndex: "master",
             key: "master",
             align: "left",
-            render: (text, record) => <>
-                {record?.master.nickname}
-            </>
+            render: (text, record) => (
+                <Space>
+                    <UserIcon name={record?.master.nickname} />
+                    {record?.master.nickname}
+                </Space>
+            )
         },
         {
             title: "创建时间",
@@ -356,12 +360,15 @@ const Sprint = (props) => {
                                 <use xlinkHref="#icon-noview"></use>
                             </svg>
                     }
-                    <svg className="svg-icon" aria-hidden="true" onClick={() => showModal("edit", record.id)}>
-                        <use xlinkHref="#icon-edit"></use>
-                    </svg>
-                    {/*<PrivilegeProjectButton code={'SprintDelete'} domainId={projectId}  {...props}>*/}
+                    <PrivilegeProjectButton code={'sprint_update'} domainId={projectId}  {...props}>
+                        <svg className="svg-icon" aria-hidden="true" onClick={() => showModal("edit", record.id)}>
+                            <use xlinkHref="#icon-edit"></use>
+                        </svg>
+                    </PrivilegeProjectButton>
+
+                    <PrivilegeProjectButton code={'sprint_delete'} domainId={projectId}  {...props}>
                         <DeleteModal deleteFunction={deleSprintList} id={record.id} />
-                    {/*</PrivilegeProjectButton>*/}
+                    </PrivilegeProjectButton>
 
                 </Space>
 
@@ -378,11 +385,11 @@ const Sprint = (props) => {
                             firstText="迭代"
                         >
                             <div className="sprint-botton">
-                                {/*<PrivilegeProjectButton code={'SpintAdd'} domainId={projectId}  {...props}>*/}
+                                <PrivilegeProjectButton code={'sprint_add'} domainId={projectId}  {...props}>
                                     <Button type="primary" className="sprint-botton-add" onClick={() => showModal("add")}>
                                         添加迭代
                                     </Button>
-                                {/*</PrivilegeProjectButton>*/}
+                                </PrivilegeProjectButton>
 
                             </div>
                         </Breadcumb>

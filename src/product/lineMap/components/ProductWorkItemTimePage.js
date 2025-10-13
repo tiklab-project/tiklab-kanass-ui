@@ -3,7 +3,7 @@ import {observer, Provider} from "mobx-react";
 import EpicStore from "../../../project/lineMap/store/EpicStore";
 import React, {useEffect, useRef, useState} from "react";
 import {setSessionStorage} from "../../../common/utils/setSessionStorage";
-import {Col, List, Row, Spin} from "antd";
+import {Col, Empty, List, Row, Spin, Tag} from "antd";
 import InputSearch from "../../../common/input/InputSearch";
 import WorkCreatDropdown from "../../../work/components/workCreatDropdown";
 import DeleteModal from "../../../common/deleteModal/deleteModal";
@@ -12,6 +12,7 @@ import WorkDetailDrawer from "../../../work/components/WorkDetailDrawer";
 import ProductLineMapStore from "../store/ProductLineMapStore";
 import WorkStore from "../../../work/store/WorkStore";
 import "./ProductWorkItemTimePage.scss"
+import UserIcon from "../../../common/UserIcon/UserIcon";
 
 const ProductWorkItemTimePage = (props) => {
     const store = {
@@ -36,7 +37,6 @@ const ProductWorkItemTimePage = (props) => {
     const groupDataByMonth = (data) => {
         const groups = {};
 
-        // console.log("看下计算分组的数据：    "+data)
         if (!data || !Array.isArray(data)){
             return [];
         }
@@ -82,13 +82,12 @@ const ProductWorkItemTimePage = (props) => {
         setWorkId(workItem.id)
         setIsModalVisible(true)
         setSessionStorage("detailCrumbArray", [{ id: workItem.id, code: workItem.code, title: workItem.title, iconUrl: workItem.workTypeSys.iconUrl }])
-        props.history.replace(`/project/${workItem.project.id}/linemap/${workItem.id}`)
+        props.history.replace(`/product/${productId}/linemap/${workItem.id}`)
 
         setIsModalVisible(true)
-
     }
 
-    const setStatuStyle = (id) => {
+    const setStatusStyle = (id) => {
         let name;
         switch (id) {
             case "todo":
@@ -116,7 +115,6 @@ const ProductWorkItemTimePage = (props) => {
         }));
     };
 
-    // 自定义渲染分组标题
     const renderGroupTitle = (group) => {
         const isExpanded = expandedGroups[group.month];
 
@@ -135,14 +133,12 @@ const ProductWorkItemTimePage = (props) => {
                     </svg>
                 )}
                 <span>{group.month}</span>
-                {/*<span className="group-title-item-count">{group.count}个需求</span>*/}
                 <span>（{group.count}）</span>
             </div>
         );
     };
 
     const reSearchTable = (param) => {
-        console.log("查询的参数:    "+JSON.stringify(param))
         findWorkItemList(param).then(result => {
             setDataList(result);
 
@@ -150,7 +146,7 @@ const ProductWorkItemTimePage = (props) => {
             setGroupData(newGroupedData);
 
             var expandedGroups = newGroupedData.reduce((acc, group) => {
-                acc[group.month] = true; // 默认全部展开
+                acc[group.month] = true;
                 return acc;
             }, {});
             setExpandedGroups(expandedGroups)
@@ -160,37 +156,44 @@ const ProductWorkItemTimePage = (props) => {
     }
 
     const onSearch = (value) => {
-        console.log(value);
         const param = {
             projectIds: projectIds,
             workTypeSysId: workTypeList[0].workType.id,
-            title: value
+            title: value,
+            projectId: null
         }
         reSearchTable(param)
     }
 
     useEffect(() => {
-        console.log("按时间视图--产品id：    "+productId)
-        // 先获取事项类型信息，然后再获取事项列表
         findProjectList({productId: productId}).then(res => {
             const ids = res.data.map(item => item.id);
             setProjectIds(ids)
             findWorkTypeDmList({ projectIds: ids, codes: ["demand"] }).then(res => {
                 if (res.code === 0) {
                     setWorkTypeList(res.data)
+
+                    // 未关联项目
+                    if (ids.length === 0){
+                        setDataList([])
+                        setGroupData([]);
+                        setLoading(false)
+                        return;
+                    }
+
                     const param = {
                         projectIds: ids,
-                        workTypeSysId: res.data[0].workType.id
+                        workTypeSysId: res.data[0].workType.id,
+                        projectId:null
                     }
                     findWorkItemList(param).then(result => {
-                        // console.log("数据：    "+JSON.stringify(result))
                         setDataList(result);
 
                         const newGroupedData = groupDataByMonth(result);
                         setGroupData(newGroupedData);
 
                         var expandedGroups = newGroupedData.reduce((acc, group) => {
-                            acc[group.month] = true; // 默认全部展开
+                            acc[group.month] = true;
                             return acc;
                         }, {});
                         setExpandedGroups(expandedGroups)
@@ -198,10 +201,8 @@ const ProductWorkItemTimePage = (props) => {
                         setLoading(false)
                     })
                 }
-
             })
         })
-
     }, []);
 
     const deleteWork = (id) => {
@@ -221,16 +222,11 @@ const ProductWorkItemTimePage = (props) => {
     }
 
     return <Provider {...store}>
-        <Row style={
-            {
-                height: "100vh",
-                overflowY:"auto"
-            }
-        }>
+        <Row style={{ height: "100vh", overflowY:"auto" }}>
             <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "20", offset: "2" }} xxl={{ span: "18", offset: "4" }}>
-                <div className="project-linemap">
-                    <div className="project-linemap-head">
-                        <div className="project-linemap-title">路线图</div>
+                <div className="product-linemap">
+                    <div className="product-linemap-head">
+                        <div className="product-linemap-title">路线图</div>
                         <div className="line-map-tab">
                             <div className={`tab-tabpane ${lineMapView === "workItemTime" ? "tab-tabpane-select" : ""}`} onClick={() => onChange("workItemTime")}>
                                 按时间
@@ -256,7 +252,7 @@ const ProductWorkItemTimePage = (props) => {
                                 <div className="work-item-time-content">
                                     <div className="content-table">
                                         {
-                                            groupedData.map((group) => (
+                                            groupedData.length > 0 ? groupedData.map((group) => (
                                                 <div key={group.month}>
                                                     {renderGroupTitle(group)}
                                                     {expandedGroups[group.month] && (
@@ -264,70 +260,83 @@ const ProductWorkItemTimePage = (props) => {
                                                             dataSource={group.items}
                                                             renderItem={(item, index) => (
                                                                 <List.Item
-                                                                    // className="work-item"
-                                                                    // onClick={() => goWorkItemDetail(item, index)}
+                                                                    className="work-item-row"
                                                                     actions={[
-                                                                        // <Space size="small">
                                                                         <div className="workItem-operate">
-                                                                            <div className={`work-status ${setStatuStyle(item.workStatusNode.id)}`}>
-                                                                                {item.workStatusNode?.name}
-                                                                            </div>
-                                                                            <div className="delete-operate">
-                                                                                <DeleteModal deleteFunction={deleteWork} id={item.id} />
-                                                                            </div>
+                                                                            <DeleteModal deleteFunction={deleteWork} id={item.id} />
                                                                         </div>
-                                                                        // </Space>
                                                                     ]}
                                                                 >
-                                                                    <div className="item-content-wrapper">
-                                                                        <div className="item-avatar">
-                                                                            <ImgComponent
-                                                                                src={item.workTypeSys?.iconUrl}
-                                                                                alt=""
-                                                                                className="icon-18"
-                                                                            />
-                                                                            {/*<span className="item-code">{item.code}</span>*/}
-                                                                        </div>
-
-                                                                        <div className="item-content" onClick={() => goWorkItemDetail(item, index)}>
-                                                                            <div
-                                                                                className="item-title"
-
-                                                                            >
+                                                                    <div className="work-item-columns">
+                                                                        {/* Column 1: Icon + Title */}
+                                                                        <div className="column-icon-title" onClick={() => goWorkItemDetail(item, index)}>
+                                                                            <div className="item-avatar">
+                                                                                <ImgComponent
+                                                                                    src={item.workTypeSys?.iconUrl}
+                                                                                    alt=""
+                                                                                    className="icon-18"
+                                                                                />
+                                                                            </div>
+                                                                            <div className="item-title">
                                                                                 {item.title}
                                                                             </div>
-                                                                            <div className="item-description">
-                                                                                <span className="item-creator">{item.builder?.nickname}</span>
-                                                                                <span className="item-time">{item.buildTime.substring(0, 10)}</span>
+                                                                        </div>
+
+                                                                        {/* Column 3: Status */}
+                                                                        <div className={'column-status'}>
+                                                                            <div className={`work-status ${setStatusStyle(item.workStatusNode.id)}`}>
+                                                                                {item.workStatusNode?.name}
                                                                             </div>
                                                                         </div>
 
+                                                                        {/* Column 4: Priority */}
+                                                                        <div className={`column-priority`}>
+                                                                            <div className="work-info-img">
+                                                                                <ImgComponent
+                                                                                    src={item.workPriority?.iconUrl}
+                                                                                    alt=""
+                                                                                    // isRemote={true}
+                                                                                    className="img-icon-right icon-10"
+                                                                                />
+                                                                            </div>
+                                                                            <div className="work-info-text">{item.workPriority?.name || '-'}</div>
+                                                                        </div>
 
+                                                                        {/* Column 5: Creator */}
+                                                                        <div className="column-creator">
+                                                                            <UserIcon name={item.builder?.nickname} />
+                                                                            {item.builder?.nickname || '-'}
+                                                                        </div>
+
+                                                                        {/* Column 6: Create Time */}
+                                                                        <div className="column-time">
+                                                                            {item.buildTime.substring(0, 10)}
+                                                                        </div>
                                                                     </div>
                                                                 </List.Item>
-
                                                             )}
                                                         />
                                                     )}
                                                 </div>
                                             ))
+                                                :<Empty
+                                                    imageStyle={{height: 100}}
+                                                    description={<span>暂无数据</span>}
+                                                />
                                         }
                                     </div>
                                 </div>
                         }
                     </div>
                 </div>
-
             </Col>
         </Row>
-
 
         <WorkDetailDrawer
             isModalVisible={isModalVisible}
             setIsModalVisible={setIsModalVisible}
             modelRef={modelRef}
             showPage={true}
-            // deleteWork = {deleteWork}
             delectCurrentWorkItem={deleteWork}
             {...props}
         />

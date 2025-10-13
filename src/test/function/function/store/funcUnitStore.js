@@ -7,6 +7,7 @@ export class FuncUnitStore {
     @observable funcUnitList = [];
     @observable funcUnitInfo;
     @observable testCaseInfo;
+    @observable permissionCodeList = [];
 
     @action
     findFuncUnitList = async (value) => {
@@ -45,6 +46,17 @@ export class FuncUnitStore {
         param.append('id', id);
 
         await Axios.post("/funcUnitCase/deleteFuncUnitCase",param)
+    }
+
+    // 获取事项的表单字段和功能的权限列表
+    @action
+    findFunctionDmCodeList = async(value) => {
+
+        const data = await Axios.post("/permission/findDomainPermissions", value)
+        if(data.code === 0){
+            this.permissionCodeList = data.data;
+        }
+        return data;
     }
 
 }

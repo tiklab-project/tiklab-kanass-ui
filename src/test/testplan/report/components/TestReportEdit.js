@@ -27,7 +27,7 @@ const TestReportEdit = (props) => {
                 form.setFieldsValue({
                     name: res.name,
                     // rangeTime: [moment(res.startTime, 'YYYY-MM-DD'), moment(res.endTime, 'YYYY-MM-DD')],
-                    desc: res.desc
+                    // desc: res.desc
                 });
             });
         }
@@ -105,12 +105,12 @@ const TestReportEdit = (props) => {
                     {/*>*/}
                     {/*    <RangePicker format={'YYYY-MM-DD'} style={{ width: "420px" }} />*/}
                     {/*</Form.Item>*/}
-                    <Form.Item
-                        label="报告描述"
-                        name="desc"
-                    >
-                        <TextArea rows={4} placeholder="请输入报告描述" />
-                    </Form.Item>
+                    {/*<Form.Item*/}
+                    {/*    label="报告描述"*/}
+                    {/*    name="desc"*/}
+                    {/*>*/}
+                    {/*    <TextArea rows={4} placeholder="请输入报告描述" />*/}
+                    {/*</Form.Item>*/}
                 </Form>
             </Modal>
         </>

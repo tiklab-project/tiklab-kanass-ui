@@ -1,19 +1,47 @@
 import React from "react";
 import {Dropdown, Menu, Modal, Popconfirm} from "antd";
-import IconCommon from "../IconCommon";
+import "./HideDelete.scss"
 import {EllipsisOutlined} from "@ant-design/icons";
+import {PrivilegeButton, PrivilegeProjectButton} from "tiklab-privilege-ui";
 
 const HideDelete = (props) =>{
-    const {deleteFn} = props;
+    const {deleteFn, privilegeCode, projectId} = props;
 
 
-    const menu = (
-        <Menu>
-            <Menu.Item key={1}>
-                <div style={{cursor:"pointer",width:"100px"}}  onClick={() => showDeleteConfirm()}>删除</div>
-            </Menu.Item>
-        </Menu>
-    );
+    const menu = () => {
+        return(
+            <div className="delete-dropdown-more">
+                {
+                    privilegeCode ?
+                        projectId ?
+                            <PrivilegeProjectButton code={privilegeCode} domainId={projectId}  {...props}>
+                                <div onClick={() => showDeleteConfirm(true)} className="dropdown-more-item">
+                                    <svg style={{marginRight:"5px"}} className="icon-16" aria-hidden="true">
+                                        <use xlinkHref="#icon-delete"></use>
+                                    </svg>
+                                    <span>删除</span>
+                                </div>
+                            </PrivilegeProjectButton>
+                            :
+                            <PrivilegeButton code={privilegeCode} {...props}>
+                                <div onClick={() => showDeleteConfirm(true)} className="dropdown-more-item">
+                                    <svg style={{marginRight:"5px"}} className="icon-16" aria-hidden="true">
+                                        <use xlinkHref="#icon-delete"></use>
+                                    </svg>
+                                    <span>删除</span>
+                                </div>
+                            </PrivilegeButton>
+                        :
+                        <div onClick={() => showDeleteConfirm(true)} className="dropdown-more-item">
+                            <svg style={{marginRight:"5px"}} className="icon-16" aria-hidden="true">
+                                <use xlinkHref="#icon-delete"></use>
+                            </svg>
+                            <span>删除</span>
+                        </div>
+                }
+            </div>
+        )
+    };
 
 
     // 删除确认
@@ -32,14 +60,14 @@ const HideDelete = (props) =>{
 
 
     return(
-        <>
-            <Dropdown overlay={menu} placement="bottomRight">
+        <div className={"hide-delete"}>
+            <Dropdown overlay={() => menu()} placement="bottomRight">
                 <span>
                     <EllipsisOutlined style={{fontSize:24}} />
                 </span>
             </Dropdown>
 
-        </>
+        </div>
     )
 }
 

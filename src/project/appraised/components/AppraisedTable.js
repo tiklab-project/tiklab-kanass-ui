@@ -111,15 +111,6 @@ const AppraisedTable = (props) => {
     }, []);
 
     const goDetail = (id, name) => {
-        console.log("id:  " + id + "name:  " + name)
-        // const params = {
-        //     name: name,
-        //     model: "appraised",
-        //     modelId: id,
-        //     project: { id: project.id },
-        //     projectType: { id: project.projectType.id },
-        // }
-        // createRecent(params)
 
         props.history.push(`/project/${projectId}/appraised/${id}`)
         localStorage.setItem("appraisedId", id);

@@ -117,43 +117,43 @@ const WorkBodarContent = (props) => {
                                                                             </Tooltip>
                                                                         </div>
 
-                                                                        {(() => {
-                                                                            if (workItem.parentId) {
-                                                                                return (
-                                                                                    <Tooltip title={`父事项： ${workItem.parentWorkItem.title}`}>
-                                                                                        <div className="work-item-middle">
-                                                                                            <svg className="img-icon-right" aria-hidden="true">
-                                                                                                <use xlinkHref="#icon-parent"></use>
-                                                                                            </svg>
-                                                                                            <span className="work-item-parent">{workItem.parentWorkItem.title}</span>
-                                                                                        </div>
-                                                                                    </Tooltip>
-                                                                                )
-                                                                            }
-                                                                            return null;
-                                                                        })()}
+                                                                        {/*{(() => {*/}
+                                                                        {/*    if (workItem.parentId) {*/}
+                                                                        {/*        return (*/}
+                                                                        {/*            <Tooltip title={`父事项： ${workItem.parentWorkItem.title}`}>*/}
+                                                                        {/*                <div className="work-item-middle">*/}
+                                                                        {/*                    <svg className="img-icon-right" aria-hidden="true">*/}
+                                                                        {/*                        <use xlinkHref="#icon-parent"></use>*/}
+                                                                        {/*                    </svg>*/}
+                                                                        {/*                    <span className="work-item-parent">{workItem.parentWorkItem.title}</span>*/}
+                                                                        {/*                </div>*/}
+                                                                        {/*            </Tooltip>*/}
+                                                                        {/*        )*/}
+                                                                        {/*    }*/}
+                                                                        {/*    return null;*/}
+                                                                        {/*})()}*/}
                                                                         <div className="work-item-bottom">
                                                                                 <div className="work-item-bottom-left">
                                                                                     {/*<div className="work-item-date">*/}
                                                                                     {/*    {parseDate(workItem.buildTime)}*/}
                                                                                     {/*</div>*/}
                                                                                     {/*子事项*/}
-                                                                                    {(() => {
-                                                                                        const childCount = getChildrenCount(workItem.children);
-                                                                                        if (childCount > 0) {
-                                                                                            return (
-                                                                                                <Tooltip title={`子事项 ${childCount} 个`}>
-                                                                                                    <span className="attr-badge">
-                                                                                                        <svg className="img-icon-right" aria-hidden="true">
-                                                                                                            <use xlinkHref="#icon-child"></use>
-                                                                                                        </svg>
-                                                                                                        {childCount}
-                                                                                                    </span>
-                                                                                                </Tooltip>
-                                                                                            )
-                                                                                        }
-                                                                                        return null;
-                                                                                    })()}
+                                                                                    {/*{(() => {*/}
+                                                                                    {/*    const childCount = getChildrenCount(workItem.children);*/}
+                                                                                    {/*    if (childCount > 0) {*/}
+                                                                                    {/*        return (*/}
+                                                                                    {/*            <Tooltip title={`子事项 ${childCount} 个`}>*/}
+                                                                                    {/*                <span className="attr-badge">*/}
+                                                                                    {/*                    <svg className="img-icon-right" aria-hidden="true">*/}
+                                                                                    {/*                        <use xlinkHref="#icon-child"></use>*/}
+                                                                                    {/*                    </svg>*/}
+                                                                                    {/*                    {childCount}*/}
+                                                                                    {/*                </span>*/}
+                                                                                    {/*            </Tooltip>*/}
+                                                                                    {/*        )*/}
+                                                                                    {/*    }*/}
+                                                                                    {/*    return null;*/}
+                                                                                    {/*})()}*/}
                                                                                     {/*逾期*/}
                                                                                     {(() => {
                                                                                         const due = getDueStatus(workItem.planEndTime);

@@ -140,14 +140,14 @@ const StageSurvey = (props) => {
 
         if (state === "000000" && stageInfo?.workNumber > 0) {
             dom = <div className="stage-state-start-button" onClick={() => changeStateToStart()}>
-                开始迭代
+                开始阶段
             </div>
         }
 
         if (state === "000000" && stageInfo?.workNumber <= 0) {
-            dom = <Tooltip placement="bottom" title={"当前迭代没有规划事项，不能开始"}>
+            dom = <Tooltip placement="bottom" title={"当前阶段没有规划事项，不能开始"}>
                 <div className="stage-state-disable-button">
-                    开始迭代
+                    开始阶段
                 </div>
             </Tooltip>
 
@@ -156,7 +156,7 @@ const StageSurvey = (props) => {
 
         if (state === "111111" && stageInfo?.workNumber > 0) {
             dom = <div className="stage-state-start-button" onClick={() => changeStateToEnd()}>
-                完成迭代
+                完成阶段
             </div>
         }
         return dom;
@@ -204,7 +204,7 @@ const StageSurvey = (props) => {
                                         <UserIcon userInfo={stageInfo?.master} size="big" className="item-icon" name={stageInfo?.master.nickname} />
                                         <div className="item-content">
                                             <div className="item-top">{stageInfo?.master?.nickname}</div>
-                                            <div className="item-bottom">迭代负责人</div>
+                                            <div className="item-bottom">阶段负责人</div>
                                         </div>
                                     </div>
                                     <div className="stage-work">
@@ -269,25 +269,25 @@ const StageSurvey = (props) => {
                                                                 <span style={{paddingRight:"10px"}}>
                                                                     <PlayCircleOutlined />
                                                                 </span>
-                                                                开始迭代
+                                                                开始阶段
                                                             </Select.Option>
                                                             : stageInfo?.status === "1" ?
                                                                 <Select.Option value="2">
                                                                 <span style={{paddingRight:"10px"}}>
                                                                     <CloseCircleOutlined />
                                                                 </span>
-                                                                    结束迭代
+                                                                    结束阶段
                                                                 </Select.Option> :
                                                                 <Select.Option value="1">
                                                                 <span style={{paddingRight:"10px"}}>
                                                                     <PlayCircleOutlined />
                                                                 </span>
-                                                                    开始迭代
+                                                                    开始阶段
                                                                 </Select.Option>
                                                     }
                                                 </Select>
                                             </div>
-                                            <div className="item-bottom">迭代状态</div>
+                                            <div className="item-bottom">阶段状态</div>
                                         </div>
                                     </div>
 
@@ -297,7 +297,7 @@ const StageSurvey = (props) => {
                                         </svg>
                                         <div className="item-content">
                                             <div className="item-top">{stageInfo?.startTime.slice(0, 10)} ~ {stageInfo?.endTime.slice(0, 10)}</div>
-                                            <div className="item-bottom">迭代计划周期</div>
+                                            <div className="item-bottom">阶段计划周期</div>
                                         </div>
                                     </div>
 
@@ -307,7 +307,7 @@ const StageSurvey = (props) => {
                                         </svg>
                                         <div className="item-content">
                                             <div className="item-top">{stageInfo?.relaStartTime ? stageInfo?.relaStartTime.slice(0, 10) : "未开始"}  ~ {stageInfo?.status === "222222" ? stageInfo?.relaEndTime.slice(0, 10) : "未结束"}</div>
-                                            <div className="item-bottom">迭代实际周期</div>
+                                            <div className="item-bottom">阶段实际周期</div>
                                         </div>
                                     </div>
 
@@ -317,7 +317,7 @@ const StageSurvey = (props) => {
                                         </svg>
                                         <div className="item-content">
                                             <div className="item-top item-progress"><Progress percent={percent} status="active" /></div>
-                                            <div className="item-bottom">迭代进度</div>
+                                            <div className="item-bottom">阶段进度</div>
                                         </div>
                                     </div>
                                     {/*<div className="stage-item">*/}
@@ -325,21 +325,21 @@ const StageSurvey = (props) => {
                                     {/*        <ClockCircleOutlined style={{fontSize:"20px", color:"grey"}} />*/}
                                     {/*        <div className="item-content">*/}
                                     {/*            <div className="item-top">{stageInfo?.estimateTime}  小时</div>*/}
-                                    {/*            <div className="item-bottom">迭代预计工时</div>*/}
+                                    {/*            <div className="item-bottom">阶段预计工时</div>*/}
                                     {/*        </div>*/}
                                     {/*    </div>*/}
                                     {/*    <div className="item-group">*/}
                                     {/*        <ClockCircleOutlined style={{fontSize:"20px", color:"grey"}} />*/}
                                     {/*        <div className="item-content">*/}
                                     {/*            <div className="item-top">{stageInfo?.surplusTime}  小时</div>*/}
-                                    {/*            <div className="item-bottom">迭代剩余工时</div>*/}
+                                    {/*            <div className="item-bottom">阶段剩余工时</div>*/}
                                     {/*        </div>*/}
                                     {/*    </div>*/}
                                     {/*</div>*/}
                                 </div>
                             </div>
                             <div className="burn-down-box">
-                                <div className="stage-title">迭代燃尽图</div>
+                                <div className="stage-title">阶段燃尽图</div>
                                 <div className="burn-down" id="stage-burn-down">
 
                                 </div>

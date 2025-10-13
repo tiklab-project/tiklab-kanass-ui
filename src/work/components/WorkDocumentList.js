@@ -15,6 +15,7 @@ import { applyJump } from "tiklab-core-ui";
 import WorkWikiStore from "../store/WorkWikiStore";
 import DeleteModal from "../../common/deleteModal/deleteModal";
 import WorkPrivilegeComponent from "./WorkPrivilegeComponent";
+import {PrivilegeProjectButton} from "tiklab-privilege-ui";
 const WorkDocumentList = (props) => {
     const store = {
         workWikiStore: WorkWikiStore
@@ -161,16 +162,20 @@ const WorkDocumentList = (props) => {
             <div className="document-content">
 
                 {
-                    selectDocument && <WorkDocumentAddmodal
-                        {...props}
-                        name="添加文档"
-                        selectIds={selectIds}
-                        setWorkDocumentList={setWorkDocumentList}
-                        projectId={projectId}
-                        showSelectDocument={showSelectDocument}
-                        selectDocument={selectDocument}
-                        getSelectUserList={getSelectUserList}
-                    />
+                    selectDocument &&
+                    <PrivilegeProjectButton domainId={projectId} code={'work_update'}>
+                        <WorkDocumentAddmodal
+                            {...props}
+                            name="添加文档"
+                            selectIds={selectIds}
+                            setWorkDocumentList={setWorkDocumentList}
+                            projectId={projectId}
+                            showSelectDocument={showSelectDocument}
+                            selectDocument={selectDocument}
+                            getSelectUserList={getSelectUserList}
+                        />
+                    </PrivilegeProjectButton>
+
                 }
                 {
                     workDocumentList?.length > 0 ?

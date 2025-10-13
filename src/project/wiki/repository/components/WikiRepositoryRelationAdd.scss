@@ -1,0 +1,7 @@
+.repository-add-modal {
+    height: calc(100% - 300px);
+    .ant-modal-body {
+        overflow: auto;
+        max-height: calc(100% - 100px);
+    }
+}

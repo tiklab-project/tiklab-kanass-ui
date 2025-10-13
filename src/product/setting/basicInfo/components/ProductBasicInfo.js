@@ -71,6 +71,7 @@ const ProductBasicInfo = (props) => {
                 form.setFieldsValue({
                     name: data.name,
                     remark: data.remark,
+                    status: data.status,
                     master: data.master.id,
                     productLimits: data.productLimits,
                     startTime: [moment(data.startTime, dateFormat), moment(data.endTime, dateFormat)]
@@ -85,6 +86,7 @@ const ProductBasicInfo = (props) => {
         form.setFieldsValue({
             name: productInfo.name,
             remark: productInfo.remark,
+            status: productInfo.status,
             master: productInfo.master.id,
             productLimits: productInfo.productLimits,
             startTime: [moment(productInfo.startTime, dateFormat), moment(productInfo.endTime, dateFormat)]
@@ -233,6 +235,23 @@ const ProductBasicInfo = (props) => {
                                                 return <Select.Option value={item.id} key={item.id}>{item.nickname}</Select.Option>
                                             })
                                         }
+                                    </Select>
+                                </Form.Item>
+                                <Form.Item
+                                    label={"产品状态"}
+                                    name="status"
+                                    rules={[
+                                        {
+                                            required: true
+                                        }
+                                    ]}
+                                >
+                                    <Select
+                                        placeholder="产品状态"
+                                    >
+                                        <Select.Option value="0" key="0">未开始</Select.Option>
+                                        <Select.Option value="1" key="1">进行中</Select.Option>
+                                        <Select.Option value="2" key="2">已结束</Select.Option>
                                     </Select>
                                 </Form.Item>
                                 <Form.Item

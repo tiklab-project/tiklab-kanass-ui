@@ -28,6 +28,7 @@ const TestPlanEdit = (props) => {
                 const res = await findTestPlan(testPlanId);
                 form.setFieldsValue({
                     name: res.name,
+                    state: res.state,
                     rangeTime: [moment(res.startTime, 'YYYY-MM-DD'), moment(res.endTime, 'YYYY-MM-DD')],
                 });
             } catch (error) {
@@ -119,6 +120,22 @@ const TestPlanEdit = (props) => {
                     >
                         <Input placeholder="请输入名称" maxLength={50} />
                     </Form.Item>
+
+                    {
+                        props.type === "edit" &&
+                        <Form.Item
+                            label="状态"
+                            name="state"
+                        >
+                            <Select
+                                placeholder="状态"
+                            >
+                                <Select.Option value={0} key={0}>未开始</Select.Option>
+                                <Select.Option value={1} key={1}>进行中</Select.Option>
+                                <Select.Option value={2} key={2}>已结束</Select.Option>
+                            </Select>
+                        </Form.Item>
+                    }
 
                     <Form.Item
                         label="日期范围"

@@ -1,5 +1,5 @@
 import {observer} from "mobx-react";
-import {Dropdown, message, Modal} from "antd";
+import {Dropdown, message, Modal, Input} from "antd";
 import Button from "../../common/button/Button";
 import WorkPrivilegeComponent from "./WorkPrivilegeComponent";
 import WorkDeleteSelectModal from "./WorkDeleteSelectModal";
@@ -11,7 +11,7 @@ import {SwapRightOutlined} from "@ant-design/icons";
 import { getUser } from 'tiklab-core-ui'
 
 const WorkDetailTitle = (props) => {
-    const { workInfo, workStore, detailForm, delectCurrentWorkItem, viewFlow, } = props
+    const { workInfo, workStore, detailForm, delectCurrentWorkItem, viewFlow, workDetailLeft } = props
 
     const { workList, setWorkList, setWorkId, workShowType, workId, editWork,
         setWorkIndex, getWorkTypeList, getModuleList, findSprintList, getSelectUserList,
@@ -21,10 +21,11 @@ const WorkDetailTitle = (props) => {
     } = workStore;
     const [isFocus, setIsFocus] = useState();
     const [workStatus, setWorkStatus] = useState(workInfo.workStatusNode.name ? workInfo.workStatusNode.name : "nostatus")
-    const workDetailTop = useRef();
     const inputRef = useRef()
     const [transformList, setTransformList] = useState([])
     const userId = getUser().userId;
+    const [description, setDescription] = useState("");
+    const transitionDescRef = useRef('');
 
     const isPermissionField = (code) => {
         const isEdit = permissionFieldList.indexOf(code) > -1 ? true : false;
@@ -35,15 +36,29 @@ const WorkDetailTitle = (props) => {
         Modal.confirm({
             title: "修改之后不能撤回，确认修改状态？",
             className: "edit-status-modal",
-            getContainer: workDetailTop.current,
+            getContainer: workDetailLeft.current,
+            content: (
+                <div>
+                    <p>描述：</p>
+                    <Input.TextArea
+                        rows={3}
+                        onChange={({ target: { value } }) => {
+                            transitionDescRef.current = value;
+                        }}
+                        placeholder="可填写变更原因或描述..."
+                    />
+                </div>
+            ),
             onOk: () => {
                 const value = {
                     updateField: "workStatusNode",
                     workStatusNode: transition?.toNode?.id,
                     transitionId: transition.id,
                     flowId: transition.flow.id,
-                    id: workId
+                    id: workId,
+                    transitionDesc: transitionDescRef.current
                 }
+                transitionDescRef.current = '';
                 editWork(value).then((res) => {
                     if (res.code === 0) {
                         setWorkStatus(name)
@@ -170,7 +185,7 @@ const WorkDetailTitle = (props) => {
     );
 
     return (
-        <div className="work-detail-top" ref={workDetailTop} >
+        <div className="work-detail-top">
             <div className="work-detail-top-name">
                 <div className="work-item-title-top">
                     <div className={"work-item-title-top-info"}>
@@ -206,7 +221,7 @@ const WorkDetailTitle = (props) => {
                         <Dropdown
                             overlay={menu}
                             trigger={"click"}
-                            getPopupContainer={() => workDetailTop.current}
+                            getPopupContainer={() => workDetailLeft.current}
                             onVisibleChange={(open) => console.log(open)}
                         >
                             <Button className="botton-background" style={{ marginRight: "10px" }}>
@@ -218,7 +233,7 @@ const WorkDetailTitle = (props) => {
                         </Dropdown>
                         <WorkPrivilegeComponent code={'WorkItemDelete'} workId ={workId}  {...props}>
                             <WorkDeleteSelectModal
-                                getPopupContainer={workDetailTop}
+                                getPopupContainer={workDetailLeft}
                                 delectCurrentWorkItem={delectCurrentWorkItem}
                                 haveChildren={haveChildren}
                                 workId={workId}

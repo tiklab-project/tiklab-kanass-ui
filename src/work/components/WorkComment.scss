@@ -94,14 +94,14 @@
                 }
             }
             .comment-content {
-                padding:0 15px;
+                padding: 0 15px;
                 line-height: 30px;
-                text-overflow: ellipsis;
-                overflow: hidden;
-                width: 100%;
-                display: -webkit-box;
-                -webkit-box-orient: vertical;
-                -webkit-line-clamp: 3;
+                white-space: pre-wrap; /* 保留换行符和空格 */
+                word-wrap: break-word; /* 允许长单词换行 */
+                overflow: hidden; /* 隐藏超出部分 */
+                display: -webkit-box; /* 启用多行截断 */
+                -webkit-box-orient: vertical; /* 垂直方向 */
+                -webkit-line-clamp: 3; /* 最多显示3行，超出部分显示... */
             }
             .comment-action {
                 display: flex;

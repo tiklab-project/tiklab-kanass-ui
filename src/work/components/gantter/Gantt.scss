@@ -65,7 +65,7 @@
 
             .table-hearder-assigner {
                 width: 90px;
-                border-right: 2px solid #d3d3d3;
+                border-right: 1px solid #fff;
                 padding: 0 8px;
             }
 
@@ -164,25 +164,29 @@
 
             .table-td-status {
                 width: 60px;
-                padding: 0 8px;
+                padding: 0px;
                 display: flex;
+                align-items: center;
                 .work-status {
-                    padding: 2px 3px;
+                    padding: 0;
                     background: #e2e1e4;
                     border-radius: 4px;
                     font-size: 10px;
-                    width: fit-content;
                     color: #2b333e;
+                    min-width: 50px;
+                    height: 20px;
+                    line-height: 20px;
+                    text-align: center;
                 }
         
                 .work-status-process {
-                    background: #e2e1e4;
-                    color: #5e5314;
+                    background: #2a9feb;
+                    color: #fff;
                 }
         
                 .work-status-done {
-                    background: #e2e1e4;
-                    color: #5e5314;
+                    background: #5fcf9e;
+                    color: #fff;
                 }
         
             }
@@ -192,7 +196,7 @@
                 overflow: hidden;
                 white-space: nowrap;
                 text-overflow: ellipsis;
-                border-right: 2px solid #d3d3d3;
+                //border-right: 1px solid #d3d3d3;
                 padding: 0 8px;
                 display: flex;
                 align-items: center;
@@ -217,11 +221,11 @@
         align-items: center;
         justify-content: center;
         font-size: 12px;
-        width: 450px;
-        height: 20px;
-        //position: absolute;
-        //bottom: -15px;
-        //left: 175px;
+        //width: 450px;
+        //height: 20px;
+        position: absolute;
+        bottom: -15px;
+        left: 175px;
         .change-page-button {
             cursor: pointer;
             color: #5d70ea;
@@ -244,13 +248,15 @@
         right: 0;
         width: calc(100% - 450px);
         max-height: calc(100% - 65px);
+        min-height: calc(100% - 65px);
+        border-left: 1px solid #d3d3d3;
         overflow-x: auto;
         overflow-y: hidden;
         // border-left: var(--tiklab-gray-200) 2px solid;
         .table-date-background {
             // display: flex;
             position: absolute;
-            height: 100%;
+            height: 100% !important;
             top: 0;
             left: 0;
             display: inline-flex;

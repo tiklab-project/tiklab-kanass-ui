@@ -13,10 +13,10 @@ import {Progress} from "antd";
 const setStatuStyle = (id) => {
     let name;
     switch (id) {
-        case "todo":
+        case "TODO":
             name = "work-status-todo";
             break;
-        case "done":
+        case "DONE":
             name = "work-status-done";
             break;
         default:
@@ -63,6 +63,18 @@ const xxlColumn = (goWorkItemDetail, sortArray) => {
         },
 
         {
+            title: '状态',
+            dataIndex: ['workStatusNode', 'name'],
+            key: 'workStatus',
+            className: `${sortArray.indexOf("workStatus") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
+            sorter: {
+                multiple: 2
+            },
+            render: (text, record) => <div className={`work-status ${setStatuStyle(record.workStatusCode)}`}>
+                {text}
+            </div>
+        },
+        {
             title: '优先级',
             dataIndex: ['workPriority', 'name'],
             key: 'workPriority',
@@ -76,22 +88,10 @@ const xxlColumn = (goWorkItemDetail, sortArray) => {
                         src={record.workPriority?.iconUrl}
                         alt=""
                         // isRemote={true}
-                        className="img-icon-right"
+                        className="img-icon-right icon-10"
                     />
                 </div>
                 <div className="work-info-text">{text || "暂无设置"}</div>
-            </div>
-        },
-        {
-            title: '状态',
-            dataIndex: ['workStatusNode', 'name'],
-            key: 'workStatus',
-            className: `${sortArray.indexOf("workStatus") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
-            sorter: {
-                multiple: 2
-            },
-            render: (text, record) => <div className={`work-status ${setStatuStyle(record.workStatusNode.id)}`}>
-                {text}
             </div>
         },
         {
@@ -213,7 +213,7 @@ const lgColumn = (goWorkItemDetail, sortArray, actionColumn) => {
             sorter: {
                 multiple: 2
             },
-            render: (text, record) => <div className={`work-status ${setStatuStyle(record.workStatusNode.id)}`}>
+            render: (text, record) => <div className={`work-status ${setStatuStyle(record.workStatusCode)}`}>
                 {text}
             </div>
         },
@@ -232,7 +232,7 @@ const lgColumn = (goWorkItemDetail, sortArray, actionColumn) => {
                         src={record.workPriority?.iconUrl}
                         // isRemote={true}
                         alt=""
-                        className="img-icon-right"
+                        className="img-icon-right icon-10"
                     />
                 </div>
                 <div className="work-info-text">{text || "暂无设置"}</div>
@@ -297,6 +297,18 @@ const xxlWorkColumn = (goWorkItemDetail, sortArray, actionColumn) => {
             )
         },
         {
+            title: '状态',
+            dataIndex: ['workStatusNode', 'name'],
+            key: 'workStatus',
+            className: `${sortArray.indexOf("workStatus") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
+            sorter: {
+                multiple: 2
+            },
+            render: (text, record) => <div className={`work-status ${setStatuStyle(record.workStatusCode)}`}>
+                {text}
+            </div>
+        },
+        {
             title: '优先级',
             dataIndex: ['workPriority', 'name'],
             key: 'workPriority',
@@ -310,22 +322,10 @@ const xxlWorkColumn = (goWorkItemDetail, sortArray, actionColumn) => {
                         src={record.workPriority?.iconUrl}
                         // isRemote={true}
                         alt=""
-                        className="img-icon-right"
+                        className="img-icon-right icon-10"
                     />
                 </div>
                 <div className="work-info-text">{text || "暂无设置"}</div>
-            </div>
-        },
-        {
-            title: '状态',
-            dataIndex: ['workStatusNode', 'name'],
-            key: 'workStatus',
-            className: `${sortArray.indexOf("workStatus") > -1 ? "show-sort-icon" : "hidden-sort-icon"}`,
-            sorter: {
-                multiple: 2
-            },
-            render: (text, record) => <div className={`work-status ${setStatuStyle(record.workStatusNode.id)}`}>
-                {text}
             </div>
         },
         {
@@ -434,7 +434,7 @@ const lgWorkColumn = (goWorkItemDetail, sortArray, actionColumn) => {
             sorter: {
                 multiple: 2
             },
-            render: (text, record) => <div className={`work-status ${setStatuStyle(record.workStatusNode.id)}`}>
+            render: (text, record) => <div className={`work-status ${setStatuStyle(record.workStatusCode)}`}>
                 {text}
             </div>
         },
@@ -452,7 +452,7 @@ const lgWorkColumn = (goWorkItemDetail, sortArray, actionColumn) => {
                         src={record.workPriority?.iconUrl}
                         // isRemote={true}
                         alt=""
-                        className="img-icon-right"
+                        className="img-icon-right icon-10"
                     />
                 </div>
                 <div className="work-info-text">{text || "暂无设置"}</div>

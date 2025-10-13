@@ -129,7 +129,7 @@ export class LogStore {
         const params = {
             orderParams: [{
                 name: "code",
-                orderType: "asc"
+                orderType: "desc"
             }],
             pageParam: {
                 pageSize: 20,

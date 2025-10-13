@@ -12,7 +12,7 @@
 
 @media (min-width: 1281px) {
     .work-bodar-box {
-        width: 250px;
+        width: 320px;
     }
 }
 .work-bordar {
@@ -114,7 +114,8 @@
                 font-size: 13px;
                 background-color: #fff;
                 cursor: pointer;
-                display: block;
+                display: grid;
+                min-height: 90px;
                 align-items: center;
                 //gap: 8px;
                 transition: background-color .2s ease;

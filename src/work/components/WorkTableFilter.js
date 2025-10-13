@@ -83,16 +83,22 @@ const WorkTableFilter = (props) => {
     useEffect(() => {
         findProjectList();
         getSelectUserList(projectId)
-        getWorkTypeList({ projectId: projectId });
         getWorkStatus()
+        if (!path.includes("/product") && !path.includes("/projectSet")){
+            getWorkTypeList({ projectId: projectId });
+        }
         if (path.includes("/product")){
             findProjectList({productId: productId}).then(res => {
                 setProjectList(res.data)
+                getWorkTypeList({ productId: productId });
             })
+
         }
         if (path.includes("/projectSet")){
             findProjectList({projectSetId: projectSetId}).then(res => {
                 setProjectList(res.data)
+                const ids = res.data.map(item => item.id);
+                getWorkTypeList({ projectIds: ids });
             })
         }
         return

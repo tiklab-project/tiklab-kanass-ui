@@ -20,6 +20,7 @@ import { removeNodeInTree } from "../../../common/utils/treeDataAction";
 import { Modal } from "antd";
 import Button from "../../../common/button/Button";
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
+import { getUser } from "tiklab-core-ui";
 
 const SprintPlan = (props) => {
     const store = {
@@ -36,7 +37,7 @@ const SprintPlan = (props) => {
         deleteWorkItem, workId } = WorkStore;
     const { getNoPlanWorkList, noPlanSprintWorkList, setNoPlanSprintWorkList, getWorkList, planSprintWorkList, setPlanSprintWorkList,
         findSprintList, updateWorkItem, delSprint, noPlanSearchCondition, searchCondition,
-        planTotal, noPlanTotal, haveChildren, findWorkItemAndChildrenIds, listType, setListType } = SprintPlanStore;
+        planTotal, noPlanTotal, haveChildren, findWorkItemAndChildrenIds, listType, setListType, findFunctionDmCodeList, permissionCodeList } = SprintPlanStore;
     const [moveWorkId, setMoveWorkId] = useState()
     const [startSprintId, setStartSprintId] = useState();
     const [endSprintId, setEndSprintId] = useState();
@@ -46,6 +47,11 @@ const SprintPlan = (props) => {
     const [isMove, setIsMove] = useState(false)
     // 拖放效果
     useEffect(() => {
+        const data = {
+            domainId:projectId,
+            userId:getUser().userId
+        }
+        findFunctionDmCodeList(data)
         // 获取没被规划的事项列表
         getNoPlanWorkList(
             {
@@ -53,7 +59,7 @@ const SprintPlan = (props) => {
                 workStatusCodes: ["TODO", "PROGRESS"],
                 assignerIds: null,
                 keyWord: null,
-                neqSprintId: sprintId,
+                sprintIdIsNull: true,
                 pageParam: {
                     pageSize: 20,
                     currentPage: 1
@@ -85,9 +91,21 @@ const SprintPlan = (props) => {
     }, [])
 
     /**
+     * 查找当前用户是否有当前的功能权限
+     * @param {功能编码} code
+     * @returns  true=有权限  false=没权限
+     */
+    const isPermissionCode = (code) => {
+        return permissionCodeList.includes(code);
+    }
+
+    /**
      * 抓取事项
      */
     const moveSprintPlanItem = () => {
+        if (!isPermissionCode("sprint_plan_work")) {
+            return;
+        }
         const dragEvent = event.target
         setDragEvent(dragEvent)
         dragEvent.style.background = "#d0e5f2";
@@ -99,12 +117,24 @@ const SprintPlan = (props) => {
      * @param {事项当前所属迭代id} sprintId 
      */
     const moveStart = (id, sprintId) => {
+        if (!isPermissionCode("sprint_plan_work")) {
+            return;
+        }
         console.log(1)
         setMoveWorkId(id)
         setIsDraggable(false)
         setStartSprintId(sprintId)
         const dragEvent = event.target
         dragEvent.style.background = "#d0e5f2";
+    }
+
+    const moveEnd = () => {
+        if (!isPermissionCode("sprint_plan_work")) {
+            return;
+        }
+        setIsDraggable(true)
+        const dragEvent = event.target
+        dragEvent.style.background = "#fff";
     }
 
     //必须有onDragOver才能触发onDrop
@@ -551,7 +581,7 @@ const SprintPlan = (props) => {
                                         onDrag={() => moveSprintPlanItem()}
                                         draggable = {isDraggable}
                                         onDragStart={() => moveStart(item.id, null)}
-                                        onDragEnd = {() => setIsDraggable(true)}
+                                        onDragEnd = {() => moveEnd()}
                                         key={item.id}
                                     >
                                         <div className="work-item-left" onClick={() => goWorkItem(item, index, "noPlan")}>
@@ -565,10 +595,22 @@ const SprintPlan = (props) => {
 
                                             </div>
                                             <div className="work-item-info">
-                                                <div className="work-item-id">{item.code}</div>
+                                                {/*<div className="work-item-id">{item.code}</div>*/}
                                                 <div className="work-item-title">{item.title}</div>
                                             </div>
                                         </div >
+
+                                        <div className="work-item-priority">
+                                            <div className="work-info-img">
+                                                <ImgComponent
+                                                    src={item.workPriority?.iconUrl}
+                                                    alt=""
+                                                    // isRemote={true}
+                                                    className="img-icon-right icon-10"
+                                                />
+                                            </div>
+                                            <div className="work-info-text">{item.workPriority?.name || '_'}</div>
+                                        </div>
                                         <div className={`work-item-status`}>
                                             <div className={`work-status ${setStatuStyle(item.workStatusNode.id)}`}>
                                                 {item.workStatusNode.name}
@@ -658,7 +700,7 @@ const SprintPlan = (props) => {
                                         onDrag={() => moveSprintPlanItem()}
                                         draggable = {isDraggable}
                                         onDragStart={() => moveStart(item.id, sprintId)}
-                                        onDragEnd = {() => setIsDraggable(true)}
+                                        onDragEnd = {() => moveEnd()}
                                         key={item.id}
                                     >
                                         <div className="work-item-left" onClick={() => goWorkItem(item, index, "plan")}>
@@ -672,13 +714,21 @@ const SprintPlan = (props) => {
 
                                             </div>
                                             <div className="work-item-info">
-                                                <div className="work-item-id">{item.code}</div>
+                                                {/*<div className="work-item-id">{item.code}</div>*/}
                                                 <div className="work-item-title">{item.title}</div>
                                             </div>
                                         </div >
-                                        {/* <div className="work-item-master">
-                                            <div className="work-item-id">{item.assigner?.nickname}</div>
-                                        </div> */}
+                                         <div className="work-item-priority">
+                                             <div className="work-info-img">
+                                                 <ImgComponent
+                                                     src={item.workPriority?.iconUrl}
+                                                     alt=""
+                                                     // isRemote={true}
+                                                     className="img-icon-right icon-10"
+                                                 />
+                                             </div>
+                                             <div className="work-info-text">{item.workPriority?.name || '_'}</div>
+                                        </div>
                                         <div className={`work-item-status`}>
                                             <div className={`work-status ${setStatuStyle(item.workStatusNode.id)}`}>
                                                 {item.workStatusNode.name}

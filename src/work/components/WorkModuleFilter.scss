@@ -4,15 +4,15 @@
   transition: width 0.3s;
   display: flex;
   flex-direction: column;
-  background-color: #f3f7f9;
+  background-color: #f8f9fc;
 
   .work-module-filter-sider {
     display: flex;
     flex-direction: column;
     height: 100%;
     overflow-y: auto;
-    min-width: 250px;
-    max-width: 250px;
+    min-width: 220px;
+    max-width: 220px;
     gap: 10px;
     scrollbar-gutter: stable;
 
@@ -125,7 +125,7 @@
         overflow-x: hidden;
 
         .ant-tree-list{
-          background-color: #f3f7f9;
+          background-color: #f8f9fc;
         }
         .ant-tree-treenode {
           width: 100%;
@@ -145,7 +145,7 @@
           }
         }
         .ant-tree-node-selected{
-          background-color: #F0F0F0;
+          background-color: transparent;
         }
         .ant-tree-switcher{
           display: flex;
@@ -191,7 +191,7 @@
         height: 30px;
         margin: 0 10px 5px;
         cursor: pointer;
-        background: #f3f7f9;
+        background: #f8f9fc;
         padding: 6px;
       }
     }
@@ -214,13 +214,13 @@
   }
   .work-module-filter-sider::-webkit-scrollbar-track {
     border-radius: 0;
-    background: #f3f7f9;
+    background: #f8f9fc;
   }
 
   @media (max-width: 768px) {
     .work-module-filter-sider {
-      min-width: 200px;
-      max-width: 200px;
+      min-width: 220px;
+      max-width: 220px;
     }
   }
 
@@ -233,8 +233,8 @@
 
   @media (min-width: 1281px) {
     .work-module-filter-sider {
-      min-width: 250px;
-      max-width: 250px;
+      min-width: 220px;
+      max-width: 220px;
     }
   }
 

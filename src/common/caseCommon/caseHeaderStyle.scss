@@ -3,29 +3,30 @@
   text-align: center;
   font-size: 12px;
   border-radius: 4px;
-  width: fit-content;
-  padding: 4px 5px;
-  font-weight: 500;
-  line-height: 1.2;
+  display: flex;
+  justify-content: center;
+  width: 50px;
+  height: 20px;
+  line-height: 20px;
 }
 
 // 状态样式
 .case-status-0 {
   @extend .case-status-tag;
-  background: #ededed;
-  color: #666;
+  background: #e2e1e4;
+  color: #2b333e;
 }
 
 .case-status-1 {
   @extend .case-status-tag;
-  background: #cce6ff;
-  color: #1890ff;
+  background: #2a9feb;
+  color: #fff;
 }
 
 .case-status-2 {
   @extend .case-status-tag;
-  background: #b7e4c7;
-  color: #237804;
+  background: #5fcf9e;
+  color: #fff;
 }
 
 // 优先级标签公共样式

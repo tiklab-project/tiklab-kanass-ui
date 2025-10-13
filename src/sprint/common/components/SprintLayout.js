@@ -203,12 +203,15 @@ const Sprintdetail = (props) => {
                             </div>
 
                             <div className="sprint-detail-operate">
-                                <svg className="svg-icon" aria-hidden="true" onClick={() => showModal("edit", sprintId)}>
-                                    <use xlinkHref="#icon-edit"></use>
-                                </svg>
-                                {/*<PrivilegeProjectButton code={'SprintDelete'} domainId={projectId}  {...props}>*/}
+                                <PrivilegeProjectButton code={'sprint_update'} domainId={projectId}  {...props}>
+                                    <svg className="svg-icon" aria-hidden="true" onClick={() => showModal("edit", sprintId)}>
+                                        <use xlinkHref="#icon-edit"></use>
+                                    </svg>
+                                </PrivilegeProjectButton>
+
+                                <PrivilegeProjectButton code={'sprint_delete'} domainId={projectId}  {...props}>
                                     <DeleteModal deleteFunction={deleSprintList} id={sprintId} />
-                                {/*</PrivilegeProjectButton>*/}
+                                </PrivilegeProjectButton>
                             </div>
                         </div>
                     </Col>

@@ -154,19 +154,22 @@ const Versiondetail = (props) => {
                         </div>
 
                         <div className={"version-detail-operate"}>
-                            <VersionAddmodal
-                                name="编辑版本"
-                                type="edit"
-                                id={versionId}
-                                // findVersion={findVersion}
-                                getUseList={getUseList}
-                                userList={userList}
-                                versionStore={VersionStore}
-                                {...props}
-                            />
-                            {/*<PrivilegeProjectButton code={'ProjectVersionDelete'} domainId={projectId}  {...props}>*/}
+                            <PrivilegeProjectButton code={'version_update'} domainId={projectId}  {...props}>
+                                <VersionAddmodal
+                                    name="编辑版本"
+                                    type="edit"
+                                    id={versionId}
+                                    // findVersion={findVersion}
+                                    getUseList={getUseList}
+                                    userList={userList}
+                                    versionStore={VersionStore}
+                                    {...props}
+                                />
+                            </PrivilegeProjectButton>
+
+                            <PrivilegeProjectButton code={'version_delete'} domainId={projectId}  {...props}>
                                 <DeleteModal deleteFunction={deletVersionList} id={versionId} />
-                            {/*</PrivilegeProjectButton>*/}
+                            </PrivilegeProjectButton>
                         </div>
                     </div>
                 </Col>

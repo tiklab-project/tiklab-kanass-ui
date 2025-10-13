@@ -18,6 +18,7 @@ import { setSessionStorage } from "../../../common/utils/setSessionStorage";
 import { removeNodeInTree } from "../../../common/utils/treeDataAction";
 import { Button, Modal } from "antd";
 import ImgComponent from "../../../common/imgComponent/ImgComponent";
+import { getUser } from "tiklab-core-ui";
 const VersionPlan = (props) => {
     const store = {
         versionPlanStore: VersionPlanStore,
@@ -33,7 +34,7 @@ const VersionPlan = (props) => {
         workId, deleteWorkItem } = WorkStore;
     const { getNoPlanVersionWorkList, noPlanVersionWorkList, setNoPlanVersionWorkList, getWorkList, planVersionWorkList, setPlanVersionWorkList,
         updateWorkItem, delVersion, noPlanSearchCondition, searchCondition,
-        planTotal, noPlanTotal, haveChildren, findWorkItemAndChildrenIds } = VersionPlanStore;
+        planTotal, noPlanTotal, haveChildren, findWorkItemAndChildrenIds, findFunctionDmCodeList, permissionCodeList } = VersionPlanStore;
     const [moveWorkId, setMoveWorkId] = useState()
     const [startVersionId, setStartVersionId] = useState();
     const [endVersionId, setEndVersionId] = useState();
@@ -44,6 +45,11 @@ const VersionPlan = (props) => {
     const [isMove, setIsMove] = useState(false)
     // 拖放效果
     useEffect(() => {
+        const data = {
+            domainId:projectId,
+            userId:getUser().userId
+        }
+        findFunctionDmCodeList(data)
         getNoPlanVersionWorkList(
             {
                 projectId: projectId,
@@ -76,9 +82,19 @@ const VersionPlan = (props) => {
         return
     }, [])
 
-
+    /**
+     * 查找当前用户是否有当前的功能权限
+     * @param {功能编码} code
+     * @returns  true=有权限  false=没权限
+     */
+    const isPermissionCode = (code) => {
+        return permissionCodeList.includes(code);
+    }
 
     const moveVersionPlanItem = () => {
+        if (!isPermissionCode("version_plan_work")) {
+            return;
+        }
         const dragEvent = event.target
         setDragEvent(dragEvent)
         dragEvent.style.background = "#d0e5f2";
@@ -86,6 +102,9 @@ const VersionPlan = (props) => {
     }
 
     const moveStart = (id, versionId) => {
+        if (!isPermissionCode("version_plan_work")) {
+            return;
+        }
         setMoveWorkId(id)
         setIsDraggable(false)
         setStartVersionId(versionId)

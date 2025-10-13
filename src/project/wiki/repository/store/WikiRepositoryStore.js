@@ -20,9 +20,17 @@ export class WikiRepositoryStore {
         return data;
     }
 
+    // 关联知识库
     @action
     createProjectWikiRepository = async(params) => {
         const data = await Service("/projectWikiRepository/createProjectWikiRepository", params)
+        return data;
+    }
+
+    // 创建知识库
+    @action
+    createWikiRepository = async(params) => {
+        const data = await Service("/projectWikiRepository/createWikiRepository", params)
         return data;
     }
 

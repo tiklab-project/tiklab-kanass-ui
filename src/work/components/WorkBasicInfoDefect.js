@@ -68,6 +68,7 @@ const WorkBasicInfo = (props) => {
     const moreFormRef = useRef();
     const exFormRef = useRef();
     const detailTabRef = useRef();
+    const workDetailLeft = useRef();
     
     // 自定义字段的栅格设置
     const layoutExForm = {
@@ -717,8 +718,8 @@ const WorkBasicInfo = (props) => {
     return (
         <Provider {...store}>
             <div className="work-info">
-                <div className="work-info-left">
-                    <WorkDetailTitle getTransitionList={getTransitionList} viewFlow={viewFlow} workInfo={workInfo} workStore={workStore} detailForm={detailForm} {...props} />
+                <div className="work-info-left" ref={workDetailLeft}>
+                    <WorkDetailTitle getTransitionList={getTransitionList} viewFlow={viewFlow} workInfo={workInfo} workStore={workStore} detailForm={detailForm} workDetailLeft={workDetailLeft} {...props} />
 
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <div className="other-title">描述</div>
@@ -872,8 +873,8 @@ const WorkBasicInfo = (props) => {
                                         >
                                             {priorityList && priorityList.map((item) => (
                                                 <Select.Option value={item.id} key={item.id}>
-                                                    <div style={{ display: "flex", alignItems: "center", gap: "3px" }}>
-                                                        <ImgComponent src={item.iconUrl} alt="" className="img-icon" />
+                                                    <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+                                                        <ImgComponent src={item.iconUrl} alt="" className="icon-10" />
                                                         {item.name}
                                                     </div>
                                                 </Select.Option>
@@ -1089,6 +1090,7 @@ const WorkBasicInfo = (props) => {
                                                 onChange={(value) => updataEstimateTime(value)}
                                                 value={estimateTimeValue}
                                                 disabled={isPermissionField("estimateTime")}
+                                                min={0}
                                             />
 
                                             <Input
@@ -1104,6 +1106,7 @@ const WorkBasicInfo = (props) => {
                                                 onChange={(value) => updataSurplusTime(value)}
                                                 value={surplusTimeValue}
                                                 disabled={isPermissionField("surplusTime")}
+                                                min={0}
                                             />
                                         </Space>
                                     </Form.Item>
