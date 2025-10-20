@@ -115,10 +115,10 @@ const WorkTableHead = (props) => {
 
 
                         {
-                            (path.includes("/projectSet") || path.includes("/product")) ?
+                            !path.includes("/planDetail") ?
                                 <WorkCreatDropdown workTypeList={workTypeList}  {...props} />
                                 :
-                                !path.includes("/planDetail") &&
+                                (path.includes("/projectSet") || path.includes("/product")) &&
                                 <PrivilegeProjectButton code={'work_add'} domainId={projectId}  {...props}>
                                     <WorkCreatDropdown workTypeList={workTypeList}  {...props} />
                                 </PrivilegeProjectButton>
@@ -141,7 +141,7 @@ const WorkTableHead = (props) => {
                         {
                             path.includes("/planDetail") &&
                             // <PrivilegeProjectButton code={'work_add'} domainId={projectId}  {...props}>
-                                <Button type={"primary"} onClick={() => handleProductPlanLinkWork(workTypeList, productPlanId)}>
+                                <Button onClick={() => handleProductPlanLinkWork(workTypeList, productPlanId)}>
                                     关联{workTypeCode === "demand" ? "需求" : "缺陷"}
                                 </Button>
                             // </PrivilegeProjectButton>

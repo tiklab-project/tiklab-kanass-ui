@@ -13,7 +13,7 @@ import { inject, observer } from "mobx-react";
 const ProjectSetUser = props => {
     const projectSetId = props.match.params.projectSetId;
     return (
-        <div className="project-user">
+        <div className="project-user" style={{ height: "100%" }}>
             <DomainUser
                 {...props}
                 domainId={projectSetId}

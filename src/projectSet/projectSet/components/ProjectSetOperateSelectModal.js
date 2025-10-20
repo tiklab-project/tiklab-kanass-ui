@@ -20,15 +20,16 @@ const ProjectSetOperateSelectModal = (props) => {
 
 
     useEffect(() => {
-        info()
-        getUseList().then(res => {
-            if (res.code === 0) {
-                console.log(uselist)
-            }
-
-        })
+        if (editModalVisible || deleteModalVisible){
+            info()
+            getUseList().then(res => {
+                if (res.code === 0) {
+                    console.log(uselist)
+                }
+            })
+        }
         return;
-    }, [])
+    }, [editModalVisible, deleteModalVisible])
 
     const info = () => {
         form.setFieldsValue({

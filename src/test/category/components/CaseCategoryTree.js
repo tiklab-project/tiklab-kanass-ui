@@ -26,14 +26,31 @@ const transformData = (
     add,
     expandedKeys,
     deleteCategoryFn,
-    history, // 新增参数
-    setSelectedKeys // 新增参数
+    history,
+    setSelectedKeys
 ) => {
     if (!Array.isArray(data)) return [];
+
+    // 计算节点下的叶子总数（递归）
+    const countLeafNodes = (node) => {
+        let count = 0;
+        // 直接叶子节点
+        if (Array.isArray(node.nodeList)) {
+            count += node.nodeList.length;
+        }
+        // 子模块的叶子节点
+        if (Array.isArray(node.children)) {
+            count += node.children.reduce((sum, child) => sum + countLeafNodes(child), 0);
+        }
+        return count;
+    };
 
     // 递归处理每个节点
     const processNodes = (nodes) =>
         nodes.flatMap((item) => {
+            // 计算当前模块下的叶子节点总数
+            const leafCount = countLeafNodes(item);
+
             // 目录节点
             const dirNode = {
                 key: item.id,
@@ -59,7 +76,7 @@ const transformData = (
                             }}
                         >
                             {expandedKeys.includes(item.id) ? (
-                                <FolderOpenOutlined  />
+                                <FolderOpenOutlined />
                             ) : (
                                 <FolderOutlined />
                             )}
@@ -73,77 +90,27 @@ const transformData = (
                                 {item.moduleName}
                             </span>
                         </Space>
-                        {/*{*/}
-                        {/*    add && hoverKey === item.id && (*/}
-                        {/*        <span onClick={(e) => e.stopPropagation()}>*/}
-                        {/*            <CategoryEdit*/}
-                        {/*                type={"add"}*/}
-                        {/*                icon={true}*/}
-                        {/*                findList={findList}*/}
-                        {/*                categoryId={item.id}*/}
-                        {/*            />*/}
-                        {/*            <HideDelete deleteFn={()=>deleteCategoryFn(item.id)}/>*/}
-                        {/*        </span>)*/}
-                        {/*}*/}
+                        {/* 显示叶子节点数量 */}
+                        <span style={{ marginLeft: 8, color: '#999' }}>
+                            ({leafCount})
+                        </span>
                     </div>
                 ),
                 children: undefined,
                 data: item
             };
-            // 递归children
+
+            // 递归处理子模块
             if (item.children && item.children.length) {
                 dirNode.children = processNodes(item.children);
             }
-            // 处理nodeList为叶子节点
-            let nodeListNodes = [];
-            if (Array.isArray(item.nodeList) && item.nodeList.length > 0) {
-                nodeListNodes = item.nodeList.map(node => ({
-                    key: node.id,
-                    title: (
-                        <div
-                            style={{
-                                display: "flex",
-                                alignItems: "center",
-                                width: "100%",
-                                height: "36px",
-                                gap: "8px"
-                            }}
-                            className="category-tree-leaf-item"
-                            onClick={e => {
-                                e.stopPropagation();
-                                setSelectedKeys && setSelectedKeys([node.id]); // 新增
-                                toDiffCaseFn(node, history);
-                            }}
-                        >
-                            <div style={{ flexShrink: 0, marginTop: '5px' }}>{showCaseTypeView(node.caseType, "icon-s")}</div>
-                            <span
-                                style={{
-                                    overflow: "hidden",
-                                    textOverflow: "ellipsis",
-                                    whiteSpace: "nowrap",
-                                    maxWidth: "120px",
-                                    display: "inline-block",
-                                    verticalAlign: "middle"
-                                }}
-                            >
-                                {node.name}
-                            </span>
-                        </div>
-                    ),
-                    isLeaf: true,
-                    data: node
-                }));
-            }
-            // 目录节点在上，nodeList节点在下
-            if (nodeListNodes.length > 0) {
-                if (!dirNode.children) dirNode.children = [];
-                dirNode.children = [...(dirNode.children || []), ...nodeListNodes];
-            }
+
             return [dirNode];
         });
 
     return processNodes(data);
 };
+
 
 const CaseCategoryTree = ({
     onNodeClick,

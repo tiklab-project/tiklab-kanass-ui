@@ -77,7 +77,7 @@ const WorkDocumentAddmodal = (props) => {
                             cancelText: "取消",
                             getContainer: documentAdd ? () => documentAdd.current : null,
                             onOk() { props.history.push({
-                                pathname: `/project/${projectId}/wiki`,
+                                pathname: `/project/${projectId}/set/integration`,
                                 state: { activeKey: "repository" }
                             }) }
                         });

@@ -35,6 +35,7 @@ const ModuleList = (props) => {
     const [visible, setVisible] = useState(false);
     const [parent, setParent] = useState()
     const [modalName, setModalName] = useState()
+    const path = props.match.path;
     // 项目id
     const projectId = props.match.params.id;
 
@@ -132,15 +133,19 @@ const ModuleList = (props) => {
         width: "15%",
         render: (text, record) => (
             <Space size="middle">
-                {/*<PrivilegeProjectButton code={'ModuleAdd'} domainId={projectId}  {...props}>*/}
+                <PrivilegeProjectButton code={'project_module_add'} domainId={projectId}  {...props}>
                     <svg className="svg-icon" aria-hidden="true" onClick={() => showModal(record, "添加子模块")} style={{ cursor: "pointer" }}>
                         <use xlinkHref="#icon-add2"></use>
                     </svg>
-                {/*</PrivilegeProjectButton>*/}
-                <svg className="svg-icon" aria-hidden="true" onClick={() => showEditModule(record)} style={{ cursor: "pointer" }}>
-                    <use xlinkHref="#icon-edit"></use>
-                </svg>
-                <DeleteModal deleteFunction = {deleteModuleList} id = {record.id}/>
+                </PrivilegeProjectButton>
+                <PrivilegeProjectButton code={'project_module_update'} domainId={projectId}  {...props}>
+                    <svg className="svg-icon" aria-hidden="true" onClick={() => showEditModule(record)} style={{ cursor: "pointer" }}>
+                        <use xlinkHref="#icon-edit"></use>
+                    </svg>
+                </PrivilegeProjectButton>
+                <PrivilegeProjectButton code={'project_module_delete'} domainId={projectId}  {...props}>
+                    <DeleteModal deleteFunction = {deleteModuleList} id = {record.id}/>
+                </PrivilegeProjectButton>
             </Space>
         )
     }
@@ -160,11 +165,15 @@ const ModuleList = (props) => {
                     <Breadcumb
                         firstText="模块"
                     >
-                        {/*<PrivilegeProjectButton code={'ModuleAdd'} domainId={projectId}  {...props}>*/}
-                            <Button type="primary" onClick={() => showModal(null, "添加模块")}>
-                                添加模块
-                            </Button>
-                        {/*</PrivilegeProjectButton>*/}
+                        {
+                            project?.productId ? <></> :
+                                <PrivilegeProjectButton code={'project_module_add'} domainId={projectId}  {...props}>
+                                    <Button type="primary" onClick={() => showModal(null, "添加模块")}>
+                                        添加模块
+                                    </Button>
+                                </PrivilegeProjectButton>
+                        }
+
                     </Breadcumb>
                     <div className="project-module-contant">
                         <div className="search-add">

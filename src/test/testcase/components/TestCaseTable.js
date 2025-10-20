@@ -153,11 +153,11 @@ const TestCaseTable = (props) => {
         const res = findTestCaseTableListFn(param);
         const countRes = findTestCasePriorityLevelCountFn(param)
         setTableLoading(false)
-        // findTestCaseList(param).then((res)=>{
-        //     setTotalPage(res.totalPage);
-        //     setTotalRecord(res.totalRecord)
-        //     setTableLoading(false)
-        // })
+        findTestCaseList(param).then((res)=>{
+            setTotalPage(res.totalPage);
+            setTotalRecord(res.totalRecord)
+            setTableLoading(false)
+        })
     }
 
 
@@ -378,7 +378,14 @@ const TestCaseTable = (props) => {
                             columns={column}
                             dataSource={testcaseList}
                             rowKey={record => record.id}
-                            pagination={false}
+                            pagination={{
+                                total:totalRecord,
+                                pageSize: pageSize,
+                                current: currentPage,
+                                onChange: onTableChange,
+                                position: ["bottomCenter"],
+                                showTotal: () => `共${totalRecord}条`
+                            }}
                             loading={tableLoading}
                             onRow={(record) => ({style: rowStyle(record.caseType)})}
                             locale={{
@@ -390,13 +397,13 @@ const TestCaseTable = (props) => {
                                     : <div style={{height: 100}}/>,
                             }}
                         />
-                        <PaginationCommon
-                            currentPage={currentPage}
-                            totalPage={totalPage}
-                            changePage={onTableChange}
-                            totalRecord={totalRecord}
-                            findPage={findPage}
-                        />
+                        {/*<PaginationCommon*/}
+                        {/*    currentPage={currentPage}*/}
+                        {/*    totalPage={totalPage}*/}
+                        {/*    changePage={onTableChange}*/}
+                        {/*    totalRecord={totalRecord}*/}
+                        {/*    findPage={findPage}*/}
+                        {/*/>*/}
                     </div>
                 </div>
             </Col>

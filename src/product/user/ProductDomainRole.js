@@ -13,7 +13,7 @@ import { inject, observer } from "mobx-react";
 const ProductDomainRole = props => {
     const productId = props.match.params.productId;
     return (
-        <div>
+        <div style={{ height: "100%" }}>
             <DomainRole
                 {...props}
                 domainId={productId}

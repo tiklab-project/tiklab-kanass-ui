@@ -90,12 +90,14 @@ const WorkTable = (props) => {
             epicView: null
         }
         if (path.includes("/product")){
+            console.log("事项查询项目列表  产品")
             const res = await findProjectList({productId: productId})
             const ids = res.data.map(item => item.id);
             console.log("项目ids: ", ids)
             params = {projectIds: ids, workTypeCode: "demand", ...params}
         }
         if (path.includes("/projectSet")){
+            console.log("事项查询项目列表  项目集")
             const res = await findProjectList({projectSetId: projectSetId})
             const ids = res.data.map(item => item.id);
             params = {projectIds: ids, ...params}

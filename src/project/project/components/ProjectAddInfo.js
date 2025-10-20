@@ -165,8 +165,19 @@ const ProjectAddInfo = (props) => {
                     // 显示具体错误信息（如名称过长、重复等）
                     message.error(res.msg || '项目添加失败，请检查输入内容');
                 }
-            }).catch(() => {
-                message.error("请求失败，请重试");
+            }).catch((error) => {
+                if (error.response) {
+                    // HTTP 错误
+                    message.error(`请求失败 (${error.response.status})，请重试`);
+                } else if (error.request) {
+                    // 网络错误
+                    message.error('网络连接超时，请检查网络后重试');
+                } else {
+                    // 其他错误
+                    message.error('请求失败，请重试');
+                }
+            }).finally(() => {
+                setLoading(false);
             });
         }).catch(() => {
             // 表单验证失败时提示

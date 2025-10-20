@@ -65,8 +65,14 @@ const TestPlanEdit = (props) => {
             findPage();
             setVisible(false);
         } catch (error) {
-            message.error(props.type === "add" ? '创建测试计划失败' : '更新测试计划失败');
-            console.error('提交测试计划失败:', error);
+            if (error.errorFields || error.errorFields.length > 0) {
+                // 这是表单校验错误，不需要显示失败提示
+                console.log('表单校验未通过:', error);
+            } else {
+                // 这是真正的提交失败
+                message.error(props.type === "add" ? '创建测试计划失败' : '更新测试计划失败');
+                console.error('提交测试计划失败:', error);
+            }
         } finally {
             setLoading(false);
         }

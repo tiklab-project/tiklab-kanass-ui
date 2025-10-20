@@ -107,20 +107,26 @@ const FunctionInstanceList = (props) => {
                     执行结果
                 </div>
             }
-            <div className={"table-list-box"} style={{margin: "16px 0"}}>
-                <Table
-                    className={'function-instance-table'}
-                    columns={columns}
-                    dataSource={dataList}
-                    rowKey={record => record.id}
-                    loading={loading}
-                    pagination={false}
-                    locale={{
-                        // emptyText: <div style={{color: "#999"}}>暂无结果</div>,
-                        emptyText: <Empty description="暂无结果"/>,
-                    }}
-                />
-            </div>
+            {
+                dataList && dataList.length > 0 ?
+                    <div className={"table-list-box"} style={{margin: "16px 0"}}>
+                        <Table
+                            className={'function-instance-table'}
+                            columns={columns}
+                            dataSource={dataList}
+                            rowKey={record => record.id}
+                            loading={loading}
+                            pagination={false}
+                            locale={{
+                                // emptyText: <div style={{color: "#999"}}>暂无结果</div>,
+                                emptyText: <Empty description="暂无结果"/>,
+                            }}
+                        />
+                    </div>
+                    :
+                    <Empty description="暂无结果"/>
+            }
+
         </>
     )
 }

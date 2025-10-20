@@ -49,6 +49,7 @@ import WorkBasicInfoBottom from "./WorkBasicInfoBottom";
 import ProductModuleStore from "../../product/module/store/ProductModuleStore";
 import ModuleStore from "../../project/setting/module/store/ModuleStore";
 import WorkDetailTitle from "./WorkDetailTitle";
+import {PrivilegeProjectButton} from "tiklab-privilege-ui";
 const { RangePicker } = DatePicker;
 const { Dragger } = Upload;
 
@@ -60,13 +61,14 @@ const getStore = (project) =>{
     }
 }
 const WorkBasicInfo = (props) => {
-    const { detailForm, getTransitionList, viewFlow } = props;
+    const { detailForm, getTransitionList, viewFlow, relationModalNum } = props;
     const [extDataForm] = Form.useForm();
     const formRef = useRef();
     const moreFormRef = useRef();
     const exFormRef = useRef();
     const detailTabRef = useRef();
     const workDetailLeft = useRef();
+    const [basicInfoBottomMinHeight, setBasicInfoBottomMinHeight] = useState(600);
 
     // 自定义字段的栅格设置
     const layoutExForm = {
@@ -93,7 +95,7 @@ const WorkBasicInfo = (props) => {
     };
 
     const { workStore, workInfo, setWorkInfo, workDetailMetaData, setWorkDetailMetaData, workRelationStore, workTypeText, deep, setTabValue, taskType } = props;
-    const { workId, workList, setWorkList, findWorkAttachList, createWorkAttach,
+    const { workId, workList, setWorkList, findWorkAttachList, createWorkAttach, findFunctionDmCodeList,
         attachList, findFormConfig, formList, selectVersionList, sprintList, priorityList, editWork,
         findCanBeRelationParentWorkItemList, findCanBeRelationPerWorkItemList,
         userList, searchWorkById, findChildrenLevel, stageList, createSelectItemRelation,
@@ -108,6 +110,7 @@ const WorkBasicInfo = (props) => {
     const [estimateTimeValue, setEstimateTimeValue] = useState(0)
     // 剩余工时
     const [surplusTimeValue, setSurplusTimeValue] = useState(0)
+    const [canUpdate, setCanUpdate] = useState(false);
 
     // 项目id
     const projectId = props.match.params.id;
@@ -180,6 +183,23 @@ const WorkBasicInfo = (props) => {
     useEffect(() => {
         // 查找flow关联的form
         const flowId = workInfo.workType.flow.id
+
+        const data = {
+            domainId:projectId,
+            userId:getUser().userId
+        }
+        findFunctionDmCodeList(data).then(res => {
+            if (res.data && res.code === 0){
+                if (res.data && res.data.length > 0){
+                    if (!res.data.includes("work_update")){
+                        setCanUpdate(true)
+                    }else {
+                        setCanUpdate(false)
+                    }
+                }
+            }
+        })
+
         // // 查找流程
         // findFlow({ id: flowId }).then(res => {
         //     if (res.code === 0) {
@@ -238,6 +258,24 @@ const WorkBasicInfo = (props) => {
 
         return null;
     }, [workInfo])
+
+    useEffect(() => {
+        if (!workDetailLeft.current) return;
+
+        const resizeObserver = new ResizeObserver((entries) => {
+            for (let entry of entries) {
+                const { height } = entry.contentRect;
+                setBasicInfoBottomMinHeight(height-133); // 更新状态
+                console.log('当前高度:', height-133);
+            }
+        });
+
+        resizeObserver.observe(workDetailLeft.current); // 开始监听
+
+        return () => {
+            resizeObserver.disconnect(); // 组件卸载时取消监听
+        };
+    }, []);
 
 
     const ticket = getUser().ticket;
@@ -556,7 +594,7 @@ const WorkBasicInfo = (props) => {
     const [fieldName, setFieldName] = useState("")
     // 点击字段
     const changeStyle = (value, fieldCode) => {
-        if (!isPermissionField(fieldCode)) {
+        if (!isPermissionField(fieldCode) && !canUpdate) {
             return;
         }
         setFieldName(value)
@@ -674,7 +712,7 @@ const WorkBasicInfo = (props) => {
      * @param {*} code 
      */
     const onMouseEnter = (code) => {
-        if (!isPermissionField(code)) {
+        if (!isPermissionField(code) && !canUpdate) {
             setHoverFieldName(code)
         }
 
@@ -685,7 +723,7 @@ const WorkBasicInfo = (props) => {
      */
     const switchEditorDesc = () => {
         console.log(isPermissionField("desc"))
-        if (!isPermissionField("desc")) {
+        if (!isPermissionField("desc") && !canUpdate) {
             setEditorType(true)
         }
 
@@ -715,9 +753,11 @@ const WorkBasicInfo = (props) => {
 
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <div className="other-title">描述</div>
-                        <svg className="icon-22" aria-hidden="true" onClick={() => switchEditorDesc()}>
-                            <use xlinkHref={`#icon-edit`}></use>
-                        </svg>
+                        <PrivilegeProjectButton domainId={projectId} code={'work_update'}>
+                            <svg className="icon-22" aria-hidden="true" onClick={() => switchEditorDesc()}>
+                                <use xlinkHref={`#icon-edit`}></use>
+                            </svg>
+                        </PrivilegeProjectButton>
                     </div>
 
                     <div className={`work-detail-box desc-box ${(moreDesc || editorType) ? "more-desc":""}`}>
@@ -774,7 +814,7 @@ const WorkBasicInfo = (props) => {
                     </div>
 
                     <div className="work-detail-box comment-box" ref={detailTabRef}>
-                        <WorkBasicInfoBottom detailTabRef={detailTabRef} {...props}/>
+                        <WorkBasicInfoBottom detailTabRef={detailTabRef} bottomMinHeight={basicInfoBottomMinHeight} relationModalNum={relationModalNum} {...props}/>
                     </div>
                 </div>
                 <div className="work-info-right">
@@ -821,7 +861,7 @@ const WorkBasicInfo = (props) => {
                                             onMouseEnter={() => onMouseEnter("assigner")}
                                             onMouseLeave={() => setHoverFieldName("")}
                                             getPopupContainer={() => formRef.current}
-                                            disabled={isPermissionField("assigner")}
+                                            disabled={isPermissionField("assigner") && canUpdate}
                                             dropdownMatchSelectWidth={false} // 下拉菜单不自适应宽度
                                         >
                                             {
@@ -862,7 +902,7 @@ const WorkBasicInfo = (props) => {
                                             onMouseLeave={() => setHoverFieldName("")}
                                             allowClear
                                             getPopupContainer={() => formRef.current}
-                                            disabled={isPermissionField("workPriority")}
+                                            disabled={isPermissionField("workPriority") && canUpdate}
                                             dropdownMatchSelectWidth={false} // 下拉菜单不自适应宽度
                                         >
                                             {
@@ -902,7 +942,7 @@ const WorkBasicInfo = (props) => {
                                             onMouseLeave={() => setHoverFieldName("")}
                                             allowClear
                                             getPopupContainer={() => formRef.current}
-                                            disabled={isPermissionField("module")}
+                                            disabled={isPermissionField("module") && canUpdate}
                                         >
                                             {
                                                 moduleList && moduleList.map((item) => {
@@ -928,7 +968,7 @@ const WorkBasicInfo = (props) => {
                                                 setHoverFieldName={setHoverFieldName}
                                                 workStore={workStore}
                                                 workStatusCode={workInfo.workStatusCode}
-                                                disabled={isPermissionField("sprint")}
+                                                disabled={isPermissionField("sprint") && canUpdate}
                                             />
                                         </Form.Item>
                                     }
@@ -950,7 +990,7 @@ const WorkBasicInfo = (props) => {
                                                 onMouseEnter={() => onMouseEnter("stage")}
                                                 onMouseLeave={() => setHoverFieldName("")}
                                                 getPopupContainer={() => formRef.current}
-                                                disabled={isPermissionField("stage")}
+                                                disabled={isPermissionField("stage") && canUpdate}
                                             >
                                                 {
                                                     stageList && stageList.map((item) => {
@@ -976,7 +1016,7 @@ const WorkBasicInfo = (props) => {
                                             setHoverFieldName={setHoverFieldName}
                                             workStore={workStore}
                                             workStatusCode={workInfo.workStatusCode}
-                                            disabled={isPermissionField("projectVersion")}
+                                            disabled={isPermissionField("projectVersion") && canUpdate}
                                         />
                                     </Form.Item>
 
@@ -998,7 +1038,7 @@ const WorkBasicInfo = (props) => {
                                             onMouseEnter={() => onMouseEnter("planBeginTime")}
                                             onMouseLeave={() => setHoverFieldName("")}
                                             getPopupContainer={() => formRef.current}
-                                            disabled={isPermissionField("planTime")}
+                                            disabled={isPermissionField("planTime") && canUpdate}
                                         />
                                     </Form.Item>
 
@@ -1020,7 +1060,7 @@ const WorkBasicInfo = (props) => {
                                             onMouseEnter={() => onMouseEnter("planEndTime")}
                                             onMouseLeave={() => setHoverFieldName("")}
                                             getPopupContainer={() => formRef.current}
-                                            disabled={isPermissionField("planTime")}
+                                            disabled={isPermissionField("planTime") && canUpdate}
                                         />
                                     </Form.Item>
 
@@ -1055,7 +1095,7 @@ const WorkBasicInfo = (props) => {
                                                 onMouseLeave={() => setHoverFieldName("")}
                                                 onChange={(value) => updataEstimateTime(value)}
                                                 value={estimateTimeValue}
-                                                disabled={isPermissionField("estimateTime")}
+                                                disabled={isPermissionField("estimateTime") && canUpdate}
                                                 min={0}
                                             />
 
@@ -1071,7 +1111,7 @@ const WorkBasicInfo = (props) => {
                                                 onMouseLeave={() => setHoverFieldName("")}
                                                 onChange={(value) => updataSurplusTime(value)}
                                                 value={surplusTimeValue}
-                                                disabled={isPermissionField("surplusTime")}
+                                                disabled={isPermissionField("surplusTime") && canUpdate}
                                                 min={0}
                                             />
                                         </Space>

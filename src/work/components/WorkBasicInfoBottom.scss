@@ -25,7 +25,7 @@
     font-size: 12px;
   }
 
-  .work-select{
+  .work-detail-bottom-tab-select{
     .ant-select-arrow{
       right: 15px;
     }
@@ -36,5 +36,24 @@
 }
 
 .work-basic-info-bottom-content{
-  //min-height: 600px;
+  min-height: 600px;
+}
+@media (min-width: 1200px) {
+  .work-basic-info-bottom-content{
+    min-height: 500px;
+  }
+}
+@media (min-width: 1281px) {
+  .work-basic-info-bottom-content{
+    min-height: 680px;
+  }
+}
+
+// tab栏Select下拉框选中样式
+.ant-select-dropdown {
+  .bottom-select-tab-active {
+    .ant-space-item {
+      color: var(--tiklab-blue) !important;
+    }
+  }
 }

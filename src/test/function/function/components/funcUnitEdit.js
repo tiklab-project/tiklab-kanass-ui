@@ -13,6 +13,7 @@ import IconCommon from "../../../../common/caseCommon/IconCommon";
 import {createWorkTestCaseFn} from "../../../testcase/components/testCaseTableFn";
 import WorkItemStore from "../../../defectBind/workItem/store/WorkItemStore";
 import {createWorkItemBindFn} from "../../../../work/components/WorkTestCaseFn";
+import ImgComponent from "../../../../common/imgComponent/ImgComponent";
 
 // 添加与编辑
 const FuncUnitEdit = (props) => {
@@ -41,6 +42,9 @@ const FuncUnitEdit = (props) => {
                 })
             }
         })
+        form.setFieldsValue({
+            priorityLevel: 1,
+        });
         setStepList([]);
         setVisible(true);
     };
@@ -324,33 +328,34 @@ const FuncUnitEdit = (props) => {
                                     getPopupContainer={() => formRef.current}
                                     className={"func-select"}
                                     bordered={false}
+                                    onSelect={(value) => console.log("选择的优先级", value)}
                                 >
                                     <Option value={0}>
                                         <div style={{display: "flex", gap: "10px", alignItems: "center"}}>
-                                            <IconCommon
-                                                className={"icon-16"}
-                                                icon={"icon_level1"}
-                                                style={{cursor: "pointer"}}
+                                            <ImgComponent
+                                                src={"proivilege1.png"}
+                                                alt=""
+                                                className="icon-10"
                                             />
                                             <div>低</div>
                                         </div>
                                     </Option>
                                     <Option value={1}>
                                         <div style={{display: "flex", gap: "10px", alignItems: "center"}}>
-                                            <IconCommon
-                                                className={"icon-16"}
-                                                icon={"icon_level2"}
-                                                style={{cursor: "pointer"}}
+                                            <ImgComponent
+                                                src={"proivilege3.png"}
+                                                alt=""
+                                                className="icon-10"
                                             />
                                             <div>中</div>
                                         </div>
                                     </Option>
                                     <Option value={2}>
                                         <div style={{display: "flex", gap: "10px", alignItems: "center"}}>
-                                            <IconCommon
-                                                className={"icon-16"}
-                                                icon={"icon_level3"}
-                                                style={{cursor: "pointer"}}
+                                            <ImgComponent
+                                                src={"proivilege5.png"}
+                                                alt=""
+                                                className="icon-10"
                                             />
                                             <div>高</div>
                                         </div>

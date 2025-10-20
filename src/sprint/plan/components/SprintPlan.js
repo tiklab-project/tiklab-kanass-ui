@@ -147,6 +147,9 @@ const SprintPlan = (props) => {
      * @param {被分配的迭代id} Sid 
      */
     const changeSprintPlan = (Sid) => {
+        if (!isPermissionCode("version_plan_work")) {
+            return;
+        }
         event.preventDefault();
         console.log(3)
         setIsDraggable(true)

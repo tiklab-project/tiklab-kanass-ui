@@ -104,7 +104,7 @@ const MessageListItem = (props) => {
     const setDom = () => {
         let dom = null;
         switch (type) {
-            case "KANASS_MESSAGETYPE_UPDATESTATUS":
+            case "KANASS_UPDATESTATUS":
                 dom = (
                     <div className="message-list-item" >
                         <div className="message-list-item-left">
@@ -131,7 +131,7 @@ const MessageListItem = (props) => {
                     </div >
                 )
                 break;
-            case "KANASS_MESSAGETYPE_TASKTODO":
+            case "KANASS_TASKTODO":
                 dom = (
                     <div className="message-list-item" >
                         <div className="message-list-item-left">
@@ -148,7 +148,7 @@ const MessageListItem = (props) => {
                     </div >
                 )
                 break;
-            case "KANASS_MESSAGETYPE_SPRINTCREATE":
+            case "KANASS_SPRINTCREATE":
                 dom = (
                     <div className="message-list-item" >
                         <div className="message-list-item-left">
@@ -165,7 +165,7 @@ const MessageListItem = (props) => {
                     </div >
                 )
                 break;
-            case "KANASS_MESSAGETYPE_SPRINTUPDATE":
+            case "KANASS_SPRINTUPDATE":
                 dom = (
                     <div className="message-list-item" >
                         <div className="message-list-item-left">
@@ -192,7 +192,7 @@ const MessageListItem = (props) => {
                     </div >
                 )
                 break;
-            case "KANASS_MESSAGETYPE_JOINPROJECT":
+            case "KANASS_JOINPROJECT":
                 dom = (
                     <div className="message-list-item" >
                         <div className="message-list-item-left">
@@ -209,7 +209,7 @@ const MessageListItem = (props) => {
                     </div >
                 )
                 break;
-            case "KANASS_MESSAGETYPE_JOINPROSET":
+            case "KANASS_JOINPROSET":
                 dom = (
                     <div className="message-list-item" >
                         <div className="message-list-item-left">
@@ -226,7 +226,7 @@ const MessageListItem = (props) => {
                     </div >
                 )
                 break;
-            case "KANASS_MESSAGETYPE_PROJECT_UPDATESTATUS":
+            case "KANASS_PROJECT_UPDATESTATUS":
                 dom = (
                     <div className="message-list-item" >
                         <div className="message-list-item-left">
@@ -253,7 +253,7 @@ const MessageListItem = (props) => {
                     </div >
                 )
                 break;
-            case "KANASS_MESSAGETYPE_PROJECT_ADDUSER":
+            case "KANASS_PROJECT_ADDUSER":
                 dom = (
                     <div className="message-list-item" >
                         <div className="message-list-item-left">
@@ -270,7 +270,7 @@ const MessageListItem = (props) => {
                     </div >
                 )
                 break;
-            case "KANASS_MESSAGETYPE_PROJECT_DELETE":
+            case "KANASS_PROJECT_DELETE":
                 dom = (
                     <div className="message-list-item" >
                         <div className="message-list-item-left">
@@ -287,7 +287,7 @@ const MessageListItem = (props) => {
                     </div >
                 )
                 break;
-            case "KANASS_MESSAGETYPE_PROJECT_CREATE":
+            case "KANASS_PROJECT_CREATE":
                 dom = (
                     <div className="message-list-item" >
                         <div className="message-list-item-left">
@@ -304,7 +304,7 @@ const MessageListItem = (props) => {
                     </div >
                 )
                 break;
-            case "KANASS_MESSAGETYPE_PROJECT_UPDATE":
+            case "KANASS_PROJECT_UPDATE":
                 dom = (
                     <div className="message-list-item" >
                         <div className="message-list-item-left">
@@ -321,7 +321,7 @@ const MessageListItem = (props) => {
                     </div >
                 )
                 break;
-            case "KANASS_MESSAGETYPE_WORKITEM_CREATE":
+            case "KANASS_WORKITEM_CREATE":
                 dom = (
                     <div className="message-list-item" >
                         <div className="message-list-item-left">
@@ -338,7 +338,7 @@ const MessageListItem = (props) => {
                     </div >
                 )
                 break;
-            case "KANASS_MESSAGETYPE_WORKITEM_UPDATE":
+            case "KANASS_WORKITEM_UPDATE":
                 dom = (
                     <div className="message-list-item" >
                         <div className="message-list-item-left">
@@ -355,7 +355,7 @@ const MessageListItem = (props) => {
                     </div >
                 )
                 break;
-            case "KANASS_MESSAGETYPE_WORKITEM_DELETE":
+            case "KANASS_WORKITEM_DELETE":
                 dom = (
                     <div className="message-list-item" >
                         <div className="message-list-item-left">
@@ -372,7 +372,7 @@ const MessageListItem = (props) => {
                     </div >
                 )
                 break;
-            case "KANASS_MESSAGETYPE_WORKITEM_UPDATESTATUS":
+            case "KANASS_WORKITEM_UPDATESTATUS":
                 dom = (
                     <div className="message-list-item" >
                         <div className="message-list-item-left">
@@ -399,7 +399,7 @@ const MessageListItem = (props) => {
                     </div >
                 )
                 break;
-            case "KANASS_MESSAGETYPE_WORKITEM_COMMENT":
+            case "KANASS_WORKITEM_COMMENT":
                 dom = (
                     <div className="message-list-item" >
                         <div className="message-list-item-left">
@@ -416,7 +416,7 @@ const MessageListItem = (props) => {
                     </div >
                 )
                 break;
-            case "KANASS_MESSAGETYPE_APPRAISED_CREATE":
+            case "KANASS_APPRAISED_CREATE":
                 dom = (
                     <div className="message-list-item" >
                         <div className="message-list-item-left">
@@ -433,7 +433,7 @@ const MessageListItem = (props) => {
                     </div >
                 )
                 break;
-            case "KANASS_MESSAGETYPE_APPRAISED_UPDATE":
+            case "KANASS_APPRAISED_UPDATE":
                 dom = (
                     <div className="message-list-item" >
                         <div className="message-list-item-left">
@@ -450,7 +450,7 @@ const MessageListItem = (props) => {
                     </div >
                 )
                 break;
-            case "KANASS_MESSAGETYPE_PROJECTSET_DELETE":
+            case "KANASS_PROJECTSET_DELETE":
                 dom = (
                     <div className="message-list-item" >
                         <div className="message-list-item-left">
@@ -467,7 +467,7 @@ const MessageListItem = (props) => {
                     </div >
                 )
                 break;
-            case "KANASS_MESSAGETYPE_PROJECTSET_CREATE":
+            case "KANASS_PROJECTSET_CREATE":
                 dom = (
                     <div className="message-list-item" >
                         <div className="message-list-item-left">
@@ -484,7 +484,7 @@ const MessageListItem = (props) => {
                     </div >
                 )
                 break;
-            case "KANASS_MESSAGETYPE_PROJECTSET_UPDATE":
+            case "KANASS_PROJECTSET_UPDATE":
                 dom = (
                     <div className="message-list-item" >
                         <div className="message-list-item-left">
@@ -501,7 +501,7 @@ const MessageListItem = (props) => {
                     </div >
                 )
                 break;
-            case "KANASS_MESSAGETYPE_PRODUCT_DELETE":
+            case "KANASS_PRODUCT_DELETE":
                 dom = (
                     <div className="message-list-item" >
                         <div className="message-list-item-left">
@@ -518,7 +518,7 @@ const MessageListItem = (props) => {
                     </div >
                 )
                 break;
-            case "KANASS_MESSAGETYPE_PRODUCT_CREATE":
+            case "KANASS_PRODUCT_CREATE":
                 dom = (
                     <div className="message-list-item" >
                         <div className="message-list-item-left">
@@ -535,7 +535,7 @@ const MessageListItem = (props) => {
                     </div >
                 )
                 break;
-            case "KANASS_MESSAGETYPE_PRODUCT_UPDATE":
+            case "KANASS_PRODUCT_UPDATE":
                 dom = (
                     <div className="message-list-item" >
                         <div className="message-list-item-left">

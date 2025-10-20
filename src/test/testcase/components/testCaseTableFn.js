@@ -127,7 +127,7 @@ export const showCreateUser = (director) =>{
     }else {
         return <div className={"ws-user-item"}>
             <div className={"display-flex-gap"}>
-                <Avatar  style={{flex:"none"}} size="small" icon={<UserOutlined />} />
+                <Avatar  style={{flex:"none", display:"flex", alignItems:"center", justifyContent:"center"}} size="small" icon={<UserOutlined />} />
                 <span> 未设置 </span>
             </div>
         </div>

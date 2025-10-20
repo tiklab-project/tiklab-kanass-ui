@@ -124,7 +124,7 @@ const WorkTypeList = (props) => {
                         <ImgComponent
                             src={record.iconUrl}
                             alt=""
-                            className="icon-24"
+                            className="icon-20"
                         />
                     </div>
                     <div className="work-type-text">{text}</div>
@@ -184,7 +184,6 @@ const WorkTypeList = (props) => {
             title: "操作",
             key: "action",
             align: "left",
-            width: '20%',
             render: (text, record) => (
                 <Space size="middle">
 

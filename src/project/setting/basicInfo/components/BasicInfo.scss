@@ -7,6 +7,31 @@
     font-weight: 600;
 }
 .project-set-basicinfo {
+
+    // 修改 Ant Design Collapse 组件的样式
+    .ant-collapse {
+        border: 1px solid var(--tiklab-gray-200);
+        background-color: var(--tiklab-gray-600);
+        border-radius: 4px;
+
+        .ant-collapse-item {
+            border-bottom: 1px solid #d9d9d9;
+
+            &:last-child {
+                border-bottom: none;
+            }
+
+            .ant-collapse-header {
+                align-items: flex-start !important;
+                padding: 16px 24px !important;
+
+                .ant-collapse-arrow{
+                    top: 20px;
+                }
+            }
+        }
+    }
+
     padding: var(--tiklab-padding);
     .project-set-title {
         height: 40px;

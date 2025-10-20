@@ -140,9 +140,15 @@ export class ProjectStore {
         const param = new FormData()
         param.append("id", values)
         const data = await Service("/project/deleteProject", param)
-        if (data.code === 0) {
-            this.findProjectList()
-        }
+        // if (data.code === 0) {
+        //     const value = {
+        //         pageParam: {
+        //             pageSize: 10,
+        //             currentPage: 1
+        //         }
+        //     }
+        //     this.findProjectPage(value)
+        // }
         return data;
     }
 

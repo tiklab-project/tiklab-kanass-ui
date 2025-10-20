@@ -163,7 +163,7 @@ export class SprintPlanStore {
     @action
     findFunctionDmCodeList = async(value) => {
 
-        const data = await Axios.post("/permission/findDomainPermissions", value)
+        const data = await Service("/permission/findDomainPermissions", value)
         if(data.code === 0){
             this.permissionCodeList = data.data;
         }

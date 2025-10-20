@@ -49,8 +49,8 @@ const LoadData = (props) => {
     }
 
   return  (
-      <Row>
-          <Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>
+      <Fragment>
+          {/*<Col sm={24} md={24} lg={{ span: 24 }} xl={{ span: "18", offset: "3" }} xxl={{ span: "18", offset: "3" }}>*/}
               <div className="load-data">
                   <Breadcumb
                       firstText="导入外部数据"
@@ -62,6 +62,8 @@ const LoadData = (props) => {
                               loadJiraDataDesc()
                           }
                       </div>
+                  </div>
+                  <div className="load-data-box">
                       <div className="load-data-content">
                           {
                               loadMantisDataDesc()
@@ -71,8 +73,7 @@ const LoadData = (props) => {
 
               </div>
 
-          </Col>
-      </Row >
+      </Fragment >
   )
 }
 

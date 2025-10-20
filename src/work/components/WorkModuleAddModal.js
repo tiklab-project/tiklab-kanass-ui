@@ -1,7 +1,7 @@
 import {observer} from "mobx-react";
 import {withRouter} from "react-router";
 import React,{useEffect, useState} from "react";
-import {Form, Input, Modal} from "antd";
+import {Form, Input, message, Modal} from "antd";
 
 const WorkModuleAddModal = (props) => {
     const {moduleStore, moduleVisible, setModuleVisible, parentId, projectId} = props;
@@ -13,19 +13,30 @@ const WorkModuleAddModal = (props) => {
     }, [moduleVisible]);
 
     const handleOk = () => {
-        const param = {
-            moduleName: form.getFieldValue("moduleName"),
-            parent: {
-                id: parentId
-            },
-            project: {
-                id: projectId
-            }
-        }
-        console.log(param)
-        createModule(param).then(res => {
-            setModuleVisible(false);
-        });
+        form.validateFields()
+            .then(value => {
+                const param = {
+                    moduleName: value.moduleName,
+                    parent: {
+                        id: parentId
+                    },
+                    project: {
+                        id: projectId
+                    }
+                }
+                console.log(param)
+                createModule(param).then(res => {
+                    setModuleVisible(false);
+                });
+            })
+            .catch((errorInfo) => {
+            // 显示具体错误信息
+                if (errorInfo.errorFields){
+                    console.log("表单验证失败",errorInfo.errorFields);
+                }else {
+                    message.error(`新增模块失败，请检查网络连接：${errorInfo}`);
+                }
+            });
 
     }
 

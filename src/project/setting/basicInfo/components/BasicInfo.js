@@ -385,16 +385,19 @@ const BasicInfo = props => {
                                             {/*<Button htmlType="submit" type="primary" disabled={disable}>
                                                 保存
                                             </Button>*/}
-                                            <Button
-                                                htmlType="submit"
-                                                type="primary"
-                                                disabled={
-                                                    form.getFieldsError().some(field => field.errors.length > 0) ||
-                                                    form.getFieldValue('projectName')?.length > 50
-                                                }
-                                            >
-                                                保存
-                                            </Button>
+                                            <PrivilegeProjectButton code={'project_basic_info_update'} domainId={projectId}  {...props}>
+                                                <Button
+                                                    htmlType="submit"
+                                                    type="primary"
+                                                    disabled={
+                                                        form.getFieldsError().some(field => field.errors.length > 0) ||
+                                                        form.getFieldValue('projectName')?.length > 50
+                                                    }
+                                                >
+                                                    保存
+                                                </Button>
+                                            </PrivilegeProjectButton>
+
                                         </Form.Item>
                                     {/*</PrivilegeProjectButton>*/}
 
@@ -407,11 +410,11 @@ const BasicInfo = props => {
                                     此项目及其事务、组件、附件和版本将在回收站中保留 60 天，之后将被永久删除。
                                 </div>
 
-                                {/*<PrivilegeProjectButton code={'ProjectDelete'} domainId={projectId}  {...props}>*/}
+                                <PrivilegeProjectButton code={'project_basic_info_delete'} domainId={projectId}  {...props}>
                                     <div className="change-button delete-button" onClick={() => showModal()}>
                                         删除项目
                                     </div>
-                                {/*</PrivilegeProjectButton>*/}
+                                </PrivilegeProjectButton>
                             </div>
                         </Panel>
                     </Collapse>

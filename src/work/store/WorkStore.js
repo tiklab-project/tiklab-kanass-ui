@@ -1467,5 +1467,16 @@ export class WorkStore {
             return data;
         }
     }
+
+    // 获取事项的表单字段和功能的权限列表
+    @action
+    findFunctionDmCodeList = async(value) => {
+
+        const data = await Service("/permission/findDomainPermissions", value)
+        if(data.code === 0){
+            // this.permissionCodeList = data.data;
+        }
+        return data;
+    }
 }
 export default new WorkStore();

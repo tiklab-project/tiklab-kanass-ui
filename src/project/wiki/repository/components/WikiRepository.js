@@ -209,7 +209,7 @@ const WikiRepository = (props) => {
                         cancelText: "取消",
                         getContainer: wikiRepository ? () => wikiRepository.current : null,
                         onOk() { props.history.push({
-                            pathname: `/project/${projectId}/wiki`,
+                            pathname: `/project/${projectId}/set/integration`,
                             state: { activeKey: "repository" }
                         }) }
                     });

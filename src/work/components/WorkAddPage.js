@@ -24,6 +24,7 @@ import ProjectSetStore from "../../projectSet/projectSet/store/ProjectSetStore";
 import setImageUrl from "../../common/utils/setImageUrl";
 import DeleteModal from "../../common/deleteModal/deleteModal";
 import InputWithCount from "../../common/inputWithCount/InputWithCount";
+import ProjectStore from "../../project/project/store/ProjectStore";
 const { Dragger } = Upload;
 
 const { RangePicker } = DatePicker;
@@ -80,7 +81,8 @@ const WorkAddPage = (props) => {
     let caseId = urlParams.get("caseId")
     const [editorType, setEditorType] = useState(false);
     const editorRef = useRef(null);
-    const [selectProjectId, setSelectProjectId] = useState(projectId);
+    // 获取选中项目的事项类型id
+    const [selectProjectWorkType, setSelectProjectWorkType] = useState(null);
 
     // 上传附件的信息
     const upload_url = env === "local" ? base_url : "";
@@ -97,11 +99,17 @@ const WorkAddPage = (props) => {
         if (path.includes("/product")){
             findProjectList({productId: productId}).then(res => {
                 setProjectList(res.data)
+                if (res.data.length > 0){
+                    setProject(res.data[0])
+                }
             })
         }
         if (path.includes("/projectSet")){
             findProjectList({projectSetId: projectSetId}).then(res => {
                 setProjectList(res.data)
+                if (res.data.length > 0){
+                    setProject(res.data[0])
+                }
             })
         }
         // const metaProjectId = projectId;
@@ -257,9 +265,9 @@ const WorkAddPage = (props) => {
     }, [projectId, projectSetId, productId])
 
     useEffect(() => {
-        if (selectProjectId){
+        if (project){
             const param = {
-                projectId: selectProjectId,
+                projectId: project.id,
                 workType: workType
             }
             findWorkItemCreateMetaData(param).then(res => {
@@ -278,100 +286,100 @@ const WorkAddPage = (props) => {
                 })
 
                 // 设置项目信息
-                if (project){
+
+                form.setFieldsValue({
+                    parentWorkItem: workId,
+                    project: project.id,
+                    sprint: sprintId,
+                    assigner: project?.master.id,
+                    planTime: [moment(getNowFormatDate(), dateFormat), moment(getNowFormatDate(), dateFormat)]
+                })
+
+                // // 设置模块
+                // form.setFieldsValue({
+                //     module: res.data.moduleList[0]?.id
+                // })
+
+                // 设置所选版本、迭代、计划
+                // 敏捷模型
+                console.log("sprintId:  " + sprintId)
+                if (projectType === 'scrum'){
+                    if (sprintId) {
+                        form.setFieldsValue({
+                            sprint: sprintId
+                        })
+                    } else {
+                        if (res.data.sprintList.length > 0) {
+                            form.setFieldsValue({
+                                sprint: res.data.sprintList[0]?.id
+                            })
+                        } else {
+                            form.setFieldsValue({
+                                sprint: null
+                            })
+                        }
+                    }
+                }
+
+                // 瀑布模型
+                if (projectType === 'nomal'){
                     form.setFieldsValue({
-                        parentWorkItem: workId,
-                        project: selectProjectId,
-                        sprint: sprintId,
-                        assigner: project?.master.id,
-                        planTime: [moment(getNowFormatDate(), dateFormat), moment(getNowFormatDate(), dateFormat)]
+                        stage: res.data.stageList[0]?.id
                     })
+                }
 
-                    // // 设置模块
-                    // form.setFieldsValue({
-                    //     module: res.data.moduleList[0]?.id
-                    // })
-
-                    // 设置所选版本、迭代、计划
-                    // 敏捷模型
-                    console.log("sprintId:  " + sprintId)
-                    if (projectType === 'scrum'){
-                        if (sprintId) {
+                // 看板模型
+                if (projectType === 'kanban'){
+                    if (sprintId) {
+                        form.setFieldsValue({
+                            sprint: sprintId
+                        })
+                    } else {
+                        if (res.data.sprintList.length > 0) {
                             form.setFieldsValue({
-                                sprint: sprintId
+                                sprint: res.data.sprintList[0]?.id
                             })
                         } else {
-                            if (res.data.sprintList.length > 0) {
-                                form.setFieldsValue({
-                                    sprint: res.data.sprintList[0]?.id
-                                })
-                            } else {
-                                form.setFieldsValue({
-                                    sprint: null
-                                })
-                            }
+                            form.setFieldsValue({
+                                sprint: null
+                            })
+                        }
+                    }
+                }
+
+
+                // 混合模型
+                if (projectType === 'hybrid'){
+
+                    if (sprintId) {
+                        form.setFieldsValue({
+                            sprint: sprintId
+                        })
+                    } else {
+                        if (res.data.sprintList.length > 0) {
+                            form.setFieldsValue({
+                                sprint: res.data.sprintList[0]?.id
+                            })
+                        } else {
+                            form.setFieldsValue({
+                                sprint: null
+                            })
                         }
                     }
 
-                    // 瀑布模型
-                    if (projectType === 'nomal'){
-                        form.setFieldsValue({
-                            stage: res.data.stageList[0]?.id
-                        })
-                    }
+                    form.setFieldsValue({
+                        stage: res.data.stageList[0]?.id
+                    })
+                }
 
-                    // 看板模型
-                    if (projectType === 'kanban'){
-                        if (sprintId) {
-                            form.setFieldsValue({
-                                sprint: sprintId
-                            })
-                        } else {
-                            if (res.data.sprintList.length > 0) {
-                                form.setFieldsValue({
-                                    sprint: res.data.sprintList[0]?.id
-                                })
-                            } else {
-                                form.setFieldsValue({
-                                    sprint: null
-                                })
-                            }
-                        }
-                    }
+                // ipd模型
+                if (projectType === 'ipd'){
+                    form.setFieldsValue({
+                        stage: res.data.stageList[0]?.id
+                    })
+                }
 
-
-                    // 混合模型
-                    if (projectType === 'hybrid'){
-
-                        if (sprintId) {
-                            form.setFieldsValue({
-                                sprint: sprintId
-                            })
-                        } else {
-                            if (res.data.sprintList.length > 0) {
-                                form.setFieldsValue({
-                                    sprint: res.data.sprintList[0]?.id
-                                })
-                            } else {
-                                form.setFieldsValue({
-                                    sprint: null
-                                })
-                            }
-                        }
-
-                        form.setFieldsValue({
-                            stage: res.data.stageList[0]?.id
-                        })
-                    }
-
-                    // ipd模型
-                    if (projectType === 'ipd'){
-                        form.setFieldsValue({
-                            stage: res.data.stageList[0]?.id
-                        })
-                    }
-
-                    if (projectType !== "nomal" && projectType !== "ipd"){
+                if (projectType !== "nomal" && projectType !== "ipd"){
                         if (versionId) {
                             form.setFieldsValue({
                                 projectVersion: versionId
@@ -388,7 +396,7 @@ const WorkAddPage = (props) => {
                             }
                         }
                     }
-                }
+
 
 
             });
@@ -408,7 +416,7 @@ const WorkAddPage = (props) => {
             }
         }
         return;
-    }, [selectProjectId]);
+    }, [project]);
 
     const containerRef = useRef(null);
     const [isEditorFocused, setIsEditorFocused] = useState(false);
@@ -556,7 +564,160 @@ const WorkAddPage = (props) => {
 
     // 选择项目
     const selectProject = (value, option) => {
-        setSelectProjectId(option.project.id)
+
+        const param = {
+            projectId: option.project.id,
+            workType: workType
+        }
+        findWorkItemCreateMetaData(param).then(res => {
+
+            // 设置选中项目的事项类型id
+            setSelectProjectWorkType(res.data.workTypeDm.id)
+
+            // 事项子类型下拉框
+            setSelectItem(res.data.fieldList[0][0])
+            form.setFieldsValue({
+                eachType: res.data.fieldList[0][0]?.selectItemList[0]?.id,
+            })
+
+
+
+            // 设置优先级
+            form.setFieldsValue({
+                workPriority: res.data.fieldList[1][0]?.selectItemList[0].id
+            })
+
+            // 设置项目信息
+            if (option.project){
+                setProjectType(option.project.projectType.type)
+                form.setFieldsValue({
+                    parentWorkItem: workId,
+                    project: option.project.id,
+                    sprint: sprintId,
+                    assigner: res.data.dmUserPage.dataList[0]?.user.id,
+                    planTime: [moment(getNowFormatDate(), dateFormat), moment(getNowFormatDate(), dateFormat)]
+                })
+
+                // // 设置模块
+                // form.setFieldsValue({
+                //     module: res.data.moduleList[0]?.id
+                // })
+
+                // 设置所选版本、迭代、计划
+                // 敏捷模型
+                console.log("sprintId:  " + sprintId)
+                if (option.project.projectType.type === 'scrum'){
+                    if (sprintId) {
+                        form.setFieldsValue({
+                            sprint: sprintId
+                        })
+                    } else {
+                        if (res.data.sprintList.length > 0) {
+                            form.setFieldsValue({
+                                sprint: res.data.sprintList[0]?.id
+                            })
+                        } else {
+                            form.setFieldsValue({
+                                sprint: null
+                            })
+                        }
+                    }
+                }
+
+                // 瀑布模型
+                if (option.project.projectType.type === 'nomal'){
+                    form.setFieldsValue({
+                        stage: res.data.stageList[0]?.id
+                    })
+                }
+
+                // 看板模型
+                if (option.project.projectType.type === 'kanban'){
+                    if (sprintId) {
+                        form.setFieldsValue({
+                            sprint: sprintId
+                        })
+                    } else {
+                        if (res.data.sprintList.length > 0) {
+                            form.setFieldsValue({
+                                sprint: res.data.sprintList[0]?.id
+                            })
+                        } else {
+                            form.setFieldsValue({
+                                sprint: null
+                            })
+                        }
+                    }
+                }
+
+
+                // 混合模型
+                if (option.project.projectType.type === 'hybrid'){
+
+                    if (sprintId) {
+                        form.setFieldsValue({
+                            sprint: sprintId
+                        })
+                    } else {
+                        if (res.data.sprintList.length > 0) {
+                            form.setFieldsValue({
+                                sprint: res.data.sprintList[0]?.id
+                            })
+                        } else {
+                            form.setFieldsValue({
+                                sprint: null
+                            })
+                        }
+                    }
+
+                    form.setFieldsValue({
+                        stage: res.data.stageList[0]?.id
+                    })
+                }
+
+                // ipd模型
+                if (option.project.projectType.type === 'ipd'){
+                    form.setFieldsValue({
+                        stage: res.data.stageList[0]?.id
+                    })
+                }
+
+                if (option.project.projectType.type !== "nomal" && option.project.projectType.type !== "ipd"){
+                    if (versionId) {
+                        form.setFieldsValue({
+                            projectVersion: versionId
+                        })
+                    } else {
+                        if (res.data.versionList.length > 0) {
+                            form.setFieldsValue({
+                                projectVersion: res.data.versionList[0]?.id
+                            })
+                        } else {
+                            form.setFieldsValue({
+                                projectVersion: null
+                            })
+                        }
+                    }
+                }
+            }
+
+
+        });
+
+        if (project?.productId){
+            findModuleList({ productId: project?.productId }).then(res => {
+                form.setFieldsValue({
+                    module: res.data[0]?.id
+                })
+            });
+        }else{
+            findModuleList({ projectId: projectId }).then(res => {
+                form.setFieldsValue({
+                    module: res.data[0]?.id
+                })
+            });
+        }
+
         // getProjectValue(option.project)
     }
 
@@ -578,7 +739,7 @@ const WorkAddPage = (props) => {
             values.builder = getUser().userId;
             values.planBeginTime = values.planTime[0].format('YYYY-MM-DD HH:mm:ss')
             values.planEndTime = values.planTime[1].format('YYYY-MM-DD 23:59:59')
-            values.workType = workType.id;
+            values.workType = selectProjectWorkType ? selectProjectWorkType : workType.id;
             values.desc = slateValue;
             values.project = projectId ? projectId : values.project;
             values.fieldId = selectItem?.id;

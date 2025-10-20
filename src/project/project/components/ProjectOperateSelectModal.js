@@ -54,25 +54,29 @@ const ProjectOperateSelectModal = (props) => {
             {
                 type: 'array',
                 required: true,
-                message: 'Please select time!',
+                message: '请选择计划时间',
             }
         ]
     };
 
     const [dmUser, setDmUser] = useState([])
+    const [loading,setLoading] = useState( false)
 
     useEffect(() => {
 
-        info()
-        getProjectTypeList()
-        findDmUserList({domainId : projectInfo.id}).then(res=> {
-            if(res.code === 0){
-                setDmUser(res.data)
-            }
-        })
+        if (deleteModalVisible || editModalVisible){
+            info()
+            getProjectTypeList()
+            findDmUserList({domainId : projectInfo.id}).then(res=> {
+                if(res.code === 0){
+                    setDmUser(res.data)
+                }
+            })
+        }
         return;
-    }, [])
+    }, [deleteModalVisible, editModalVisible])
     const info = () => {
+        setLoading(true)
         searchpro(projectInfo.id).then((response) => {
             const time = response["startTime"]
             if (response.code === 0) {
@@ -89,6 +93,7 @@ const ProjectOperateSelectModal = (props) => {
                     startTime: [moment(data.startTime, dateFormat), moment(data.endTime, dateFormat)]
                 })
             }
+            setLoading( false)
 
         })
     };
@@ -117,8 +122,11 @@ const ProjectOperateSelectModal = (props) => {
             })
         }).catch((errorInfo) => {
             // 显示具体错误信息
-            const errors = errorInfo.errorFields.map(field => field.errors[0]);
-            message.error(`表单验证失败：${errors.join('；')}`);
+            if (errorInfo.errorFields){
+                console.log("表单验证失败",errorInfo.errorFields);
+            }else {
+                message.error(`编辑失败，请检查网络连接：${errorInfo}`);
+            }
         });
     };
 
@@ -170,22 +178,24 @@ const ProjectOperateSelectModal = (props) => {
 
     const moreMenu = () => {
         return <div className="project-dropdown-more">
-            <PrivilegeButton code={"project_update"}>
+            {
+                projectInfo.updatePermission &&
                 <div onClick={() => setEditModalVisible(true)} className="dropdown-more-item">
                     <svg style={{marginRight:"5px"}} className="icon-16" aria-hidden="true">
                         <use xlinkHref="#icon-edit"></use>
                     </svg>
                     <span>编辑</span>
                 </div>
-            </PrivilegeButton>
-            <PrivilegeButton code={"project_delete"}>
+            }
+            {
+                projectInfo.deletePermission &&
                 <div onClick={() => setDeleteModalVisible(true)} className="dropdown-more-item">
                     <svg style={{marginRight:"5px"}} className="icon-16" aria-hidden="true">
                         <use xlinkHref="#icon-delete"></use>
                     </svg>
                     <span>删除</span>
                 </div>
-            </PrivilegeButton>
+            }
         </div>
     };
 
@@ -226,6 +236,7 @@ const ProjectOperateSelectModal = (props) => {
                 status={status}
                 dmUser={dmUser}
                 rangeConfig={rangeConfig}
+                loading={loading}
             />
         </>
 

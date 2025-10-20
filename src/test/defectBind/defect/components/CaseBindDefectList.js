@@ -275,7 +275,11 @@ const CaseBindDefectList = (props) =>{
                     idList.push(item.id)
                 })
                 setTestCaseIdList(idList)
-                findPage({caseIds: idList})
+                if (idList.length !== 0){
+                    findPage({caseIds: idList})
+                }else {
+                    setTableLoading(false)
+                }
             })
         }else {
             const idList = [];
@@ -308,6 +312,7 @@ const CaseBindDefectList = (props) =>{
             // setDataList(res.dataList)
             setTableLoading(false)
         })
+        setTableLoading(false)
     }
 
     /**
@@ -371,7 +376,7 @@ const CaseBindDefectList = (props) =>{
                             emptyText: inDetail ? <div style={{height: 100}}/>
                                 :<Empty
                                     imageStyle={{height: 100}}
-                                    description={<span>暂无数据</span>}
+                                    description={<span>暂无关联缺陷</span>}
                                 />
                         }}
                     />

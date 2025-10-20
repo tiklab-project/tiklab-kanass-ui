@@ -319,9 +319,17 @@
     font-size: 13px;
 }
 
+.step-add-box {
+    padding: 5px;
+    //border-radius: 5px;
+    position: relative;
+    background: #f9fafb;
+    border: 1px solid #f5f5f5;
+}
+
 .step-item-box{
     //margin: 10px 0;
-    padding: 5px;
+    padding: 0 5px;
     //border-radius: 5px;
     position: relative;
     background: #f9fafb;
@@ -603,6 +611,17 @@
     background: #eee;
 }
 
+/* 在预期结果列后添加分割线 */
+.step-cell:nth-child(3)::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #eee;
+}
+
 // 操作列右对齐
 .step-cell:last-child {
     display: flex;
@@ -610,9 +629,9 @@
     align-items: center;
 }
 
-// 序号与拖拽图标所在列的轻微弱化背景，保持克制
+// 序号与拖拽图标所在列的轻微弱化背景
 .step-row .step-item-box-icon {
     background-color: #fafafa;
-    padding: 2px 4px;
+    //padding: 2px 4px;
     border-radius: 4px;
 }

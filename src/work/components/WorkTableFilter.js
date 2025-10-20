@@ -81,7 +81,7 @@ const WorkTableFilter = (props) => {
     );
 
     useEffect(() => {
-        findProjectList();
+        // findProjectList();
         getSelectUserList(projectId)
         getWorkStatus()
         if (!path.includes("/product") && !path.includes("/projectSet")){

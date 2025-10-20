@@ -2,7 +2,7 @@ import React, {useEffect, useState, useRef} from 'react';
 import IconCommon from "../../../../common/caseCommon/IconCommon";
 import {inject, observer} from "mobx-react";
 import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
-import {MenuOutlined, PlusOutlined, UpOutlined, CheckOutlined, CloseOutlined, FormOutlined} from "@ant-design/icons";
+import {PlusOutlined, UpOutlined, CheckOutlined, CloseOutlined, FormOutlined} from "@ant-design/icons";
 import {Row, Col, Empty, Popconfirm, Select, Form, Input, Button, Space, message, Tooltip} from "antd";
 import stepCommonStore from "../../../common/stepcommon/store/StepCommonStore";
 import {CASE_TYPE} from "../../../../common/dictionary/dictionary";
@@ -22,6 +22,7 @@ const FunctionStepAddList = (props) => {
     const {funcUnitStore, stepList, setStepList} = props;
     const {findFuncUnit} = funcUnitStore;
     const [showAddForm, setShowAddForm] = useState(false);
+    const [showAddFormIndex, setShowAddFormIndex] = useState(-1); // 跟踪在哪个索引处显示新增表单
     const [editingStepId, setEditingStepId] = useState(null);
     const [form] = Form.useForm();
     const [editForm] = Form.useForm();
@@ -96,7 +97,7 @@ const FunctionStepAddList = (props) => {
         return result;
     }
 
-    const handleAddStep = async () => {
+    const handleAddStep = async (index) => {
         try {
             let formValues = await form.validateFields();
             const values = {
@@ -105,21 +106,37 @@ const FunctionStepAddList = (props) => {
                 sort: stepList.length
             };
 
-            setStepList([...stepList, values]);
+            // 在指定索引位置插入新步骤
+            const newStepList = [...stepList];
+            newStepList.splice(index + 1, 0, values);
 
-            message.success("添加成功");
+            // 更新排序值
+            const updatedItems = newStepList.map((item, idx) => ({
+                ...item,
+                sort: idx
+            }));
+
+            setStepList(updatedItems);
+
+            console.log("添加步骤成功");
             form.resetFields();
             setShowAddForm(false);
         } catch (error) {
-            message.success("添加失败");
-            console.error('添加步骤失败:', error);
+            if (error.errorFields || error.errorFields.length > 0){
+                console.error('验证表单:', error);
+            }else {
+                message.error("添加失败");
+                console.error('添加步骤失败:', error);
+            }
+
+
         }
     };
 
-    const handleKeyPressAdd = (e) => {
+    const handleKeyPressAdd = (e, index) => {
         if (e.key === 'Enter' && e.ctrlKey) {
             e.preventDefault();
-            handleAddStep();
+            handleAddStep(index);
         }
     };
 
@@ -177,29 +194,36 @@ const FunctionStepAddList = (props) => {
         editForm.resetFields();
     };
 
-    const renderItemsInfo = (item,provided,step) =>{
+    const cancelAdd = () => {
+        setShowAddForm(false);
+        setShowAddFormIndex(null);
+        form.resetFields();
+    };
+
+    const renderItemsInfo = (item,provided,step, index) =>{
         const isEditing = editingStepId === item.id;
 
         return(
-            <Row className={"step-item-content step-row"}>
-                <Col className={"step-cell"}>
+            <Row className={"step-item-content step-row"} style={{display: "flex"}}>
+                <Col className={"step-cell"} style={{width: "30px"}}>
                     <div
                         {...provided.dragHandleProps}
                         className={"step-item-box-icon"}
                     >
-                        <MenuOutlined />
-                        <div className={"step-item-box-index"}>{item.sort+1}</div>
+                        <svg className="icon-18" aria-hidden="true" style={{marginLeft: "3px", cursor: "pointer"}}>
+                            <use xlinkHref="#icon-holder"></use>
+                        </svg>
                     </div>
                 </Col>
-                <Col span={9} className={"step-cell step-item-box-text"}>
+                <Col span={10} className={"step-cell step-item-box-text"}>
                     {isEditing ? (
                         <Form.Item
                             name="described"
-                            rules={[{ required: true, message: '请输入步骤描述' }]}
+                            rules={[{ required: true, message: '步骤描述' }]}
                             style={{marginBottom: 0, width: "100%"}}
                         >
                             <TextArea
-                                placeholder="请输入步骤描述(Ctrl+Enter快速保存)"
+                                placeholder="步骤描述(Ctrl+Enter快速保存)"
                                 autoSize={{minRows: 3, maxRows: 4}}
                                 onKeyDown={(e) => handleKeyPressEdit(e, item.id)}
                                 bordered={false}
@@ -212,15 +236,15 @@ const FunctionStepAddList = (props) => {
                         }} className={"text-display"}>{step?.described}</div>
                     )}
                 </Col>
-                <Col span={9} className={"step-cell step-item-box-text"}>
+                <Col span={10} className={"step-cell step-item-box-text"}>
                     {isEditing ? (
                         <Form.Item
                             name="expect"
-                            rules={[{ required: true, message: '请输入预期结果' }]}
+                            rules={[{ required: true, message: '预期结果' }]}
                             style={{marginBottom: 0, width: "100%"}}
                         >
                             <TextArea
-                                placeholder="请输入预期结果(Ctrl+Enter快速保存)"
+                                placeholder="预期结果(Ctrl+Enter快速保存)"
                                 autoSize={{minRows: 3, maxRows: 4}}
                                 onKeyDown={(e) => handleKeyPressEdit(e, item.id)}
                                 bordered={false}
@@ -233,7 +257,7 @@ const FunctionStepAddList = (props) => {
                         }} className={"text-display"}>{step?.expect}</div> : null
                     )}
                 </Col>
-                <Col className={"step-cell"} style={{marginLeft: "auto",height:"20px"}}>
+                <Col className={"step-cell"} style={{margin:"0 auto", display: "flex",height:"20px", width: "50px", justifyContent: "center", alignItems: "center"}}>
                     {isEditing ? (
                         <Space>
                             <Tooltip title={"Ctrl + Enter 快速保存"} mouseEnterDelay={0.5}>
@@ -255,14 +279,16 @@ const FunctionStepAddList = (props) => {
                         </Space>
                     ) : (
                         <Space>
-                            <FormOutlined
-                                style={{fontSize:16,cursor: "pointer"}}
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    startEdit(item.id);
-                                }}
-                            />
-                            <HideDelete privilegeCode={'test_case_update'} projectId={projectId} deleteFn={()=>deleteFn(item)}/>
+                            <svg className="icon-18" aria-hidden="true" style={{marginLeft: "3px", cursor: "pointer"}}
+                                 onClick={(e) => {
+                                     e.stopPropagation();
+                                     console.log("---新增步骤---",index)
+                                     setShowAddFormIndex(index)
+                                     showAddFormHandler(index);
+                                 }}>
+                                <use xlinkHref="#icon-add2"></use>
+                            </svg>
+                            <HideDelete deleteFn={()=>deleteFn(item)}/>
                         </Space>
                     )}
                 </Col>
@@ -270,6 +296,71 @@ const FunctionStepAddList = (props) => {
         )
     }
 
+    const renderAddForm = (index) => {
+        return (
+            <div className={"step-item-box"} style={{marginTop: "10px"}}>
+                <Form
+                    form={form}
+                    layout="vertical"
+                    onFinish={() => handleAddStep(index)}
+                >
+                    <Row className={"step-item-content"} style={{display: "flex"}}>
+                        <Col className={"step-cell"} style={{width: "30px"}}>
+                            <div className={"step-item-box-icon"}>
+                                <svg className="icon-18" aria-hidden="true" style={{marginLeft: "3px", cursor: "pointer"}}>
+                                    <use xlinkHref="#icon-holder"></use>
+                                </svg>
+                            </div>
+                        </Col>
+                        <Col span={10} className={"step-cell step-item-box-text"}>
+                            <Form.Item
+                                name="described"
+                                rules={[{required: true, message: '步骤描述'}]}
+                                style={{marginBottom: 0, width: "100%"}}
+                            >
+                                <TextArea
+                                    ref={describedInputRef}
+                                    placeholder="步骤描述(Ctrl+Enter快速保存)"
+                                    autoSize={{minRows: 3, maxRows: 4}}
+                                    onKeyDown={(e) => handleKeyPressAdd(e, index)}
+                                    bordered={false}
+                                />
+                            </Form.Item>
+                        </Col>
+                        <Col span={10} className={"step-cell step-item-box-text"}>
+                            <Form.Item
+                                name="expect"
+                                rules={[{required: true, message: '预期结果'}]}
+                                style={{marginBottom: 0, width: "100%"}}
+                            >
+                                <TextArea
+                                    placeholder="预期结果(Ctrl+Enter快速保存)"
+                                    autoSize={{minRows: 3, maxRows: 4}}
+                                    onKeyDown={(e) => handleKeyPressAdd(e, index)}
+                                    bordered={false}
+                                />
+                            </Form.Item>
+                        </Col>
+                        <Col style={{margin: "0 auto", display: "flex", height: "20px", width: "50px",
+                            justifyContent: "center", alignItems: "center"}}>
+                            <Space>
+                                <Tooltip title={"Ctrl + Enter 快速保存"} mouseEnterDelay={0.5}>
+                                    <CheckOutlined
+                                        onClick={() => handleAddStep(index)}
+                                        style={{cursor: "pointer", fontSize: "16px"}}
+                                    />
+                                </Tooltip>
+                                <CloseOutlined
+                                    onClick={cancelAdd}
+                                    style={{cursor: "pointer", fontSize: "16px"}}
+                                />
+                            </Space>
+                        </Col>
+                    </Row>
+                </Form>
+            </div>
+        );
+    };
 
     const renderItems = (list) => {
         return list.map((item, index) => {
@@ -288,12 +379,14 @@ const FunctionStepAddList = (props) => {
                         >
                             {editingStepId === item.id ? (
                                 <Form form={editForm} layout="vertical">
-                                    {renderItemsInfo(item, provided, step)}
+                                    {renderItemsInfo(item, provided, step, index)}
                                 </Form>
                             ) : (
-                                renderItemsInfo(item, provided, step)
+                                renderItemsInfo(item, provided, step, index)
                             )}
                         </div>
+                        {/* 在当前位置下方显示新增表单 */}
+                        {showAddForm && showAddFormIndex === index && renderAddForm(index)}
                     </>
                 )}
             </Draggable>
@@ -301,10 +394,6 @@ const FunctionStepAddList = (props) => {
     };
 
     const deleteFn = async (item) =>{
-
-        // await deleteStepCommon(item.id, CASE_TYPE.FUNCTION)
-        // await findList()
-        // await findFuncUnit(functionId)
         setStepList(stepList.filter(step => step.id !== item.id))
     }
 
@@ -348,85 +437,92 @@ const FunctionStepAddList = (props) => {
                         )}
                     </Droppable>
                 </DragDropContext>
-                <div className={"step-item-box"} style={{marginTop: "10px"}}>
-                    <div style={{textAlign: "center"}}>
-                        {
-                            !showAddForm &&
-                                <span
-                                    className="link-text"
-                                    onClick={showAddFormHandler}
-                                    style={{cursor: "pointer", fontSize: "14px", display: "inline-flex", alignItems: "center"}}
-                                >
-                                    <svg className="icon-20" aria-hidden="true" style={{marginRight: "5px"}}>
-                                        <use xlinkHref="#icon-add2"></use>
-                                    </svg>
-                                    添加步骤
-                                </span>
-                        }
+                {
+                    !showAddForm && stepList.length === 0 &&
+                    <div className={"step-add-box"} style={{marginTop: "10px"}}>
+                        <div style={{textAlign: "center"}}>
+                            <span
+                                className="link-text"
+                                onClick={showAddFormHandler}
+                                style={{cursor: "pointer", fontSize: "14px", display: "inline-flex", alignItems: "center"}}
+                            >
+                                <svg className="icon-20" aria-hidden="true" style={{marginRight: "5px"}}>
+                                    <use xlinkHref="#icon-add2"></use>
+                                </svg>
+                                添加步骤
+                            </span>
+                        </div>
                     </div>
-                    {showAddForm && (
-                        <Form
-                            form={form}
-                            layout="vertical"
-                            onFinish={handleAddStep}
-                        >
-                            <Row className={"step-item-content"}>
-                                <Col className={"step-cell"}>
-                                    <div className={"step-item-box-icon"}>
-                                        <MenuOutlined />
-                                        <div className={"step-item-box-index"}>{stepList.length + 1}</div>
-                                    </div>
-                                </Col>
-                                <Col span={9} className={"step-cell step-item-box-text"}>
-                                    <Form.Item
-                                        name="described"
-                                        rules={[{required: true, message: '请输入步骤描述'}]}
-                                        style={{marginBottom: 0, width: "100%"}}
-                                    >
-                                        <TextArea
-                                            ref={describedInputRef}
-                                            placeholder="请输入步骤描述(Ctrl+Enter快速保存)"
-                                            autoSize={{minRows: 3, maxRows: 4}}
-                                            onKeyDown={handleKeyPressAdd}
-                                            bordered={false}
-                                        />
-                                    </Form.Item>
-                                </Col>
-                                <Col span={9} className={"step-cell step-item-box-text"}>
-                                    <Form.Item
-                                        name="expect"
-                                        rules={[{required: true, message: '请输入预期结果'}]}
-                                        style={{marginBottom: 0, width: "100%"}}
-                                    >
-                                        <TextArea
-                                            placeholder="请输入预期结果(Ctrl+Enter快速保存)"
-                                            autoSize={{minRows: 3, maxRows: 4}}
-                                            onKeyDown={handleKeyPressAdd}
-                                            bordered={false}
-                                        />
-                                    </Form.Item>
-                                </Col>
-                                <Col style={{marginLeft: "auto", height: "20px"}}>
-                                    <Space>
-                                        <Tooltip title={"Ctrl + Enter 快速保存"} mouseEnterDelay={0.5}>
-                                            <CheckOutlined
-                                                onClick={handleAddStep}
-                                                style={{cursor: "pointer", fontSize: "16px"}}
-                                            />
-                                        </Tooltip>
-                                        <CloseOutlined
-                                            onClick={() => {
-                                                form.resetFields();
-                                                setShowAddForm(false);
-                                            }}
-                                            style={{cursor: "pointer", fontSize: "16px"}}
-                                        />
-                                    </Space>
-                                </Col>
-                            </Row>
-                        </Form>
-                    )}
-                </div>
+                }
+                {/* 在列表末尾显示新增表单 */}
+                {showAddForm && stepList.length === 0 && showAddFormIndex === -1 && renderAddForm(stepList.length - 1)}
+                {/*{*/}
+                {/*    showAddForm && (*/}
+                {/*        <div className={"step-item-box"} style={{marginTop: "10px"}}>*/}
+                {/*            <Form*/}
+                {/*                form={form}*/}
+                {/*                layout="vertical"*/}
+                {/*                onFinish={handleAddStep}*/}
+                {/*            >*/}
+                {/*                <Row className={"step-item-content"} style={{display: "flex"}}>*/}
+                {/*                    <Col className={"step-cell"} style={{width: "20px"}}>*/}
+                {/*                        <div className={"step-item-box-icon"}>*/}
+                {/*                            <HolderOutlined />*/}
+                {/*                            /!*<div className={"step-item-box-index"}>{stepList.length + 1}</div>*!/*/}
+                {/*                        </div>*/}
+                {/*                    </Col>*/}
+                {/*                    <Col span={10} className={"step-cell step-item-box-text"}>*/}
+                {/*                        <Form.Item*/}
+                {/*                            name="described"*/}
+                {/*                            rules={[{required: true, message: '步骤描述'}]}*/}
+                {/*                            style={{marginBottom: 0, width: "100%"}}*/}
+                {/*                        >*/}
+                {/*                            <TextArea*/}
+                {/*                                ref={describedInputRef}*/}
+                {/*                                placeholder="步骤描述(Ctrl+Enter快速保存)"*/}
+                {/*                                autoSize={{minRows: 3, maxRows: 4}}*/}
+                {/*                                onKeyDown={handleKeyPressAdd}*/}
+                {/*                                bordered={false}*/}
+                {/*                            />*/}
+                {/*                        </Form.Item>*/}
+                {/*                    </Col>*/}
+                {/*                    <Col span={10} className={"step-cell step-item-box-text"}>*/}
+                {/*                        <Form.Item*/}
+                {/*                            name="expect"*/}
+                {/*                            rules={[{required: true, message: '预期结果'}]}*/}
+                {/*                            style={{marginBottom: 0, width: "100%"}}*/}
+                {/*                        >*/}
+                {/*                            <TextArea*/}
+                {/*                                placeholder="预期结果(Ctrl+Enter快速保存)"*/}
+                {/*                                autoSize={{minRows: 3, maxRows: 4}}*/}
+                {/*                                onKeyDown={handleKeyPressAdd}*/}
+                {/*                                bordered={false}*/}
+                {/*                            />*/}
+                {/*                        </Form.Item>*/}
+                {/*                    </Col>*/}
+                {/*                    <Col style={{display: "flex", height: "20px", width: "50px",*/}
+                {/*                        justifyContent: "center", alignItems: "center"}}>*/}
+                {/*                        <Space>*/}
+                {/*                            <Tooltip title={"Ctrl + Enter 快速保存"} mouseEnterDelay={0.5}>*/}
+                {/*                                <CheckOutlined*/}
+                {/*                                    onClick={handleAddStep}*/}
+                {/*                                    style={{cursor: "pointer", fontSize: "16px"}}*/}
+                {/*                                />*/}
+                {/*                            </Tooltip>*/}
+                {/*                            <CloseOutlined*/}
+                {/*                                onClick={() => {*/}
+                {/*                                    form.resetFields();*/}
+                {/*                                    setShowAddForm(false);*/}
+                {/*                                }}*/}
+                {/*                                style={{cursor: "pointer", fontSize: "16px"}}*/}
+                {/*                            />*/}
+                {/*                        </Space>*/}
+                {/*                    </Col>*/}
+                {/*                </Row>*/}
+                {/*            </Form>*/}
+                {/*        </div>*/}
+                {/*    )*/}
+                {/*}*/}
 
             </div>
         </>

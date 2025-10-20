@@ -48,7 +48,7 @@ const ProjectList = (props) => {
 
     useEffect(() => {
         setActiveTabs("1")
-        findProjectPage({ focusUser: null, creator: null, projectName: null })
+        onSearch();
         setRecentLoading(true)
         findProjectSortRecentTime({}).then(res => {
             setRecentProjectList(res.data)

@@ -13,7 +13,7 @@ import { inject, observer } from "mobx-react";
 const ProductUser = props => {
     const productId = props.match.params.productId;
     return (
-        <div className="project-user">
+        <div className="project-user" style={{ height: "100%" }}>
             <DomainUser
                 {...props}
                 domainId={productId}

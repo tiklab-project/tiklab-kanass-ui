@@ -170,6 +170,18 @@
           }
 
 
+          .module-tree-node-title {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            max-width: 164px;
+          }
+          .module-tree-node-title-hover {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            max-width: 122px;
+          }
 
           .module-tree-node-action{
             display: flex;

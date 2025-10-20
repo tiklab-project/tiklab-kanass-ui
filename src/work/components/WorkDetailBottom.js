@@ -22,7 +22,7 @@ import WorkRelationStore from "../store/WorkRelationStore";
 import WorkCommentStore from "../store/WorkCommentStore";
 
 const WorkDetailBottom = (props) => {
-    const { workStore, workInfo, setWorkInfo,  detailForm, getTransitionList, 
+    const { workStore, workInfo, setWorkInfo,  detailForm, getTransitionList, relationModalNum,
         tabValue, setTabValue, closeModal, workDetailMetaData, setWorkDetailMetaData, viewFlow } = props;
     const treePath = workInfo.treePath;
     const deep = treePath ? treePath.split(";").length : 1;
@@ -93,6 +93,7 @@ const WorkDetailBottom = (props) => {
                         setWorkDetailMetaData={setWorkDetailMetaData}
                         detailForm={detailForm}
                         getTransitionList={getTransitionList}
+                        relationModalNum={relationModalNum}
                         deep={deep}
                         taskType={taskType}
                         workTypeText={workTypeText}
@@ -109,6 +110,7 @@ const WorkDetailBottom = (props) => {
                         setWorkDetailMetaData={setWorkDetailMetaData}
                         detailForm={detailForm}
                         getTransitionList={getTransitionList}
+                        relationModalNum={relationModalNum}
                         deep={deep}
                         taskType={taskType}
                         workTypeText={workTypeText}
@@ -124,6 +126,7 @@ const WorkDetailBottom = (props) => {
                         setWorkDetailMetaData={setWorkDetailMetaData}
                         detailForm={detailForm}
                         getTransitionList={getTransitionList}
+                        relationModalNum={relationModalNum}
                         deep={deep}
                         taskType={taskType}
                         workTypeText={workTypeText}
@@ -139,6 +142,7 @@ const WorkDetailBottom = (props) => {
                         setWorkDetailMetaData={setWorkDetailMetaData}
                         detailForm={detailForm}
                         getTransitionList={getTransitionList}
+                        relationModalNum={relationModalNum}
                         deep={deep}
                         taskType={taskType}
                         workTypeText={workTypeText}

@@ -1,6 +1,6 @@
 import {withRouter} from "react-router";
 import {inject, observer, Provider} from "mobx-react";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Select, Space} from "antd";
 import WorkCommentStore from "../store/WorkCommentStore";
 import WorkDynamic from "./WorkDynamic";
@@ -14,7 +14,8 @@ import "./WorkBasicInfoBottom.scss"
 import WorkAttachPage from "./WorkAttachPage";
 
 const WorkBasicInfoBottom = (props) => {
-    const {workStore, workRelationStore, store, workInfo, workTypeText, deep, setTabValue, taskType, closeModal,getTransitionList,detailTabRef} = props;
+    const {workStore, workRelationStore, store, workInfo, workTypeText, deep, setTabValue, taskType, closeModal,
+        getTransitionList,detailTabRef, bottomMinHeight, relationModalNum} = props;
     const path = props.match.path;
     const { workId, attachList, searchWorkById, viewType
     } = workStore;
@@ -23,6 +24,7 @@ const WorkBasicInfoBottom = (props) => {
     const [title, setTitle] = useState("")
     const [selectTab, setSelectTab] = useState(0)
     const {dynamicAndCommentAndLogNum} = WorkCommentStore
+    const tabSelectRef = useRef(null);
 
     const workDetailBottomTabValue = [
         {
@@ -68,19 +70,23 @@ const WorkBasicInfoBottom = (props) => {
     const getNum = (id) => {
         switch (id) {
             case 0:
-                return dynamicAndCommentAndLogNum.dynamicNum;
+                return relationModalNum?.dynamic;
             case 1:
-                return dynamicAndCommentAndLogNum.commentNum;
+                return relationModalNum?.workComment;
             case 6:
-                return dynamicAndCommentAndLogNum.workLogNum;
+                return relationModalNum?.workLog;
             case 2:
-                return relateAndChildNum.childNum;
+                return relationModalNum?.childrenWork;
             case 3:
-                return relateAndChildNum.relateNum;
+                return relationModalNum?.relationWork;
             case 5:
-                return relateAndChildNum.taskChildNum;
+                return relationModalNum?.childrenTaskWork;
+            case 7:
+                return relationModalNum?.workDocument;
+            case 8:
+                return relationModalNum?.workTestCase;
             case 4:
-                return attachList.length;
+                return attachList?.length;
             default:
                 return "";
         }
@@ -208,13 +214,14 @@ const WorkBasicInfoBottom = (props) => {
                         bordered={false}
                         // style={{backgroundColor: '#f0f0f0'}}
                         placeholder=""
-                        allowClear
                         dropdownMatchSelectWidth={false}
-                        className="work-select"
+                        className="work-select work-detail-bottom-tab-select"
                         key="selectProject"
+                        value={null}
                         onSelect={handleTabClick}
                         onClear={handleClear}
                         getPopupContainer={() => detailTabRef.current}
+                        ref={tabSelectRef}
                     >
                         {
                             finalTabValue && finalTabValue.map((item, index) => {
@@ -222,14 +229,16 @@ const WorkBasicInfoBottom = (props) => {
                                     return <Select.Option value={item.id} key={item.id}>
                                         <div
                                             key={item.id}
-                                            className={"bottom-tab " + (selectTab === item.id ? "bottom-tab-active" : "")}
+                                            className={"bottom-tab " + (selectTab === item.id ? "bottom-select-tab-active" : "")}
                                             onClick={() => {
                                                 console.log("index:  " + item.id)
                                                 setSelectTab(item.id)
                                             }}
                                         >
-                                            <span>{item.label}</span>
-                                            <span className="bottom-tab-num">{getNum(item.id)}</span>
+                                            <Space>
+                                                <span>{item.label}</span>
+                                                <span className="bottom-tab-num">{getNum(item.id)}</span>
+                                            </Space>
                                         </div>
                                     </Select.Option>
                                 }
@@ -238,7 +247,7 @@ const WorkBasicInfoBottom = (props) => {
                     </Select>
                 }
             </div>
-            <div className="work-basic-info-bottom-content">
+            <div className="work-basic-info-bottom-content" style={{minHeight: bottomMinHeight}}>
                 {
                     selectTab === 0 &&
                     <div className="tabs-tabpanel">

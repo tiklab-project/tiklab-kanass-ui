@@ -62,8 +62,9 @@
 
     // 修改 Ant Design Collapse 组件的样式
     .ant-collapse {
-        border: 1px solid #d9d9d9;
-        border-radius: 2px;
+        border: 1px solid var(--tiklab-gray-200);
+        background-color: var(--tiklab-gray-600);
+        border-radius: 4px;
 
         .ant-collapse-item {
             border-bottom: 1px solid #d9d9d9;

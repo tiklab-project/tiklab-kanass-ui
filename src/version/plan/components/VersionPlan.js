@@ -118,6 +118,9 @@ const VersionPlan = (props) => {
     }
 
     const changeVersionPlan = (Sid) => {
+        if (!isPermissionCode("version_plan_work")) {
+            return;
+        }
         event.preventDefault();
         setActionType("update")
         setEndVersionId(Sid)

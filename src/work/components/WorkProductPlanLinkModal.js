@@ -54,15 +54,18 @@ const WorkProductPlanLinkModal = (props) => {
     }
 
     useEffect(() => {
-        findProjectList({productId: productId}).then(res => {
-            setProjectList(res.data)
-            const param = {
-                projectIds: res.data.map(item => item.id),
-                workTypeCode: workTypeCode,
-            }
-            searchWork(param)
-            getWorkStatus()
-        })
+        console.log("workProductPlanLink  查询项目列表")
+        if (showLinkModal){
+            findProjectList({productId: productId}).then(res => {
+                setProjectList(res.data)
+                const param = {
+                    projectIds: res.data.map(item => item.id),
+                    workTypeCode: workTypeCode,
+                }
+                searchWork(param)
+                getWorkStatus()
+            })
+        }
 
     }, [workTypeCode]);
 

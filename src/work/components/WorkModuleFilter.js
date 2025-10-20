@@ -18,6 +18,7 @@ import WorkModuleFilterOperateSelectModal from "./WorkModuleFilterOperateSelectM
 import ProductModuleStore from "../../product/module/store/ProductModuleStore";
 import ProductStore from "../../product/product/store/ProductStore";
 import ProjectSetStore from "../../projectSet/projectSet/store/ProjectSetStore";
+import {PrivilegeProjectButton} from "tiklab-privilege-ui";
 const {TreeNode} = Tree;
 
 const getModuleStore = (project, path) =>{
@@ -159,6 +160,7 @@ const WorkModuleFilter = (props) => {
     useEffect(() => {
         // 如果是项目集下，查询项目列表
         if (projectSetId) {
+            console.log("事项模块栏查询项目列表")
             findProjectList({projectSetId:  projectSetId}).then(res => {
                 const ids = res.data.map(item => item.id);
                 //获取系统内置事项类型
@@ -590,7 +592,7 @@ const WorkModuleFilter = (props) => {
                                         handleNodeClick(item.id, currentPath)
                                     }}
                                 >
-                                    <div className="module-tree-node-title">
+                                    <div className={`${(!project?.productId &&(hoverNodeKey === item.id || moduleSelect === item.id)) ? 'module-tree-node-title-hover':'module-tree-node-title'}`}>
                                         {
                                             isExpand ?
                                                 <FolderOpenOutlined style={{ fontSize: '15px' }} />
@@ -602,11 +604,13 @@ const WorkModuleFilter = (props) => {
                                     {
                                         (!project?.productId &&(hoverNodeKey === item.id || moduleSelect === item.id)) &&
                                             <div className="module-tree-node-action">
-                                                <div
-                                                    onClick={() => handleAddNodeClick(item.id)}
-                                                >
-                                                    <PlusOutlined style={{ fontSize: '15px' }}/>
-                                                </div>
+                                                <PrivilegeProjectButton code={"project_module_add"} domainId={projectId}>
+                                                    <div
+                                                        onClick={() => handleAddNodeClick(item.id)}
+                                                    >
+                                                        <PlusOutlined style={{ fontSize: '15px' }}/>
+                                                    </div>
+                                                </PrivilegeProjectButton>
                                                 <WorkModuleFilterOperateSelectModal
                                                     moduleInfo={item}
                                                     moduleStore={ModuleStore}

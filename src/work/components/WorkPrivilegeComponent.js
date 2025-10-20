@@ -27,7 +27,7 @@ const WorkPrivilegeComponent = (props) => {
     useEffect(()=> {
         setShowButton(isPermissionField(code))
         return null;
-    }, [])
+    }, [permissionFieldList])
 
     return <div style={{display: showButton ? "block" : "none"}}>
     {children}
